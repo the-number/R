@@ -72,6 +72,10 @@ c_main (void *closure,  int argc,  char *argv[])
 
   widget_set_init (&argc,  &argv);
 
+#if DEBUG && HAVE_GL_GLUT_H
+  glutInit ();
+#endif
+
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */

@@ -5,10 +5,21 @@ AM_CPPFLAGS+=-DGUILEDIR=\"$(pkgdatadir)\" \
     -DSCRIPTDIR=\"$(pkgdatadir)/scripts\" 
 
 
-
 src_gnubik_CPPFLAGS = $(AM_CPPFLAGS)
-src_gnubik_CFLAGS = $(AM_CFLAGS) $(GTK_CFLAGS) $(GDK_GL_EXT_CFLAGS) $(GTK_GL_EXT_CFLAGS) -DGDK_MULTIHEAD_SAFE=1
-src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS)
+
+src_gnubik_CFLAGS = $(AM_CFLAGS) \
+	$(GTK_CFLAGS) \
+	$(GL_CFLAGS) \
+	$(GLU_CFLAGS) \
+	$(GLUT_CFLAGS) \
+	$(GDK_GL_EXT_CFLAGS) \
+	$(GTK_GL_EXT_CFLAGS) \
+	-DGDK_MULTIHEAD_SAFE=1
+
+src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS) \
+	 $(GL_LIBS) \
+	 $(GLU_LIBS) \
+	 $(GLUT_LIBS)
 
 
 src_gnubik_SOURCES = \

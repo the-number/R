@@ -58,18 +58,24 @@ dnl Find the X11 include and library directories
 AC_PATH_X
 AC_PATH_XTRA
 
+AX_CHECK_GL
+AX_CHECK_GLU
+
+if test "x$no_gl" = x"yes"; then
+   AC_MSG_ERROR("No GL library seems to be installed")
+fi
+
+if test "x$no_glu" = x"yes"; then
+   AC_MSG_ERROR("No GLU library seems to be installed")
+fi
+
+
 dnl Checks for libraries.
 AC_SEARCH_LIBS([scm_c_string_length], [guile],,
 	AC_MSG_ERROR("Guile 1.8.0 or later is required"))
 
 AC_SEARCH_LIBS([cos],[m],,
 	AC_MSG_ERROR("No maths library present" ))
-
-
-AC_SEARCH_LIBS([glBegin], [MesaGL GL])
-
-AC_SEARCH_LIBS([gluOrtho2D], [MesaGLU GLU])
-
 
 
 
@@ -81,8 +87,7 @@ PKG_CHECK_MODULES(GTK_GL_EXT, gtkglext-1.0,,)
 
 dnl Glut is used only if building with debug info
 dnl If it's there, then include it. Otherwise don't bother
-AC_SEARCH_LIBS([glutStrokeCharacter], [glut])
-
+AX_CHECK_GLUT
 
 
 AC_C_CONST
@@ -95,13 +100,6 @@ AC_CHECK_FUNCS(getpwuid)
 
 dnl Checks for header files.
 AC_CHECK_HEADERS([malloc.h pwd.h])
-AC_CHECK_HEADERS(GL/gl.h,,
-	AC_MSG_ERROR("GL/gl.h is missing from include path")
-	)
-AC_CHECK_HEADERS(GL/glu.h,,
-	AC_MSG_ERROR("GL/glu.h is missing from include path")
-	)
-
 
 
 AC_SUBST(PACKAGE)

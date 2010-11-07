@@ -36,7 +36,7 @@
 #include "quarternion.h"
 
 
-#if DEBUG && HAVE_LIBGLUT
+#if DEBUG && HAVE_GL_GLUT_H
 #include <GL/glut.h>
 #endif
 

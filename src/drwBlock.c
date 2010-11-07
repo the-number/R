@@ -37,7 +37,7 @@
 
 
 /* We use a little bit of glut in debug mode */
-#if DEBUG
+#if DEBUG && HAVE_GL_GLUT_H
 #include <GL/glut.h>
 
 void
@@ -378,7 +378,7 @@ draw_face (GLint face,  GLint col_outline ,  int block_id)
 
   glDisable (GL_TEXTURE_2D);
 
-#if DEBUG && HAVE_LIBGLUT
+#if DEBUG && HAVE_GL_GLUT_H
   {
     char str[4];
 
