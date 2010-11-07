@@ -4,6 +4,11 @@ SUBDIRS= po
 
 AUTOMAKE_OPTIONS = gnits 1.10 subdir-objects
 
+SUFFIXES=
+ALL_LOCAL=
+CLEAN_LOCAL=
+
+
 icondir=$(pkgdatadir)/icons
 AM_CPPFLAGS=-DLOCALEDIR=\"$(localedir)\" -DPKGICONDIR=\"$(icondir)\"
 
@@ -15,11 +20,10 @@ AM_CFLAGS+=-Wall -Wwrite-strings \
 endif
 
 
-
-
 include $(top_srcdir)/src/automake.mk
 include $(top_srcdir)/scripts/automake.mk
 include $(top_srcdir)/doc/automake.mk
+include $(top_srcdir)/po/automake.mk
 
 
 ACLOCAL_AMFLAGS = -I m4

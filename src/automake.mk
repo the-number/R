@@ -60,8 +60,3 @@ src_gnubik_SOURCES = \
 	src/widget-set.c \
 	src/widget-set.h 
 
-
-po/POTFILES.in:
-	echo $(src_gnubik_SOURCES) | sed -e 's/ /\
-/g' > $@
-

@@ -1,6 +1,6 @@
 *~
 ChangeLog
-Makefile.in
+./Makefile.in
 aclocal.m4
 config.h.in
 configure

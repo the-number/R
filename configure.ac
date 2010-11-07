@@ -106,5 +106,5 @@ AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
 
-AC_OUTPUT(Makefile po/Makefile.in)
+AC_OUTPUT(Makefile po/Makefile)
 
