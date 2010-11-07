@@ -1,4 +1,5 @@
 mkdir -p build-aux
+mkdir -p m4
 aclocal -I m4 
 autoconf
 autoheader
