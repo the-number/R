@@ -21,3 +21,5 @@ include $(top_srcdir)/src/automake.mk
 include $(top_srcdir)/scripts/automake.mk
 include $(top_srcdir)/doc/automake.mk
 
+
+ACLOCAL_AMFLAGS = -I m4

@@ -19,7 +19,8 @@ dnl Process this file with autoconf to produce a configure script.
 
 
 AX_PREREQ(2.60)
-AC_INIT(gnubik, 2.3,bug-gnubik@gnu.org)
+AC_INIT([GNUbik], [2.3], [bug-gnubik@gnu.org], [gnubik])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
 
@@ -38,7 +39,7 @@ AM_CONDITIONAL(cc_is_gcc, test x"$GCC" = x"yes" )
 
 dnl Internationalization macros.
 AM_GNU_GETTEXT([external], [need-ngettext])
-AM_GNU_GETTEXT_VERSION([0.16.1])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 AC_ARG_ENABLE(debug,
      [  --enable-debug    Turn on debugging],

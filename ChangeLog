@@ -1,3 +1,8 @@
+2010-11-07  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (ACLOCAL_AMFLAGS): New variable.
+	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.18.
+
 Mon Jan 19 15:53:54 WST 2009 John Darrington <john@darrington.wattle.id.au>
 	* Fix seg fault when closing the colour selection dialog with a delete
 	signal.
