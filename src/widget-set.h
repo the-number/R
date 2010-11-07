@@ -42,21 +42,11 @@ enum
     } ;
 void set_toolbar_state (unsigned state);
 
-
-
 GtkWidget * create_statusbar (GtkWidget * container);
 void update_statusbar (void);
 
-
-void cleanup (void);
-
-void show_widget (GtkWidget *);
-
-void start_main_loop (void);
-
 void set_the_colours (GtkWidget * w,  const char *progname);
 void setCubeColours (char *progname);
-
 
 /* Declare that the cube has been solved */
 void declare_win (const struct cube *) ;

@@ -450,38 +450,6 @@ create_menubar (GtkWidget * container,  GtkWidget * toplevel)
 
 }
 
-void
-cleanup (void)
-{
-}
-
-
-void
-show_widget (GtkWidget * w)
-{
-  gtk_widget_show (w);
-
-}
-
-
-void
-start_main_loop (void)
-{
-  gtk_main ();
-}
-
-void set_the_colours (GtkWidget *w,  const char *progname);
-
-
-/* set the colours of the faces */
-void
-setCubeColours (char *progname)
-{
-  /*dummy*/
-
-}
-
-
 /* Popup an error dialog box */
 void
 error_dialog (GtkWidget *parent,  const gchar *format, ...)

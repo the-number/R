@@ -105,10 +105,6 @@ c_main (void *closure,  int argc,  char *argv[])
   statusbar  = create_statusbar (form);
 
 
-  /* tidy up whent the program exits */
-  atexit (cleanup);
-
-
   /* create the cube */
   number_of_blocks = create_the_cube (cube_dimension);
   if ( 0 > number_of_blocks ) {
@@ -138,14 +134,9 @@ c_main (void *closure,  int argc,  char *argv[])
   initSelection (glxarea, 50,  1,  selection_func);
 
 
-  show_widget (main_application_window);
+  gtk_widget_show (main_application_window);
 
-
-  setCubeColours (argv[0]);
-
-
-  start_main_loop ();
-
+  gtk_main ();
 }
 
 
