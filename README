@@ -1,0 +1,7 @@
+This is the GNUbik distribution.
+
+GNUbik is a GNU package.  It is a 3D interactive graphics 
+puzzle. It renders an image of a magic cube 
+(similar to a rubik cube) and you attempt to solve it.
+
+See the file INSTALL for installation instructions.

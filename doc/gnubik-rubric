@@ -1,0 +1,209 @@
+The rubric for the GNUbik cube program.
+
+   The program is separated into several distinct libraries of
+   routines.  Library routines are called as required by main.  The
+   only library which does any rendering is drw-block.c.  Select.c
+   uses Xt routines and a few glu commands, and there is state
+   parameter maintenance and initialisation done in main.  cube.c and
+   txfm.c are kept free of any Mesa/OpenGL reliance.  The libraries
+   interact as follows:
+
+   
+cube.c, cube.h, (cube_i.h)
+
+   These files define a cube object, which holds the state of a cube
+   at any time. On the face of it (pardon the pun), there are 2x2 ways
+   of doing this. The cube can be thought of as a set of faces, or as
+   a set of blocks. Further, there can be an array element for each
+   face/block which gives the location of the face/block, or there can
+   be an array of locations which gives the face/block which sits
+   there.
+
+   For historical reasons (this program started out as a pure
+   graphical one with no real cube logic) the state of the cube is
+   stored as an array of blocks, including internal ones, with a
+   transformation matrix stored for each block which carries the
+   information of how that block is situated relative to the centre of
+   the cube. The advantage of this approach is that applying rotations
+   to the sides of the cube is easy (just a loop over all blocks
+   applying a rotation matrix to the existing transformation), and
+   rendering is easy (again, just a loop over all blocks applying the
+   user's visual orientation of the cube to the block transformation
+   and leaving it to the graphics to sort out the rendering and hidden
+   face removal).
+
+   The graphics routines also maintain within the cube object vectors
+   for face normals and orientations (to cope with bitmaps on the
+   faces). The cube object provides getters and setters for the
+   graphics system to these variables. There is one instance, in ui.c,
+   where the cube internals are accessed directly; this is marked with
+   `!!!!!!' and should be eliminated ASAP.
+
+   The centre of the cube is at location (0,0,0).  The blocks are of
+   dimensions 2x2x2.  This arrangement means that the position of a
+   block's centre and its extremities may always be described by an
+   integer value, regardless of whether an odd or even cube dimension
+   is specified.
+
+   The transformation matrices are augmented 4x4, which means to say
+   that the upper 3x3 elements give the rotation, and the bottom row
+   (elements 12, 13, and 14) give the translation (offset from the
+   centre of the cube). Despite the previous paragraph, the matrix
+   elements are stored as GLfloat types, to simplify the graphics
+   programming.
+
+   The act of rotating a face of the cube is performed in two
+   steps. First the blocks that make up the edge are identified, and
+   returned to the caller in a Slice_Blocks object. This object can
+   then be passed to the rotate routing proper which applies the
+   correct transformation to the positions of those blocks. (The
+   graphics subsystem will perform this latter act in separate steps
+   also, so that the cube turns more smoothly on-screen).
+   
+   With Guile installed, the cube object also provides a method for
+   obtaining a Scheme representation of the state of the cube. Since
+   script-fu is used to analyze the state of the cube, it is simpler
+   to provide the state as an array of facial locations, storing the
+   colour visible at each face (this will need extending to deal with
+   orientations).
+
+   Finally, as GNUbik is not currently implemented as an object
+   oriented program, a global variable `the_cube' is defined, and
+   functions are made available for creating and destroying the global
+   object.
+
+   Critique:
+
+   With the benefit of hindsight, the storage and manipulation of the
+   face normals and `quadrant' orientation vectors can probably best
+   be moved out of the cube object (it is, technically, redundant
+   information; maybe it can be put into a specialized object derived
+   from the cube for the graphical subsystem). Then, all the
+   arithmetic on the cube state can be of a (very) short integer type
+   (instead of GLfloat), thus improving performance and storage.
+   
+
+drwBlock.c
+
+   The drwBlock.c file contains one main routine, which uses
+   Mesa/OpenGL to display a block on the screen.  Note that as far as
+   drwBlock is concerned, the block is drawn in its original ( solved
+   ) position.  Main transforms the model- view matrix by the current
+   transformation of the block, before displaying it.  When the block
+   is rendered, the colour of the outline is specified.  This is used
+   to indicate a block which the user has selected to be rotated.
+
+   
+select.c
+
+   The select.c library provides a means for the user to pick a block
+   using the mouse.  Xt callbacks are used for this purpose.  A block
+   is picked, if the mouse comes to rest on it.  This is achieved with
+   two callbacks, a timer callback which is invoked at the hold off
+   period ( the time for which the mouse must have ceased motion ),
+   and a passive motion callback.  A flag is set in one callback, and
+   cleared in the other.  Thus, if the timer callback sees a set flag,
+   then it knows that the mouse has not moved since the last timer
+   callback event.  The block at the current cursor position is then
+   determined, using the methods described in Chapter 13 of the OpenGL
+   Programming Guide.  Having selected a block the select.c library,
+   performs a predetermined action, in our case, it redisplays the
+   image, so that the selected block can be indicated.
+
+   The remaining functions of interest, are turn_indicator, which
+   displays a 3/4 circle, with an arrowhead, to indicate which way the
+   next move will be, and the mouse callback function, mouse, which
+   determines what happens when the user presses a mouse button.
+
+
+Guile integration; guile-hooks.c
+
+   When the prescence of Guile is detected by the build configuration
+   script, the GNUbik program is modified in the following ways.
+
+   The main routine (in main.c) becomes a secondary function, and a
+   new outer main initializes the Guile system which in turn calls the
+   inner main routine, which then starts up GNUbik in the usual
+   way. (There are deep technical reasons to do with the run-time
+   stack why Guile has to start in this way). To unify the code, a
+   dummy outer main routine is used when Guile is not present on the
+   system which simply calls the inner main directly.
+
+   During the development of the menus in the graphics initialization
+   (widget-set-gtk.c), a call is made to GNUbik's script-fu
+   initialization function in guile-hooks.c, which searches out all
+   the scripts on the system and runs them.
+
+   However, prior to doing this, guile-hooks.c defines all the C
+   functions that are available in the Scheme world, and exports them
+   appropriately. These include a function which registers a Scheme
+   string with a menu item (see next paragraph), a function which
+   obtains the current state of the cube (with the help of the_cube's
+   auxiliary function), and functions which cause the cube to be
+   rotated in the C world (with the help of the_cube object, and a
+   callout to the graphics subsystem to make the animations happen).
+
+   On initialization, then, GNUbik executes all the scripts it finds,
+   and each script will call the registration function. This function
+   accumulates the registration strings in a file-global structure
+   that is eventually passed back to the caller of the initialization
+   function, which is the part of the graphics subsystem taking care
+   of the initialization of the menubar. This, in turn, dynamically
+   creates the Script-fu submenus.
+
+   When the user selects a menu item, a callback is called in
+   guile-hooks.c, and the callback data passed to it is the string
+   registered with the menu item. The Guile interpreter is invoked to
+   evaluate the contents of this string in the Guile world, and the
+   effect of that would normally be to invoke a procedure that was
+   defined by one of the scripts during the script initialization
+   loop.
+
+   flubrd.scm
+
+      Any respectable script would use the `FLUBRD' wrapper around the
+      raw interface to GNUbik when it can. Thus it is necessary to
+      ensure that this script is available before any of the others
+      run. For this reason (and because it does not directly appear on
+      the menu), this script is considered to be part of the GNUbik
+      program itself and not a generic script. It is therefore located
+      in the .../share/gnubik/guile directory, and the script-fu
+      initialization routine scans this directory before either of the
+      script directories.
+      
+
+move-queue.c, move-queue.h, (move-queue_i.h)
+
+   These files contain the definition of an object which holds a list of all
+   moves applied to a cube (it does not directly interact with the cube), and
+   provides methods for rewinding and playing out the list. A single instance
+   (move_queue) is made in ui.c, and callback methods are defined here which act
+   on the queue. The callback methods are called from the toolbar (built up in
+   widget-set-gtk.c) and from script-fu (guile-hooks.c).
+
+
+Sources of Reference:
+
+   Woo M., Neider J. & Davis, T., "OpenGL Programming
+   Guide", Second Edition, Addison Wesley, 1997.
+
+   Kempf R. & Frazier C., "OpenGL Reference  Manual",
+   Second Edition, Addison Wesley, 1996.
+
+   Kilgard  M. J.,  "OpenGL  Programming for the X window System",
+   Addison Wesley, 1996.
+
+
+   
+________________________________________________________________________________
+Copyright (C) 2004 John Darrington, Dale Mellor
+
+	Permission is granted to anyone to make or distribute verbatim
+	copies of this document as received, in any medium, provided that
+	the copyright notice and this permission notice are preserved,
+	thus giving the recipient permission to redistribute in turn.
+
+	Permission is granted to distribute modified versions of this
+	document, or of portions of it, under the above conditions,
+	provided also that they carry prominent notices stating who last
+	changed them.

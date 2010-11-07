@@ -1,0 +1,13 @@
+To build this source from CVS,  use
+
+./autogen.sh
+
+It's been tested with 
+  autoconf 2.61
+  automake 1.10
+  make     3.81
+  gettext  0.16.1
+
+Other versions may or may not work.
+
+Feedback to john@darrington.wattle.id.au

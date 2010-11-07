@@ -1,0 +1,68 @@
+/*
+    GNUbik -- A 3 dimensional magic cube game.
+    Copyright (C) 2003  John Darrington
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License,  or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+#ifndef WIDGET_SET_H
+#define WIDGET_SET_H
+
+
+#include <gtk/gtk.h>
+#include "cube.h"
+
+extern GtkWidget * main_application_window;
+
+void widget_set_init (int *argc,  char *** argv) ;
+
+GtkWidget * create_top_level_widget (void);
+
+GtkWidget * create_container_widget (GtkWidget * parent);
+
+GtkWidget * create_menubar (GtkWidget * container,  GtkWidget * toplevel);
+
+
+GtkWidget * create_play_toolbar (GtkWidget * container,  GtkWidget * toplevel);
+enum
+    {
+        PLAY_TOOLBAR_BACK = 0x0b << 0,
+        PLAY_TOOLBAR_STOP = 0x01 << 2,
+        PLAY_TOOLBAR_PLAY = 0x03 << 4
+    } ;
+void set_toolbar_state (unsigned state);
+
+
+
+GtkWidget * create_statusbar (GtkWidget * container);
+void update_statusbar (void);
+
+
+void cleanup (void);
+
+void show_widget (GtkWidget *);
+
+void start_main_loop (void);
+
+void set_the_colours (GtkWidget * w,  const char *progname);
+void setCubeColours (char *progname);
+
+
+/* Declare that the cube has been solved */
+void declare_win (const struct cube *) ;
+
+/* Popup an error dialog box */
+void error_dialog (GtkWidget * parent,  const char *format, ...);
+
+
+#endif

@@ -1,0 +1,232 @@
+Mon Jan 19 15:53:54 WST 2009 John Darrington <john@darrington.wattle.id.au>
+	* Fix seg fault when closing the colour selection dialog with a delete
+	signal.
+
+Sun Jan 18 22:07:45 WST 2009 John Darrington <john@darrington.wattle.id.au>
+
+	* If the attempt to configure the framebuffer fails, try again
+	without the accumulation buffer.
+
+Fri Jan 16 08:27:46 WST 2009 John Darrington <john@darrington.wattle.id.au>
+
+	* Cope with OpenGL contexts that don't have an accumulation buffer, 
+	by not attempting to anti-alias in these instances.
+
+Thu Jan 15 08:51:39 WST 2009 John Darrington <john@darrington.wattle.id.au>
+	
+	* Fail more gracefully when cube dimension is too big for the memory.
+	
+	* Changed some unsigned ints to signed ones where appropriate.
+	
+Fri Dec  5 08:39:49 WST 2008 John Darrington <john@darrington.wattle.id.au>
+
+	* src/colour-sel.c src/glarea.c src/menus.c src/select.c src/ui.h:
+	 Updated some deprecated constructs with modern counterparts.
+	 Thanks to Ivaylo Valkov for supplying this patch.
+
+John Darrington <john@darrington.wattle.id.au>
+
+	* Used a non-recursive make system instead of the dodgy recursive
+	version.  
+
+	* added gr.po pt_BR.po zh_CN.po pt.po localisations.
+
+	* src/widget-ui.c: Used GTK Stock items instead of our own icons.
+
+	* icons/*: Deleted per above.
+
+	* src/*athena*: Removed.
+
+	* src/*.c: Added #include <config.h>
+
+	* src/*.h: Removed any calls to #include <config.h>
+ 
+Mon Nov  7 18:37:14 WST 2005 John Darrington <john@darrington.wattle.id.au>
+
+	* renamed fr_FR.po to fr.po since the translation would appear to be
+	  OK for any West African / South Pacific / Canadian french too.
+	  (original translator unavailable for comment).
+
+
+Sat Jun 22 12:44:17 WST 2005 John Darrington <john@darrington.wattle.id.au>
+
+	* po/nl.po, po/LINGUAS: Added Dutch translation.
+
+	* configure.ac: Added error message if guile is not installed, and 
+	--without-guile is not used.
+
+	* configure.ac, Makefile.am: Made gettext 0.14.4 happy, by removing
+	  m4 directory.
+
+	* src/Makefile.am: Fixed problems compiling without guile.
+
+	* src/colour-sel-gtk.c, src/drwBlock.c, src/glarea-gtk.c, 
+	  src/select-common.c, src/textures.h, src/ui.h, 
+          src/widget-set-gtk.c: Fixed some warnings
+
+Sat Feb  5 10:11:20 WST 2005 John Darrington <john@darrington.wattle.id.au>
+
+	* widget-set-gtk.c: Copied the menu_items so that gettext can take
+	effect.
+
+	* Updated the German translation.
+
+	* Updated the Russian and Polish translations.
+
+Wed Aug 18 20:12:12 WST 2004 John Darrington <john@darrington.wattle.id.au>
+
+	* GNUbik 2.2 Released
+
+	* Added a menu to turn on/off the statusbar and play toolbar.
+	
+	* Added some stock icons to the menus.
+
+	* Fixed a buglet where the play toolbar would expand when the window
+	was resized. 
+
+	* Reworked some bad code in widget-set-gtk.c where the menu structure 
+	was (needlessly) being created dynamically instead of statically.
+
+	* Fixed a bug where the program would crash if the cube was rebuilt
+	during the middle of a sequence of moves.
+
+Sun Aug  1 11:23:00 WST 2004 John Darrington <john@darrington.wattle.id.au>
+
+	* added a Catalan translation
+
+Sat Jul 31 17:39:59 WST 2004 John Darrington <john@darrington.wattle.id.au>
+
+	* added a Basque translation
+
+	* fixed problems relating to not being able to get certain visuals
+
+2004-02-17  Dale Mellor <dale_mellor@users.sourceforge.net>
+
+	* move-queue.c, move-queue.h, move-queue_i.h, ui.c: Removed the
+	move queue functionality from ui.c and created a new object to
+	encapsulate the functionality.
+	
+	* src/widget-set-gtk.c, ui.c: Added code to create video-style
+	play/replay buttons for manipulating the move queue.
+
+
+Thu Jan 22 18:13:32 WST 2004 <john@darrington.wattle.id.au>
+
+	* GNUbik 2.1 Released
+
+
+2004-01-21  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+	 * po/Makevars: Initialize MSGID_BUGS_ADDRESS variable.
+	 * po/LINGUAS: New file
+	 * po/pl.po: New file
+	 * po/ru.po: New file
+
+	* src/glarea-gtk.c (resize): Fixed coredump.
+
+2004-01-07  Dale Mellor <dale_mellor@users.sourceforge.net>
+
+	* doc/gnubik.texinfo, doc/gnubik-rubric: Updated documentation
+	    with notes for script writers and core hackers.
+
+	    
+Wed Jan  7 00:35:20 WST 2004 John Darrington
+
+	* Added a gtk_main_quit callback to the top level window
+
+	
+2004-01-05  Dale Mellor <dale_mellor@users.sourceforge.net>
+
+        * Added support for Guile scripts (Script-fu).
+
+        * Created scheme code for manipulating the cube according to the
+	    `flubrd' symbolism.
+
+        * Created the baseline solver script.
+
+        * Created the script implementing randomizers.
+
+	
+05-01-2004 John Darrington
+	
+	* Fixed a problem where autoconf was looking for the wrong version
+	  of gdk_pixbuf
+
+	* Added an Italian localisation
+
+        * Moved to autoconf 2.59 and gettext 0.13
+
+	* Added a Spanish localisation
+
+21-11-2003 John Darrington
+ 
+	* GNubik 2.0 Released
+
+ 	* Renamed to GNUbik
+
+        * Changed configure to complain if gtkglext is not present
+
+        * Added a French translation
+
+05-08-2003 John Darrington
+
+	* Rubik 1.16 Released
+
+	* Changed the custom message dialogs for gtk standard ones
+
+	* Made the colour select window, the about window and the Preferences
+	  window transient for the main window.
+
+	* Added a message to explain when the cube is not solved even 
+	  though it may appear to be
+
+	* Added some drag-and-drop support to the colour/image selection
+
+	* Set the lighting to be off by default.  It can cause certain colour
+	  combinations to be confused.
+
+	* Added a Danish localisation
+
+	* Changed the project name to avoid trademark violations
+
+        * Removed some deprecated GTK+ constructs
+
+        * Fixed colour allocation problem on indexed displays
+
+        * Changed some buttons to stock items
+
+16-07-2003 John Darrington
+
+	* Rubik 1.15 Released
+
+	* Started using automake for the build system
+
+	* Added transparency to the gdk icon
+
+	* Internationalisation
+	
+	* Added lighting
+        
+	* Added antialiasing
+
+        * Added a feature allowing images to be rendered to the cube
+
+        * Made the mouse cursor always point to the direction of rotation
+
+	* Fixed cube rotation from interfering with block selection
+	
+	* Added Debug feature to show block and axis numbers
+
+23-06-2003 John Darrington
+
+	* Rubik 1.14 Released
+
+25-03-20003 John Darrington
+	
+	* Rubik 1.13 Released
+
+	* Ported to GTK+
+
+07-14-2002 John Darrington
+
+	* Rubik 1.12 Released
+	

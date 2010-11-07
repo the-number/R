@@ -1,0 +1,59 @@
+GNUbik 2.3
+
+	* Reorganised the autotools and build system.
+
+	* Updated the licence from  GPLv2+ to GPLV3+
+
+	* Added bg, gr, pt_BR, pt_PT and zh_CH translations.
+
+	* We now depend on Gtk+ version 2.6 or later.
+
+	* We now depend on Guile version 1.8 or later.
+
+GNUbik 2.2
+
+	* Added video-style buttons for playing/replaying moves.
+
+	* Various bugs fixed.
+
+	* Minor cosmetic improvements to the user interface.
+
+	* Added a Basque and a Catalan localisation.
+
+	* As of this release, GTK+ is the definitive widget set.
+	  The Athena compile time option will no longer be maintained.
+
+GNUbik 2.1
+
+	* Added support for Guile scripts (Script-fu), plus scripts to
+	  randomize and	solve the cube.
+
+	* Added Polish and Russian localisations.
+	
+	* Minor bug fixes.
+
+GNUbik 2.0
+
+	* Renamed the project to GNUbik as it's now part of the GNU project
+
+	* Added a French localisation
+
+
+Grubik 1.16
+
+This version of adds a handfull of improvement:
+
+	* Internationalisation.  Only a German and American
+	  localisation is done at present. 
+
+	* Antialiasing of the cube.  It looks much better!
+
+	* You can put your own images onto the cube surface.
+
+	* The mouse cursor now points in the direction the blocks will
+          turn. 
+
+	* Optional lighting.
+
+There's also numerous bug fixes and general improvements to the code.
+	

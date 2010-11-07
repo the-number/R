@@ -1,0 +1,101 @@
+.\"
+.\"    GNUbik -- A 3 dimensional magic cube game.
+.\"    Copyright (C) 1998,2003  John Darrington
+.\"
+.\"    This program is free software; you can redistribute it and/or modify
+.\"    it under the terms of the GNU General Public License as published by
+.\"    the Free Software Foundation; either version 3 of the License, or
+.\"    (at your option) any later version.
+.\"
+.\"    This program is distributed in the hope that it will be useful,
+.\"    but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"    GNU General Public License for more details.
+.\"
+.\"    You should have received a copy of the GNU General Public License
+.\"    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\" $Id: gnubik.6,v 1.2 2008/01/16 10:35:09 jmd Exp $
+.TH gnubik  6 "16 June 2003" JMD  "GNU Utility Documentation"
+.SH NAME
+gnubik \-  an interactive, graphic Magic cube program.
+.SH SYNOPSIS
+.B
+gnubik 
+[window_system_options] [-hvs]  [-z n]  [-a m]
+
+.SH DESCRIPTION
+This is a program which displays a 3 dimensional image of a magic cube, 
+as introduced to the world by its Hungarian inventor, Erno Rubik.
+The user rotates the blocks of the cube, and attempts to solve the puzzle, by moving all the blocks to their
+correct positions and orientations, resulting in a cube with a single colour on each face.
+.SH OPERATION
+.LP
+The user interacts with the program in the following ways:
+.SS Viewing the Cube
+.LP
+The viewing position may be altered using the arrow keys or by using
+the mouse.
+The left and right arrow keys rotate the cube about the vertical axis.
+The up and down keys rotate the cube about the horizontal axis.
+Holding down the shift key whilst pressing the left and right arrow
+keys rotates the cube about the z axis.
+
+To rotate the cube using the mouse, hold down button 1 and move the
+mouse anywhere on the window.  
+If your mouse has a scroll wheel, you can use this to rotate the cube
+about the z axis.
+
+.SS Performing Rotations
+.LP
+Rotations are performed using the mouse.  
+To manipulate the cube, place the mouse cursor on a square in the cube, against
+the edge facing the direction you want to move, and click button 1.
+.LP
+The mouse cursor will indicate the direction of rotation.
+
+.SH OPTIONS
+The following options may be specified on the command line at invocation.  
+.TP
+.B -z n
+Draws a cube of dimension \fBn\fP, where \fBn\fP is positive.  
+The default value of \fBn\fP is 3.
+.TP
+.B -a m
+When rotating parts of the cube, show m intermediate positions.  The default for this
+value is 2.  Setting to a higher value, will give smoother animations, but will slow down
+the whole program.
+.TP 
+.B -s
+Starts with the cube already solved.  By default, it starts in a random position.
+.TP 
+.B -h
+Display a help message and exit.
+.TP 
+.B -v
+Display version number and then exit.
+
+.SH IMPLEMENTATION
+The code for gnubik was written in ANSI compliant C, using the Mesa graphics 
+library, and the Gtk+ library.  As such, it should be easy to generate 
+a version for any system complying with these standards.  The program was developed
+on a GNU/Linux platform running XFree86.
+.SH BUGS
+.LP
+The rendering process is slow - especially over a network, since display lists aren't currently used.  The entire 
+image is re-rendered, during each refresh, regardless of which components have changed their appearance.  
+.SH COPYRIGHT
+.LP
+Copyright (C) 1998 John Darrington.
+.LP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+.LP
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.LP
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

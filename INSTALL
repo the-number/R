@@ -1,0 +1,31 @@
+Installation of this program has several prerequisites:
+
+*  The X Window system.  X.Org is the tested platform, but it
+   should work on others too.
+
+*  Mesa,  OpenGL or any other clone of OpenGL.  Mesa is 
+   available from http://www.mesa3d.org 
+   You can find further information about OpenGL at http://www.opengl.org
+ 
+*  gtk+-2.0 version 2.6 or later.
+   
+*  You will also need the GTK Mesa/OpenGL extension 
+   library ( http://gtkglext.sourceforge.net ).
+
+*  libguile version 1.6.4 or later.
+
+
+To install the program, do the following steps.
+
+1)	Run the configure script, by typing the command `./configure'.
+
+2)	Type `make'.
+
+3)	Check that it works `./src/gnubik'.
+
+4)	Check that the documentation files compiled correctly.  Type 
+	`info -f ./doc/gnubik.info'  and then `man ./doc/gnubik.6'.
+
+5)	If you like it,  type `make install' .  This last one,
+	will probably need to be done as root.
+

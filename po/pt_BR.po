@@ -1,0 +1,286 @@
+# Message file for brazilian portuguese version of GRubik
+# Copyright (C) 2003 John Darrington
+# John Darrington <jmd@computer.org>, 2003.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: GRubik 1.16\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"PO-Revision-Date: 2003-08-01 19:01+0200\n"
+"Last-Translator: Miguel Tostes Ribeiro <migueltr@uol.com.br>\n"
+"Language-Team: Brazilian \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/colour-sel.c:181
+#, c-format
+msgid "Cannot create image from file %s: %s"
+msgstr "Não é possível criar imagem a partir do arquivo %s: %s"
+
+#: src/colour-sel.c:261
+msgid "Image Selector"
+msgstr "Seletor de imagem"
+
+#: src/colour-sel.c:289
+#, fuzzy
+msgid "All Images"
+msgstr "Imagem"
+
+#: src/colour-sel.c:296
+msgid "All Files"
+msgstr ""
+
+#: src/colour-sel.c:440
+msgid "Pattern"
+msgstr "Padrão"
+
+#: src/colour-sel.c:441
+msgid "Colour"
+msgstr "Cor"
+
+#: src/colour-sel.c:468
+msgid "Click here to use a pattern on the cube surface"
+msgstr "Clique aqui para criar um padrão na superfície do cubo"
+
+#: src/colour-sel.c:750
+msgid "Colour selector"
+msgstr "Seletor de Cor"
+
+#: src/colour-sel.c:776
+msgid "Image"
+msgstr "Imagem"
+
+#: src/colour-sel.c:777
+msgid "Se_lect"
+msgstr "Se_lecione"
+
+#: src/colour-sel.c:780
+msgid "Select an image file"
+msgstr "Selecione um arquivo de imagem"
+
+#: src/colour-sel.c:783
+msgid "_Tiled"
+msgstr "_Lado a lado"
+
+#: src/colour-sel.c:785
+msgid ""
+"Place a copy of the image\n"
+"on each block"
+msgstr ""
+"Coloque uma cópia da imagem\n"
+"em cada bloco"
+
+#: src/colour-sel.c:789
+msgid "_Mosaic"
+msgstr "_Mosaico"
+
+#: src/colour-sel.c:792
+msgid ""
+"Place a copy of the image across\n"
+"the entire face of the cube"
+msgstr ""
+"Coloque uma cópia da imagem \n"
+"ocupando toda a face do cubo"
+
+#: src/colour-sel.c:852
+#, fuzzy
+msgid ""
+"A sample of the colour or pattern. You can click and select a new colour or "
+"pattern,  or drag one to this space."
+msgstr ""
+"Um examplo da cor ou padrão. Você pode clicar e obter uma nova cor ounovo "
+"padrão, ou ainda arrastar uma um já existente para este espaço."
+
+#: src/menus.c:165
+msgid "Sets the number of blocks in each side"
+msgstr "Escolha o número de blocos em cada lado"
+
+#: src/menus.c:167
+msgid "Size of cube:"
+msgstr "Tamanho do cubo:"
+
+#: src/menus.c:207
+msgid "Faster"
+msgstr "Mais rápido"
+
+#: src/menus.c:210
+msgid "Slower"
+msgstr "Mais devagar"
+
+#: src/menus.c:215
+msgid "Controls the speed with which slices rotate"
+msgstr "Controla a rapidez da rotação da fatia"
+
+#: src/menus.c:259
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/menus.c:271
+msgid "Dimensions"
+msgstr "Dimensões"
+
+#: src/menus.c:272
+msgid "Animation"
+msgstr "Animação"
+
+#: src/menus.c:273
+msgid "Lighting"
+msgstr "Iluminação"
+
+#: src/menus.c:282
+msgid "Enable lighting"
+msgstr "Habilita iluminação"
+
+#: src/menus.c:284
+msgid "Makes the cube appear illuminated"
+msgstr "Faz o cubo aparecer iluminado"
+
+#: src/menus.c:354
+msgid "Start cube with new settings?"
+msgstr "Inicia cubo com as novas escolhas?"
+
+#: src/textures.c:203
+msgid "Pixbuf has wrong number of channels"
+msgstr "Pixbuf tem um número errado de canais."
+
+#: src/textures.c:211
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Pixbuf tem um espaço de cor desconhecido: %d"
+
+#: src/widget-set.c:112
+#, fuzzy, c-format
+msgid "Moves: %d / %d"
+msgstr "Movimentos: %d"
+
+#: src/widget-set.c:141
+#, fuzzy, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] "Cubo solucionado em %d movimentos"
+msgstr[1] "Cubo solucionado em %d movimentos"
+
+#: src/widget-set.c:148
+#, fuzzy
+msgid ""
+"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr ""
+"Cubo não foi solucionado! As cores estão corretas, mas tem orientações "
+"incorretas"
+
+#: src/widget-set.c:199
+msgid "Rewind"
+msgstr ""
+
+#: src/widget-set.c:200
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:205
+msgid "Back"
+msgstr ""
+
+#: src/widget-set.c:206
+msgid "Make one step backwards"
+msgstr ""
+
+#: src/widget-set.c:212
+msgid "Stop"
+msgstr ""
+
+#: src/widget-set.c:213
+msgid "Stop running the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:219
+msgid "Mark"
+msgstr ""
+
+#: src/widget-set.c:220
+msgid "Mark the current place in the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:226
+msgid "Forward"
+msgstr ""
+
+#: src/widget-set.c:227
+msgid "Make one step forwards"
+msgstr ""
+
+#: src/widget-set.c:233
+msgid "Play"
+msgstr ""
+
+#: src/widget-set.c:234
+msgid "Run forward through the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:321
+msgid "_Play Toolbar"
+msgstr ""
+
+#: src/widget-set.c:328
+msgid "_Status Bar"
+msgstr ""
+
+#: src/widget-set.c:366
+msgid "/_Game"
+msgstr "/_Jogo"
+
+#: src/widget-set.c:367
+msgid "/_Game/_New Game"
+msgstr "/_Spiel/_Novo Jogo"
+
+#: src/widget-set.c:368
+msgid "/_Game/sep"
+msgstr "/_Jogo/sep"
+
+#: src/widget-set.c:369
+msgid "/_Game/_Quit"
+msgstr "/_Jogo/_Sair"
+
+#: src/widget-set.c:370
+msgid "/_Settings"
+msgstr "/_Escolhas"
+
+#: src/widget-set.c:371
+msgid "/_Settings/_Preferences"
+msgstr "/Einstellungen/E_instellungen"
+
+#: src/widget-set.c:372
+msgid "/_Settings/_Colours"
+msgstr "/_Escolhas/_Cores"
+
+#: src/widget-set.c:373
+#, fuzzy
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Escolhas"
+
+#: src/widget-set.c:379
+msgid "/_Help"
+msgstr "/_Ajuda"
+
+#: src/widget-set.c:380
+msgid "/_Help/_About"
+msgstr "/_Ajuda/_Informação"
+
+#: src/widget-set.c:430
+#, fuzzy
+msgid "/Settings/Show\\/Hide"
+msgstr "/_Escolhas"
+
+#~ msgid "Use an image file on the cube face"
+#~ msgstr "Use um arquivo de imagem na face do cubo"
+
+#~ msgid "R_eset"
+#~ msgstr "_Reiniciar"
+
+#~ msgid "GRubik Error"
+#~ msgstr "Erro GRubik"
+
+#~ msgid "Starts a new cube with specified size"
+#~ msgstr "Inicia um novo cubo com o tamanho escolhido"

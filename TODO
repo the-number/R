@@ -1,0 +1,13 @@
+* Extend it so that N x M x P sized cubes are supported.
+
+* See if you can get the animations any faster.
+
+* Add some more localisations.  Volunteers please.
+
+* Some insane individual might want a 4 dimensional version.  This
+  could be  achieved by splitting the top level window into 8
+  sub-windows, each containing its own cube.  The 8 cubes, would make
+  up the `faces' of the 4 dimensional `hyper-cube'.  Thus, any cube
+  can be manipulated, but this would automatically  affect 6 of the 7
+  other cubes.  For inspiration, see the novel by Abbot E. A., "Flatland.  
+  A Romance of Many Dimensions", Basil Blackwell, 1978.

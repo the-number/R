@@ -1,0 +1,7 @@
+John Mark Darrington <john@darrington.wattle.id.au>
+  is the main author and maintainer of this package.
+
+Dale Mellor <dale_mellor@users.sourceforge.net>
+  wrote guile_hooks.c, guile_hooks.h, and all of the Scheme code; cube.c,
+  cube_i.h, cube.h, move-queue.c, move-queue_i.h and move-queue.h were written
+  based heavily on previous work by John Darrington.

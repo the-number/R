@@ -1,0 +1,272 @@
+# Dutch translation for GNUbik
+# Copyright (C) 2003 John Darrington
+# John Darrington <john@darrington.wattle.id.au>, 2003.
+# Lidwine van As <gnubik-nl@coolpython.nl>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNUbik 2.0\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"PO-Revision-Date: 2005-06-20 19:15+0100\n"
+"Last-Translator: Lidwine van As <gnubik-nl@coolpython.nl>\n"
+"Language-Team: Dutch <gnubik-nl@coolpython.nl>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+
+#: src/colour-sel.c:181
+#, c-format
+msgid "Cannot create image from file %s: %s"
+msgstr "Kan geen afbeelding maken van bestand %s: %s"
+
+#: src/colour-sel.c:261
+msgid "Image Selector"
+msgstr "Afbeeldingenkiezer"
+
+#: src/colour-sel.c:289
+#, fuzzy
+msgid "All Images"
+msgstr "Afbeelding"
+
+#: src/colour-sel.c:296
+msgid "All Files"
+msgstr ""
+
+#: src/colour-sel.c:440
+msgid "Pattern"
+msgstr "Patroon"
+
+#: src/colour-sel.c:441
+msgid "Colour"
+msgstr "Kleur"
+
+#: src/colour-sel.c:468
+msgid "Click here to use a pattern on the cube surface"
+msgstr "Klik hier om een patroon op het kubusoppervlak aan te brengen"
+
+#: src/colour-sel.c:750
+msgid "Colour selector"
+msgstr "Kleurenkiezer"
+
+#: src/colour-sel.c:776
+msgid "Image"
+msgstr "Afbeelding"
+
+#: src/colour-sel.c:777
+msgid "Se_lect"
+msgstr "Se_lecteren"
+
+#: src/colour-sel.c:780
+msgid "Select an image file"
+msgstr "Selecteer een afbeeldingsbestand"
+
+#: src/colour-sel.c:783
+msgid "_Tiled"
+msgstr "Ge_tegeld"
+
+#: src/colour-sel.c:785
+msgid ""
+"Place a copy of the image\n"
+"on each block"
+msgstr "Plaats afbeelding op ieder afzonderlijk blokje"
+
+#: src/colour-sel.c:789
+msgid "_Mosaic"
+msgstr "_Mozaiek"
+
+#: src/colour-sel.c:792
+msgid ""
+"Place a copy of the image across\n"
+"the entire face of the cube"
+msgstr "Verdeel afbeelding over gehele oppervlak"
+
+#: src/colour-sel.c:852
+#, fuzzy
+msgid ""
+"A sample of the colour or pattern. You can click and select a new colour or "
+"pattern,  or drag one to this space."
+msgstr ""
+"Voorbeeld van gekozen kleur of patroon. Selecteer een andere kleur of "
+"patroon door deze aan te klikken of hiernaartoe te slepen."
+
+#: src/menus.c:165
+msgid "Sets the number of blocks in each side"
+msgstr "Stelt het aantal blokken per vlak in"
+
+#: src/menus.c:167
+msgid "Size of cube:"
+msgstr "Grootte van de kubus:"
+
+#: src/menus.c:207
+msgid "Faster"
+msgstr "Sneller"
+
+#: src/menus.c:210
+msgid "Slower"
+msgstr "Langzamer"
+
+#: src/menus.c:215
+msgid "Controls the speed with which slices rotate"
+msgstr "Stelt de draaisnelheid van de schijven in"
+
+#: src/menus.c:259
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: src/menus.c:271
+msgid "Dimensions"
+msgstr "Afmetingen"
+
+#: src/menus.c:272
+msgid "Animation"
+msgstr "Animatie"
+
+#: src/menus.c:273
+msgid "Lighting"
+msgstr "Belichting"
+
+#: src/menus.c:282
+msgid "Enable lighting"
+msgstr "Belichting activeren"
+
+#: src/menus.c:284
+msgid "Makes the cube appear illuminated"
+msgstr "De kubus lijkt verlicht te worden"
+
+#: src/menus.c:354
+msgid "Start cube with new settings?"
+msgstr "Kubus starten met nieuwe instellingen?"
+
+#: src/textures.c:203
+msgid "Pixbuf has wrong number of channels"
+msgstr "Afbeelding heeft onjuist aantal kanalen"
+
+#: src/textures.c:211
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Afbeelding heeft onbekende kleurwaarde: %d"
+
+#: src/widget-set.c:112
+#, c-format
+msgid "Moves: %d / %d"
+msgstr "Aantal stappen: %d / %d"
+
+#: src/widget-set.c:141
+#, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/widget-set.c:148
+#, fuzzy
+msgid ""
+"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr "Kubus NIET opgelost! Kleuren zijn goed, maar schikking is onjuist"
+
+#: src/widget-set.c:199
+msgid "Rewind"
+msgstr "Stap terug"
+
+#: src/widget-set.c:200
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr "Ga naar de vorige markering in (of het begin van) de stappenreeks"
+
+#: src/widget-set.c:205
+msgid "Back"
+msgstr "Terug"
+
+#: src/widget-set.c:206
+msgid "Make one step backwards"
+msgstr "Ga een stap terug"
+
+#: src/widget-set.c:212
+msgid "Stop"
+msgstr "Stoppen"
+
+#: src/widget-set.c:213
+msgid "Stop running the sequence of moves"
+msgstr "Stop afspelen van stappenreeks"
+
+#: src/widget-set.c:219
+msgid "Mark"
+msgstr "Markeren"
+
+#: src/widget-set.c:220
+msgid "Mark the current place in the sequence of moves"
+msgstr "Markeer de huidige locatie in de stappenreeks"
+
+#: src/widget-set.c:226
+msgid "Forward"
+msgstr "Vooruit"
+
+#: src/widget-set.c:227
+msgid "Make one step forwards"
+msgstr "Ga een stap vooruit"
+
+#: src/widget-set.c:233
+msgid "Play"
+msgstr "Afspelen"
+
+#: src/widget-set.c:234
+msgid "Run forward through the sequence of moves"
+msgstr "Loop door de stappenreeks heen"
+
+#: src/widget-set.c:321
+msgid "_Play Toolbar"
+msgstr "_Afspeelwerkbalk"
+
+#: src/widget-set.c:328
+msgid "_Status Bar"
+msgstr "Status_balk"
+
+#: src/widget-set.c:366
+msgid "/_Game"
+msgstr "/_Spel"
+
+#: src/widget-set.c:367
+msgid "/_Game/_New Game"
+msgstr "/_Spel/_Nieuw spel"
+
+#: src/widget-set.c:368
+msgid "/_Game/sep"
+msgstr "/_Spel/sep"
+
+#: src/widget-set.c:369
+msgid "/_Game/_Quit"
+msgstr "/_Spel/A_fsluiten"
+
+#: src/widget-set.c:370
+msgid "/_Settings"
+msgstr "/_Instellingen"
+
+#: src/widget-set.c:371
+msgid "/_Settings/_Preferences"
+msgstr "/_Instellingen/_Voorkeuren"
+
+#: src/widget-set.c:372
+msgid "/_Settings/_Colours"
+msgstr "/_Instellingen/_Kleuren"
+
+#: src/widget-set.c:373
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Instellingen/_Tonen\\/Verbergen"
+
+#: src/widget-set.c:379
+msgid "/_Help"
+msgstr ""
+
+#: src/widget-set.c:380
+msgid "/_Help/_About"
+msgstr "/_Help/_Over..."
+
+#: src/widget-set.c:430
+msgid "/Settings/Show\\/Hide"
+msgstr "/Instellingen/Tonen\\/Verbergen"
+
+#~ msgid "Use an image file on the cube face"
+#~ msgstr "Gebruik afbeelding als kubusoppervlak"

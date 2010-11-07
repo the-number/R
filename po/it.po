@@ -1,0 +1,278 @@
+# Italian translation of GNUbik package.
+# Copyright (C) 2003 John Darrington
+# Marco Ciampa <ciampix@libero.it>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.0\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"PO-Revision-Date: 2003-12-28 16:15+0100\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: italian <tp@lists.linux.it>, <it@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: src/colour-sel.c:181
+#, c-format
+msgid "Cannot create image from file %s: %s"
+msgstr "Impossibile creare l'immagine dal file %s: %s"
+
+#: src/colour-sel.c:261
+msgid "Image Selector"
+msgstr "Selettore immagine"
+
+#: src/colour-sel.c:289
+#, fuzzy
+msgid "All Images"
+msgstr "Immagine"
+
+#: src/colour-sel.c:296
+msgid "All Files"
+msgstr ""
+
+#: src/colour-sel.c:440
+msgid "Pattern"
+msgstr "Motivo"
+
+#: src/colour-sel.c:441
+msgid "Colour"
+msgstr "Colore"
+
+#: src/colour-sel.c:468
+msgid "Click here to use a pattern on the cube surface"
+msgstr "Fare clic qui per usare un motivo sulla superfice del cubo"
+
+#: src/colour-sel.c:750
+msgid "Colour selector"
+msgstr "Selettore colori"
+
+#: src/colour-sel.c:776
+msgid "Image"
+msgstr "Immagine"
+
+#: src/colour-sel.c:777
+msgid "Se_lect"
+msgstr "Se_leziona"
+
+#: src/colour-sel.c:780
+msgid "Select an image file"
+msgstr "Seleziona un file immagine"
+
+#: src/colour-sel.c:783
+msgid "_Tiled"
+msgstr "_Piastrellato"
+
+#: src/colour-sel.c:785
+msgid ""
+"Place a copy of the image\n"
+"on each block"
+msgstr ""
+"Piazza una copia dell'immagine\n"
+"in ogni blocco"
+
+#: src/colour-sel.c:789
+msgid "_Mosaic"
+msgstr "_Mosaico"
+
+#: src/colour-sel.c:792
+msgid ""
+"Place a copy of the image across\n"
+"the entire face of the cube"
+msgstr ""
+"Piazza una copia dell'immagine attraverso\n"
+"l'intera faccia del cubo"
+
+#: src/colour-sel.c:852
+#, fuzzy
+msgid ""
+"A sample of the colour or pattern. You can click and select a new colour or "
+"pattern,  or drag one to this space."
+msgstr ""
+"Un campione del colore del motivo. Puoi fare clic e selezionare un nuovo "
+"colore o motivo oppure trascinarne uno su questo spazio."
+
+#: src/menus.c:165
+msgid "Sets the number of blocks in each side"
+msgstr "Imposta il numero dei blocchi per ogni lato"
+
+#: src/menus.c:167
+msgid "Size of cube:"
+msgstr "Ampiezza del cubo:"
+
+#: src/menus.c:207
+msgid "Faster"
+msgstr "Più veloce"
+
+#: src/menus.c:210
+msgid "Slower"
+msgstr "Più lento"
+
+#: src/menus.c:215
+msgid "Controls the speed with which slices rotate"
+msgstr "Controlla la velocità con la quale ruotano i dadi"
+
+#: src/menus.c:259
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: src/menus.c:271
+msgid "Dimensions"
+msgstr "Dimensioni"
+
+#: src/menus.c:272
+msgid "Animation"
+msgstr "Animazione"
+
+#: src/menus.c:273
+msgid "Lighting"
+msgstr "Illuminazione"
+
+#: src/menus.c:282
+msgid "Enable lighting"
+msgstr "Abilita l'illuminazione"
+
+#: src/menus.c:284
+msgid "Makes the cube appear illuminated"
+msgstr "Fai in modo che il cubo appaia illuminato"
+
+#: src/menus.c:354
+msgid "Start cube with new settings?"
+msgstr "Esegui il cubo con le nuove impostazioni?"
+
+#: src/textures.c:203
+msgid "Pixbuf has wrong number of channels"
+msgstr "Pixbuf ha il numero di canali sbagliato"
+
+#: src/textures.c:211
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Pixbuf ha uno spazio colore sconosciuto: %d"
+
+#: src/widget-set.c:112
+#, fuzzy, c-format
+msgid "Moves: %d / %d"
+msgstr "Muovi: %d"
+
+#: src/widget-set.c:141
+#, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] "Il cubo è stato risolto in %d mosse"
+msgstr[1] "Il cubo è stato risolto in %d mosse"
+
+#: src/widget-set.c:148
+#, fuzzy
+msgid ""
+"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr ""
+"Il cubo NON è stato risolto! I colori sono corretti ma hanno un'orientamento "
+"sbagliato"
+
+#: src/widget-set.c:199
+msgid "Rewind"
+msgstr ""
+
+#: src/widget-set.c:200
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:205
+msgid "Back"
+msgstr ""
+
+#: src/widget-set.c:206
+msgid "Make one step backwards"
+msgstr ""
+
+#: src/widget-set.c:212
+msgid "Stop"
+msgstr ""
+
+#: src/widget-set.c:213
+msgid "Stop running the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:219
+msgid "Mark"
+msgstr ""
+
+#: src/widget-set.c:220
+msgid "Mark the current place in the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:226
+msgid "Forward"
+msgstr ""
+
+#: src/widget-set.c:227
+msgid "Make one step forwards"
+msgstr ""
+
+#: src/widget-set.c:233
+msgid "Play"
+msgstr ""
+
+#: src/widget-set.c:234
+msgid "Run forward through the sequence of moves"
+msgstr ""
+
+#: src/widget-set.c:321
+msgid "_Play Toolbar"
+msgstr ""
+
+#: src/widget-set.c:328
+msgid "_Status Bar"
+msgstr ""
+
+#: src/widget-set.c:366
+msgid "/_Game"
+msgstr "/_Gioco"
+
+#: src/widget-set.c:367
+msgid "/_Game/_New Game"
+msgstr "/_Gioco/_Nuovo gioco"
+
+#: src/widget-set.c:368
+msgid "/_Game/sep"
+msgstr "/_Gioco/sep"
+
+#: src/widget-set.c:369
+msgid "/_Game/_Quit"
+msgstr "/Gioco/_Esci"
+
+#: src/widget-set.c:370
+msgid "/_Settings"
+msgstr "/_Impostazioni"
+
+#: src/widget-set.c:371
+msgid "/_Settings/_Preferences"
+msgstr "/_Impostazioni/_Preferenze"
+
+#: src/widget-set.c:372
+msgid "/_Settings/_Colours"
+msgstr "/_Impostazioni/_Colori"
+
+#: src/widget-set.c:373
+#, fuzzy
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Impostazioni"
+
+#: src/widget-set.c:379
+msgid "/_Help"
+msgstr "/_Aiuto"
+
+#: src/widget-set.c:380
+msgid "/_Help/_About"
+msgstr "/_Aiuto/_Informazioni"
+
+#: src/widget-set.c:430
+#, fuzzy
+msgid "/Settings/Show\\/Hide"
+msgstr "/_Impostazioni"
+
+#~ msgid "Use an image file on the cube face"
+#~ msgstr "Usa un file immagine sulla faccia del cubo"

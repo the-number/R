@@ -1,0 +1,259 @@
+# Greek translation of GNUbik
+# Copyright (C) 2003 John Darrington
+# Anastasios M. Pingios <anastasios.pingios@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNUbik 2.0\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2006-04-19 13:00+0800\n"
+"PO-Revision-Date: 2007-10-11 03:25+0200\n"
+"Last-Translator: Anastasios M. Pingios <anastasios.pingios@gmail.com>\n"
+"Language-Team: Greek <anastasios.pingios@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/colour-sel-gtk.c:185
+#, c-format
+msgid "Cannot create image from file %s: %s"
+msgstr "Δεν είναι εφικτή η δημιουργία της εικόνας από το αρχείο %s: %s"
+
+#: src/colour-sel-gtk.c:228
+msgid "Image Selector"
+msgstr "Επιλογή Εικόνας"
+
+#: src/colour-sel-gtk.c:379
+msgid "Pattern"
+msgstr "Μοτίβο"
+
+#: src/colour-sel-gtk.c:380
+msgid "Colour"
+msgstr "Χρώμα"
+
+#: src/colour-sel-gtk.c:407
+msgid "Click here to use a pattern on the cube surface"
+msgstr "Κάντε κλικ εδώ για να χρησιμοποιήσετε κάποιο μοτίβο στην επιφάνεια του κύβου"
+
+#: src/colour-sel-gtk.c:693
+msgid "Colour selector"
+msgstr "Επιλογή χρώματος"
+
+#: src/colour-sel-gtk.c:720
+msgid "Image"
+msgstr "Εικόνα"
+
+#: src/colour-sel-gtk.c:721
+msgid "Se_lect"
+msgstr "Επι_λογή"
+
+#: src/colour-sel-gtk.c:724
+msgid "Select an image file"
+msgstr "Επιλέξτε μία εικόνα"
+
+#: src/colour-sel-gtk.c:725
+msgid "Use an image file on the cube face"
+msgstr "Χρήση μιας εικόνας στον κύβο"
+
+#: src/colour-sel-gtk.c:727
+msgid "_Tiled"
+msgstr "_Επιστρωμένος"
+
+#: src/colour-sel-gtk.c:729
+msgid ""
+"Place a copy of the image\n"
+"on each block"
+msgstr ""
+"Τοποθετήστε ένα αντίγραφο της εικόνας\n"
+"σε κάθε τμήμα"
+
+#: src/colour-sel-gtk.c:734
+msgid "_Mosaic"
+msgstr "_Μοτίβο"
+
+#: src/colour-sel-gtk.c:737
+msgid ""
+"Place a copy of the image across\n"
+"the entire face of the cube"
+msgstr ""
+"Τοποθετήστε ένα αντίγραφο της εικόνας κατά μήκος\n"
+"ολόκληρου του κύβου"
+
+#: src/colour-sel-gtk.c:799
+msgid "A sample of the colour or pattern. You can click and select a new colour or pattern, or drag one to this space."
+msgstr "Ένα δείγμα του χρώματος ή του μοτίβου. Μπορείτε να κάνετε κλικ και επιλογή ενός νέου χρώματος ή μοτίβου, ή να σύρετε ένα σε αυτό το κενό."
+
+#: src/menus-gtk.c:172
+msgid "Sets the number of blocks in each side"
+msgstr "Ορίζει τον αριθμό των τμημάτων σε κάθε πλευρά"
+
+#: src/menus-gtk.c:177
+msgid "Size of cube:"
+msgstr "Μέγεθος του κύβου:"
+
+#: src/menus-gtk.c:225
+msgid "Faster"
+msgstr "Γρηγορότερα"
+
+#: src/menus-gtk.c:228
+msgid "Slower"
+msgstr "Πιο αργά"
+
+#: src/menus-gtk.c:233
+msgid "Controls the speed with which slices rotate"
+msgstr "Ελέγχει την ταχύτητα περιστροφής των τμημάτων"
+
+#: src/menus-gtk.c:293
+msgid "Preferences"
+msgstr "Ιδιότητες"
+
+#: src/menus-gtk.c:298
+msgid "Dimensions"
+msgstr "Διαστάσεις"
+
+#: src/menus-gtk.c:299
+msgid "Animation"
+msgstr "Animation"
+
+#: src/menus-gtk.c:300
+msgid "Lighting"
+msgstr "Φωτισμός"
+
+#: src/menus-gtk.c:309
+msgid "Enable lighting"
+msgstr "Ενεργοποίηση φωτισμού"
+
+#: src/menus-gtk.c:311
+msgid "Makes the cube appear illuminated"
+msgstr "Κάνει τον κύβο να φαίνεται φωτισμένος"
+
+#: src/menus-gtk.c:409
+msgid "Start cube with new settings?"
+msgstr "Εκκίνηση του κύβου με νέες ρυθμίσεις;"
+
+#: src/textures.c:204
+msgid "Pixbuf has wrong number of channels"
+msgstr "Το Pixbuf έχει λανθασμένο αριθμό καναλιών"
+
+#: src/textures.c:212
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Το Pixbuf έχει άγωστο εύρος χρωμάτων: %d"
+
+#: src/widget-set-gtk.c:112
+#, c-format
+msgid "Moves: %d / %d"
+msgstr "Κινήσεις: %d / %d"
+
+#: src/widget-set-gtk.c:138
+#, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] "Ο κύβος λύθηκε με %d κίνηση"
+msgstr[1] "Ο κύβος λύθηκε με %d κινήσεις"
+
+#: src/widget-set-gtk.c:144
+msgid "Cube is NOT solved! The colours are correct, but have incorrect orientation"
+msgstr "Ο κύβος ΔΕΝ έχει λυθεί! Τα χρώματα είναι σωστά, αλλά έχουν λάθος προσανατολισμό."
+
+#: src/widget-set-gtk.c:203
+msgid "Rewind"
+msgstr "Ξανατύλιξε"
+
+#: src/widget-set-gtk.c:204
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr "Πήγαινε στο προηγούμενο σημείο (ή στην αρχή) της ακολουθίας κινήσεων"
+
+#: src/widget-set-gtk.c:210
+msgid "Back"
+msgstr "Πίσω"
+
+#: src/widget-set-gtk.c:211
+msgid "Make one step backwards"
+msgstr "Κάνε ένα βήμα πίσω"
+
+#: src/widget-set-gtk.c:217
+msgid "Stop"
+msgstr "Σταμάτα"
+
+#: src/widget-set-gtk.c:218
+msgid "Stop running the sequence of moves"
+msgstr "Σταμάτα την εκτέλεση της ακολουθίας κινήσεων"
+
+#: src/widget-set-gtk.c:224
+msgid "Mark"
+msgstr "Σημείωσε"
+
+#: src/widget-set-gtk.c:225
+msgid "Mark the current place in the sequence of moves"
+msgstr "Σημείωσε το τρέχον σημείο στην ακολουθία κινήσεων"
+
+#: src/widget-set-gtk.c:231
+msgid "Forward"
+msgstr "Μπροστά"
+
+#: src/widget-set-gtk.c:232
+msgid "Make one step forwards"
+msgstr "Κάνε ένα βήμα μπροστά"
+
+#: src/widget-set-gtk.c:238
+msgid "Play"
+msgstr "Παίξε"
+
+#: src/widget-set-gtk.c:239
+msgid "Run forward through the sequence of moves"
+msgstr "Προχωρήστε μπρόστα στην ακολουθία κινήσεων"
+
+#: src/widget-set-gtk.c:279
+msgid "_Play Toolbar"
+msgstr "_Γραμμή Παιχνιδιού"
+
+#: src/widget-set-gtk.c:286
+msgid "_Status Bar"
+msgstr "_Γραμμή Κατάστασης"
+
+#: src/widget-set-gtk.c:324
+msgid "/_Game"
+msgstr "/_Παιχνίδι"
+
+#: src/widget-set-gtk.c:325
+msgid "/_Game/_New Game"
+msgstr "/_Παιχνίδι/_Νέο Παιχνίδι"
+
+#: src/widget-set-gtk.c:326
+msgid "/_Game/sep"
+msgstr "/_Παιχνίδι/sep"
+
+#: src/widget-set-gtk.c:327
+msgid "/_Game/_Quit"
+msgstr "/_Παιχνίδι/_Τερματισμός"
+
+#: src/widget-set-gtk.c:329
+msgid "/_Settings"
+msgstr "/_Ρυθμίσεις"
+
+#: src/widget-set-gtk.c:330
+msgid "/_Settings/_Preferences"
+msgstr "/_Ρυθμίσεις/_Ιδιότητες"
+
+#: src/widget-set-gtk.c:332
+msgid "/_Settings/_Colours"
+msgstr "/_Ρυθμίσεις/_Χρώματα"
+
+#: src/widget-set-gtk.c:334
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Ρυθμίσεις/Εμφά_νιση\\/Απόκρυψη"
+
+#: src/widget-set-gtk.c:343
+msgid "/_Help"
+msgstr "/_Βοήθεια"
+
+#: src/widget-set-gtk.c:344
+msgid "/_Help/_About"
+msgstr "/_Βοήθεια/_Περί"
+
+#: src/widget-set-gtk.c:398
+msgid "/Settings/Show\\/Hide"
+msgstr "/Ρυθμίσεις/Εμφάνιση\\/Απόκρυψη"
+

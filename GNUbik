@@ -1,0 +1,29 @@
+!***********************************************************************
+! Application defaults for GNUbik
+! Most of these are the defaults anyway, but they are listed here so you can
+! change them if necessary.
+!***********************************************************************
+
+! $Id: GNUbik,v 1.1 2003/10/26 04:32:51 jmd Exp $
+
+*glxarea*width: 300
+*glxarea*height: 300
+*help.label: Help
+*quit.label: Quit
+*animation.label: Animation
+*background: lightgrey
+
+! Colours of the cube faces
+!gnubik.color0: Red
+!gnubik.color1: Green
+!gnubik.color2: Blue
+!gnubik.color3: Cyan
+!gnubik.color4: Magenta
+!gnubik.color5: Yellow
+
+gnubik.color0: Dark Orange
+gnubik.color1: yellowgreen
+gnubik.color2: powder blue
+gnubik.color3: azure
+gnubik.color4: purple
+gnubik.color5: gold
