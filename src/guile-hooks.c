@@ -24,7 +24,11 @@
 #include <memory.h>
 #include <dirent.h>
 #include <stdio.h>
+
+#if HAVE_PWD_H
 #include <pwd.h>
+#endif
+
 #include <unistd.h>
 
 #include "cube.h"

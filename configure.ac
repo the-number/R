@@ -93,7 +93,7 @@ AC_CHECK_FUNCS(getopt_long)
 AC_CHECK_FUNCS(getpwuid)
 
 dnl Checks for header files.
-AC_CHECK_HEADERS(malloc.h)
+AC_CHECK_HEADERS([malloc.h pwd.h])
 AC_CHECK_HEADERS(GL/gl.h,,
 	AC_MSG_ERROR("GL/gl.h is missing from include path")
 	)
