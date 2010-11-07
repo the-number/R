@@ -18,6 +18,7 @@
 */
 static const char RCSID[]="$Id: ui.c,v 1.15 2009/01/18 00:54:56 jmd Exp $";
 
+#include <config.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <stdio.h>

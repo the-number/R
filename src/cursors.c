@@ -17,6 +17,7 @@
 */
 static const char RCSID[]="$Id: cursors.c,v 1.2 2008/01/16 10:35:12 jmd Exp $";
 
+#include <config.h>
 #include <math.h>
 #include "cursors.h"
 

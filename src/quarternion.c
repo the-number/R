@@ -18,6 +18,7 @@
 */
 static const char RCSID[]="$Id: quarternion.c,v 1.2 2008/01/16 10:35:13 jmd Exp $";
 
+#include <config.h>
 #include "quarternion.h"
 #include "txfm.h"
 

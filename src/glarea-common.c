@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <config.h>
 #include "quarternion.h"
 #include <GL/glu.h>
 #include <math.h>

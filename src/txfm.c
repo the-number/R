@@ -18,6 +18,7 @@
 */
 static const char RCSID[]="$Id: txfm.c,v 1.3 2008/01/16 10:35:14 jmd Exp $";
 
+#include <config.h>
 #include <stdio.h>
 #include "txfm.h"
 #include <assert.h>

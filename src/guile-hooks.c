@@ -16,8 +16,9 @@
 */
 
 
-#include "guile-hooks.h"
+#include <config.h>
 
+#include "guile-hooks.h"
 
 #include <stdlib.h>
 #include <memory.h>

@@ -18,6 +18,7 @@
 */
 static const char RCSID[]="$Id: select.c,v 1.5 2009/01/18 00:47:00 jmd Exp $";
 
+#include <config.h>
 
 /* This library provides  a means of picking a block using the mouse cursor.
 

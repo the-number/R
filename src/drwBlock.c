@@ -16,6 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+#include <config.h>
+
 /*
 	glLoadName is a Mesa/OpenGL command,  which loads a `name' so that the
 	selection mechanism can identify  an object .
