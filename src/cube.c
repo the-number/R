@@ -18,11 +18,8 @@
 */
 
 
-static const char RCSID []
-    = "$Id: cube.c,v 1.8 2009/01/17 23:46:33 jmd Exp $";
-
-
 #include <config.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

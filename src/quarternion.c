@@ -16,7 +16,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-static const char RCSID[]="$Id: quarternion.c,v 1.2 2008/01/16 10:35:13 jmd Exp $";
 
 #include <config.h>
 #include "quarternion.h"

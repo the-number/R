@@ -15,7 +15,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-static const char RCSID[]="$Id: textures.c,v 1.7 2008/01/16 10:35:14 jmd Exp $";
 
 #include <config.h>
 #include <GL/gl.h>

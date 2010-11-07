@@ -16,7 +16,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-static const char RCSID[]="$Id: ui.c,v 1.15 2009/01/18 00:54:56 jmd Exp $";
 
 #include <config.h>
 #include <memory.h>

@@ -15,7 +15,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-static const char RCSID[]="$Id: glarea.c,v 1.10 2009/01/18 12:37:27 jmd Exp $";
 
 
 #include <time.h>

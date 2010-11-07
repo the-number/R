@@ -16,11 +16,9 @@
 */
 
 
-static const char RCSID []
-    = "$Id: move-queue.c,v 1.4 2009/01/17 23:46:33 jmd Exp $";
-
-
 #include <config.h>
+
+
 #include "move-queue.h"
 
 #include <malloc.h>
