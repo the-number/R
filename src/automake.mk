@@ -31,8 +31,6 @@ src_gnubik_SOURCES = \
 	src/main.c \
 	src/menus.c \
 	src/menus-gtk.h \
-	src/menus.h \
-	src/menutree.h \
 	src/move-queue.c \
 	src/move-queue.h \
 	src/move-queue_i.h \
