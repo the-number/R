@@ -28,7 +28,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
-#include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtkgl.h>
 
@@ -482,48 +481,6 @@ setCubeColours (char *progname)
 
 }
 
-void
-set_the_colours (GtkWidget *w,  const char *progname)
-{
-
-  int i;
-
-  Display *dpy;
-
-  dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
-
-
-  for (i=0;i<6;++i){
-    char *colour=0;
-    char resname[20];
-    GdkColor xcolour;
-    g_snprintf (resname, 20, "color%d",  i);
-    colour=XGetDefault (dpy,  progname,  resname);
-
-    if (!colour)
-      continue;
-
-    if (!gdk_color_parse (colour, &xcolour)) {
-      g_warning ("colour %s not in database\n",  colour);
-    }
-    else{
-      /* convert colours to GLfloat values,  and set them*/
-      const unsigned short full = ~0;
-
-
-      GLfloat red =   (GLfloat) xcolour.red/full ;
-      GLfloat green = (GLfloat) xcolour.green/full ;
-      GLfloat blue =  (GLfloat) xcolour.blue/full ;
-
-      setColour (i,  red,  green,  blue);
-    }
-  }
-
-
-}
-
-
-
 
 /* Popup an error dialog box */
 void
@@ -564,3 +521,44 @@ error_dialog (GtkWidget *parent,  const gchar *format, ...)
 
 }
 
+
+
+#include <X11/Xlib.h>
+
+void
+set_the_colours (GtkWidget *w,  const char *progname)
+{
+
+  int i;
+
+  Display *dpy;
+
+  dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
+
+
+  for (i=0;i<6;++i){
+    char *colour=0;
+    char resname[20];
+    GdkColor xcolour;
+    g_snprintf (resname, 20, "color%d",  i);
+    colour=XGetDefault (dpy,  progname,  resname);
+
+    if (!colour)
+      continue;
+
+    if (!gdk_color_parse (colour, &xcolour)) {
+      g_warning ("colour %s not in database\n",  colour);
+    }
+    else{
+      /* convert colours to GLfloat values,  and set them*/
+      const unsigned short full = ~0;
+
+
+      GLfloat red =   (GLfloat) xcolour.red/full ;
+      GLfloat green = (GLfloat) xcolour.green/full ;
+      GLfloat blue =  (GLfloat) xcolour.blue/full ;
+
+      setColour (i,  red,  green,  blue);
+    }
+  }
+}
