@@ -159,7 +159,7 @@ create_dimension_widget (void)
 
   GtkWidget *hbox = gtk_hbox_new (FALSE,  BOX_PADDING);
 
-  GtkObject *adj = gtk_adjustment_new (cube_dimension, 1,  G_MAXFLOAT, 1, 1, 10);
+  GtkObject *adj = gtk_adjustment_new (cube_dimension, 1,  G_MAXFLOAT, 1, 1, 0);
 
   GtkWidget *entry = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
 
@@ -201,7 +201,7 @@ create_animation_widget (void)
   vboxOuter = gtk_vbox_new (TRUE,  BOX_PADDING);
   vbox = gtk_vbox_new (FALSE,  BOX_PADDING);
 
-  adjustment = gtk_adjustment_new (frameQty, 0, 99, 1, 1, 10);
+  adjustment = gtk_adjustment_new (frameQty, 0, 99, 1, 1, 0);
 
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -413,7 +413,7 @@ move (GtkWidget *w, gpointer   data )
 
 
   hbox1 = gtk_hbox_new (TRUE, 0);
-  adj1 = gtk_adjustment_new (0, 0,  number_of_blocks-1, 1, 1, 10);
+  adj1 = gtk_adjustment_new (0, 0,  number_of_blocks-1, 1, 1, 0);
 
   g_signal_connect (adj1, "value-changed",  G_CALLBACK (fill_value), &md.slice);
 
@@ -422,13 +422,13 @@ move (GtkWidget *w, gpointer   data )
 
 
   hbox2 = gtk_hbox_new (TRUE, 0);
-  adj2 = gtk_adjustment_new (0, 0, 2, 1, 1, 10);
+  adj2 = gtk_adjustment_new (0, 0, 2, 1, 1, 0);
   g_signal_connect (adj2, "value-changed",  G_CALLBACK (fill_value), &md.axis);
   sb2 = gtk_spin_button_new (GTK_ADJUSTMENT (adj2), 0, 0);
   label2  = gtk_label_new ("Axis:");
 
   hbox4 = gtk_hbox_new (TRUE, 0);
-  adj4 = gtk_adjustment_new (0, 0, 1, 1, 1, 1);
+  adj4 = gtk_adjustment_new (0, 0, 1, 1, 1, 0);
   g_signal_connect (adj4, "value-changed",  G_CALLBACK (fill_value), &md.dir);
   sb4 = gtk_spin_button_new (GTK_ADJUSTMENT (adj4), 0, 0);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sb4),  TRUE);
