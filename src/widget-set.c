@@ -28,7 +28,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
-#include <gdk/gdkx.h>
 #include <gtk/gtkgl.h>
 
 #include "drwBlock.h"
@@ -491,12 +490,15 @@ error_dialog (GtkWidget *parent,  const gchar *format, ...)
 
 
 
+#if !X_DISPLAY_MISSING
 #include <X11/Xlib.h>
+#include <gdk/gdkx.h>
+#endif
 
 void
 set_the_colours (GtkWidget *w,  const char *progname)
 {
-
+#if !X_DISPLAY_MISSING
   int i;
 
   Display *dpy;
@@ -529,4 +531,7 @@ set_the_colours (GtkWidget *w,  const char *progname)
       setColour (i,  red,  green,  blue);
     }
   }
+#endif
 }
+
+
