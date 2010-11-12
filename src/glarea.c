@@ -35,7 +35,6 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glx.h>
 
 #include <gtk/gtk.h>
 #include <gtk/gtkwidget.h>
@@ -121,7 +120,6 @@ resize (GtkWidget *w,  GtkAllocation *alloc,
   if (!gdk_gl_drawable_gl_begin (gldrawable,  glcontext))
     return;
 
-  glXWaitX ();
   min_dim = (width < height) ? width : height ;
 
   /* Ensure that cube is always the same proportions */
@@ -137,15 +135,15 @@ have_accumulation_buffer (void)
   GLint x;
 
   glGetIntegerv (GL_ACCUM_BLUE_BITS, &x);
-  if ( x < 3)  return False;
+  if ( x < 3)  return GL_FALSE;
 
   glGetIntegerv (GL_ACCUM_RED_BITS, &x);
-  if ( x < 3)  return False;
+  if ( x < 3)  return GL_FALSE;
 
   glGetIntegerv (GL_ACCUM_GREEN_BITS, &x);
-  if ( x < 3)  return False;
+  if ( x < 3)  return GL_FALSE;
 
-  return True;
+  return GL_TRUE;
 }
 
 static void register_gl_callbacks (GtkWidget * glxarea);
@@ -304,7 +302,7 @@ register_gl_callbacks (GtkWidget *glxarea)
 }
 
 
-static gboolean redisplayPending = False ;
+static gboolean redisplayPending = FALSE ;
 
 static guint idle_id;
 
@@ -332,7 +330,7 @@ postRedisplay (void)
     {
       idle_id = g_idle_add (handleRedisplay,  glwidget);
 
-      redisplayPending = True;
+      redisplayPending = TRUE;
     }
 }
 
@@ -518,11 +516,11 @@ static gboolean
 handleRedisplay (gpointer glxarea)
 {
   display_func (GTK_WIDGET (glxarea));
-  redisplayPending = False;
+  redisplayPending = FALSE;
 
   g_source_remove (idle_id);
 
-  return True ;
+  return TRUE ;
 }
 
 
