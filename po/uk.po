@@ -1,5 +1,5 @@
-# Polish messages for GNUbik 
-# Copyright (C) 2004, 2010 John Darrington
+# Ukrainian messages for GNUbik
+# Copyright (C) 2010 John Darrington
 # This file is distributed under the same license as the GNUbik package.  
 #
 msgid ""
@@ -7,262 +7,261 @@ msgstr ""
 "Project-Id-Version: GNUbik 2.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2010-02-11 21:14+0200\n"
-"PO-Revision-Date: 2010-01-11 21:34+0200\n"
+"PO-Revision-Date: 2010-02-11 22:11+0200\n"
 "Last-Translator: Sergey Poznyakoff <gray@gnu.org>\n"
-"Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+"Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/colour-sel.c:181
 #, c-format
 msgid "Cannot create image from file %s: %s"
-msgstr "Nie można utworzyć obrazu z pliku %s: %s"
+msgstr "Не можна створити зображення з файла %s: %s"
 
 #: src/colour-sel.c:261
 msgid "Image Selector"
-msgstr "Wybór obrazku"
+msgstr "Вибір зображення"
 
 #: src/colour-sel.c:289
 msgid "All Images"
-msgstr "Wszystkie obrazki"
+msgstr "Всі зображення"
 
 #: src/colour-sel.c:296
 msgid "All Files"
-msgstr "Wszystkie pliki"
+msgstr "Всі файли"
 
 #: src/colour-sel.c:440
 msgid "Pattern"
-msgstr "Deseń"
+msgstr "Взірець"
 
 #: src/colour-sel.c:441
 msgid "Colour"
-msgstr "Kolor"
+msgstr "Колір"
 
-# By nałożyć deseń na ...
 #: src/colour-sel.c:468
 msgid "Click here to use a pattern on the cube surface"
-msgstr "Kliknij tutaj by nałożyć deseń na powierzchnię sześcianu"
+msgstr "Клацни тут щоб застосувати взірець на поверхні куба"
 
 #: src/colour-sel.c:750
 msgid "Colour selector"
-msgstr "Wybór koloru"
+msgstr "Вибір кольору"
 
 #: src/colour-sel.c:776
 msgid "Image"
-msgstr "Obraz"
+msgstr "Зображення"
 
 #: src/colour-sel.c:777
 msgid "Se_lect"
-msgstr "_Wybór"
+msgstr "_Вибір"
 
 #: src/colour-sel.c:780
 msgid "Select an image file"
-msgstr "Wybiera plik obrazu"
+msgstr "Вибрати файл зображення"
 
 #: src/colour-sel.c:783
 msgid "_Tiled"
-msgstr "_Kafelki"
+msgstr "_Кахля"
 
 #: src/colour-sel.c:785
 msgid ""
 "Place a copy of the image\n"
 "on each block"
 msgstr ""
-"Rozmieść kopię obrazu\n"
-"na każdym bloku"
+"Розташувати зображення\n"
+"на кожному блоці"
 
 #: src/colour-sel.c:789
 msgid "_Mosaic"
-msgstr "_Mozaika"
+msgstr "_Мозаїка"
 
 #: src/colour-sel.c:792
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
 msgstr ""
-"Rozmieść kopię obrazu na całej\n"
-"stronie sześcianu"
+"Розташувати зображення\n"
+"на кожної грані куба"
 
 #: src/colour-sel.c:852
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
 "pattern,  or drag one to this space."
-msgstr "Wzór koloru lub desenia. Kliknij i wybierz nowy kolor lub deseń, albo przeciągnij go tutaj"
+msgstr "Зразок кольору або взірця. Клацни на новому кольорі або взірці, або перетягни його сюди."
 
 #: src/menus.c:165
 msgid "Sets the number of blocks in each side"
-msgstr "Ustawia liczbę bloków na każdej stronie"
+msgstr "Встановити кількість блоків на грань"
 
 #: src/menus.c:167
 msgid "Size of cube:"
-msgstr "Rozmiar sześcianu:"
+msgstr "Розмір куба:"
 
 #: src/menus.c:207
 msgid "Faster"
-msgstr "Szybciej"
+msgstr "Швидше"
 
 #: src/menus.c:210
 msgid "Slower"
-msgstr "Wolniej"
+msgstr "Повільніше"
 
 #: src/menus.c:215
 msgid "Controls the speed with which slices rotate"
-msgstr "Ustawia szybkość obracania wycinków"
+msgstr "Керування швидкістю обертання зрізів"
 
 #: src/menus.c:259
 msgid "Preferences"
-msgstr "Preferencje"
+msgstr "Переваги"
 
 #: src/menus.c:271
 msgid "Dimensions"
-msgstr "Wymiary"
+msgstr "Розміри"
 
 #: src/menus.c:272
 msgid "Animation"
-msgstr "Animacja"
+msgstr "Анімація"
 
 #: src/menus.c:273
 msgid "Lighting"
-msgstr "Oświetlenie"
+msgstr "Підсвітка"
 
 #: src/menus.c:282
 msgid "Enable lighting"
-msgstr "Włącza oświetlenie"
+msgstr "Увімкнути підсвітку"
 
 #: src/menus.c:284
 msgid "Makes the cube appear illuminated"
-msgstr "Włącza oświetlenie sześcianu"
+msgstr "Вмикає підсвітлення куба"
 
 #: src/menus.c:354
 msgid "Start cube with new settings?"
-msgstr "Rozpocząć grę z nowymi ustawieniami?"
+msgstr "Розпочати гру з новими налаштуваннями?"
 
 #: src/textures.c:203
 msgid "Pixbuf has wrong number of channels"
-msgstr "Pixbuf ma błędną liczbę kanałów"
+msgstr "Pixbuf має помилкову кількість каналів"
 
 #: src/textures.c:211
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
-msgstr "Pixbuf ma nieznaną przestrzeń kolorów: %d"
+msgstr "Pixbuf має невідомий простір кольорів: %d"
 
 #: src/widget-set.c:112
 #, c-format
 msgid "Moves: %d / %d"
-msgstr "Posunięcia: %d / %d"
+msgstr "Ходи: %d / %d"
 
 #: src/widget-set.c:141
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "Sześcian ułożono za %d posunięcie"
-msgstr[1] "Sześcian ułożono za %d posunięcia"
-msgstr[2] "Sześcian ułożono za %d posunięć"
+msgstr[0] "Куб складений за %d хід"
+msgstr[1] "Куб складений за %d ходи"
+msgstr[2] "Куб складений за %d ходів"
 
 #: src/widget-set.c:148
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr "Sześcian NIE został ułożony! Kolory są poprawne, ale błędnie rozmieszczone"
+msgstr "Куб НЕ складений! Кольори правильні, але розміщені помилково"
 
 #: src/widget-set.c:199
 msgid "Rewind"
-msgstr "Przewinięńcie"
+msgstr "Повернутися"
 
 #: src/widget-set.c:200
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Przejście do poprzedniego znacznika lub do początku sekwencji posunięć"
+msgstr "Повернутися до попередньої відмітки або початку послідовності ходів"
 
 #: src/widget-set.c:205
 msgid "Back"
-msgstr "Wstecz"
+msgstr "Назад"
 
 #: src/widget-set.c:206
 msgid "Make one step backwards"
-msgstr "Jedne posunięcie wstecz"
+msgstr "Зробити один крок назад"
 
 #: src/widget-set.c:212
 msgid "Stop"
-msgstr "Zatrzymanie"
+msgstr "Стоп"
 
 #: src/widget-set.c:213
 msgid "Stop running the sequence of moves"
-msgstr "Zatrzymuje wykonanie sekwencji posunięć"
+msgstr "Зупинити виконання послідовності ходів"
 
 #: src/widget-set.c:219
 msgid "Mark"
-msgstr "Znacznik"
+msgstr "Помітити"
 
 #: src/widget-set.c:220
 msgid "Mark the current place in the sequence of moves"
-msgstr "Zaznacza bieżącą pozycje w sekwencji posunięć"
+msgstr "Помітити поточний хід у послідовності ходів"
 
 #: src/widget-set.c:226
 msgid "Forward"
-msgstr "Naprzód"
+msgstr "Вперед"
 
 #: src/widget-set.c:227
 msgid "Make one step forwards"
-msgstr "Jedne posunięcie naprzód"
+msgstr "Зробити крок уперед"
 
 #: src/widget-set.c:233
 msgid "Play"
-msgstr "Wykonanie"
+msgstr "Грати"
 
 #: src/widget-set.c:234
 msgid "Run forward through the sequence of moves"
-msgstr "Wykonanie sekwencji posunięć"
+msgstr "Виконати послідовність ходів"
 
 #: src/widget-set.c:321
 msgid "_Play Toolbar"
-msgstr "Pasek _narzędzi gry"
+msgstr "Панель _гри"
 
 #: src/widget-set.c:328
 msgid "_Status Bar"
-msgstr "Pasek _stanu"
+msgstr "Панель _стану"
 
 #: src/widget-set.c:366
 msgid "/_Game"
-msgstr "/_Gra"
+msgstr "/_Гра"
 
 #: src/widget-set.c:367
 msgid "/_Game/_New Game"
-msgstr "/_Gra/_Nowa gra"
+msgstr "/_Гра/_Нова гра"
 
 #: src/widget-set.c:368
 msgid "/_Game/sep"
-msgstr "/_Gra/sep"
+msgstr "/_Гра/sep"
 
 #: src/widget-set.c:369
 msgid "/_Game/_Quit"
-msgstr "/_Gra/_Wyjście"
+msgstr "/_Гра/_Вихід"
 
 #: src/widget-set.c:370
 msgid "/_Settings"
-msgstr "/_Ustawienia"
+msgstr "/_Гра/Н_алаштування"
 
 #: src/widget-set.c:371
 msgid "/_Settings/_Preferences"
-msgstr "/_Ustawienia/_Preferencje"
+msgstr "/_Гра/Н_алаштування"
 
 #: src/widget-set.c:372
 msgid "/_Settings/_Colours"
-msgstr "/_Ustawienia/_Kolory"
+msgstr "/_Гра/Н_алаштування/_Переваги"
 
 #: src/widget-set.c:373
 msgid "/_Settings/Sho_w\\/Hide"
-msgstr "/_Ustawienia/Pokaż\\/Ukryj"
+msgstr "/Н_алаштування/_Показати\\/Сховати"
 
 #: src/widget-set.c:379
 msgid "/_Help"
-msgstr "/_Pomóc"
+msgstr "/_Довідка"
 
 #: src/widget-set.c:380
 msgid "/_Help/_About"
-msgstr "/_Pomoc/_O programie"
+msgstr "/_Довідка/_О програмі"
 
 #: src/widget-set.c:430
 msgid "/Settings/Show\\/Hide"
-msgstr "/_Ustawienia/Pokaż\\/Ukryj"
+msgstr "/Налаштування/Показати\\/Сховати"
