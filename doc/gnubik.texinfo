@@ -128,8 +128,8 @@ Display version number and then exit.
 @node Resources, , Options, Configuration
 @comment  node-name,  next,  previous,  up
 @section Resources
-GNUbik uses the Athena widget set.  Any widget's resource may be set to control menu labels, background colours etc.
-In addition, the following application resources set the colours of the cube faces:
+If your operating system uses the X Windowing System, you can use 
+the following application resources to set the colours of the cube faces:
 @example
 ! Colours of the cube faces
 
