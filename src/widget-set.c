@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003, 2004  John Darrington
+    Copyright (C) 2003, 2004, 2010  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include "menus-gtk.h"
 #include "colour-sel.h"
 #include "version.h"
-#include "guile-hooks.h"
 #include "move-queue.h"
 #include "ui.h"
 
@@ -337,116 +336,84 @@ create_show_hide_menu (void)
 }
 
 
-/* Duplicate the GtkItemFactoryEntries,  calling gettext on the path */
-static GtkItemFactoryEntry *
-dup_items (const GtkItemFactoryEntry *src, gint n)
+static const GtkActionEntry action_entries [] = 
 {
-  gint i;
-  GtkItemFactoryEntry *dest;
+  { "game-menu-action", NULL, N_("_Game") },
+  { "settings-menu-action", NULL, N_("_Settings") },
+  { "help-menu-action", NULL, N_("_Help") },
 
-  dest = g_malloc ( n * sizeof (GtkItemFactoryEntry) );
+  {
+    "preferences-action", GTK_STOCK_PREFERENCES, N_("_Preferences"),
+    NULL, "preferences", G_CALLBACK (preferences)
+  },
 
-  for (i = 0 ; i < n; ++i )
-    {
-      dest[i] = src[i];
-      dest[i].path = g_strdup (gettext (src[i].path));
-    }
+  {
+    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
+    NULL, "colours", G_CALLBACK (colour_select_menu)
+  },
 
-  return dest;
-}
+  {
+    "show-hide-action", NULL, N_("Sho_w/Hide"),
+    NULL, "show-hide", G_CALLBACK (create_show_hide_menu)
+  },
+
+  {
+    "about-action", NULL, N_("_About"),
+    NULL, "about", G_CALLBACK (about)
+  },
+
+  {
+    "quit-action", GTK_STOCK_QUIT, N_("_Quit"),
+    "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
+  },
+
+  {
+    "new-game-action", NULL, N_("_New Game"),
+    "<control>N", "new-game", G_CALLBACK (request_new_game)
+  }
+
+};
+
+
+static const char menu_tree[] = "<ui>\
+  <menubar name=\"MainMenu\">\
+    <menu name=\"game-menu\" action=\"game-menu-action\">\
+     <menuitem name=\"new-game\" action=\"new-game-action\"/>\
+     <menuitem name=\"quit\" action=\"quit-action\"/>\
+    </menu>\
+    <menu name=\"settings-menu\" action=\"settings-menu-action\">\
+     <menuitem name=\"preferences\" action=\"preferences-action\"/>\
+     <menuitem name=\"colours\" action=\"colours-action\"/>\
+     <menuitem name=\"show-hide\" action=\"show-hide-action\"/>\
+    </menu>\
+    <menu name=\"help-menu\" action=\"help-menu-action\">\
+     <menuitem name=\"about\" action=\"about-action\"/>\
+    </menu>\
+  </menubar>\
+</ui>";
 
 GtkWidget *
 create_menubar (GtkWidget * container,  GtkWidget * toplevel)
 {
   GtkWidget *menubar;
+  GtkUIManager *menu_manager = gtk_ui_manager_new ();
+  GtkActionGroup *action_group = gtk_action_group_new ("menu-actions");
 
-  const GtkItemFactoryEntry menu_items[] =
-    {
-      { N_("/_Game"),          NULL,          NULL,  0,  "<Branch>" },
-      { N_("/_Game/_New Game"),      "<control>N",  request_new_game,  0,  NULL },
-      { N_("/_Game/sep"),      NULL,          NULL,  0,  "<Separator>" },
-      { N_("/_Game/_Quit"),      "<control>Q",  gtk_main_quit,  0, "<StockItem>",  GTK_STOCK_QUIT },
-      { N_("/_Settings"),       NULL,          NULL,  0,  "<Branch>" },
-      { N_("/_Settings/_Preferences"),   NULL,  preferences,  toplevel, "<StockItem>",  GTK_STOCK_PREFERENCES },
-      { N_("/_Settings/_Colours"),   NULL,  colour_select_menu,  0, "<StockItem>",  GTK_STOCK_SELECT_COLOR },
-      { N_("/_Settings/Sho_w\\/Hide"),   NULL,  0,  0,  NULL },
-      { ("/Script-_fu"),   NULL,  NULL,  0,  "<Branch>" },
-#if DEBUG
-      { "/_Debug",         NULL,          NULL,  0,  "<Branch>" },
-      { "/_Debug/_Move",      NULL,       move,  0,  NULL },
-#endif
-      { N_("/_Help"),          NULL,          NULL,  0,  "<Branch>" },
-      { N_("/_Help/_About"),    NULL,      about,  0,  NULL },
-    };
+  gtk_action_group_add_actions (action_group, action_entries,
+				sizeof (action_entries) / sizeof (action_entries[0]), NULL);
 
-  GtkItemFactory *item_factory;
-  GtkAccelGroup *accel_group;
+  gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
 
-  GtkItemFactoryEntry *menu_copy;
+  if ( 0 == gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree, strlen (menu_tree), NULL))
+    g_return_val_if_reached (NULL);
 
-
-  const gint nmenu_items = sizeof (menu_items) / sizeof (menu_items[0]);
-
-
-  menu_copy = dup_items (menu_items,  nmenu_items);
-
-  accel_group = gtk_accel_group_new ();
-
-  /* This function initializes the item factory.
-     Param 1: The type of menu - can be GTK_TYPE_MENU_BAR,  GTK_TYPE_MENU,
-     or GTK_TYPE_OPTION_MENU.
-     Param 2: The path of the menu.
-     Param 3: A pointer to a gtk_accel_group.  The item factory sets up
-     the accelerator table while generating menus.
-  */
-
-  item_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR,  "<main>",
-                                       accel_group);
-
-  /* This function generates the menu items. Pass the item factory,
-     the number of items in the array,  the array itself,  and and
-     callback data for the the menu items. */
-  gtk_item_factory_create_items (item_factory,  nmenu_items,
-				 (GtkItemFactoryEntry*) menu_copy,  NULL);
-
-
- {
-     /* Get the menu structure asked for by the collection of Guile scripts. */
-     Menu_Item_List *list = startup_guile_scripts ();
-
-     /* And use the factory to add the items to the menu. */
-     for (; list; list = list->next)
-         gtk_item_factory_create_item (item_factory,
-                                       &list->entry,
-                                       list->callback_data,
-                                       1);
- }
-
- {
-   GtkWidget *w;
-
-
-   w = gtk_item_factory_get_widget (item_factory, _("/Settings/Show\\/Hide"));
-
-   if ( w )
-     gtk_menu_item_set_submenu (GTK_MENU_ITEM (w),  create_show_hide_menu ());
-
- }
-
-   /* Attach the new accelerator group to the window. */
-  gtk_window_add_accel_group (GTK_WINDOW (window),  accel_group);
-
-
-    /* Finally,  return the actual menu bar created by the item factory. */
-  menubar = gtk_item_factory_get_widget (item_factory,  "<main>");
-
+  menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
   gtk_box_pack_start (GTK_BOX (container),  menubar,  FALSE,  TRUE,  0);
 
   gtk_widget_show (menubar);
 
   return menubar;
-
 }
 
 /* Popup an error dialog box */
