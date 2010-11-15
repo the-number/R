@@ -358,7 +358,7 @@ static const GtkActionEntry action_entries [] =
   },
 
   {
-    "about-action", NULL, N_("_About"),
+    "about-action", GTK_STOCK_ABOUT, N_("_About"),
     NULL, "about", G_CALLBACK (about)
   },
 
