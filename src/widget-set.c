@@ -343,7 +343,7 @@ static const GtkActionEntry action_entries [] =
   { "help-menu-action", NULL, N_("_Help") },
 
   {
-    "preferences-action", GTK_STOCK_PREFERENCES, N_("_Preferences"),
+    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
     NULL, "preferences", G_CALLBACK (preferences)
   },
 
@@ -358,12 +358,12 @@ static const GtkActionEntry action_entries [] =
   },
 
   {
-    "about-action", GTK_STOCK_ABOUT, N_("_About"),
+    "about-action", GTK_STOCK_ABOUT, NULL,
     NULL, "about", G_CALLBACK (about)
   },
 
   {
-    "quit-action", GTK_STOCK_QUIT, N_("_Quit"),
+    "quit-action", GTK_STOCK_QUIT, NULL,
     "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
   },
 
