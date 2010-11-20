@@ -508,7 +508,30 @@ about (GtkWidget *w, gpointer data)
   gtk_window_set_modal (GTK_WINDOW (dialog),  TRUE);
   gtk_window_set_transient_for (GTK_WINDOW (dialog),  toplevel);
 
-  gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog), copyleft_notice);
+  gtk_about_dialog_set_name (GTK_ABOUT_DIALOG (dialog),
+				PACKAGE_NAME);
+
+  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog),
+				PACKAGE_VERSION);
+
+  gtk_about_dialog_set_website (GTK_ABOUT_DIALOG (dialog),
+				PACKAGE_URL);
+
+  gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog),
+				copyleft_notice);
+
+  gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (dialog),
+				 _("A 3 dimensional magic cube puzzle"));
+
+  gtk_about_dialog_set_translator_credits 
+    (
+     GTK_ABOUT_DIALOG (dialog),
+     /* TRANSLATORS: Do not translate this string. Instead, use it to list
+	the people who have helped with translation to your language. */
+     _("translator-credits")
+     );
+
+  gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog), "John Darrington, Dale Mellor");
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   

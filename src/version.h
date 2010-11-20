@@ -18,7 +18,6 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-const char *get_version_string (void);
 extern const char copyleft_notice[];
 
 #endif

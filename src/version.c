@@ -21,22 +21,8 @@
 #include <config.h>
 #include <stdio.h>
 
-static const char RCS_ID[]="$Id: version.c,v 1.10 2009/01/18 13:09:37 jmd Exp $";
-
-
-/* Extract the revision number from this file's rcs string  */
-const char *
-get_version_string (void)
-{
-	return VERSION;
-}
 
 const char copyleft_notice[]=
-"\n"
-"    GNUbik  -- A 3 dimensional magic cube game.\n"
-"    Copyright (C) 1998,  2003,  2009  John Darrington\n"
-"                  2004,  2008  John Darrington,  Dale Mellor\n"
-"\n"
 "    This program is free software; you can redistribute it and/or modify\n"
 "    it under the terms of the GNU General Public License as published by\n"
 "    the Free Software Foundation; either version 3 of the License,  or\n"

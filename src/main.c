@@ -196,7 +196,7 @@ app_opts (int *argc,  char **argv)
       exit (0);
       break;
     case 'v':
-      printf ("%s\n",  get_version_string ());
+      printf ("%s\n",  PACKAGE_VERSION);
       printf ("%s",  copyleft_notice);
       exit (0);
       break;
