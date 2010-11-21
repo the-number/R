@@ -31,6 +31,8 @@
 
 #include "drwBlock.h"
 
+#include "guile-hooks.h"
+
 #include <libintl.h>
 #define _(String) gettext (String)
 #define N_(String) (String)
@@ -341,6 +343,8 @@ static const GtkActionEntry action_entries [] =
   { "game-menu-action", NULL, N_("_Game") },
   { "settings-menu-action", NULL, N_("_Settings") },
   { "help-menu-action", NULL, N_("_Help") },
+  { "scripts-menu-action", NULL, N_("_Scripts") },
+
 
   {
     "preferences-action", GTK_STOCK_PREFERENCES, NULL,
@@ -386,6 +390,8 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"colours\" action=\"colours-action\"/>\
      <menuitem name=\"show-hide\" action=\"show-hide-action\"/>\
     </menu>\
+    <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
+    </menu>\
     <menu name=\"help-menu\" action=\"help-menu-action\">\
      <menuitem name=\"about\" action=\"about-action\"/>\
     </menu>\
@@ -406,6 +412,8 @@ create_menubar (GtkWidget * container,  GtkWidget * toplevel)
 
   if ( 0 == gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree, strlen (menu_tree), NULL))
     g_return_val_if_reached (NULL);
+
+  startup_guile_scripts (menu_manager);
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
@@ -441,7 +449,6 @@ error_dialog (GtkWidget *parent,  const gchar *format, ...)
 
   g_free (message);
 
-
   gtk_window_set_transient_for (GTK_WINDOW (dialog),  GTK_WINDOW (parent));
 
  /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
@@ -452,7 +459,6 @@ error_dialog (GtkWidget *parent,  const gchar *format, ...)
 
 
  gtk_widget_show_all (dialog);
-
 }
 
 

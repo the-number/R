@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2004  Dale Mellor
+    Copyright (C) 2004, 2010  Dale Mellor
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 #include <config.h>
 
@@ -36,11 +35,6 @@
 #include "widget-set.h"
 
 
-/* The head of a singly linked list of menu items that the guile scripts request
-   as they are executed. */
-
-static Menu_Item_List *list_head = NULL;
-
 
 /* When a script runs,  the first cube movement that is requested by the script
    must flush the move queue after the place of current insertion; further move
@@ -50,65 +44,67 @@ static Menu_Item_List *list_head = NULL;
 static int moved;
 
 
-
 
 /* This function is called from the menu when the user makes a selection. The
    data is a string which was registered with the menu system and gives the name
    of a scheme procedure to execute. */
 
-static void run_scheme (gpointer data,  guint action,  GtkWidget *widget)
+static void 
+run_scheme (GtkAction *act,  char *data)
 {
-    moved = 0;
+  moved = 0;
 
-    char *buffer = (char*) malloc (strlen (data) + 3);
+  char *buffer = malloc (strlen (data) + 3);
 
-    sprintf (buffer,  "(%s)",  (char*) data);
+  sprintf (buffer, "(%s)",  data);
 
-    scm_eval_string (scm_makfrom0str (buffer));
+  scm_eval_string (scm_makfrom0str (buffer));
 
-    free (buffer);
+  free (buffer);
 
-    request_play ();
+  request_play ();
 }
 
+/* The menu manager */
+static GtkUIManager *uim;
 
-
-
-/* Function callable from scheme (as gnubik-register-script) which allows a
-   script to specify a menu entry and the name of a procedure to call when that
-   menu entry is selected. Note that /Script-fu/ is always appended,  so all
-   scripts are forced under the Script-fu main menu item. This function prepends
-   a new item to the head of the linked list,  with the data necessary for the
-   menu system to function. */
-
-static SCM gnubik_register_script (SCM menu_location,
-                                   SCM callback)
+/*
+  Function callable from scheme (as gnubik-register-script) which allows a
+  script to specify a menu entry and the name of a procedure to call when that
+  menu entry is selected. Note that /Script-fu/ is always appended,  so all
+  scripts are forced under the Script-fu main menu item. 
+*/
+static SCM 
+gnubik_register_script (SCM menu_location,
+			SCM callback)
 {
-    const int string_length = scm_c_string_length (menu_location);
-    const char menu_path_prefix [] = "/Script-_fu/";
-    Menu_Item_List *new_entry;
-    char *ml = scm_to_locale_string (menu_location);
-    char *buffer
-        = (char*) malloc (strlen (menu_path_prefix) + string_length + 1);
+  char *ml = scm_to_locale_string (menu_location);
 
+  GtkActionGroup *ag = gtk_action_group_new (ml);
 
-    strcpy (buffer,  menu_path_prefix);
-    strcat (buffer,  ml);
-    free (ml);
+  GtkActionEntry gae;
+  gae.name = ml;
+  gae.stock_id = NULL;
+  gae.label = ml;
+  gae.accelerator = NULL;
+  gae.tooltip = NULL;
+  gae.callback = G_CALLBACK (run_scheme);
 
-    new_entry = (Menu_Item_List*) malloc (sizeof (Menu_Item_List));
+  gtk_action_group_add_actions (ag, &gae, 1,
+				scm_to_locale_string (callback));
 
-    new_entry->entry.path = buffer;
-    new_entry->entry.accelerator = 0;
-    new_entry->entry.callback = run_scheme;
-    new_entry->entry.callback_action = 1;
-    new_entry->entry.item_type = NULL;
-    new_entry->callback_data = scm_to_locale_string (callback);
-    new_entry->next = list_head;
+  gtk_ui_manager_insert_action_group (uim, ag, 0);
 
-    list_head = new_entry;
+  gtk_ui_manager_add_ui (uim, gtk_ui_manager_new_merge_id (uim),
+			 "/ui/MainMenu/scripts-menu/",
+			 ml,
+			 ml,
+			 GTK_UI_MANAGER_MENUITEM,
+			 TRUE);
 
-    return SCM_UNSPECIFIED;
+  free (ml);
+
+  return SCM_UNSPECIFIED;
 }
 
 
@@ -198,24 +194,24 @@ static SCM gnubik_error_dialog (SCM message)
 static void 
 read_script_directory (const char *dir_name)
 {
-    static char buffer [1024];
+  static char buffer [1024];
 
-    DIR *directory = opendir (dir_name);
+  DIR *directory = opendir (dir_name);
 
-    if (directory)
+  if (directory)
     {
-        struct dirent *entry;
+      struct dirent *entry;
 
-        for (entry = readdir (directory); entry; entry = readdir (directory))
+      for (entry = readdir (directory); entry; entry = readdir (directory))
 
-            if (strcmp (".scm",
-                        entry->d_name + strlen (entry->d_name) - 4)
-                     == 0)
-            {
-                snprintf (buffer,  1024,  "%s/%s",  dir_name,  entry->d_name);
+	if (strcmp (".scm",
+		    entry->d_name + strlen (entry->d_name) - 4)
+	    == 0)
+	  {
+	    snprintf (buffer,  1024,  "%s/%s",  dir_name,  entry->d_name);
 
-                scm_primitive_load (scm_makfrom0str (buffer));
-            }
+	    scm_primitive_load (scm_makfrom0str (buffer));
+	  }
     }
 }
 
@@ -227,13 +223,12 @@ read_script_directory (const char *dir_name)
    running the scripts,  however,  it first makes sure all the pertinent C
    functions are registered in the guile world. */
 
-Menu_Item_List *
-startup_guile_scripts (void)
+void
+startup_guile_scripts (GtkUIManager *ui_manager)
 {
     static const char local_dir [] = "/.gnubik/scripts";
     const char *home_dir;
     char *buffer;
-
 
     /* Register C functions that the scheme world can access. */
 
@@ -257,6 +252,7 @@ startup_guile_scripts (void)
                         1,  0,  0,
                         gnubik_error_dialog);
 
+    uim = ui_manager;
 
     /* Run all the initialization files in .../share/gnubik/guile,  and the
        system scripts in .../share/gnubik/scripts. */
@@ -284,12 +280,4 @@ startup_guile_scripts (void)
 
 	free (buffer);
       }
-
-
-    /* Hopefully the scripts that we have run will have called
-       gnubik_register_script above to populate the list_head,  which we now
-       return to the calling application which can in turn make the menu entries
-       that run the scripts. */
-
-    return list_head;
 }
