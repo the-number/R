@@ -254,12 +254,11 @@ startup_guile_scripts (GtkUIManager *ui_manager)
 
     uim = ui_manager;
 
-    /* Run all the initialization files in .../share/gnubik/guile,  and the
+    /* Run all the initialization files in .../share/gnubik/guile, and the
        system scripts in .../share/gnubik/scripts. */
 
     read_script_directory (GUILEDIR);
     read_script_directory (SCRIPTDIR);
-
 
     /* Run all the user scripts in $(HOME)/.gnubik/scripts. */
 
@@ -272,9 +271,9 @@ startup_guile_scripts (GtkUIManager *ui_manager)
 
     if (home_dir)
       {
-	buffer = (char*) malloc (strlen (home_dir) + strlen (local_dir) + 1);
-	strcpy (buffer,  home_dir);
-	strcat (buffer,  local_dir);
+	buffer = malloc (strlen (home_dir) + strlen (local_dir) + 1);
+	strcpy (buffer, home_dir);
+	strcat (buffer, local_dir);
 
 	read_script_directory (buffer);
 
