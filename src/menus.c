@@ -498,17 +498,15 @@ manual_move (GtkWidget *w,  Move_Data * data)
 #endif
 
 void
-about (GtkWidget *w, gpointer data)
+about (GtkWidget *w, GtkWindow *toplevel)
 {
-  GtkWindow *toplevel = GTK_WINDOW (data);
-
   /* Create the widgets */
   GtkWidget *dialog = gtk_about_dialog_new ();
 
   gtk_window_set_modal (GTK_WINDOW (dialog),  TRUE);
   gtk_window_set_transient_for (GTK_WINDOW (dialog),  toplevel);
 
-  gtk_about_dialog_set_name (GTK_ABOUT_DIALOG (dialog),
+  gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG (dialog),
 				PACKAGE_NAME);
 
   gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog),
@@ -531,7 +529,7 @@ about (GtkWidget *w, gpointer data)
      _("translator-credits")
      );
 
-  gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog), "John Darrington, Dale Mellor");
+  gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog), "Copyright © 2011; John Darrington, Dale Mellor");
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   

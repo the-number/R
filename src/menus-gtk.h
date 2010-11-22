@@ -28,7 +28,7 @@ void preferences ( GtkWidget *w,  gpointer   data );
 /* Close  a window without doing anything else */
 void close_no_action (GtkWidget *w ,  gpointer data);
 			
-void about ( GtkWidget *w,       gpointer   data );
+void about (GtkWidget *w, GtkWindow *);
 
 void  move ( GtkWidget *w,       gpointer   data );
 
