@@ -397,17 +397,30 @@
 ;; Provide plenty of menu entries to give the user some control over the solving
 ;; algorithm (he may want to perform part of the solution himself!)
 
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/_Full cube"
-                        "mellor-solve 7")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/Bottom edge place"
-                        "mellor-solve 6")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/Bottom corner orient"
-                        "mellor-solve 5")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/Bottom corner place"
-                        "mellor-solve 4")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/_Middle slice"
-                        "mellor-solve 3")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/_Top slice"
-                        "mellor-solve 2")
-(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/_Top edges"
-                        "mellor-solve 1")
+(define solvers (gnubik-create-menu "_Solvers"))
+(define m3 (gnubik-create-menu "_3x3" solvers))
+(define menu (gnubik-create-menu "_Mellor" m3))
+
+
+;(gnubik-register-script "_Solvers/_3x3/_Mellor (baseline)/_Full cube"  "mellor-solve 7" menu)
+
+(gnubik-register-script "_Full cube"
+                        "mellor-solve 7" menu)
+
+(gnubik-register-script "Bottom edge place"
+                        "mellor-solve 6" menu)
+
+(gnubik-register-script "Bottom corner orient"
+                        "mellor-solve 5" menu)
+
+(gnubik-register-script "Bottom corner place"
+                        "mellor-solve 4" menu)
+
+(gnubik-register-script "_Middle slice"
+                        "mellor-solve 3" menu)
+
+(gnubik-register-script "_Top slice"
+                        "mellor-solve 2" menu)
+
+(gnubik-register-script "_Top edges"
+                        "mellor-solve 1" menu)

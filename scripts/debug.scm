@@ -34,7 +34,6 @@
     (newline)))
 
 
-(gnubik-register-script "_Debug/_Dump state" "gnubik-dump-state")
 
 
 
@@ -46,9 +45,16 @@
           (move-face cube face)
           (execute-move-buffer!)))))
 
-(gnubik-register-script "_Debug/_Move/_F" "debug-move-animated \"f\"")
-(gnubik-register-script "_Debug/_Move/_B" "debug-move-animated \"b\"")
-(gnubik-register-script "_Debug/_Move/_L" "debug-move-animated \"l\"")
-(gnubik-register-script "_Debug/_Move/_R" "debug-move-animated \"r\"")
-(gnubik-register-script "_Debug/_Move/_U" "debug-move-animated \"u\"")
-(gnubik-register-script "_Debug/_Move/_D" "debug-move-animated \"d\"")
+
+(define dbg-menu (gnubik-create-menu "_Debug"))
+
+(define menu (gnubik-create-menu "_Move" dbg-menu))
+
+(gnubik-register-script "_Dump state" "gnubik-dump-state" dbg-menu)
+
+(gnubik-register-script "_F" "debug-move-animated \"f\"" menu)
+(gnubik-register-script "_B" "debug-move-animated \"b\"" menu)
+(gnubik-register-script "_L" "debug-move-animated \"l\"" menu)
+(gnubik-register-script "_R" "debug-move-animated \"r\"" menu)
+(gnubik-register-script "_U" "debug-move-animated \"u\"" menu)
+(gnubik-register-script "_D" "debug-move-animated \"d\"" menu)

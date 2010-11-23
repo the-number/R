@@ -68,6 +68,51 @@ run_scheme (GtkAction *act,  char *data)
 /* The menu manager */
 static GtkUIManager *uim;
 
+static SCM 
+gnubik_create_menu (SCM name, SCM loc)
+{
+  char *ml = scm_to_locale_string (name);
+  char *loc_str = NULL;
+
+  GtkActionGroup *ag = gtk_action_group_new (ml);
+
+  GtkActionEntry gae;
+
+  if ( SCM_UNBNDP (loc))
+    loc_str = g_strdup ("/ui/MainMenu/scripts-menu");
+  else
+    loc_str = scm_to_locale_string (loc);
+
+  gae.name = ml;
+  gae.stock_id = NULL;
+  gae.label = ml;
+  gae.accelerator = NULL;
+  gae.tooltip = NULL;
+  gae.callback = NULL;
+
+  gtk_action_group_add_actions (ag, &gae, 1, NULL);
+
+  gtk_ui_manager_insert_action_group (uim, ag, 0);
+
+  gtk_ui_manager_add_ui (uim,
+			 gtk_ui_manager_new_merge_id (uim),
+			 loc_str,
+			 ml,
+			 ml,
+			 GTK_UI_MANAGER_MENU,
+			 TRUE);
+
+  char *menuloc = g_strdup_printf ("%s/%s",loc_str, ml);
+
+  SCM sml = scm_from_locale_string (menuloc);
+
+  free (ml);
+  free (menuloc);
+  free (loc_str);
+
+  return sml;
+}
+
 /*
   Function callable from scheme (as gnubik-register-script) which allows a
   script to specify a menu entry and the name of a procedure to call when that
@@ -75,10 +120,11 @@ static GtkUIManager *uim;
   scripts are forced under the Script-fu main menu item. 
 */
 static SCM 
-gnubik_register_script (SCM menu_location,
-			SCM callback)
+gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
 {
   char *ml = scm_to_locale_string (menu_location);
+
+  char *loc_str = scm_to_locale_string (loc);
 
   GtkActionGroup *ag = gtk_action_group_new (ml);
 
@@ -90,18 +136,20 @@ gnubik_register_script (SCM menu_location,
   gae.tooltip = NULL;
   gae.callback = G_CALLBACK (run_scheme);
 
-  gtk_action_group_add_actions (ag, &gae, 1,
-				scm_to_locale_string (callback));
+  char *cmd_string = scm_to_locale_string (callback);
+
+  gtk_action_group_add_actions (ag, &gae, 1, cmd_string);
 
   gtk_ui_manager_insert_action_group (uim, ag, 0);
 
   gtk_ui_manager_add_ui (uim, gtk_ui_manager_new_merge_id (uim),
-			 "/ui/MainMenu/scripts-menu/",
+			 loc_str,
 			 ml,
 			 ml,
 			 GTK_UI_MANAGER_MENUITEM,
 			 TRUE);
 
+  free (loc_str);
   free (ml);
 
   return SCM_UNSPECIFIED;
@@ -213,6 +261,8 @@ read_script_directory (const char *dir_name)
 	    scm_primitive_load (scm_makfrom0str (buffer));
 	  }
     }
+
+  closedir (directory);
 }
 
 
@@ -232,8 +282,12 @@ startup_guile_scripts (GtkUIManager *ui_manager)
 
     /* Register C functions that the scheme world can access. */
 
+    scm_c_define_gsubr ("gnubik-create-menu",
+                        1,  1,  0,
+                        gnubik_create_menu);
+
     scm_c_define_gsubr ("gnubik-register-script",
-                        2,  0,  0,
+                        3,  0,  0,
                         gnubik_register_script);
 
     scm_c_define_gsubr ("gnubik-cube-state",
