@@ -50,11 +50,11 @@
 
 (define menu (gnubik-create-menu "_Move" dbg-menu))
 
-(gnubik-register-script "_Dump state" "gnubik-dump-state" dbg-menu)
+(gnubik-register-script "_Dump state" '(gnubik-dump-state) dbg-menu)
 
-(gnubik-register-script "_F" "debug-move-animated \"f\"" menu)
-(gnubik-register-script "_B" "debug-move-animated \"b\"" menu)
-(gnubik-register-script "_L" "debug-move-animated \"l\"" menu)
-(gnubik-register-script "_R" "debug-move-animated \"r\"" menu)
-(gnubik-register-script "_U" "debug-move-animated \"u\"" menu)
-(gnubik-register-script "_D" "debug-move-animated \"d\"" menu)
+(gnubik-register-script "_F" '(debug-move-animated "f") menu)
+(gnubik-register-script "_B" '(debug-move-animated "b") menu)
+(gnubik-register-script "_L" '(debug-move-animated "l") menu)
+(gnubik-register-script "_R" '(debug-move-animated "r") menu)
+(gnubik-register-script "_U" '(debug-move-animated "u") menu)
+(gnubik-register-script "_D" '(debug-move-animated "d") menu)

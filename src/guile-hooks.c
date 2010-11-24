@@ -50,17 +50,11 @@ static int moved;
    of a scheme procedure to execute. */
 
 static void
-run_scheme (GtkAction * act, char *data)
+run_scheme (GtkAction * act, SCM exp)
 {
   moved = 0;
 
-  char *buffer = malloc (strlen (data) + 3);
-
-  sprintf (buffer, "(%s)", data);
-
-  scm_eval_string (scm_makfrom0str (buffer));
-
-  free (buffer);
+  scm_eval (exp, scm_interaction_environment());
 
   request_play ();
 }
@@ -132,9 +126,7 @@ gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
   gae.tooltip = NULL;
   gae.callback = G_CALLBACK (run_scheme);
 
-  char *cmd_string = scm_to_locale_string (callback);
-
-  gtk_action_group_add_actions (ag, &gae, 1, cmd_string);
+  gtk_action_group_add_actions (ag, &gae, 1, callback);
 
   gtk_ui_manager_insert_action_group (uim, ag, 0);
 
