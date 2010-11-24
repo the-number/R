@@ -20,7 +20,7 @@
 #define CURSORS_H
 
 
-void get_cursor (float angle,   unsigned char **data,  unsigned char **mask,
-	   int *height,  int *width,  int *hot_x,  int *hot_y);
+void get_cursor (float angle, unsigned char **data, unsigned char **mask,
+		 int *height, int *width, int *hot_x, int *hot_y);
 
 #endif

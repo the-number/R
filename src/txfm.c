@@ -24,14 +24,15 @@
 
 /* print out the location of a point.  For debug only */
 void
-plot ( point p)
+plot (point p)
 {
-	int i;
+  int i;
 
-	for ( i=0; i < MATRIX_DIM; i++) {
-		printf ("%f\t",  p[i] );
-	}
-	putchar ('\n');
+  for (i = 0; i < MATRIX_DIM; i++)
+    {
+      printf ("%f\t", p[i]);
+    }
+  putchar ('\n');
 }
 
 
@@ -40,25 +41,26 @@ plot ( point p)
 
 /* Pre-multiply a point or vector x,  by matrix M */
 void
-transform ( const Matrix M,  pv  x)
+transform (const Matrix M, pv x)
 {
-	int i,  j;
+  int i, j;
 
-	/* Temporary point variable for result */
-	pv q={0, 0, 0, 0};
-	
+  /* Temporary point variable for result */
+  pv q = { 0, 0, 0, 0 };
 
-	/* for each row */
-	for (i=0;i < MATRIX_DIM; i++) {
-		/* for each column */
-		for ( j=0; j < MATRIX_DIM; j++)
-			 q[i] += M[i+MATRIX_DIM*j] * x[j] ;
-	}
 
-	/* Now copy  q into x */
-	for (i=0;i < MATRIX_DIM; i++)
-		x[i]=q[i];
-	
+  /* for each row */
+  for (i = 0; i < MATRIX_DIM; i++)
+    {
+      /* for each column */
+      for (j = 0; j < MATRIX_DIM; j++)
+	q[i] += M[i + MATRIX_DIM * j] * x[j];
+    }
+
+  /* Now copy  q into x */
+  for (i = 0; i < MATRIX_DIM; i++)
+    x[i] = q[i];
+
 }
 
 
@@ -67,16 +69,18 @@ transform ( const Matrix M,  pv  x)
 void
 showMatrix (const Matrix M)
 {
-	int i,  j;
+  int i, j;
 
-	/* for each row */
-	for ( i=0; i < MATRIX_DIM; i++) {
-		/* for each column */
-		for ( j=0; j<MATRIX_DIM; j++) {
-			printf ("%f\t", (float) M[i+(MATRIX_DIM*j)] );
-		}
-		putchar ('\n');
+  /* for each row */
+  for (i = 0; i < MATRIX_DIM; i++)
+    {
+      /* for each column */
+      for (j = 0; j < MATRIX_DIM; j++)
+	{
+	  printf ("%f\t", (float) M[i + (MATRIX_DIM * j)]);
 	}
+      putchar ('\n');
+    }
 }
 
 
@@ -84,72 +88,75 @@ showMatrix (const Matrix M)
 
 /* Pre-multiply a matrix N,  by matrix M */
 void
-pre_mult ( const Matrix M,  Matrix N)
+pre_mult (const Matrix M, Matrix N)
 {
-	int i,  j;
-	int k;
+  int i, j;
+  int k;
 
-	/* Temporary Matrix variable for result */
-	Matrix T = {
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0
-	};
+  /* Temporary Matrix variable for result */
+  Matrix T = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0
+  };
 
-	
 
-	for (k=0;k < MATRIX_DIM ; k++) {
-		for (i=0;i < MATRIX_DIM ; i++) {
-			for ( j=0; j < MATRIX_DIM; j++) {
-				 T[i+k*MATRIX_DIM] +=
-					M[i+MATRIX_DIM*j] * N[j+MATRIX_DIM*k];
-			}
-		}
+
+  for (k = 0; k < MATRIX_DIM; k++)
+    {
+      for (i = 0; i < MATRIX_DIM; i++)
+	{
+	  for (j = 0; j < MATRIX_DIM; j++)
+	    {
+	      T[i + k * MATRIX_DIM] +=
+		M[i + MATRIX_DIM * j] * N[j + MATRIX_DIM * k];
+	    }
 	}
+    }
 
-	/* Now copy  T into N */
-	for (i=0;i < MATRIX_DIM * MATRIX_DIM; i++)
-		N[i]=T[i];
-	
+  /* Now copy  T into N */
+  for (i = 0; i < MATRIX_DIM * MATRIX_DIM; i++)
+    N[i] = T[i];
+
 }
 
 
 
 /* Set matrix element x,  y to value */
 void
-set (Matrix M,  int x,  int y,  float value)
+set (Matrix M, int x, int y, float value)
 {
   assert (x <= MATRIX_DIM);
   assert (y <= MATRIX_DIM);
 
-  M[x + MATRIX_DIM * y ] = value;
+  M[x + MATRIX_DIM * y] = value;
 
 }
 
 /* Create a vector by taking the difference of 2 points */
 void
-vector_from_points (point p1,  point p2,  vector v)
+vector_from_points (point p1, point p2, vector v)
 {
   int i;
 
-  for (i = 0 ; i < MATRIX_DIM ; ++i )
+  for (i = 0; i < MATRIX_DIM; ++i)
     v[i] = p2[i] - p1[i];
 
-  assert (v[MATRIX_DIM-1] == 0.0);
+  assert (v[MATRIX_DIM - 1] == 0.0);
 }
 
 
 /* Return zero if any corresponding components of the two vectors are not equal,
    otherwise return one to indicate the vectors are identical. */
 int
-vectors_equal (const vector v1,  const vector v2)
+vectors_equal (const vector v1, const vector v2)
 {
-    int i;
+  int i;
 
-    for (i = 0; i < 4; ++i)
-        if (v1 [i]  !=  v2 [i])
-            return 0;
+  for (i = 0; i < 4; ++i)
+    if (v1[i] != v2[i])
+      return 0;
 
-    return 1;
+  return 1;
 }

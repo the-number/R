@@ -23,34 +23,34 @@
 
 #define MATRIX_DIM 4
 
-typedef GLfloat Matrix[MATRIX_DIM*MATRIX_DIM];
+typedef GLfloat Matrix[MATRIX_DIM * MATRIX_DIM];
 typedef GLfloat pv[MATRIX_DIM];
-typedef pv point,  vector;
+typedef pv point, vector;
 
 
 /* Multiply a vector by a scalar); */
-void vector_mult (vector v,  float scalar);
+void vector_mult (vector v, float scalar);
 
 /* pre-multiply point/vector pv by matrix tx */
-void transform ( const Matrix tx,  pv  x);
+void transform (const Matrix tx, pv x);
 
 /* Pre Multiply Matrix N,  by Matrix M,   the result is left in N */
-void pre_mult ( const Matrix M,  Matrix N);
+void pre_mult (const Matrix M, Matrix N);
 
 /* Display Matrix M on stdout */
 void showMatrix (const Matrix M);
 
 /* Display point p's co-ordinates on stdout*/
-void plot ( point p);
+void plot (point p);
 
 /* Set an element of a matrix */
-void set (Matrix M,  int x,  int y,  float value);
+void set (Matrix M, int x, int y, float value);
 
 /* Create a vector from the difference of two points */
-void vector_from_points (point p1,  point p2,  vector v);
+void vector_from_points (point p1, point p2, vector v);
 
 /* Return non-zero if the two vectors are equal. */
-int vectors_equal (const vector v1,  const vector v2);
+int vectors_equal (const vector v1, const vector v2);
 
 
 #endif /* TXFM_H */

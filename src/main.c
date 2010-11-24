@@ -38,7 +38,7 @@
 static const char help_string[];
 
 
-void app_opts (int *argc,  char **argv);
+void app_opts (int *argc, char **argv);
 
 /* this is the number of frames drawn when a slice of the cube rotates
    90 degrees */
@@ -51,26 +51,26 @@ int number_of_blocks;
 
 
 
-static GtkWidget * glxarea;
-GtkWidget * main_application_window;
+static GtkWidget *glxarea;
+GtkWidget *main_application_window;
 
 static void
-c_main (void *closure,  int argc,  char *argv[])
+c_main (void *closure, int argc, char *argv[])
 {
-  GtkWidget * form ;
-  GtkWidget * menubar;
-  GtkWidget * play_toolbar;
-  GtkWidget * statusbar;
+  GtkWidget *form;
+  GtkWidget *menubar;
+  GtkWidget *play_toolbar;
+  GtkWidget *statusbar;
 
 
 
   /* Internationalisation stuff */
   setlocale (LC_ALL, "");
   bind_textdomain_codeset (PACKAGE, "UTF-8");
-  bindtextdomain (PACKAGE,  LOCALEDIR);
+  bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 
-  widget_set_init (&argc,  &argv);
+  widget_set_init (&argc, &argv);
 
 #if DEBUG && HAVE_GL_GLUT_H
   glutInit ();
@@ -83,55 +83,56 @@ c_main (void *closure,  int argc,  char *argv[])
 
 
   /* process arguments specific to this program */
-  app_opts (&argc,  argv) ;
+  app_opts (&argc, argv);
 
   /* Create a container widget.   A `thing' which will contain the menubar
      and the gl area */
   form = create_container_widget (main_application_window);
 
 
-  menubar = create_menubar (form,  main_application_window);
-  play_toolbar = create_play_toolbar (form,  main_application_window);
+  menubar = create_menubar (form, main_application_window);
+  play_toolbar = create_play_toolbar (form, main_application_window);
 
 
 
   glxarea = create_gl_area (form);
 
-  gtk_box_pack_start (GTK_BOX (form),  glxarea,  TRUE,  TRUE,  0);
+  gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
 
   gtk_widget_show (glxarea);
 
 
-  statusbar  = create_statusbar (form);
+  statusbar = create_statusbar (form);
 
 
   /* create the cube */
   number_of_blocks = create_the_cube (cube_dimension);
-  if ( 0 > number_of_blocks ) {
-    print_cube_error (the_cube,  "Error creating cube");
-    exit (-1);
-  }
+  if (0 > number_of_blocks)
+    {
+      print_cube_error (the_cube, "Error creating cube");
+      exit (-1);
+    }
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
-  if ( !solved ) {
-    int i;
-    srand (time (0));
-    for ( i = 0; i < 8*cube_dimension; i++ )
+  if (!solved)
     {
-        Slice_Blocks *blocks
-            = identify_blocks (the_cube,
-                               rand () % number_of_blocks,
-                               rand () % 3);
+      int i;
+      srand (time (0));
+      for (i = 0; i < 8 * cube_dimension; i++)
+	{
+	  Slice_Blocks *blocks = identify_blocks (the_cube,
+						  rand () % number_of_blocks,
+						  rand () % 3);
 
-        rotate_slice (the_cube,  rand ()%2 +1,  blocks);
+	  rotate_slice (the_cube, rand () % 2 + 1, blocks);
 
-        free_slice_blocks (blocks);
+	  free_slice_blocks (blocks);
+	}
     }
-  }
 
   /* initialise the selection mechanism */
-  initSelection (glxarea, 50,  1,  selection_func);
+  initSelection (glxarea, 50, 1, selection_func);
 
 
   gtk_widget_show (main_application_window);
@@ -144,10 +145,10 @@ c_main (void *closure,  int argc,  char *argv[])
 #include <libguile.h>
 
 int
-main (int argc,  char **argv)
+main (int argc, char **argv)
 {
- scm_boot_guile (argc,  argv,  c_main,  0);
- return 0;
+  scm_boot_guile (argc, argv, c_main, 0);
+  return 0;
 }
 
 
@@ -156,7 +157,7 @@ main (int argc,  char **argv)
 /* process the options we're interested in.  X resource overrides should
 have already been extracted */
 void
-app_opts (int *argc,  char **argv)
+app_opts (int *argc, char **argv)
 {
 
 #ifdef HAVE_GETOPT_LONG
@@ -166,45 +167,47 @@ app_opts (int *argc,  char **argv)
 #endif
 
   int c;
-  const char shortopts[]="vhsz:a:";
+  const char shortopts[] = "vhsz:a:";
 
 #ifdef HAVE_GETOPT_LONG
   int longind;
   const struct option longopts[] = {
-    { "animation",  1,  0,  'a' },
-    { "help",  0,  0,  'h' },
-    { "version",  0, 0, 'v' },
-    { "solved",  0, 0, 's' },
-    { "size", 1, 0, 'z' },
-    { 0, 0, 0, 0 }
-  } ;
+    {"animation", 1, 0, 'a'},
+    {"help", 0, 0, 'h'},
+    {"version", 0, 0, 'v'},
+    {"solved", 0, 0, 's'},
+    {"size", 1, 0, 'z'},
+    {0, 0, 0, 0}
+  };
 #endif
 
-  while ( ( c = GETOPT (*argc,  argv,  shortopts,  longopts,  &longind ) )!= -1 )  {
-    switch (c) {
-    case 'a':
-      sscanf (optarg, "%d", &frameQty);
-      break;
-    case 's':
-      solved = 1;
-      break;
-    case 'z':
-      sscanf (optarg, "%d", &cube_dimension);
-      break;
-    case 'h':
-      printf ("%s",  help_string);
-      exit (0);
-      break;
-    case 'v':
-      printf ("%s\n",  PACKAGE_VERSION);
-      printf ("%s",  copyleft_notice);
-      exit (0);
-      break;
-    default:
-      break;
+  while ((c = GETOPT (*argc, argv, shortopts, longopts, &longind)) != -1)
+    {
+      switch (c)
+	{
+	case 'a':
+	  sscanf (optarg, "%d", &frameQty);
+	  break;
+	case 's':
+	  solved = 1;
+	  break;
+	case 'z':
+	  sscanf (optarg, "%d", &cube_dimension);
+	  break;
+	case 'h':
+	  printf ("%s", help_string);
+	  exit (0);
+	  break;
+	case 'v':
+	  printf ("%s\n", PACKAGE_VERSION);
+	  printf ("%s", copyleft_notice);
+	  exit (0);
+	  break;
+	default:
+	  break;
+	}
+
     }
-		
-  }
 
 }
 
@@ -212,10 +215,9 @@ app_opts (int *argc,  char **argv)
 
 
 static const char help_string[] =
-"-h\n--help\tShow this help message\n\n"
-"-v\n--version\tShow version number\n\n"
-"-s\n--solved\tStart with the cube already solved\n\n"
-"-z n\n--size=n\tShow a   n x n x n   sized cube \n\n"
-"-a n\n--animation=n\tNumber of intermediate positions to be shown in animations\n\n"
-"\n\nBug reports to " PACKAGE_BUGREPORT "\n"
-;
+  "-h\n--help\tShow this help message\n\n"
+  "-v\n--version\tShow version number\n\n"
+  "-s\n--solved\tStart with the cube already solved\n\n"
+  "-z n\n--size=n\tShow a   n x n x n   sized cube \n\n"
+  "-a n\n--animation=n\tNumber of intermediate positions to be shown in animations\n\n"
+  "\n\nBug reports to " PACKAGE_BUGREPORT "\n";

@@ -34,24 +34,22 @@
  */
 
 
-struct
-_Move_Queue_Item
+struct _Move_Queue_Item
 {
-    Move_Data data;
-    int mark;
-    struct _Move_Queue_Item *next;
-} ;
+  Move_Data data;
+  int mark;
+  struct _Move_Queue_Item *next;
+};
 
-struct
-_Move_Queue
+struct _Move_Queue
 {
-    struct _Move_Queue_Item *head;     /* Pop off this end. */
-    struct _Move_Queue_Item *tail;     /* Push on this end. */
-    struct _Move_Queue_Item *current;  /* User's 'roaming' cursor. */
-    int queue_length;         /* The number of items on the queue. */
-    int current_place;        /* Number of steps of current from head. */
-    int mark_next_push;            /* Will the next move be a marked point? */
-} ;
+  struct _Move_Queue_Item *head;	/* Pop off this end. */
+  struct _Move_Queue_Item *tail;	/* Push on this end. */
+  struct _Move_Queue_Item *current;	/* User's 'roaming' cursor. */
+  int queue_length;		/* The number of items on the queue. */
+  int current_place;		/* Number of steps of current from head. */
+  int mark_next_push;		/* Will the next move be a marked point? */
+};
 
 
 

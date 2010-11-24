@@ -22,15 +22,16 @@
 #include <GL/gl.h>
 #include <gtk/gtk.h>
 
-struct facet_selection {
-	int block;
-	int face;
-	int quadrant;
-} ;
+struct facet_selection
+{
+  int block;
+  int face;
+  int quadrant;
+};
 
 /* Initialise the selection library */
-void initSelection (GtkWidget *glxarea, int holdoff,
-		    GLdouble precision,  void (*do_this)(void) );
+void initSelection (GtkWidget * glxarea, int holdoff,
+		    GLdouble precision, void (*do_this) (void));
 
 /* Temporarily enable/disable selection */
 void disableSelection (void);
@@ -46,11 +47,11 @@ void updateSelection (void);
 int itemIsSelected (void);
 
 
-int get_widget_height (GtkWidget *w);
+int get_widget_height (GtkWidget * w);
 
 
 /* Identify the block at screen co-ordinates x,  y */
-struct facet_selection* pickPolygons (int x,  int y) ;
+struct facet_selection *pickPolygons (int x, int y);
 
 
 

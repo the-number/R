@@ -43,53 +43,49 @@
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
 
-static void set_icon (GtkWidget *shell_widget);
+static void set_icon (GtkWidget * shell_widget);
 
 typedef void display (GtkWidget *);
 
-static void display_anti_alias (GtkWidget *glxarea);
-static void display_raw (GtkWidget *glxarea);
+static void display_anti_alias (GtkWidget * glxarea);
+static void display_raw (GtkWidget * glxarea);
 
 static display *display_func = NULL;
 
 
-static void graphics_area_init (GtkWidget *w, gpointer data);
+static void graphics_area_init (GtkWidget * w, gpointer data);
 
 static gboolean handleRedisplay (gpointer glxarea);
 
-void projection_init (int jitter) ;
+void projection_init (int jitter);
 
 
-static void resize (GtkWidget *w,
-			GtkAllocation *alloc,
-			gpointer data);
+static void resize (GtkWidget * w, GtkAllocation * alloc, gpointer data);
 
 
-static gboolean cube_orientate_keys (GtkWidget *w,
-				     GdkEventKey *event,
+static gboolean cube_orientate_keys (GtkWidget * w,
+				     GdkEventKey * event,
 				     gpointer clientData);
 
-static gboolean z_rotate (GtkWidget *w,  GdkEventScroll *event,
+static gboolean z_rotate (GtkWidget * w, GdkEventScroll * event,
 			  gpointer clientData);
 
 
-static gboolean cube_orientate_mouse (GtkWidget *w,
-				      GdkEventMotion *event,
+static gboolean cube_orientate_mouse (GtkWidget * w,
+				      GdkEventMotion * event,
 				      gpointer clientData);
 
 
-static gboolean buttons (GtkWidget *w,
-			 GdkEventButton *event,
-			 gpointer clientData);
+static gboolean buttons (GtkWidget * w,
+			 GdkEventButton * event, gpointer clientData);
 
 
 
-static gboolean cube_controls (GtkWidget *w,
-			       GdkEventButton *event,
-			       gpointer clientData);
+static gboolean cube_controls (GtkWidget * w,
+			       GdkEventButton * event, gpointer clientData);
 
 
-static void expose (GtkWidget *w,  GdkEventExpose *event);
+static void expose (GtkWidget * w, GdkEventExpose * event);
 
 
 static GtkWidget *glwidget;
@@ -104,26 +100,26 @@ re_initialize_glarea (void)
 
 /* Resize callback.  */
 static void
-resize (GtkWidget *w,  GtkAllocation *alloc,
-	gpointer data)
+resize (GtkWidget * w, GtkAllocation * alloc, gpointer data)
 {
-  GLint min_dim ;
+  GLint min_dim;
   gint height = alloc->height;
-  gint width =  alloc->width;
+  gint width = alloc->width;
 
-  if ( ! GTK_WIDGET_REALIZED (w))
+  if (!GTK_WIDGET_REALIZED (w))
     return;
 
   GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
   GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (w);
 
-  if (!gdk_gl_drawable_gl_begin (gldrawable,  glcontext))
+  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
     return;
 
-  min_dim = (width < height) ? width : height ;
+  min_dim = (width < height) ? width : height;
 
   /* Ensure that cube is always the same proportions */
-  glViewport ((width-min_dim) /2,  (height-min_dim) /2,  min_dim,  min_dim);
+  glViewport ((width - min_dim) / 2, (height - min_dim) / 2, min_dim,
+	      min_dim);
 }
 
 
@@ -135,13 +131,16 @@ have_accumulation_buffer (void)
   GLint x;
 
   glGetIntegerv (GL_ACCUM_BLUE_BITS, &x);
-  if ( x < 3)  return GL_FALSE;
+  if (x < 3)
+    return GL_FALSE;
 
   glGetIntegerv (GL_ACCUM_RED_BITS, &x);
-  if ( x < 3)  return GL_FALSE;
+  if (x < 3)
+    return GL_FALSE;
 
   glGetIntegerv (GL_ACCUM_GREEN_BITS, &x);
-  if ( x < 3)  return GL_FALSE;
+  if (x < 3)
+    return GL_FALSE;
 
   return GL_TRUE;
 }
@@ -149,20 +148,15 @@ have_accumulation_buffer (void)
 static void register_gl_callbacks (GtkWidget * glxarea);
 
 static void
-initialize_gl_capability (GtkWidget *glxarea)
+initialize_gl_capability (GtkWidget * glxarea)
 {
   gint i;
 
-  const GdkGLConfigMode mode[] =
-    { 
-      GDK_GL_MODE_RGB
-      | GDK_GL_MODE_DOUBLE
-      | GDK_GL_MODE_ACCUM,
+  const GdkGLConfigMode mode[] = {
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM,
 
-      GDK_GL_MODE_RGB
-      | GDK_GL_MODE_DOUBLE
-
-    };
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE
+  };
 
   GdkScreen *screen = gtk_widget_get_screen (glxarea);
 
@@ -179,24 +173,20 @@ initialize_gl_capability (GtkWidget *glxarea)
     }
 
 
-  if ( !glconfig )
+  if (!glconfig)
     g_error ("No suitable visual found.");
 
-  gtk_widget_set_gl_capability (glxarea,
-                                glconfig,
-                                0,
-                                TRUE,
-                                GDK_GL_RGBA_TYPE);
+  gtk_widget_set_gl_capability (glxarea, glconfig, 0, TRUE, GDK_GL_RGBA_TYPE);
 }
 
 
 
 GtkWidget *
-create_gl_area (GtkWidget *containerWidget)
+create_gl_area (GtkWidget * containerWidget)
 {
   const GtkTargetEntry target[2] = {
-    { "text/uri-list",  0,  RDRAG_FILELIST },
-    { "application/x-color",  0,  RDRAG_COLOUR },
+    {"text/uri-list", 0, RDRAG_FILELIST},
+    {"application/x-color", 0, RDRAG_COLOUR},
   };
 
   GtkWidget *glxarea = gtk_drawing_area_new ();
@@ -204,13 +194,12 @@ create_gl_area (GtkWidget *containerWidget)
 
   initialize_gl_capability (glxarea);
 
-  gtk_drag_dest_set (glxarea,  GTK_DEST_DEFAULT_ALL,
-		     target, 2,  GDK_ACTION_COPY);
+  gtk_drag_dest_set (glxarea, GTK_DEST_DEFAULT_ALL,
+		     target, 2, GDK_ACTION_COPY);
 
 
   g_signal_connect (glxarea, "drag_data_received",
-		    G_CALLBACK (drag_data_received),
-		    (gpointer)-1);
+		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 
 
   glwidget = glxarea;
@@ -218,19 +207,19 @@ create_gl_area (GtkWidget *containerWidget)
   register_gl_callbacks (glxarea);
 
 
-  return glxarea ;
+  return glxarea;
 }
 
 
 extern float cursorAngle;
 
 static void
-graphics_area_init (GtkWidget *w,  gpointer data )
+graphics_area_init (GtkWidget * w, gpointer data)
 {
   GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
   GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (w);
 
-  if (!gdk_gl_drawable_gl_begin (gldrawable,  glcontext))
+  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
     {
       g_critical ("Cannot initialise gl drawable\n");
       return;
@@ -238,7 +227,7 @@ graphics_area_init (GtkWidget *w,  gpointer data )
 
   gtk_widget_set_size_request (w, 300, 300);
 
-  gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)),  w);
+  gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
 
   lighting_init ();
 
@@ -255,16 +244,13 @@ graphics_area_init (GtkWidget *w,  gpointer data )
 
 
 static void
-register_gl_callbacks (GtkWidget *glxarea)
+register_gl_callbacks (GtkWidget * glxarea)
 {
-  g_signal_connect (glxarea, "realize",
-		    G_CALLBACK (graphics_area_init), 0);
+  g_signal_connect (glxarea, "realize", G_CALLBACK (graphics_area_init), 0);
 
-  g_signal_connect (glxarea, "expose_event",
-		    G_CALLBACK (expose), 0);
+  g_signal_connect (glxarea, "expose_event", G_CALLBACK (expose), 0);
 
-  g_signal_connect (glxarea, "size-allocate",
-		    G_CALLBACK (resize), 0);
+  g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize), 0);
 
 
   gtk_widget_add_events (GTK_WIDGET (glxarea),
@@ -273,62 +259,59 @@ register_gl_callbacks (GtkWidget *glxarea)
 			 /* | GDK_BUTTON_MOTION_MASK */
 			 | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
 			 | GDK_VISIBILITY_NOTIFY_MASK
-			 | GDK_POINTER_MOTION_MASK );
+			 | GDK_POINTER_MOTION_MASK);
 
 
-  GTK_WIDGET_SET_FLAGS (glxarea,  GTK_CAN_FOCUS);
+  GTK_WIDGET_SET_FLAGS (glxarea, GTK_CAN_FOCUS);
 
 
-  g_signal_connect (glxarea,  "key_press_event",
+  g_signal_connect (glxarea, "key_press_event",
 		    G_CALLBACK (cube_orientate_keys), 0);
 
   g_signal_connect (glxarea, "motion_notify_event",
 		    G_CALLBACK (cube_orientate_mouse), 0);
 
 
-  g_signal_connect (glxarea, "scroll_event",
-		    G_CALLBACK (z_rotate), 0);
+  g_signal_connect (glxarea, "scroll_event", G_CALLBACK (z_rotate), 0);
+
+
+  g_signal_connect (glxarea, "button_press_event", G_CALLBACK (buttons), 0);
+
+  g_signal_connect (glxarea, "button_release_event", G_CALLBACK (buttons), 0);
 
 
   g_signal_connect (glxarea, "button_press_event",
-		    G_CALLBACK (buttons), 0);
-
-  g_signal_connect (glxarea, "button_release_event",
-		    G_CALLBACK (buttons), 0);
-
-
-  g_signal_connect (glxarea,  "button_press_event",
 		    G_CALLBACK (cube_controls), 0);
 }
 
 
-static gboolean redisplayPending = FALSE ;
+static gboolean redisplayPending = FALSE;
 
 static guint idle_id;
 
 void
 postRedisplay (void)
 {
-  if ( display_func == NULL)
+  if (display_func == NULL)
     {
       GdkGLContext *glcontext = gtk_widget_get_gl_context (glwidget);
       GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glwidget);
 
-      if (!gdk_gl_drawable_make_current (gldrawable,  glcontext))
+      if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
 	{
 	  g_critical ("Cannot set gl drawable current\n");
 	  return;
 	}
 
-      if ( have_accumulation_buffer () )
+      if (have_accumulation_buffer ())
 	display_func = display_anti_alias;
       else
 	display_func = display_raw;
     }
 
-  if ( !redisplayPending )
+  if (!redisplayPending)
     {
-      idle_id = g_idle_add (handleRedisplay,  glwidget);
+      idle_id = g_idle_add (handleRedisplay, glwidget);
 
       redisplayPending = TRUE;
     }
@@ -338,31 +321,32 @@ postRedisplay (void)
 
 /* Set the icon for the program */
 static void
-set_icon (GtkWidget *shell_widget)
+set_icon (GtkWidget * shell_widget)
 {
-  GdkPixmap *pixmap ;
+  GdkPixmap *pixmap;
 
-  GdkWindow *window  ;
+  GdkWindow *window;
 
   GdkBitmap *mask;
 
   window = gtk_widget_get_parent_window (shell_widget);
 
-  pixmap = gdk_pixmap_create_from_xpm_d (window,  &mask,  0,  (gchar **) gnubik_xpm);
+  pixmap =
+    gdk_pixmap_create_from_xpm_d (window, &mask, 0, (gchar **) gnubik_xpm);
 
-  gdk_window_set_icon (window, 0,  pixmap,  mask);
+  gdk_window_set_icon (window, 0, pixmap, mask);
 }
 
 
 /* Error string display.  This is always called by a macro
    wrapper,  to set the file and line_no opts parameters */
 void
-error_check (const char *file,  int line_no,  const char *string)
+error_check (const char *file, int line_no, const char *string)
 {
   GLenum err_state;
-  if ( GL_NO_ERROR != (err_state = glGetError ())  )
-    g_print ("%s:%d %s:  %s\n",  file,  line_no ,  string,
-	     gluErrorString (err_state) );
+  if (GL_NO_ERROR != (err_state = glGetError ()))
+    g_print ("%s:%d %s:  %s\n", file, line_no, string,
+	     gluErrorString (err_state));
 }
 
 
@@ -370,7 +354,7 @@ error_check (const char *file,  int line_no,  const char *string)
 
 /* Expose callback.  Just redraw the scene */
 static void
-expose (GtkWidget *w,  GdkEventExpose *event)
+expose (GtkWidget * w, GdkEventExpose * event)
 {
   postRedisplay ();
 }
@@ -382,9 +366,7 @@ static gboolean button_down = FALSE;
 
 /* Rotate the cube about the z axis (relative to the viewer ) */
 gboolean
-z_rotate (GtkWidget *w,
-	  GdkEventScroll *event,
-	  gpointer clientData)
+z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer clientData)
 {
 
   rotate_cube (2, !event->direction);
@@ -395,32 +377,32 @@ z_rotate (GtkWidget *w,
 
 /* Record the state of button 1 */
 gboolean
-buttons (GtkWidget *w,
-	 GdkEventButton *event,
-	 gpointer clientData)
+buttons (GtkWidget * w, GdkEventButton * event, gpointer clientData)
 {
 
   /* In GTK1-2,  buttons 4 and 5 mean mouse wheel scrolling */
-  if ( event->button == 4 )
+  if (event->button == 4)
     rotate_cube (2, 1);
 
-  if ( event->button == 5 )
+  if (event->button == 5)
     rotate_cube (2, 0);
 
 
 
-  if ( event->button != 1)
+  if (event->button != 1)
     return FALSE;
 
 
-  if ( event->type == GDK_BUTTON_PRESS) {
-    button_down = TRUE;
-    disableSelection ();
-  }
-  else if ( event->type == GDK_BUTTON_RELEASE) {
-    enableSelection ();
-    button_down = FALSE;
-  }
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      button_down = TRUE;
+      disableSelection ();
+    }
+  else if (event->type == GDK_BUTTON_RELEASE)
+    {
+      enableSelection ();
+      button_down = FALSE;
+    }
 
 
   return FALSE;
@@ -428,44 +410,43 @@ buttons (GtkWidget *w,
 
 
 gboolean
-cube_orientate_mouse (GtkWidget *w,
-		      GdkEventMotion *event,
-		      gpointer clientData)
+cube_orientate_mouse (GtkWidget * w,
+		      GdkEventMotion * event, gpointer clientData)
 {
 
-  static gdouble last_mouse_x=-1;
-  static gdouble last_mouse_y=-1;
+  static gdouble last_mouse_x = -1;
+  static gdouble last_mouse_y = -1;
 
   gint xmotion = 0;
   gint ymotion = 0;
 
 
 
-  if ( ! button_down)
+  if (!button_down)
     return FALSE;
 
-  if ( itemIsSelected () )
+  if (itemIsSelected ())
     return FALSE;
 
 
-  if ( last_mouse_x >= 0 )
-    xmotion = event->x - last_mouse_x ;
+  if (last_mouse_x >= 0)
+    xmotion = event->x - last_mouse_x;
 
-  if ( last_mouse_y >= 0 )
-    ymotion = event->y - last_mouse_y ;
+  if (last_mouse_y >= 0)
+    ymotion = event->y - last_mouse_y;
 
 
-  last_mouse_x = event->x ;
+  last_mouse_x = event->x;
   last_mouse_y = event->y;
 
-  if ( ymotion > 0 )
+  if (ymotion > 0)
     rotate_cube (0, 1);
-  if ( ymotion < 0 )
+  if (ymotion < 0)
     rotate_cube (0, 0);
 
-  if ( xmotion > 0 )
+  if (xmotion > 0)
     rotate_cube (1, 1);
-  if ( xmotion < 0 )
+  if (xmotion < 0)
     rotate_cube (1, 0);
 
 
@@ -473,15 +454,15 @@ cube_orientate_mouse (GtkWidget *w,
 }
 
 gboolean
-cube_orientate_keys (GtkWidget *w,  GdkEventKey *event,  gpointer clientData)
+cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer clientData)
 {
 
-  int shifted=0;
+  int shifted = 0;
 
-  if ( event->state & GDK_SHIFT_MASK)
-    shifted=1;
+  if (event->state & GDK_SHIFT_MASK)
+    shifted = 1;
 
-  arrows (event->keyval,  shifted);
+  arrows (event->keyval, shifted);
 
   return TRUE;
 }
@@ -492,9 +473,9 @@ cube_orientate_keys (GtkWidget *w,  GdkEventKey *event,  gpointer clientData)
 
 /* Input callback.  Despatch input events to approprite handlers */
 gboolean
-cube_controls (GtkWidget *w,  GdkEventButton *event,  gpointer clientData)
+cube_controls (GtkWidget * w, GdkEventButton * event, gpointer clientData)
 {
-  if ( event->type != GDK_BUTTON_PRESS)
+  if (event->type != GDK_BUTTON_PRESS)
     return TRUE;
 
 
@@ -520,36 +501,37 @@ handleRedisplay (gpointer glxarea)
 
   g_source_remove (idle_id);
 
-  return TRUE ;
+  return TRUE;
 }
 
 
 static void
-set_mouse_cursor (GtkWidget *glxarea)
+set_mouse_cursor (GtkWidget * glxarea)
 {
   unsigned char *mask_bits;
   unsigned char *data_bits;
-  int hot_x,  hot_y;
-  int width,  height;
+  int hot_x, hot_y;
+  int width, height;
 
 
   GdkCursor *cursor;
-  GdkPixmap *source,  *mask;
-  GdkColor fg = { 0,  65535,  65535,  65535 }; /* White. */
-  GdkColor bg = { 0,  0,  0,  0 }; /* Black. */
+  GdkPixmap *source, *mask;
+  GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
+  GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
 
-  if ( itemIsSelected () )
+  if (itemIsSelected ())
     {
-      get_cursor (cursorAngle,  &data_bits,  &mask_bits,  &height,  &width,
-		  &hot_x,  &hot_y);
+      get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
+		  &hot_x, &hot_y);
 
 
-      source = gdk_bitmap_create_from_data (NULL,  (const gchar *) data_bits,
-					    width,  height);
-      mask = gdk_bitmap_create_from_data (NULL,  (const gchar *) mask_bits,
-					  width,  height);
+      source = gdk_bitmap_create_from_data (NULL, (const gchar *) data_bits,
+					    width, height);
+      mask = gdk_bitmap_create_from_data (NULL, (const gchar *) mask_bits,
+					  width, height);
 
-      cursor = gdk_cursor_new_from_pixmap (source,  mask,  &fg,  &bg,  hot_x,  hot_y);
+      cursor =
+	gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, hot_x, hot_y);
       g_object_unref (source);
       g_object_unref (mask);
     }
@@ -559,7 +541,7 @@ set_mouse_cursor (GtkWidget *glxarea)
       cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
     }
 
-  gdk_window_set_cursor (glxarea->window,  cursor);
+  gdk_window_set_cursor (glxarea->window, cursor);
   gdk_cursor_unref (cursor);
 
 }
@@ -583,14 +565,14 @@ render_scene (GLint jitter)
 /* Reset the bit planes, and render the scene using the accumulation
    buffer for antialiasing*/
 static void
-display_anti_alias (GtkWidget *glxarea)
+display_anti_alias (GtkWidget * glxarea)
 {
   int jitter;
 
   GdkGLContext *glcontext = gtk_widget_get_gl_context (glxarea);
   GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glxarea);
 
-  if (!gdk_gl_drawable_make_current (gldrawable,  glcontext))
+  if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
     {
       g_critical ("Cannot set gl drawable current\n");
       return;
@@ -608,7 +590,7 @@ display_anti_alias (GtkWidget *glxarea)
   for (jitter = 0; jitter < 8; ++jitter)
     {
       render_scene (jitter);
-      glAccum (GL_ACCUM,  1.0 / 8.0);
+      glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
   glAccum (GL_RETURN, 1.0);
@@ -622,12 +604,12 @@ display_anti_alias (GtkWidget *glxarea)
    without anti-aliasing.
  */
 static void
-display_raw (GtkWidget *glxarea)
+display_raw (GtkWidget * glxarea)
 {
   GdkGLContext *glcontext = gtk_widget_get_gl_context (glxarea);
   GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glxarea);
 
-  if (!gdk_gl_drawable_make_current (gldrawable,  glcontext))
+  if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
     {
       g_critical ("Cannot set gl drawable current\n");
       return;
@@ -641,5 +623,3 @@ display_raw (GtkWidget *glxarea)
 
   gdk_gl_drawable_swap_buffers (gldrawable);
 }
-
-

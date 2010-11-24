@@ -1,19 +1,19 @@
 /*
-    GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003, 2004, 2010  John Darrington
+  GNUbik -- A 3 dimensional magic cube game.
+  Copyright (C) 2003, 2004, 2010  John Darrington
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License,  or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License,  or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <config.h>
@@ -40,12 +40,12 @@
 
 
 void
-widget_set_init (int *argc,  char *** argv)
+widget_set_init (int *argc, char ***argv)
 {
 
-  gtk_init (argc,  argv);
+  gtk_init (argc, argv);
 
-  gtk_gl_init (argc,  argv);
+  gtk_gl_init (argc, argv);
 
 }
 
@@ -61,8 +61,7 @@ create_top_level_widget (void)
   /* create a new window */
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  g_signal_connect (win, "delete-event",
-		      G_CALLBACK (gtk_main_quit), 0);
+  g_signal_connect (win, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
 
   window = win;
@@ -74,13 +73,13 @@ create_top_level_widget (void)
 GtkWidget *
 create_container_widget (GtkWidget * parent)
 {
-  GtkWidget *vbox ;
+  GtkWidget *vbox;
 
   /* create a vbox to hold the drawing area and the menubar */
   vbox = gtk_vbox_new (FALSE, 0);
 
 
-  gtk_container_add (GTK_CONTAINER (parent),  vbox);
+  gtk_container_add (GTK_CONTAINER (parent), vbox);
 
   gtk_widget_show (vbox);
 
@@ -97,33 +96,33 @@ void
 update_statusbar (void)
 {
 
-  static int context=0;
+  static int context = 0;
 
   static guint mesg_id = 0;
 
   gchar mesg[MSGLEN];
 
-  if ( 0 == context )
-    context  = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar),
-					     "move-count");
+  if (0 == context)
+    context = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar),
+					    "move-count");
 
   g_snprintf (mesg,
-             MSGLEN,
-             _("Moves: %d / %d"),
-             move_queue_progress (move_queue).current,
-             move_queue_progress (move_queue).total);
+	      MSGLEN,
+	      _("Moves: %d / %d"),
+	      move_queue_progress (move_queue).current,
+	      move_queue_progress (move_queue).total);
 
-  if ( mesg_id != 0 )
-    gtk_statusbar_remove (GTK_STATUSBAR (statusbar),  context,  mesg_id);
+  if (mesg_id != 0)
+    gtk_statusbar_remove (GTK_STATUSBAR (statusbar), context, mesg_id);
 
-  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar),  context,  mesg);
+  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 
 }
 
 void
 declare_win (const struct cube *cube)
 {
-  static int context=0;
+  static int context = 0;
 
   static guint mesg_id = 0;
 
@@ -131,28 +130,30 @@ declare_win (const struct cube *cube)
 
   enum Cube_Status status = cube_get_status (cube);
 
-  if ( 0 == context )
-    context  = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar),
-					     "win");
+  if (0 == context)
+    context = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar), "win");
 
   switch (status)
     {
     case SOLVED:
-      g_snprintf (mesg,  MSGLEN,  ngettext ("Cube solved in %d move",
-					    "Cube solved in %d moves",
-					    move_queue_progress (move_queue).total),
+      g_snprintf (mesg, MSGLEN, ngettext ("Cube solved in %d move",
+					  "Cube solved in %d moves",
+					  move_queue_progress (move_queue).
+					  total),
 		  move_queue_progress (move_queue).total);
-      break ;
+      break;
     case HALF_SOLVED:
       g_snprintf (mesg,
-		  MSGLEN, _("Cube is NOT solved! The colours are correct,  but have incorrect orientation"));
+		  MSGLEN,
+		  _
+		  ("Cube is NOT solved! The colours are correct,  but have incorrect orientation"));
       break;
     default:
       g_assert_not_reached ();
     }
 
 
-  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar),  context,  mesg);
+  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 }
 
 GtkWidget *
@@ -162,7 +163,7 @@ create_statusbar (GtkWidget * container)
 
   statusbar = gtk_statusbar_new ();
 
-  gtk_box_pack_start (GTK_BOX (container),  statusbar,  FALSE,  TRUE,  0);
+  gtk_box_pack_start (GTK_BOX (container), statusbar, FALSE, TRUE, 0);
 
   gtk_widget_show (statusbar);
 
@@ -177,13 +178,12 @@ static GList *play_button_list;
 void
 set_toolbar_state (unsigned flags)
 {
-    GList *list;
+  GList *list;
 
-    for (list = play_button_list; list != NULL; list = list->next)
+  for (list = play_button_list; list != NULL; list = list->next)
     {
-        gtk_widget_set_sensitive (GTK_WIDGET (list->data),
-                                  flags & 1);
-        flags >>= 1;
+      gtk_widget_set_sensitive (GTK_WIDGET (list->data), flags & 1);
+      flags >>= 1;
     }
 }
 
@@ -192,53 +192,50 @@ static GtkWidget *play_toolbar;
 
 
 GtkWidget *
-create_play_toolbar (GtkWidget * container,  GtkWidget * toplevel)
+create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
 {
-  GtkAction *rewind =
-    gtk_action_new ("rewind",
-		    _("Rewind"),
-		    _("Go to the previous mark (or the beginning) of the sequence of moves"),
-		    GTK_STOCK_MEDIA_REWIND);
+  GtkAction *rewind = gtk_action_new ("rewind",
+				      _("Rewind"),
+				      _
+				      ("Go to the previous mark (or the beginning) of the sequence of moves"),
+				      GTK_STOCK_MEDIA_REWIND);
 
-  GtkAction *previous =
-    gtk_action_new ("previous",
-		    _("Back"),
-		    _("Make one step backwards"),
-		    GTK_STOCK_MEDIA_PREVIOUS);
-
-
-  GtkAction *stop =
-    gtk_action_new ("stop",
-		    _("Stop"),
-		    _("Stop running the sequence of moves"),
-		    GTK_STOCK_MEDIA_STOP);
+  GtkAction *previous = gtk_action_new ("previous",
+					_("Back"),
+					_("Make one step backwards"),
+					GTK_STOCK_MEDIA_PREVIOUS);
 
 
-  GtkAction *mark =
-    gtk_action_new ("mark",
-		    _("Mark"),
-		    _("Mark the current place in the sequence of moves"),
-		    GTK_STOCK_MEDIA_STOP);
+  GtkAction *stop = gtk_action_new ("stop",
+				    _("Stop"),
+				    _("Stop running the sequence of moves"),
+				    GTK_STOCK_MEDIA_STOP);
 
 
-  GtkAction *next =
-    gtk_action_new ("next",
-		    _("Forward"),
-		    _("Make one step forwards"),
-		    GTK_STOCK_MEDIA_NEXT);
+  GtkAction *mark = gtk_action_new ("mark",
+				    _("Mark"),
+				    _
+				    ("Mark the current place in the sequence of moves"),
+				    GTK_STOCK_MEDIA_STOP);
 
 
-  GtkAction *play =
-    gtk_action_new ("forward",
-		    _("Play"),
-		    _("Run forward through the sequence of moves"),
-		    GTK_STOCK_MEDIA_PLAY);
+  GtkAction *next = gtk_action_new ("next",
+				    _("Forward"),
+				    _("Make one step forwards"),
+				    GTK_STOCK_MEDIA_NEXT);
+
+
+  GtkAction *play = gtk_action_new ("forward",
+				    _("Play"),
+				    _
+				    ("Run forward through the sequence of moves"),
+				    GTK_STOCK_MEDIA_PLAY);
 
 
   play_toolbar = gtk_toolbar_new ();
-  gtk_toolbar_set_style (GTK_TOOLBAR (play_toolbar),  GTK_TOOLBAR_BOTH);
-  gtk_container_set_border_width (GTK_CONTAINER (play_toolbar),  0);
-  gtk_box_pack_start (GTK_BOX (container),  play_toolbar,  FALSE,  TRUE, 0);
+  gtk_toolbar_set_style (GTK_TOOLBAR (play_toolbar), GTK_TOOLBAR_BOTH);
+  gtk_container_set_border_width (GTK_CONTAINER (play_toolbar), 0);
+  gtk_box_pack_start (GTK_BOX (container), play_toolbar, FALSE, TRUE, 0);
 
 
   gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
@@ -250,61 +247,56 @@ create_play_toolbar (GtkWidget * container,  GtkWidget * toplevel)
 		      -1);
 
   gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (stop)),
-		      -1);
+		      GTK_TOOL_ITEM (gtk_action_create_tool_item (stop)), -1);
 
   gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (mark)),
-		      -1);
+		      GTK_TOOL_ITEM (gtk_action_create_tool_item (mark)), -1);
 
   gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (next)),
-		      -1);
+		      GTK_TOOL_ITEM (gtk_action_create_tool_item (next)), -1);
 
   gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (play)),
-		      -1);
+		      GTK_TOOL_ITEM (gtk_action_create_tool_item (play)), -1);
 
   g_signal_connect_swapped (rewind, "activate",
-		    G_CALLBACK (request_queue_rewind), container);
+			    G_CALLBACK (request_queue_rewind), container);
 
   g_signal_connect_swapped (previous, "activate",
-		    G_CALLBACK (request_back), container);
+			    G_CALLBACK (request_back), container);
 
   g_signal_connect_swapped (stop, "activate",
-		    G_CALLBACK (request_stop), container);
+			    G_CALLBACK (request_stop), container);
 
   g_signal_connect_swapped (mark, "activate",
-		    G_CALLBACK (request_mark_move_queue), container);
+			    G_CALLBACK (request_mark_move_queue), container);
 
   g_signal_connect_swapped (next, "activate",
-		    G_CALLBACK (request_forward), container);
+			    G_CALLBACK (request_forward), container);
 
   g_signal_connect_swapped (play, "activate",
-		    G_CALLBACK (request_play), container);
+			    G_CALLBACK (request_play), container);
 
-    gtk_widget_show_all (play_toolbar);
+  gtk_widget_show_all (play_toolbar);
 
-    play_button_list
-        = gtk_container_get_children (GTK_CONTAINER (play_toolbar));
+  play_button_list
+    = gtk_container_get_children (GTK_CONTAINER (play_toolbar));
 
-    set_toolbar_state (0);
+  set_toolbar_state (0);
 
-    return play_toolbar;
+  return play_toolbar;
 }
 
 
 
 /* Toggle the visibility of a widget */
 static void
-toggle_visibility (GtkMenuItem *menuitem,
-		  gpointer user_data)
+toggle_visibility (GtkMenuItem * menuitem, gpointer user_data)
 {
   GtkWidget **w = (user_data);
 
   g_assert (*w);
 
-  if ( GTK_WIDGET_VISIBLE (*w))
+  if (GTK_WIDGET_VISIBLE (*w))
     gtk_widget_hide (*w);
   else
     gtk_widget_show (*w);
@@ -319,18 +311,18 @@ create_show_hide_menu (void)
   menu = gtk_menu_new ();
 
   menuitem = gtk_menu_item_new_with_mnemonic (_("_Play Toolbar"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu),  menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect (menuitem,  "activate",
-			G_CALLBACK (toggle_visibility),  &play_toolbar);
+  g_signal_connect (menuitem, "activate",
+		    G_CALLBACK (toggle_visibility), &play_toolbar);
 
   menuitem = gtk_menu_item_new_with_mnemonic (_("_Status Bar"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu),  menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect (menuitem,  "activate",
-			G_CALLBACK (toggle_visibility),  &statusbar);
+  g_signal_connect (menuitem, "activate",
+		    G_CALLBACK (toggle_visibility), &statusbar);
 
 
 
@@ -338,43 +330,36 @@ create_show_hide_menu (void)
 }
 
 
-static const GtkActionEntry action_entries [] = 
-{
-  { "game-menu-action", NULL, N_("_Game") },
-  { "settings-menu-action", NULL, N_("_Settings") },
-  { "help-menu-action", NULL, N_("_Help") },
-  { "scripts-menu-action", NULL, N_("_Scripts") },
+static const GtkActionEntry action_entries[] = {
+  {"game-menu-action", NULL, N_("_Game")},
+  {"settings-menu-action", NULL, N_("_Settings")},
+  {"help-menu-action", NULL, N_("_Help")},
+  {"scripts-menu-action", NULL, N_("_Scripts")},
 
 
   {
-    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
-    NULL, "preferences", G_CALLBACK (preferences)
-  },
+   "preferences-action", GTK_STOCK_PREFERENCES, NULL,
+   NULL, "preferences", G_CALLBACK (preferences)},
 
   {
-    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
-    NULL, "colours", G_CALLBACK (colour_select_menu)
-  },
+   "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
+   NULL, "colours", G_CALLBACK (colour_select_menu)},
 
   {
-    "show-hide-action", NULL, N_("Sho_w/Hide"),
-    NULL, "show-hide", G_CALLBACK (create_show_hide_menu)
-  },
+   "show-hide-action", NULL, N_("Sho_w/Hide"),
+   NULL, "show-hide", G_CALLBACK (create_show_hide_menu)},
 
   {
-    "about-action", GTK_STOCK_ABOUT, NULL,
-    NULL, "about", G_CALLBACK (about)
-  },
+   "about-action", GTK_STOCK_ABOUT, NULL,
+   NULL, "about", G_CALLBACK (about)},
 
   {
-    "quit-action", GTK_STOCK_QUIT, NULL,
-    "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
-  },
+   "quit-action", GTK_STOCK_QUIT, NULL,
+   "<control>Q", "quit", G_CALLBACK (gtk_main_quit)},
 
   {
-    "new-game-action", NULL, N_("_New Game"),
-    "<control>N", "new-game", G_CALLBACK (request_new_game)
-  }
+   "new-game-action", NULL, N_("_New Game"),
+   "<control>N", "new-game", G_CALLBACK (request_new_game)}
 
 };
 
@@ -399,25 +384,28 @@ static const char menu_tree[] = "<ui>\
 </ui>";
 
 GtkWidget *
-create_menubar (GtkWidget * container,  GtkWidget * toplevel)
+create_menubar (GtkWidget * container, GtkWidget * toplevel)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
   GtkActionGroup *action_group = gtk_action_group_new ("menu-actions");
 
   gtk_action_group_add_actions (action_group, action_entries,
-				sizeof (action_entries) / sizeof (action_entries[0]), NULL);
+				sizeof (action_entries) /
+				sizeof (action_entries[0]), NULL);
 
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
 
-  if ( 0 == gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree, strlen (menu_tree), NULL))
+  if (0 ==
+      gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree,
+					 strlen (menu_tree), NULL))
     g_return_val_if_reached (NULL);
 
   startup_guile_scripts (menu_manager);
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
-  gtk_box_pack_start (GTK_BOX (container),  menubar,  FALSE,  TRUE,  0);
+  gtk_box_pack_start (GTK_BOX (container), menubar, FALSE, TRUE, 0);
 
   gtk_widget_show (menubar);
 
@@ -426,42 +414,40 @@ create_menubar (GtkWidget * container,  GtkWidget * toplevel)
 
 /* Popup an error dialog box */
 void
-error_dialog (GtkWidget *parent,  const gchar *format, ...)
+error_dialog (GtkWidget * parent, const gchar * format, ...)
 {
   va_list ap;
 
-  GtkWidget *dialog ;
+  GtkWidget *dialog;
 
   gchar *message;
 
 
-  va_start (ap,  format);
+  va_start (ap, format);
 
-  message = g_strdup_vprintf (format,  ap);
+  message = g_strdup_vprintf (format, ap);
 
   va_end (ap);
 
   dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
 				   GTK_DIALOG_MODAL,
 				   GTK_MESSAGE_ERROR,
-				   GTK_BUTTONS_CLOSE,
-				   message);
+				   GTK_BUTTONS_CLOSE, message);
 
   g_free (message);
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog),  GTK_WINDOW (parent));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 
- /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
- g_signal_connect_swapped (dialog,  "response",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog);
-
+  /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
+  g_signal_connect_swapped (dialog, "response",
+			    G_CALLBACK (gtk_widget_destroy), dialog);
 
 
- gtk_widget_show_all (dialog);
+
+  gtk_widget_show_all (dialog);
 }
-
 
+
 
 #if !X_DISPLAY_MISSING
 #include <X11/Xlib.h>
@@ -469,7 +455,7 @@ error_dialog (GtkWidget *parent,  const gchar *format, ...)
 #endif
 
 void
-set_the_colours (GtkWidget *w,  const char *progname)
+set_the_colours (GtkWidget * w, const char *progname)
 {
 #if !X_DISPLAY_MISSING
   int i;
@@ -479,32 +465,32 @@ set_the_colours (GtkWidget *w,  const char *progname)
   dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
 
 
-  for (i=0;i<6;++i){
-    char *colour=0;
-    char resname[20];
-    GdkColor xcolour;
-    g_snprintf (resname, 20, "color%d",  i);
-    colour=XGetDefault (dpy,  progname,  resname);
+  for (i = 0; i < 6; ++i)
+    {
+      char *colour = 0;
+      char resname[20];
+      GdkColor xcolour;
+      g_snprintf (resname, 20, "color%d", i);
+      colour = XGetDefault (dpy, progname, resname);
 
-    if (!colour)
-      continue;
+      if (!colour)
+	continue;
 
-    if (!gdk_color_parse (colour, &xcolour)) {
-      g_warning ("colour %s not in database\n",  colour);
+      if (!gdk_color_parse (colour, &xcolour))
+	{
+	  g_warning ("colour %s not in database\n", colour);
+	}
+      else
+	{
+	  /* convert colours to GLfloat values,  and set them */
+	  const unsigned short full = ~0;
+
+	  GLfloat red = (GLfloat) xcolour.red / full;
+	  GLfloat green = (GLfloat) xcolour.green / full;
+	  GLfloat blue = (GLfloat) xcolour.blue / full;
+
+	  setColour (i, red, green, blue);
+	}
     }
-    else{
-      /* convert colours to GLfloat values,  and set them*/
-      const unsigned short full = ~0;
-
-
-      GLfloat red =   (GLfloat) xcolour.red/full ;
-      GLfloat green = (GLfloat) xcolour.green/full ;
-      GLfloat blue =  (GLfloat) xcolour.blue/full ;
-
-      setColour (i,  red,  green,  blue);
-    }
-  }
 #endif
 }
-
-

@@ -22,37 +22,37 @@
 #include <gtk/gtk.h>
 #include "cube.h"
 
-extern GtkWidget * main_application_window;
+extern GtkWidget *main_application_window;
 
-void widget_set_init (int *argc,  char *** argv) ;
+void widget_set_init (int *argc, char ***argv);
 
-GtkWidget * create_top_level_widget (void);
+GtkWidget *create_top_level_widget (void);
 
-GtkWidget * create_container_widget (GtkWidget * parent);
+GtkWidget *create_container_widget (GtkWidget * parent);
 
-GtkWidget * create_menubar (GtkWidget * container,  GtkWidget * toplevel);
+GtkWidget *create_menubar (GtkWidget * container, GtkWidget * toplevel);
 
 
-GtkWidget * create_play_toolbar (GtkWidget * container,  GtkWidget * toplevel);
+GtkWidget *create_play_toolbar (GtkWidget * container, GtkWidget * toplevel);
 enum
-    {
-        PLAY_TOOLBAR_BACK = 0x0b << 0,
-        PLAY_TOOLBAR_STOP = 0x01 << 2,
-        PLAY_TOOLBAR_PLAY = 0x03 << 4
-    } ;
+{
+  PLAY_TOOLBAR_BACK = 0x0b << 0,
+  PLAY_TOOLBAR_STOP = 0x01 << 2,
+  PLAY_TOOLBAR_PLAY = 0x03 << 4
+};
 void set_toolbar_state (unsigned state);
 
-GtkWidget * create_statusbar (GtkWidget * container);
+GtkWidget *create_statusbar (GtkWidget * container);
 void update_statusbar (void);
 
-void set_the_colours (GtkWidget * w,  const char *progname);
+void set_the_colours (GtkWidget * w, const char *progname);
 void setCubeColours (char *progname);
 
 /* Declare that the cube has been solved */
-void declare_win (const struct cube *) ;
+void declare_win (const struct cube *);
 
 /* Popup an error dialog box */
-void error_dialog (GtkWidget * parent,  const char *format, ...);
+void error_dialog (GtkWidget * parent, const char *format, ...);
 
 
 #endif

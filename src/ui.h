@@ -42,10 +42,10 @@ typedef guint t_keysym;
 void abort_animation (void);
 
 void selection_func (void);
-void arrows (t_keysym keysym,  int shifted);
+void arrows (t_keysym keysym, int shifted);
 void mouse (int button);
-void turn_indicator (int axis,  int dir);
-int vector2axis (GLfloat *vector);
+void turn_indicator (int axis, int dir);
+int vector2axis (GLfloat * vector);
 void drawCube (void);
 
 void request_stop (void);
@@ -53,22 +53,17 @@ void request_play (void);
 void request_forward (void);
 void request_back (void);
 void request_truncate_move_queue (void);
-void request_delayed_rotation (Move_Data *data);
+void request_delayed_rotation (Move_Data * data);
 void request_mark_move_queue (void);
 void request_queue_rewind (void);
 void request_fast_forward (void);
 
-void request_rotation ( Move_Data *data) ;
+void request_rotation (Move_Data * data);
 
 /* Rotate the cube about the axis (screen relative) in direction dir */
-void rotate_cube (int axis,  int dir) ;
+void rotate_cube (int axis, int dir);
 
 int is_animating (void);
 
 
 #endif
-
-
-
-
-

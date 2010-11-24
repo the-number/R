@@ -33,17 +33,20 @@
 /* Get this nonesense out of the way first! */
 struct cube *the_cube = NULL;
 
-int create_the_cube (const int dim)
+int
+create_the_cube (const int dim)
 {
   the_cube = new_cube (dim);
-  if ( the_cube == NULL)
+  if (the_cube == NULL)
     exit (1);
   return dim == 0 ? 0 : the_cube->number_blocks;
 }
 
-void destroy_the_cube (void)
+void
+destroy_the_cube (void)
 {
-  if (the_cube) free_cube (the_cube);
+  if (the_cube)
+    free_cube (the_cube);
 }
 
 
@@ -66,34 +69,34 @@ void destroy_the_cube (void)
    |   4 |   5 |   6 |   7 |    |  16 |  17 |  18 |  19 |
    |   0 |   1 |   2 |   3 |
 */
-
-
-
 
+
+
+
 /********************
  *  Cube object constructor.
  ******/
 
 /* Utility function to fetch a particular face of the cube. */
 static inline Face *
-get_face (struct cube *cube,  const int block,  const int face)
+get_face (struct cube *cube, const int block, const int face)
 {
-    return cube->blocks [block].face + face;
+  return cube->blocks[block].face + face;
 }
 
 /* Set the centre point of the face to (x0,  x1,  x2,  x3). */
 static inline void
-set_face_centre (Block *block,
-                 const int face,
-                 const GLfloat x0,  const GLfloat x1,
-                 const GLfloat x2,  const GLfloat x3)
+set_face_centre (Block * block,
+		 const int face,
+		 const GLfloat x0, const GLfloat x1,
+		 const GLfloat x2, const GLfloat x3)
 {
-    point *centre = & block->face [face].centre;
+  point *centre = &block->face[face].centre;
 
-    (*centre) [0] = x0;
-    (*centre) [1] = x1;
-    (*centre) [2] = x2;
-    (*centre) [3] = x3;
+  (*centre)[0] = x0;
+  (*centre)[1] = x1;
+  (*centre)[2] = x2;
+  (*centre)[3] = x3;
 }
 
 /* During the construction of the array of blocks,  we start by assigning them
@@ -102,15 +105,15 @@ set_face_centre (Block *block,
    function performs the transformation. Later on we will also be needing the
    inverse transformation. */
 static inline int
-block_index_to_coords (const struct cube *cube,  const int i)
+block_index_to_coords (const struct cube *cube, const int i)
 {
-    return 2 * i - (cube->cube_size - 1);
+  return 2 * i - (cube->cube_size - 1);
 }
 
 static inline int
-block_coords_to_index (const struct cube *cube,  const double i)
+block_coords_to_index (const struct cube *cube, const double i)
 {
-    return (int) ((i + (cube->cube_size - 1)) / 2.0);
+  return (int) ((i + (cube->cube_size - 1)) / 2.0);
 }
 
 
@@ -118,89 +121,88 @@ block_coords_to_index (const struct cube *cube,  const double i)
 struct cube *
 new_cube (const int cube_size)
 {
-    /* Looping variables. */
-    int i,  k;
+  /* Looping variables. */
+  int i, k;
 
-    /* The object that is returned to the caller. */
-    struct cube *ret;
+  /* The object that is returned to the caller. */
+  struct cube *ret;
 
-    /* We'll be needing this value quite a bit. */
-    const int cube_size_2 = cube_size * cube_size;
-
-
-    /* Allocate memory,  and initialize constant members of the cube. */
-
-    if (cube_size == 0)
-        return NULL;
-
-    if (NULL == (ret = malloc (sizeof (struct cube))))
-      return NULL;
-
-    ret->cube_size = cube_size;
-    ret->number_blocks = cube_size_2 * cube_size;
-
-    if (NULL == (ret->blocks = calloc (ret->number_blocks, sizeof (Block))))
-      {
-	perror ("Error allocating blocks");
-        free (ret);
-        return NULL;
-      }
+  /* We'll be needing this value quite a bit. */
+  const int cube_size_2 = cube_size * cube_size;
 
 
-    /* Loop over the array of blocks,  and initialize each one. */
+  /* Allocate memory,  and initialize constant members of the cube. */
 
-    for (i = 0; i < ret->number_blocks; ++i)
+  if (cube_size == 0)
+    return NULL;
+
+  if (NULL == (ret = malloc (sizeof (struct cube))))
+    return NULL;
+
+  ret->cube_size = cube_size;
+  ret->number_blocks = cube_size_2 * cube_size;
+
+  if (NULL == (ret->blocks = calloc (ret->number_blocks, sizeof (Block))))
     {
-        Block *block = ret->blocks + i;
+      perror ("Error allocating blocks");
+      free (ret);
+      return NULL;
+    }
 
 
-        /* Flagging only certain faces as visible allows us to avoid rendering
-           invisible surfaces,  thus slowing down animation. */
+  /* Loop over the array of blocks,  and initialize each one. */
 
-        block->visible_faces
-                   =   FACE_0 * (0 == i / cube_size_2)
-                     + FACE_1 * (cube_size - 1 == i / cube_size_2)
-                     + FACE_2 * (0 == i / cube_size % cube_size)
-                     + FACE_3 * (cube_size - 1 == i / cube_size % cube_size)
-                     + FACE_4 * (0 == i % cube_size)
-                     + FACE_5 * (cube_size - 1 == i % cube_size);
+  for (i = 0; i < ret->number_blocks; ++i)
+    {
+      Block *block = ret->blocks + i;
 
 
-        /* Initialize all transformations to the identity matrix,  then set the
-           translation part to correspond to the initial position of the
-           block. */
+      /* Flagging only certain faces as visible allows us to avoid rendering
+         invisible surfaces,  thus slowing down animation. */
 
-        for (k = 0; k < 12; ++k)
-            block->transformation [k] = 0;
-        for (k = 0; k < 4; ++k)
-            block->transformation [5 * k] = 1;
-
-        block->transformation [12]
-                 = block_index_to_coords (ret,  i % cube_size);
-        block->transformation [13]
-                 = block_index_to_coords (ret,  (i / cube_size) % cube_size);
-        block->transformation [14]
-                 = block_index_to_coords (ret,  (i / cube_size_2) % cube_size);
+      block->visible_faces
+	= FACE_0 * (0 == i / cube_size_2)
+	+ FACE_1 * (cube_size - 1 == i / cube_size_2)
+	+ FACE_2 * (0 == i / cube_size % cube_size)
+	+ FACE_3 * (cube_size - 1 == i / cube_size % cube_size)
+	+ FACE_4 * (0 == i % cube_size)
+	+ FACE_5 * (cube_size - 1 == i % cube_size);
 
 
-        /* Set all the face centres. */
+      /* Initialize all transformations to the identity matrix,  then set the
+         translation part to correspond to the initial position of the
+         block. */
 
-        set_face_centre (block,  0,   0,   0,  -1,  0);
-        set_face_centre (block,  1,   0,   0,   1,  0);
-        set_face_centre (block,  2,   0,  -1,   0,  0);
-        set_face_centre (block,  3,   0,   1,   0,  0);
-        set_face_centre (block,  4,  -1,   0,   0,  0);
-        set_face_centre (block,  5,   1,   0,   0,  0);
+      for (k = 0; k < 12; ++k)
+	block->transformation[k] = 0;
+      for (k = 0; k < 4; ++k)
+	block->transformation[5 * k] = 1;
 
-    }  /* End of loop over blocks. */
-	
-    return ret;
-
-}  /* End of function new_cube (). */
+      block->transformation[12] = block_index_to_coords (ret, i % cube_size);
+      block->transformation[13]
+	= block_index_to_coords (ret, (i / cube_size) % cube_size);
+      block->transformation[14]
+	= block_index_to_coords (ret, (i / cube_size_2) % cube_size);
 
 
+      /* Set all the face centres. */
 
+      set_face_centre (block, 0, 0, 0, -1, 0);
+      set_face_centre (block, 1, 0, 0, 1, 0);
+      set_face_centre (block, 2, 0, -1, 0, 0);
+      set_face_centre (block, 3, 0, 1, 0, 0);
+      set_face_centre (block, 4, -1, 0, 0, 0);
+      set_face_centre (block, 5, 1, 0, 0, 0);
+
+    }				/* End of loop over blocks. */
+
+  return ret;
+
+}				/* End of function new_cube (). */
 
+
+
+
 /********************
  *  A cube object destructor. Provided the memory has not been corrupted,
  *  nothing can go wrong with this.
@@ -209,17 +211,17 @@ new_cube (const int cube_size)
 void
 free_cube (struct cube *cube)
 {
-    if (cube)
+  if (cube)
     {
-        free (cube->blocks);
+      free (cube->blocks);
 
-        free (cube);
+      free (cube);
     }
 }
-
-
-
 
+
+
+
 /********************
  *  Functions for handling error messages. Note that if the message is longer
  *  than BLOCK_ERROR_MESSAGE_BUFFER_LEN then it will be truncated and a trailing
@@ -227,20 +229,20 @@ free_cube (struct cube *cube)
  ******/
 
 static inline void
-set_block_error_message (struct cube *cube,  const char *const msg)
+set_block_error_message (struct cube *cube, const char *const msg)
 {
-    strncpy (cube->error_message,  msg,  BLOCK_ERROR_MESSAGE_BUFFER_LEN);
+  strncpy (cube->error_message, msg, BLOCK_ERROR_MESSAGE_BUFFER_LEN);
 }
 
 void
-print_cube_error (const struct cube *cube,  const char *const prefix)
+print_cube_error (const struct cube *cube, const char *const prefix)
 {
-    printf ("%s: %s\n",  prefix,  cube->error_message);
+  printf ("%s: %s\n", prefix, cube->error_message);
 }
-
-
-
 
+
+
+
 /********************
  *  Object mutator rotate_slice.
  ******/
@@ -250,12 +252,15 @@ print_cube_error (const struct cube *cube,  const char *const prefix)
 static inline int
 cos_quadrant (const int quarters)
 {
-	switch (abs (quarters) % 4)
+  switch (abs (quarters) % 4)
     {
-        case 0:  return 1;
-        case 2:  return -1;
-        default: return 0;
-	}
+    case 0:
+      return 1;
+    case 2:
+      return -1;
+    default:
+      return 0;
+    }
 }
 
 /* Quick sine function,  for angles expressed in quarters of complete
@@ -263,60 +268,56 @@ cos_quadrant (const int quarters)
 static inline int
 sin_quadrant (const int quarters)
 {
-    return cos_quadrant (quarters - 1);
+  return cos_quadrant (quarters - 1);
 }
 
 /* Rotate the slice identified by a prior call to identify_blocks,  about the
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
 int
-rotate_slice (struct cube *cube,
-              const int turns,
-              const Slice_Blocks *slice)
+rotate_slice (struct cube *cube, const int turns, const Slice_Blocks * slice)
 {
-    /* Iterator for array of blocks in the current slice. */
-	const int *i;
+  /* Iterator for array of blocks in the current slice. */
+  const int *i;
 
-	/* Create a matrix describing the rotation of we are about to perform.
-       We do this by starting with the identity matrix... */
-	Matrix rotation = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1
-	};
-
-
-	/* ... and then assigning values to the active elements. */
-
-	rotation [(slice->axis + 1) % 3 + 4 * ((slice->axis + 1) % 3)]
-        = cos_quadrant (turns);
-
-	rotation [(slice->axis + 2) % 3 + 4 * ((slice->axis + 2) % 3)]
-        = cos_quadrant (turns);
-
-	rotation [(slice->axis + 1) % 3 + 4 * ((slice->axis + 2) % 3)]
-        = sin_quadrant (turns);
-
-	rotation [(slice->axis + 2) % 3 + 4 * ((slice->axis + 1) % 3)]
-        = -sin_quadrant (turns);
+  /* Create a matrix describing the rotation of we are about to perform.
+     We do this by starting with the identity matrix... */
+  Matrix rotation = {
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+  };
 
 
-    /* Apply the rotation matrix to all the blocks in this slice. We iterate
-       backwards to avoid recalculating the end of the loop with every
-       iteration. */
-	for (i = slice->blocks + slice->number_blocks - 1;
-         i >= slice->blocks;
-         --i)
-		pre_mult (rotation,  cube->blocks [*i].transformation);
+  /* ... and then assigning values to the active elements. */
 
-	return 0;
+  rotation[(slice->axis + 1) % 3 + 4 * ((slice->axis + 1) % 3)]
+    = cos_quadrant (turns);
 
-} /* End of function rotate_slice (). */
+  rotation[(slice->axis + 2) % 3 + 4 * ((slice->axis + 2) % 3)]
+    = cos_quadrant (turns);
+
+  rotation[(slice->axis + 1) % 3 + 4 * ((slice->axis + 2) % 3)]
+    = sin_quadrant (turns);
+
+  rotation[(slice->axis + 2) % 3 + 4 * ((slice->axis + 1) % 3)]
+    = -sin_quadrant (turns);
 
 
+  /* Apply the rotation matrix to all the blocks in this slice. We iterate
+     backwards to avoid recalculating the end of the loop with every
+     iteration. */
+  for (i = slice->blocks + slice->number_blocks - 1; i >= slice->blocks; --i)
+    pre_mult (rotation, cube->blocks[*i].transformation);
 
+  return 0;
+
+}				/* End of function rotate_slice (). */
 
+
+
+
 /********************
  * Return a pointer to an array of block numbers which are in the slice
  * identified by slice_depth (two publicly-exposed wrappers defined below allow
@@ -326,65 +327,60 @@ rotate_slice (struct cube *cube,
  ******/
 
 Slice_Blocks *
-identify_blocks_2 (const struct cube *cube,
-                   const GLfloat slice_depth,
-                   const int axis)
+identify_blocks_2 (const struct cube * cube,
+		   const GLfloat slice_depth, const int axis)
 {
-    /* Looping variables. */
-    int j = 0;
-    Block *i;
+  /* Looping variables. */
+  int j = 0;
+  Block *i;
 
 
-    /* Allocate memory for the return object. */
+  /* Allocate memory for the return object. */
 
-    Slice_Blocks *ret = (Slice_Blocks*) malloc (sizeof (Slice_Blocks));
+  Slice_Blocks *ret = (Slice_Blocks *) malloc (sizeof (Slice_Blocks));
 
-    if (! ret)
-        return NULL;
+  if (!ret)
+    return NULL;
 
-    ret->number_blocks = cube->cube_size * cube->cube_size;
+  ret->number_blocks = cube->cube_size * cube->cube_size;
 
-    ret->blocks = (int *) malloc (ret->number_blocks * sizeof (int));
+  ret->blocks = (int *) malloc (ret->number_blocks * sizeof (int));
 
-    if (! ret->blocks)
+  if (!ret->blocks)
     {
-        free (ret);
-        return NULL;
+      free (ret);
+      return NULL;
     }
 
 
-    /* We need to pass the axis on to the rotate routine. */
+  /* We need to pass the axis on to the rotate routine. */
 
-    ret->axis = axis;
-
-
-    /* Iterate over all the blocks in the cube. When we find one whose
-       axis-component of the location part of its transformation matrix
-       corresponds to the requested slice depth,  then we make a note of its
-       offset in the return->blocks array. */
-
-    for (i = cube->blocks + cube->number_blocks - 1; i >= cube->blocks; --i)
-        if (fabs (i->transformation [12 + axis] - slice_depth) < 0.1)
-            ret->blocks [j++] = i - cube->blocks;
+  ret->axis = axis;
 
 
-    return ret;
+  /* Iterate over all the blocks in the cube. When we find one whose
+     axis-component of the location part of its transformation matrix
+     corresponds to the requested slice depth,  then we make a note of its
+     offset in the return->blocks array. */
 
-}  /* End of function identify_blocks_2 (). */
+  for (i = cube->blocks + cube->number_blocks - 1; i >= cube->blocks; --i)
+    if (fabs (i->transformation[12 + axis] - slice_depth) < 0.1)
+      ret->blocks[j++] = i - cube->blocks;
+
+
+  return ret;
+
+}				/* End of function identify_blocks_2 (). */
 
 
 
 /* Get the blocks in the same slice as the block with block_id. */
 
 Slice_Blocks *
-identify_blocks (const struct cube *cube,
-                 const int block_id,
-                 const int axis)
+identify_blocks (const struct cube * cube, const int block_id, const int axis)
 {
-    return identify_blocks_2
-               (cube,
-                cube->blocks [block_id].transformation [12 + axis],
-                axis);
+  return identify_blocks_2
+    (cube, cube->blocks[block_id].transformation[12 + axis], axis);
 }
 
 
@@ -392,33 +388,30 @@ identify_blocks (const struct cube *cube,
 /* Get the block in the surface slice corresponding to the axis. */
 
 Slice_Blocks *
-identify_surface_blocks (const struct cube *cube,
-                         const int axis)
+identify_surface_blocks (const struct cube * cube, const int axis)
 {
-    if (axis < 3)
-        return identify_blocks_2 (cube,  cube->cube_size - 1,  axis);
+  if (axis < 3)
+    return identify_blocks_2 (cube, cube->cube_size - 1, axis);
 
-    else
-        return identify_blocks_2 (cube,
-                                  - (cube->cube_size - 1),
-                                  axis - 3);
+  else
+    return identify_blocks_2 (cube, -(cube->cube_size - 1), axis - 3);
 }
-
-
-
 
+
+
+
 /********************
  * Release the resources associated with the Slice_Block.
  ******/
 
 void
-free_slice_blocks (Slice_Blocks *slice)
+free_slice_blocks (Slice_Blocks * slice)
 {
-    if (slice)
+  if (slice)
     {
-        free (slice->blocks);
+      free (slice->blocks);
 
-        free (slice);
+      free (slice);
     }
 }
 
@@ -431,21 +424,19 @@ free_slice_blocks (Slice_Blocks *slice)
 
 void
 set_normal_vector (struct cube *cube,
-                   const int block,
-                   const int face,
-                   const vector v)
+		   const int block, const int face, const vector v)
 {
-    Matrix view;
-    vector *dest = & get_face (cube,  block,  face)->normal;
+  Matrix view;
+  vector *dest = &get_face (cube, block, face)->normal;
 
-    glGetFloatv (GL_MODELVIEW_MATRIX,  view);
+  glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
-    memcpy (dest,  v,  sizeof (vector));
+  memcpy (dest, v, sizeof (vector));
 
-    transform (view,  *dest);
+  transform (view, *dest);
 }
-
 
+
 
 
 /********************
@@ -454,19 +445,17 @@ set_normal_vector (struct cube *cube,
 
 void
 set_quadrant_vector (struct cube *cube,
-                     const int block,
-                     const int face,
-                     const int quadrant,
-                     const vector v)
+		     const int block,
+		     const int face, const int quadrant, const vector v)
 {
-    Matrix view;
-    vector *dest = get_face (cube,  block,  face)->quadrants + quadrant;
+  Matrix view;
+  vector *dest = get_face (cube, block, face)->quadrants + quadrant;
 
-    glGetFloatv (GL_MODELVIEW_MATRIX,  view);
+  glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
-    memcpy (dest,  v,  sizeof (vector));
+  memcpy (dest, v, sizeof (vector));
 
-    transform (view,  *dest);
+  transform (view, *dest);
 }
 
 
@@ -478,19 +467,17 @@ set_quadrant_vector (struct cube *cube,
 
 void
 get_quadrant_vector (const struct cube *cube,
-                    const int block,
-                    const int face,
-                    const int quadrant,
-                    vector v)
+		     const int block,
+		     const int face, const int quadrant, vector v)
 {
-    memcpy (v,
-            get_face ((struct cube *const) cube,  block,  face)->quadrants + quadrant,
-            sizeof (vector));
+  memcpy (v,
+	  get_face ((struct cube * const) cube, block,
+		    face)->quadrants + quadrant, sizeof (vector));
 }
-
-
-
 
+
+
+
 /********************
  * The cube is solved iff for all faces the quadrant vectors point in the same
  * direction.  If however all the normals point in the same direction,  but the
@@ -501,101 +488,98 @@ get_quadrant_vector (const struct cube *cube,
 enum Cube_Status
 cube_get_status (const struct cube *cube)
 {
-    /* Loop variables for iterating over faces and blocks. */
+  /* Loop variables for iterating over faces and blocks. */
 
-    int face;
-    Block *block;
+  int face;
+  Block *block;
 
 
-    /* Find out if the cube is at least half solved (the colours are right,  but
-       some orientations are wrong (this can be seen on a face away from an edge
-       of the cube with a pixmap on it). If the cube is not at least
-       half-solved,  then it is definitely unsolved and this value is
-       returned. */
+  /* Find out if the cube is at least half solved (the colours are right,  but
+     some orientations are wrong (this can be seen on a face away from an edge
+     of the cube with a pixmap on it). If the cube is not at least
+     half-solved,  then it is definitely unsolved and this value is
+     returned. */
 
-    for (face = 0; face < 6 ; ++face)
+  for (face = 0; face < 6; ++face)
     {
-        vector q0;
-        const unsigned int mask = 0x01 << face;
-        int x = 0;
+      vector q0;
+      const unsigned int mask = 0x01 << face;
+      int x = 0;
 
-        for (block = cube->blocks + cube->number_blocks - 1;
-             block >= cube->blocks;
-             --block)
-        {
-            if (block->visible_faces & mask)
-            {
-                vector *v0 = & block->face [face].normal;
+      for (block = cube->blocks + cube->number_blocks - 1;
+	   block >= cube->blocks; --block)
+	{
+	  if (block->visible_faces & mask)
+	    {
+	      vector *v0 = &block->face[face].normal;
 
-                if (x == 0)
-                {
-                    memcpy (q0,  v0,  sizeof (vector));
+	      if (x == 0)
+		{
+		  memcpy (q0, v0, sizeof (vector));
 
-                    ++x;
-                }
+		  ++x;
+		}
 
-                else
-                {
-                    if (! vectors_equal (q0,  *v0))
-                        return NOT_SOLVED;
-                }
-            }
-        }
+	      else
+		{
+		  if (!vectors_equal (q0, *v0))
+		    return NOT_SOLVED;
+		}
+	    }
+	}
     }
 
 
-    /* The cube is at least half-solved. Check if it is fully solved by checking
-       the alignments of all the quadrant vectors. If any are out,  then return
-       the half-solved status to the caller. Note that it is only necessary to
-       check two perpendicular quadrant vectors. */
+  /* The cube is at least half-solved. Check if it is fully solved by checking
+     the alignments of all the quadrant vectors. If any are out,  then return
+     the half-solved status to the caller. Note that it is only necessary to
+     check two perpendicular quadrant vectors. */
 
-    for (face = 0; face < 6; ++face)
+  for (face = 0; face < 6; ++face)
     {
-        vector q1;
-        vector q0;
-        const unsigned int mask = 0x01 << face;
-        int x = 0;
+      vector q1;
+      vector q0;
+      const unsigned int mask = 0x01 << face;
+      int x = 0;
 
-        for (block = cube->blocks + cube->number_blocks - 1;
-             block >= cube->blocks;
-             --block)
-        {
-            /* Ignore faces which are inside the cube. */
-            if (block->visible_faces & mask)
-            {
-                vector *v0 = block->face [face].quadrants;
-                vector *v1 = v0 + 1;
+      for (block = cube->blocks + cube->number_blocks - 1;
+	   block >= cube->blocks; --block)
+	{
+	  /* Ignore faces which are inside the cube. */
+	  if (block->visible_faces & mask)
+	    {
+	      vector *v0 = block->face[face].quadrants;
+	      vector *v1 = v0 + 1;
 
-                if (x == 0)
-                {
-                    memcpy (q0,  v0,  sizeof (vector));
-                    memcpy (q1,  v1,  sizeof (vector));
+	      if (x == 0)
+		{
+		  memcpy (q0, v0, sizeof (vector));
+		  memcpy (q1, v1, sizeof (vector));
 
-                    ++x;
-                }
+		  ++x;
+		}
 
-                else if (! vectors_equal (q0,  *v0)
-                                            ||  ! vectors_equal (q1,  *v1))
-                    return HALF_SOLVED;
-            }
-        }
+	      else if (!vectors_equal (q0, *v0) || !vectors_equal (q1, *v1))
+		return HALF_SOLVED;
+	    }
+	}
     }
 
-    /* struct cube is fully solved. */
-    return SOLVED;
+  /* struct cube is fully solved. */
+  return SOLVED;
 }
-
-
-
 
+
+
+
 /********************
  * struct cube accessor method.
  ******/
 
 int
-get_visible_faces (const struct cube *cube,  const int block_id)
+get_visible_faces (const struct cube *cube, const int block_id)
 {
-    return cube->blocks [block_id].visible_faces;
+  return cube->blocks[block_id].visible_faces;
 }
 
 
@@ -608,17 +592,14 @@ get_visible_faces (const struct cube *cube,  const int block_id)
 
 int
 get_block_transform (const struct cube *cube,
-                     const int block_id,
-                     Matrix transform)
+		     const int block_id, Matrix transform)
 {
-    memcpy (transform,
-            cube->blocks [block_id].transformation,
-            sizeof (Matrix));
+  memcpy (transform, cube->blocks[block_id].transformation, sizeof (Matrix));
 
-	return 0;
+  return 0;
 }
-
 
+
 
 /********************
  * Manufacture a SCM object which is a vector of six vectors of (cube_size *
@@ -626,98 +607,94 @@ get_block_transform (const struct cube *cube,
  * the cube (a number from [0, 5]).
  ********/
 
-SCM make_scm_cube (const struct cube *cube)
+SCM
+make_scm_cube (const struct cube * cube)
 {
-    SCM scm_face_vector ;
-    Block *block;
-    int face;
-    char colours [6] [cube->cube_size] [cube->cube_size];
+  SCM scm_face_vector;
+  Block *block;
+  int face;
+  char colours[6][cube->cube_size][cube->cube_size];
 
-    /* Loop over all blocks and faces,  but only process if the face is on the
-       outside of the cube. */
+  /* Loop over all blocks and faces,  but only process if the face is on the
+     outside of the cube. */
 
-    for (block = cube->blocks + cube->number_blocks - 1;
-         block >= cube->blocks;
-         --block)
-
-        for (face = 0; face < 6; ++face)
-
-            if (block->visible_faces & (0x01 << face))
-            {
-                /* Apply the rotation part of the block transformation to the
-                   offset of the face centre from the centre of the block. This
-                   will tell us the direction the face is now facing. */
-
-                point face_direction;
-
-                memcpy (face_direction,
-                        block->face [face].centre,
-                        sizeof (point));
-
-                transform (block->transformation,  face_direction);
-
-
-                /* The face direction will have exactly one non-zero component;
-                   this is in the direction of the normal,  so we can infer which
-                   side of the cube we are on. Further,  if we look at the other
-                   two components of the location part of the block
-                   transformation,  we can infer the position of the block in the
-                   face. We set the appropriate element in the colours array to
-                   the colour of this face,  which corresponds exactly with the
-                   original face the block was at. */
-
-                if (abs (face_direction [0]) > 0.1)
-                    colours [face_direction [0] < 0.0 ? 4 : 5]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [13])]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [14])] = face;
-
-                else if (abs (face_direction [1]) > 0.1)
-                    colours [face_direction [1] < 0.0 ? 2 : 3]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [12])]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [14])] = face;
-
-                else
-                    colours [face_direction [2] < 0.0 ? 0 : 1]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [12])]
-                            [block_coords_to_index
-                                     (cube,  block->transformation [13])] = face;
-            }
-
-
-    /* Now the colours array should be completely populated,  we can manufacture
-       our scheme object. */
-
-    scm_face_vector = scm_c_make_vector (6,  SCM_UNSPECIFIED);
+  for (block = cube->blocks + cube->number_blocks - 1;
+       block >= cube->blocks; --block)
 
     for (face = 0; face < 6; ++face)
+
+      if (block->visible_faces & (0x01 << face))
+	{
+	  /* Apply the rotation part of the block transformation to the
+	     offset of the face centre from the centre of the block. This
+	     will tell us the direction the face is now facing. */
+
+	  point face_direction;
+
+	  memcpy (face_direction, block->face[face].centre, sizeof (point));
+
+	  transform (block->transformation, face_direction);
+
+
+	  /* The face direction will have exactly one non-zero component;
+	     this is in the direction of the normal,  so we can infer which
+	     side of the cube we are on. Further,  if we look at the other
+	     two components of the location part of the block
+	     transformation,  we can infer the position of the block in the
+	     face. We set the appropriate element in the colours array to
+	     the colour of this face,  which corresponds exactly with the
+	     original face the block was at. */
+
+	  if (abs (face_direction[0]) > 0.1)
+	    colours[face_direction[0] < 0.0 ? 4 : 5]
+	      [block_coords_to_index
+	       (cube, block->transformation[13])]
+	      [block_coords_to_index
+	       (cube, block->transformation[14])] = face;
+
+	  else if (abs (face_direction[1]) > 0.1)
+	    colours[face_direction[1] < 0.0 ? 2 : 3]
+	      [block_coords_to_index
+	       (cube, block->transformation[12])]
+	      [block_coords_to_index
+	       (cube, block->transformation[14])] = face;
+
+	  else
+	    colours[face_direction[2] < 0.0 ? 0 : 1]
+	      [block_coords_to_index
+	       (cube, block->transformation[12])]
+	      [block_coords_to_index
+	       (cube, block->transformation[13])] = face;
+	}
+
+
+  /* Now the colours array should be completely populated,  we can manufacture
+     our scheme object. */
+
+  scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
+
+  for (face = 0; face < 6; ++face)
     {
-        int i,  j;
+      int i, j;
 
-        SCM scm_block_vector
-            = scm_c_make_vector (cube->cube_size * cube->cube_size,
-                                 SCM_UNSPECIFIED);
+      SCM scm_block_vector
+	= scm_c_make_vector (cube->cube_size * cube->cube_size,
+			     SCM_UNSPECIFIED);
 
-        for (i = 0; i < cube->cube_size; ++i)
-            for (j = 0; j < cube->cube_size; ++j)
-                scm_vector_set_x (scm_block_vector,
-                                  scm_from_int (i + cube->cube_size * j),
-                                  scm_from_int (colours [face] [i] [j]));
+      for (i = 0; i < cube->cube_size; ++i)
+	for (j = 0; j < cube->cube_size; ++j)
+	  scm_vector_set_x (scm_block_vector,
+			    scm_from_int (i + cube->cube_size * j),
+			    scm_from_int (colours[face][i][j]));
 
-        scm_vector_set_x (scm_face_vector,
-                          scm_from_int (face),
-                          scm_block_vector);
+      scm_vector_set_x (scm_face_vector,
+			scm_from_int (face), scm_block_vector);
     }
 
-    return scm_cons (scm_list_5 (scm_from_int (1),
-                                 scm_from_int (3),
-                                 scm_from_int (cube->cube_size),
-                                 scm_from_int (cube->cube_size),
-                                 scm_from_int (cube->cube_size)),
-                     scm_face_vector);
+  return scm_cons (scm_list_5 (scm_from_int (1),
+			       scm_from_int (3),
+			       scm_from_int (cube->cube_size),
+			       scm_from_int (cube->cube_size),
+			       scm_from_int (cube->cube_size)),
+		   scm_face_vector);
 }
-

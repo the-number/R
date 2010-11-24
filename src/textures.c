@@ -31,78 +31,88 @@
 
 
 static GLubyte Image[6][checkImageHeight][checkImageWidth][4];
-static unsigned char xbm[6][checkImageHeight*checkImageWidth/8];
+static unsigned char xbm[6][checkImageHeight * checkImageWidth / 8];
 
 struct pattern_parameters stock_pattern[6];
 
 static void
 texMakePatterns (void)
 {
-   int i,  j,  c;
-   int k=0;
-   int x=0;
-   int shift=0;
+  int i, j, c;
+  int k = 0;
+  int x = 0;
+  int shift = 0;
 
-   /* Stripy pattern */
-   for (i = 0; i < checkImageHeight; i++) {
-     for (j = 0; j < checkImageWidth; j++) {
-       c = ((i&0x04)==0) *255;
-       Image[k][i][j][0] = (GLubyte) c;
-       Image[k][i][j][1] = (GLubyte) c;
-       Image[k][i][j][2] = (GLubyte) c;
-       Image[k][i][j][3] = (GLubyte) 255;
-       xbm[k][x] |= ( c&0x01 ) << shift;
-       shift ++;
-       if (shift >= 8 ) {
-	 shift=0;
-	 x++;
-       }
-     }
-   }
-
-
-   /* Diagonal Striped */
-   k=1;
-   shift=0;
-   x=0;
-   for (i = 0; i < checkImageHeight; i++) {
-     for (j = 0; j < checkImageWidth; j++) {
-       c = (((i+j)&0x08)==0) *255;
-       Image[k][i][j][0] = (GLubyte) c;
-       Image[k][i][j][1] = (GLubyte) c;
-       Image[k][i][j][2] = (GLubyte) c;
-       Image[k][i][j][3] = (GLubyte) 255;
-       xbm[k][x] |= ( c&0x01 ) << shift;
-       shift ++;
-       if (shift >= 8 ) {
-	 shift=0;
-	 x++;
-       }
-     }
-   }
+  /* Stripy pattern */
+  for (i = 0; i < checkImageHeight; i++)
+    {
+      for (j = 0; j < checkImageWidth; j++)
+	{
+	  c = ((i & 0x04) == 0) * 255;
+	  Image[k][i][j][0] = (GLubyte) c;
+	  Image[k][i][j][1] = (GLubyte) c;
+	  Image[k][i][j][2] = (GLubyte) c;
+	  Image[k][i][j][3] = (GLubyte) 255;
+	  xbm[k][x] |= (c & 0x01) << shift;
+	  shift++;
+	  if (shift >= 8)
+	    {
+	      shift = 0;
+	      x++;
+	    }
+	}
+    }
 
 
-   /* Checked patterns */
-   for ( k = 2 ; k < 6 ; ++k ) {
-     unsigned int foo = 0x01 << k ;
-     shift=0;
-     x = 0;
-     for (i = 0; i < checkImageHeight; i++) {
-       for (j = 0; j < checkImageWidth; j++) {
-	 c = ((((i&foo)==0)^((j&foo)==0)))*255;
-	 Image[k][i][j][0] = (GLubyte) c;
-	 Image[k][i][j][1] = (GLubyte) c;
-	 Image[k][i][j][2] = (GLubyte) c;
-	 Image[k][i][j][3] = (GLubyte) 255;
-	 xbm[k][x] |= ( c&0x01 ) << shift;
-	 shift ++;
-	 if (shift >= 8 ) {
-	   shift=0;
-	   x++;
-	 }
-       }
-     }
-   }
+  /* Diagonal Striped */
+  k = 1;
+  shift = 0;
+  x = 0;
+  for (i = 0; i < checkImageHeight; i++)
+    {
+      for (j = 0; j < checkImageWidth; j++)
+	{
+	  c = (((i + j) & 0x08) == 0) * 255;
+	  Image[k][i][j][0] = (GLubyte) c;
+	  Image[k][i][j][1] = (GLubyte) c;
+	  Image[k][i][j][2] = (GLubyte) c;
+	  Image[k][i][j][3] = (GLubyte) 255;
+	  xbm[k][x] |= (c & 0x01) << shift;
+	  shift++;
+	  if (shift >= 8)
+	    {
+	      shift = 0;
+	      x++;
+	    }
+	}
+    }
+
+
+  /* Checked patterns */
+  for (k = 2; k < 6; ++k)
+    {
+      unsigned int foo = 0x01 << k;
+      shift = 0;
+      x = 0;
+      for (i = 0; i < checkImageHeight; i++)
+	{
+	  for (j = 0; j < checkImageWidth; j++)
+	    {
+	      c = ((((i & foo) == 0) ^ ((j & foo) == 0))) * 255;
+	      Image[k][i][j][0] = (GLubyte) c;
+	      Image[k][i][j][1] = (GLubyte) c;
+	      Image[k][i][j][2] = (GLubyte) c;
+	      Image[k][i][j][3] = (GLubyte) 255;
+	      xbm[k][x] |= (c & 0x01) << shift;
+	      shift++;
+	      if (shift >= 8)
+		{
+		  shift = 0;
+		  x++;
+		}
+	    }
+	}
+    }
 
 
 
@@ -117,30 +127,28 @@ texInit (void)
   GLuint texName[6];
 
   texMakePatterns ();
-  glPixelStorei (GL_UNPACK_ALIGNMENT,  1);
+  glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
-  glGenTextures (6,  texName);
+  glGenTextures (6, texName);
 
-  glTexEnvi (GL_TEXTURE_ENV,  GL_TEXTURE_ENV_MODE,  GL_MODULATE);
-  for ( i = 0 ; i < 6 ; ++i ) {
+  glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  for (i = 0; i < 6; ++i)
+    {
 
-    stock_pattern[i].texName = texName[i];
+      stock_pattern[i].texName = texName[i];
 
-    glBindTexture (GL_TEXTURE_2D,  texName[i]);
-    glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_WRAP_S,  GL_CLAMP);
-    glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_WRAP_T,  GL_CLAMP);
-    glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_MAG_FILTER,
-		    GL_NEAREST);
-    glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_MIN_FILTER,
-		    GL_NEAREST);
+      glBindTexture (GL_TEXTURE_2D, texName[i]);
+      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-    glTexImage2D (GL_TEXTURE_2D,  0,  GL_RGBA,  checkImageWidth,
-		 checkImageHeight,  0,  GL_RGBA,  GL_UNSIGNED_BYTE,
-		 Image[i]);
+      glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth,
+		    checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, Image[i]);
 
-    stock_pattern[i].data = xbm[i];
-    stock_pattern[i].texFunc = GL_MODULATE;
-  }
+      stock_pattern[i].data = xbm[i];
+      stock_pattern[i].texFunc = GL_MODULATE;
+    }
 
 
 }
@@ -149,39 +157,37 @@ texInit (void)
    Returns NULL if it cannot be created.
 */
 GLuint
-create_pattern_from_pixbuf (const GdkPixbuf *pixbuf ,  GError **gerr)
+create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
 {
 
   GLuint texName;
 
-  glPixelStorei (GL_UNPACK_ALIGNMENT,  1);
-  glGenTextures (1,  &texName);
+  glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+  glGenTextures (1, &texName);
 
 
-  glBindTexture (GL_TEXTURE_2D,  texName);
-  glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_WRAP_S,  GL_CLAMP);
-  glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_WRAP_T,  GL_CLAMP);
-  glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_MAG_FILTER,
-		  GL_NEAREST);
-  glTexParameteri (GL_TEXTURE_2D,  GL_TEXTURE_MIN_FILTER,
-		  GL_NEAREST);
+  glBindTexture (GL_TEXTURE_2D, texName);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
   {
     int width;
     int height;
-    guchar * pixels;
+    guchar *pixels;
 
     gboolean has_alpha;
     int channels;
 
     GLenum format;
-    GdkColorspace colourSpace ;
+    GdkColorspace colourSpace;
 
     GQuark domain = g_quark_from_string ("rubik_texture");
 
     width = gdk_pixbuf_get_width (pixbuf);
     height = gdk_pixbuf_get_height (pixbuf);
-    colourSpace =  gdk_pixbuf_get_colorspace (pixbuf);
+    colourSpace = gdk_pixbuf_get_colorspace (pixbuf);
 
 
     channels = gdk_pixbuf_get_n_channels (pixbuf);
@@ -189,41 +195,45 @@ create_pattern_from_pixbuf (const GdkPixbuf *pixbuf ,  GError **gerr)
 
     /* This seems to cover all the cases that gdk_pixbuf
        supports at the moment */
-    switch ( colourSpace ) {
-    case GDK_COLORSPACE_RGB:
-      if ( channels == 4 && has_alpha ) {
-	format = GL_RGBA;
-      }
-      else if ( channels == 3 && ! has_alpha ) {
-	format = GL_RGB;
-      }
-      else {
-	if ( gerr ) {
-	  *gerr = g_error_new (domain, 0,
-		      _("Pixbuf has wrong number of channels"));
-	}
+    switch (colourSpace)
+      {
+      case GDK_COLORSPACE_RGB:
+	if (channels == 4 && has_alpha)
+	  {
+	    format = GL_RGBA;
+	  }
+	else if (channels == 3 && !has_alpha)
+	  {
+	    format = GL_RGB;
+	  }
+	else
+	  {
+	    if (gerr)
+	      {
+		*gerr = g_error_new (domain, 0,
+				     _
+				     ("Pixbuf has wrong number of channels"));
+	      }
+	    return 0;
+	  }
+	break;
+      default:
+	if (gerr)
+	  {
+	    *gerr = g_error_new (domain, 1,
+				 _("Pixbuf has unknown colorspace: %d"),
+				 colourSpace);
+	  }
+
 	return 0;
       }
-      break ;
-    default:
-      if ( gerr ) {
-	*gerr = g_error_new (domain, 1,
-			    _("Pixbuf has unknown colorspace: %d"),
-			    colourSpace);
-      }
-
-      return 0;
-    }
 
     pixels = gdk_pixbuf_get_pixels (pixbuf);
 
-    glTexImage2D (GL_TEXTURE_2D, 0, 3,  width,  height, 0,
-		 format,  GL_UNSIGNED_BYTE,  pixels);
+    glTexImage2D (GL_TEXTURE_2D, 0, 3, width, height, 0,
+		  format, GL_UNSIGNED_BYTE, pixels);
   }
 
   return texName;
 
 }
-
-
-

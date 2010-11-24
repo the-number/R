@@ -46,9 +46,9 @@
 /* A structure containing information about a movement taking place. */
 typedef struct _Move_Data
 {
-    int slice;
-    int dir;     /* 0 or 1. */
-    int axis;
+  int slice;
+  int dir;			/* 0 or 1. */
+  int axis;
 
 } Move_Data;
 
@@ -57,62 +57,62 @@ typedef struct _Move_Data
 
 
 typedef struct _Move_Queue Move_Queue;
-
-
-
 
+
+
+
 /* Construct a new queue object. */
 Move_Queue *new_move_queue (void);
 
 
 /* Destroy an object created with the routine above. */
-void free_move_queue (Move_Queue *move_queue);
+void free_move_queue (Move_Queue * move_queue);
 
 
 /* Add a new Move_Data item onto the tail end of the queue. 1 (one) is returned
    unless there is insufficient memory to grow the queue. A local copy of the
    move_data object is made,  so the incumbent object remains in the ownership of
    the calling application. */
-int move_queue_push (Move_Queue *move_queue,
-                     const Move_Data *move_data);
+int move_queue_push (Move_Queue * move_queue, const Move_Data * move_data);
 
 
 /* Add a new Move_Data item at the current place in the queue,  dropping all
    subsequent moves. */
-int move_queue_push_current (Move_Queue *move_queue,
-                             const Move_Data *move_data);
+int move_queue_push_current (Move_Queue * move_queue,
+			     const Move_Data * move_data);
 
 
 /* Remove the current item and all those that come afterwards. */
-void move_queue_truncate (Move_Queue *move_queue);
+void move_queue_truncate (Move_Queue * move_queue);
 
 
 /* Return the data regarded as the current item on the queue. */
-const Move_Data *move_queue_current (const Move_Queue *move_queue);
+const Move_Data *move_queue_current (const Move_Queue * move_queue);
 
 
 /* Move the current item upwards (towards the first,  or oldest,  item pushed onto
    the queue). */
-int move_queue_advance (Move_Queue *move_queue);
+int move_queue_advance (Move_Queue * move_queue);
 
 
 /* Move the current item downwards (towards the last,  or newest,  item added to
    the queue). */
-int move_queue_retard (Move_Queue *move_queue);
+int move_queue_retard (Move_Queue * move_queue);
 
 
 /* A simple compound accessor. */
 
-typedef struct
-_Move_Queue_Progress
-        { int current,  total; }
-    Move_Queue_Progress;
+typedef struct _Move_Queue_Progress
+{
+  int current, total;
+}
+Move_Queue_Progress;
 
-Move_Queue_Progress move_queue_progress (const Move_Queue *move_queue);
+Move_Queue_Progress move_queue_progress (const Move_Queue * move_queue);
 
 
 /* Mark the current item as a rewind stop point. */
-void move_queue_mark_current (Move_Queue *move_queue);
+void move_queue_mark_current (Move_Queue * move_queue);
 
 
-#endif  /* Undefined MOVE_QUEUE_H. */
+#endif /* Undefined MOVE_QUEUE_H. */

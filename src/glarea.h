@@ -23,13 +23,13 @@
 
 
 extern GLdouble fovy;
-extern GLdouble cp_near,  cp_far;
+extern GLdouble cp_near, cp_far;
 
 
 void re_initialize_glarea (void);
 
 
-GtkWidget * create_gl_area (GtkWidget * containerWidget);
+GtkWidget *create_gl_area (GtkWidget * containerWidget);
 
 
 void modelViewInit (void);

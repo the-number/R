@@ -40,25 +40,26 @@ in the cube (if any) the cursor is located upon.
 #include <assert.h>
 
 static int idle_threshold;
-static gboolean motion= FALSE;
+static gboolean motion = FALSE;
 static gboolean Stop_Detected = FALSE;
 
 static int mouse_x = -1;
 static int mouse_y = -1;
 
-static double granularity  = -1;
+static double granularity = -1;
 static void (*action) (void);
 
 
 
-static gboolean detect_motion (GtkWidget *w,
-			       GdkEventMotion *event,  gpointer user_data);
+static gboolean detect_motion (GtkWidget * w,
+			       GdkEventMotion * event, gpointer user_data);
 
 static gboolean UnsetMotion (gpointer data);
 
 
-static gboolean enableDisableSelection (GtkWidget *w,
-		       GdkEventCrossing *event,  gpointer data);
+static gboolean enableDisableSelection (GtkWidget * w,
+					GdkEventCrossing * event,
+					gpointer data);
 
 static GtkWidget *glxarea;
 extern GtkWidget *toplevel;
@@ -80,38 +81,38 @@ the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. Do_this is a pointer to a function
 to be called when a new block is selected. */
 void
-initSelection (GtkWidget *rendering, int holdoff,
-	       double precision,  void (*do_this) (void))
+initSelection (GtkWidget * rendering, int holdoff,
+	       double precision, void (*do_this) (void))
 {
   needSelection = FALSE;
   idle_threshold = holdoff;
-  granularity = precision ;
+  granularity = precision;
 
   g_signal_connect (rendering, "motion_notify_event",
 		    G_CALLBACK (detect_motion), 0);
 
   action = do_this;
 
-  timer = g_timeout_add (idle_threshold,  UnsetMotion, 0);
+  timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
 
-  timerActive=TRUE;
+  timerActive = TRUE;
 
   /* Add a handler to for all those occasions when we don't need the
      selection mechanism going */
 
   g_signal_connect (rendering, "enter-notify-event",
-		      G_CALLBACK (enableDisableSelection), 0);
+		    G_CALLBACK (enableDisableSelection), 0);
 
   g_signal_connect (rendering, "leave-notify-event",
-		      G_CALLBACK (enableDisableSelection), 0);
+		    G_CALLBACK (enableDisableSelection), 0);
 
 
   g_signal_connect (rendering, "visibility-notify-event",
-		      G_CALLBACK (enableDisableSelection), 0);
+		    G_CALLBACK (enableDisableSelection), 0);
 
 
   g_signal_connect (rendering, "unmap-event",
-		      G_CALLBACK (enableDisableSelection), 0);
+		    G_CALLBACK (enableDisableSelection), 0);
 
   glxarea = rendering;
 }
@@ -121,60 +122,64 @@ void
 disableSelection (void)
 {
 
-    g_source_remove (timer);
-    timerActive=FALSE;
+  g_source_remove (timer);
+  timerActive = FALSE;
 }
 
 void
 enableSelection (void)
 {
-    if ( !timerActive) {
-      timer = g_timeout_add (idle_threshold,  UnsetMotion, 0);
-      timerActive=TRUE;
+  if (!timerActive)
+    {
+      timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
+      timerActive = TRUE;
     }
 
-    needSelection = TRUE ;
+  needSelection = TRUE;
 }
 
 
 /* When the window is not mapped,  kill the selection mechanism.  It wastes
 processor time */
 static gboolean
-enableDisableSelection (GtkWidget *w,
-		       GdkEventCrossing *event,  gpointer data)
+enableDisableSelection (GtkWidget * w,
+			GdkEventCrossing * event, gpointer data)
 {
   /* This is a kludge to work around a rather horrible bug;  for some
      reason,  some  platforms emit a EnterNotify and LeaveNotify (in
      that order) when animations occur.  This workaround makes sure
      that the window is not `entered twice' */
-  static int entered =0;
+  static int entered = 0;
 
 
-  switch (event->type) {
+  switch (event->type)
+    {
 
-  case GDK_ENTER_NOTIFY:
-    entered++;
-    needSelection = FALSE ;
-    if ( !timerActive) {
-      timer = g_timeout_add (idle_threshold,  UnsetMotion, 0);
-      timerActive=TRUE;
+    case GDK_ENTER_NOTIFY:
+      entered++;
+      needSelection = FALSE;
+      if (!timerActive)
+	{
+	  timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
+	  timerActive = TRUE;
+	}
+
+      break;
+    case GDK_LEAVE_NOTIFY:
+      updateSelection ();
+      entered--;
+      if (entered > 0)
+	break;
+
+      needSelection = TRUE;
+      g_source_remove (timer);
+      timerActive = FALSE;
+
+      break;
+
+    default:
+      break;
     }
-
-    break;
-  case GDK_LEAVE_NOTIFY:
-    updateSelection ();
-    entered--;
-    if ( entered > 0 ) break ;
-
-    needSelection = TRUE ;
-    g_source_remove (timer);
-    timerActive=FALSE;
-
-    break;
-
-  default:
-    break;
-  }
 
   return FALSE;
 }
@@ -184,10 +189,10 @@ enableDisableSelection (GtkWidget *w,
 
 /* This callback occurs whenever the mouse is moving */
 static gboolean
-detect_motion (GtkWidget *w,  GdkEventMotion *event,  gpointer user_data)
+detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer user_data)
 {
 
-  if ( event->type != GDK_MOTION_NOTIFY)
+  if (event->type != GDK_MOTION_NOTIFY)
     return FALSE;
 
   mouse_x = event->x;
@@ -212,25 +217,27 @@ gboolean
 UnsetMotion (gpointer data)
 {
 
-  if ( motion == FALSE ) { /* if not moved since last time */
+  if (motion == FALSE)
+    {				/* if not moved since last time */
 
-    if ( ! Stop_Detected ) {
-      /* in here,  things happen upon the mouse stopping */
-      Stop_Detected = TRUE;
-      updateSelection ();
+      if (!Stop_Detected)
+	{
+	  /* in here,  things happen upon the mouse stopping */
+	  Stop_Detected = TRUE;
+	  updateSelection ();
+	}
     }
-  }
 
-  motion = FALSE ;
+  motion = FALSE;
 
   return TRUE;
 
-}  /* end UnsetMotion */
+}				/* end UnsetMotion */
 
 
 
 int
-get_widget_height (GtkWidget *w)
+get_widget_height (GtkWidget * w)
 {
   return w->allocation.height;
 }
@@ -258,34 +265,34 @@ get_widget_height (GtkWidget *w)
 static int noItemSelected = 1;
 
 
-struct facet_selection* choose_items (GLint hits,  GLuint buffer[]);
+struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
 
 
 /* Structure to hold copy of the last selection taken */
-static struct facet_selection  current_selection  = {-1, -1, -1} ;
+static struct facet_selection current_selection = { -1, -1, -1 };
 
 
 /* Identify the block at screen co-ordinates x,  y .  This func determines all
    candidate blocks.  That is,  all blocks which orthogonally project to x,  y.  It
    then calls choose_items,  to determine which of them is closest to the screen.
 */
-struct facet_selection*
-pickPolygons (int x,  int y)
+struct facet_selection *
+pickPolygons (int x, int y)
 {
-  GLint height ;
+  GLint height;
 
   GLint viewport[4];
   GLuint selectBuf[BUFSIZE];
   GLint hits;
 
-  assert (granularity > 0 );
+  assert (granularity > 0);
   assert (fovy > 0);
   assert (cp_near > 0);
   assert (cp_far > 0);
 
   height = get_widget_height (glxarea);
 
-  glSelectBuffer (BUFSIZE,  selectBuf);
+  glSelectBuffer (BUFSIZE, selectBuf);
 
   glRenderMode (GL_SELECT);
 
@@ -296,12 +303,12 @@ pickPolygons (int x,  int y)
   glPushMatrix ();
   glLoadIdentity ();
 
-  glGetIntegerv (GL_VIEWPORT,  viewport);
+  glGetIntegerv (GL_VIEWPORT, viewport);
 
-  gluPickMatrix ( (GLdouble) x,  (GLdouble) (height - y),
-		  granularity,  granularity,  viewport);
+  gluPickMatrix ((GLdouble) x, (GLdouble) (height - y),
+		 granularity, granularity, viewport);
 
-  gluPerspective (fovy,  1,  cp_near,  cp_far);
+  gluPerspective (fovy, 1, cp_near, cp_far);
 
   modelViewInit ();
   drawCube ();
@@ -310,13 +317,13 @@ pickPolygons (int x,  int y)
 
   ERR_CHECK ("");
   hits = glRenderMode (GL_RENDER);
-  if ( hits == 0 ) 
+  if (hits == 0)
     {
       ERR_CHECK ("Error Selecting");
       return (NULL);
     }
 
-  return choose_items (hits,  selectBuf);
+  return choose_items (hits, selectBuf);
 }
 
 
@@ -325,43 +332,46 @@ pickPolygons (int x,  int y)
 
 /* Find out which of all the objects in buffer is the one with the
    lowest Z value.  ie. closer in the depth buffer  */
-struct facet_selection*
-choose_items (GLint hits,  GLuint buffer[])
+struct facet_selection *
+choose_items (GLint hits, GLuint buffer[])
 {
-  static struct facet_selection  selection;
-  unsigned int i,  j;
-  GLuint names,  *ptr;
-	
-  GLint closest[3]={-1, -1, -1};
-	
-  float zvalue=FLT_MAX;
+  static struct facet_selection selection;
+  unsigned int i, j;
+  GLuint names, *ptr;
+
+  GLint closest[3] = { -1, -1, -1 };
+
+  float zvalue = FLT_MAX;
   float z1;
 
 #define SEL_BLOCK 0
 #define SEL_FACE 1
 #define SEL_QUAD 2
 
-  ptr = (GLuint*) buffer;
+  ptr = (GLuint *) buffer;
 
-  for ( i=0; i < hits; i++) 
-  {
-    names = *ptr++;
+  for (i = 0; i < hits; i++)
+    {
+      names = *ptr++;
 
-    z1 = (float) *ptr++/0x7fffffff ;
+      z1 = (float) *ptr++ / 0x7fffffff;
 
-    ptr++; /* we're not interested in the minimum zvalue */
+      ptr++;			/* we're not interested in the minimum zvalue */
 
-    if ( z1 < zvalue ) {
-      zvalue = z1;
-      for (j=0; j < names ; j++) {
-	closest[j] = *ptr++;
-      }
+      if (z1 < zvalue)
+	{
+	  zvalue = z1;
+	  for (j = 0; j < names; j++)
+	    {
+	      closest[j] = *ptr++;
+	    }
 
+	}
+      else
+	{
+	  ptr += names;
+	}
     }
-    else {
-      ptr+=names;
-    }
-  }
 
   if (closest[SEL_QUAD] == -1)
     return NULL;
@@ -372,16 +382,14 @@ choose_items (GLint hits,  GLuint buffer[])
 
 #if DEBUG
   fprintf (stderr, "Selected block %d,  face %d,  quadrant %d\n",
-	   selection.block,
-	   selection.face,
-	   selection.quadrant);
+	   selection.block, selection.face, selection.quadrant);
 #endif
 
   return &selection;
 }
 
 /* an accessor func to get the value of the currently selected items */
-struct facet_selection*
+struct facet_selection *
 selectedItems (void)
 {
   if (noItemSelected)
@@ -397,9 +405,9 @@ selectedItems (void)
 void
 updateSelection (void)
 {
-  struct facet_selection  *selected_polygons = pickPolygons (mouse_x,  mouse_y);
+  struct facet_selection *selected_polygons = pickPolygons (mouse_x, mouse_y);
 
-  if (selected_polygons == NULL )
+  if (selected_polygons == NULL)
     {
       noItemSelected = 1;
     }
@@ -410,8 +418,8 @@ updateSelection (void)
       current_selection = *selected_polygons;
     }
 
-  if (action )
-    action () ;
+  if (action)
+    action ();
 }
 
 int

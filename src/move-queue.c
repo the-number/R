@@ -23,32 +23,32 @@
 
 #include <malloc.h>
 #include <string.h>
-
-
 
+
+
 /* Create and return a pointer to a new object,  which represents a queue holding
    no data. */
 
 static void
-_initialize_new_object (Move_Queue *ret)
+_initialize_new_object (Move_Queue * ret)
 {
-    ret->head = ret->tail = ret->current = NULL;
-    ret->queue_length = 0;
-    ret->current_place = 0;
-    ret->mark_next_push = 0;
+  ret->head = ret->tail = ret->current = NULL;
+  ret->queue_length = 0;
+  ret->current_place = 0;
+  ret->mark_next_push = 0;
 }
 
 Move_Queue *
 new_move_queue (void)
 {
-    Move_Queue *ret;
+  Move_Queue *ret;
 
-    if ((ret = (Move_Queue*) malloc (sizeof (Move_Queue)))  ==  NULL)
-        return NULL;
+  if ((ret = (Move_Queue *) malloc (sizeof (Move_Queue))) == NULL)
+    return NULL;
 
-    _initialize_new_object (ret);
+  _initialize_new_object (ret);
 
-    return ret;
+  return ret;
 }
 
 
@@ -59,66 +59,65 @@ new_move_queue (void)
 static void
 _release_items (struct _Move_Queue_Item *next_item)
 {
-    struct _Move_Queue_Item *next;
+  struct _Move_Queue_Item *next;
 
-    while (next_item != NULL)
+  while (next_item != NULL)
     {
-        next = next_item->next;
-        free (next_item);
-        next_item = next;
+      next = next_item->next;
+      free (next_item);
+      next_item = next;
     }
 }
 
 void
-free_move_queue (Move_Queue *move_queue)
+free_move_queue (Move_Queue * move_queue)
 {
-    _release_items (move_queue->head);
-    free (move_queue);
+  _release_items (move_queue->head);
+  free (move_queue);
 }
-
-
-
 
+
+
+
 /* Routine to push a new Move_Data object onto the _back_ of the given queue. A
    new,  locally-managed copy is made of the incumbent datum. Return 1 (one) if
    the operation is successful; 0 (zero) indicates that there was insufficient
    memory to grow the queue. */
 
 int
-move_queue_push (Move_Queue *move_queue,
-                 const Move_Data *move_data)
+move_queue_push (Move_Queue * move_queue, const Move_Data * move_data)
 {
-    struct _Move_Queue_Item *new_element;
+  struct _Move_Queue_Item *new_element;
 
-    if ((new_element = (struct _Move_Queue_Item *)
-                                malloc (sizeof (struct _Move_Queue_Item))) == NULL)
-        return 0;
+  if ((new_element = (struct _Move_Queue_Item *)
+       malloc (sizeof (struct _Move_Queue_Item))) == NULL)
+    return 0;
 
-    memcpy (&new_element->data,  move_data,  sizeof (*move_data));
-    new_element->mark = move_queue->mark_next_push;
-    new_element->next = NULL;
+  memcpy (&new_element->data, move_data, sizeof (*move_data));
+  new_element->mark = move_queue->mark_next_push;
+  new_element->next = NULL;
 
-    if (move_queue->tail != NULL)
-        move_queue->tail->next = new_element;
+  if (move_queue->tail != NULL)
+    move_queue->tail->next = new_element;
 
-    move_queue->tail = new_element;
+  move_queue->tail = new_element;
 
-    ++ move_queue->queue_length;
+  ++move_queue->queue_length;
 
-    if (move_queue->head == NULL)
-        move_queue->head = new_element;
+  if (move_queue->head == NULL)
+    move_queue->head = new_element;
 
-    if (move_queue->current == NULL)
-        move_queue->current = new_element;
+  if (move_queue->current == NULL)
+    move_queue->current = new_element;
 
-    move_queue->mark_next_push = 0;
+  move_queue->mark_next_push = 0;
 
-    return 1;
+  return 1;
 }
-
-
-
 
+
+
+
 /* Procedure to copy the incumbent datum to the current place in the queue,  and
    drop all subsequent queue entries (so that the current element becomes the
    tail). If current points past the end of the tail (including the case when
@@ -127,23 +126,22 @@ move_queue_push (Move_Queue *move_queue,
    memory to grow the queue. In all other cases 1 (one) will be returned. */
 
 int
-move_queue_push_current (Move_Queue *move_queue,
-                         const Move_Data *move_data)
+move_queue_push_current (Move_Queue * move_queue, const Move_Data * move_data)
 {
-    /* If there are no data in the queue,  then perform a standard push
-       operation. Also do this if we are at the tail. */
-    if (move_queue->current == NULL)
-        return move_queue_push (move_queue,  move_data);
+  /* If there are no data in the queue,  then perform a standard push
+     operation. Also do this if we are at the tail. */
+  if (move_queue->current == NULL)
+    return move_queue_push (move_queue, move_data);
 
-    _release_items (move_queue->current->next);
+  _release_items (move_queue->current->next);
 
-    memcpy (&move_queue->current->data,  move_data,  sizeof (*move_data));
-    move_queue->current->next = NULL;
-    move_queue->tail = move_queue->current;
-    move_queue->queue_length = move_queue->current_place + 1;
-    move_queue->mark_next_push = 0;
+  memcpy (&move_queue->current->data, move_data, sizeof (*move_data));
+  move_queue->current->next = NULL;
+  move_queue->tail = move_queue->current;
+  move_queue->queue_length = move_queue->current_place + 1;
+  move_queue->mark_next_push = 0;
 
-    return 1;
+  return 1;
 }
 
 
@@ -153,14 +151,14 @@ move_queue_push_current (Move_Queue *move_queue,
    no data in the queue,  NULL will be returned. */
 
 const Move_Data *
-move_queue_current (const Move_Queue *move_queue)
+move_queue_current (const Move_Queue * move_queue)
 {
-    return (const Move_Data *) move_queue->current;
+  return (const Move_Data *) move_queue->current;
 }
-
-
-
 
+
+
+
 /* Routine to retard the current pointer (move it towards the _head_ of the
    queue). If there are no data on the queue,  or the head already is the current
    pointer,  then zero is returned to indicate that there are no more data to
@@ -175,29 +173,28 @@ move_queue_current (const Move_Queue *move_queue)
    poping and advancing all become expensive operations. */
 
 int
-move_queue_retard (Move_Queue *move_queue)
+move_queue_retard (Move_Queue * move_queue)
 {
-    if (move_queue->head == move_queue->current)  /* We are trying to move past
-                                                     the head. */
-        return 0;
+  if (move_queue->head == move_queue->current)	/* We are trying to move past
+						   the head. */
+    return 0;
 
-    else if (move_queue->current == NULL)         /* We are past the tail. */
-        move_queue->current = move_queue->tail;
+  else if (move_queue->current == NULL)	/* We are past the tail. */
+    move_queue->current = move_queue->tail;
 
-    else        /* We must be somewhere in the middle. */
+  else				/* We must be somewhere in the middle. */
     {
-        struct _Move_Queue_Item *cursor;
+      struct _Move_Queue_Item *cursor;
 
-        for (cursor = move_queue->head;
-             cursor->next != move_queue->current;
-             cursor = cursor->next) ;
+      for (cursor = move_queue->head;
+	   cursor->next != move_queue->current; cursor = cursor->next);
 
-        move_queue->current = cursor;
+      move_queue->current = cursor;
     }
 
-    -- move_queue->current_place;
+  --move_queue->current_place;
 
-    return move_queue->current->mark == 1 ? -1 : 1;
+  return move_queue->current->mark == 1 ? -1 : 1;
 }
 
 
@@ -206,52 +203,52 @@ move_queue_retard (Move_Queue *move_queue)
 /* Remove the current object and all those that come afterwards. */
 
 void
-move_queue_truncate (Move_Queue *move_queue)
+move_queue_truncate (Move_Queue * move_queue)
 {
-    if (move_queue->current == move_queue->head)
+  if (move_queue->current == move_queue->head)
     {
-        _release_items (move_queue->head);
-        _initialize_new_object (move_queue);
+      _release_items (move_queue->head);
+      _initialize_new_object (move_queue);
     }
 
-    else
+  else
     {
-        move_queue->mark_next_push
-            = move_queue->current == NULL ? 0 : move_queue->current->mark;
+      move_queue->mark_next_push
+	= move_queue->current == NULL ? 0 : move_queue->current->mark;
 
-        move_queue_retard (move_queue);
+      move_queue_retard (move_queue);
 
-        if (move_queue->current != NULL)
-            _release_items (move_queue->current->next);
+      if (move_queue->current != NULL)
+	_release_items (move_queue->current->next);
 
-        move_queue->current->next = NULL;
+      move_queue->current->next = NULL;
 
-        move_queue->tail = move_queue->current;
+      move_queue->tail = move_queue->current;
 
-        move_queue_advance (move_queue);
+      move_queue_advance (move_queue);
 
-        move_queue->queue_length = move_queue->current_place;
+      move_queue->queue_length = move_queue->current_place;
     }
 }
-
-
-
 
+
+
+
 /* Routine to advance the current position (move it towards the _tail_). If the
    current position is already at the tail (which will also be the case if the
    queue is empty) then no action takes place and 0 (zero) is returned to
    indicate that no more data are available for consideration. */
 
 int
-move_queue_advance (Move_Queue *move_queue)
+move_queue_advance (Move_Queue * move_queue)
 {
-    if (move_queue->current == NULL)
-        return 0;
+  if (move_queue->current == NULL)
+    return 0;
 
-    move_queue->current = move_queue->current->next;
-    ++ move_queue->current_place;
+  move_queue->current = move_queue->current->next;
+  ++move_queue->current_place;
 
-    return (move_queue->current != NULL);
+  return (move_queue->current != NULL);
 }
 
 
@@ -260,14 +257,14 @@ move_queue_advance (Move_Queue *move_queue)
 /* A simple compound accessor. */
 
 Move_Queue_Progress
-move_queue_progress (const Move_Queue *move_queue)
+move_queue_progress (const Move_Queue * move_queue)
 {
-    Move_Queue_Progress p;
+  Move_Queue_Progress p;
 
-    p.current = move_queue->current_place;
-    p.total = move_queue->queue_length;
+  p.current = move_queue->current_place;
+  p.total = move_queue->queue_length;
 
-    return p;
+  return p;
 }
 
 
@@ -276,11 +273,11 @@ move_queue_progress (const Move_Queue *move_queue)
 /* And a mutator. */
 
 void
-move_queue_mark_current (Move_Queue *move_queue)
+move_queue_mark_current (Move_Queue * move_queue)
 {
-    if (move_queue->current)
-        move_queue->current->mark = 1;
+  if (move_queue->current)
+    move_queue->current->mark = 1;
 
-    else
-        move_queue->mark_next_push = 1;
+  else
+    move_queue->mark_next_push = 1;
 }

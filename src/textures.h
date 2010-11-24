@@ -28,15 +28,15 @@ struct pattern_parameters
 {
   GLuint texName;
   GLubyte *data;
-  GLint texFunc;  /* This is the function to be passed to glTexEnv */
+  GLint texFunc;		/* This is the function to be passed to glTexEnv */
 };
 
 
 extern struct pattern_parameters stock_pattern[6];
 
-void texInit (void) ;
+void texInit (void);
 
 
-GLuint create_pattern_from_pixbuf (const GdkPixbuf *pixbuf ,  GError **gerr);
+GLuint create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr);
 
 #endif
