@@ -1,6 +1,6 @@
 dnl -*-m4-*-
 dnl    GNUbik -- A 3 dimensional magic cube game.
-dnl    Copyright (C) 1998, 2003, 2007  John Darrington
+dnl    Copyright (C) 1998, 2003, 2007, 2010  John Darrington
 dnl    
 dnl    This program is free software; you can redistribute it and/or modify
 dnl    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 
 AX_PREREQ(2.60)
-AC_INIT([GNUbik], [2.3], [bug-gnubik@gnu.org], [gnubik], [http://www.gnu.org/software/gnubik])
+AC_INIT([GNUbik], [2.4], [bug-gnubik@gnu.org], [gnubik], [http://www.gnu.org/software/gnubik])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -79,7 +79,7 @@ AC_SEARCH_LIBS([cos],[m],,
 
 
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.6.0,,)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.12.0,,)
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0,,)
 PKG_CHECK_MODULES(GDK_GL_EXT, gdkglext-1.0,,)
 PKG_CHECK_MODULES(GTK_GL_EXT, gtkglext-1.0,,)
