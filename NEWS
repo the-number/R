@@ -1,3 +1,13 @@
+GNUbik 2.4
+
+	* Corrected minor errors in the documentation.
+
+	* Fixed some portability issues.
+
+	* Added uk translation.
+
+	* We now depend on Gtk+ version 2.12 or later.
+
 GNUbik 2.3
 
 	* Reorganised the autotools and build system.
