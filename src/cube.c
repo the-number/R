@@ -17,7 +17,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <config.h>
 
 #include <stdlib.h>
@@ -72,10 +71,6 @@ destroy_the_cube (void)
 
 
 
-
-/********************
- *  Cube object constructor.
- ******/
 
 /* Utility function to fetch a particular face of the cube. */
 static inline Face *
@@ -203,11 +198,10 @@ new_cube (const int cube_size)
 
 
 
-/********************
- *  A cube object destructor. Provided the memory has not been corrupted,
- *  nothing can go wrong with this.
- ******/
-
+/*
+ A cube object destructor. Provided the memory has not been corrupted,
+ nothing can go wrong with this.
+*/
 void
 free_cube (struct cube *cube)
 {
@@ -222,12 +216,11 @@ free_cube (struct cube *cube)
 
 
 
-/********************
- *  Functions for handling error messages. Note that if the message is longer
- *  than BLOCK_ERROR_MESSAGE_BUFFER_LEN then it will be truncated and a trailing
- *  NULL will not be supplied.
- ******/
-
+/*
+  Functions for handling error messages. Note that if the message is longer
+  than BLOCK_ERROR_MESSAGE_BUFFER_LEN then it will be truncated and a trailing
+  NULL will not be supplied.
+*/
 static inline void
 set_block_error_message (struct cube *cube, const char *const msg)
 {
@@ -243,9 +236,9 @@ print_cube_error (const struct cube *cube, const char *const prefix)
 
 
 
-/********************
- *  Object mutator rotate_slice.
- ******/
+/*
+  Object mutator rotate_slice.
+*/
 
 /* Quick cosine function for angles expressed in quarters of complete
    revolutions. */
@@ -318,13 +311,13 @@ rotate_slice (struct cube *cube, const int turns, const Slice_Blocks * slice)
 
 
 
-/********************
- * Return a pointer to an array of block numbers which are in the slice
- * identified by slice_depth (two publicly-exposed wrappers defined below allow
- * for a convenient means of computing this),  and axis (an integer in [0,
- * 3)). The return value should eventually be destroyed with
- * free_slice_blocks ().
- ******/
+/*
+  Return a pointer to an array of block numbers which are in the slice
+  identified by slice_depth (two publicly-exposed wrappers defined below allow
+  for a convenient means of computing this),  and axis (an integer in [0,
+  3)). The return value should eventually be destroyed with
+  free_slice_blocks ().
+*/
 
 Slice_Blocks *
 identify_blocks_2 (const struct cube * cube,
@@ -400,10 +393,9 @@ identify_surface_blocks (const struct cube * cube, const int axis)
 
 
 
-/********************
- * Release the resources associated with the Slice_Block.
- ******/
-
+/*
+ Release the resources associated with the Slice_Block.
+*/
 void
 free_slice_blocks (Slice_Blocks * slice)
 {
@@ -418,10 +410,9 @@ free_slice_blocks (Slice_Blocks * slice)
 
 
 
-/********************
- * Set the normal vector for block/face.
- ******/
-
+/*
+ Set the normal vector for block/face.
+*/
 void
 set_normal_vector (struct cube *cube,
 		   const int block, const int face, const vector v)
@@ -439,10 +430,9 @@ set_normal_vector (struct cube *cube,
 
 
 
-/********************
- * Set the vector for block/face/quadrant to v.
- ******/
-
+/*
+ Set the vector for block/face/quadrant to v.
+*/
 void
 set_quadrant_vector (struct cube *cube,
 		     const int block,
@@ -461,10 +451,7 @@ set_quadrant_vector (struct cube *cube,
 
 
 
-/********************
- * Return the quadrant vector in v.
- ******/
-
+/* Return the quadrant vector in v. */
 void
 get_quadrant_vector (const struct cube *cube,
 		     const int block,
@@ -478,13 +465,12 @@ get_quadrant_vector (const struct cube *cube,
 
 
 
-/********************
- * The cube is solved iff for all faces the quadrant vectors point in the same
- * direction.  If however all the normals point in the same direction,  but the
- * quadrants do not,  then the colours are all on the right faces,  but not
- * correctly orientated.
- ******/
-
+/*
+ The cube is solved iff for all faces the quadrant vectors point in the same
+ direction.  If however all the normals point in the same direction,  but the
+ quadrants do not,  then the colours are all on the right faces,  but not
+ correctly orientated.
+*/
 enum Cube_Status
 cube_get_status (const struct cube *cube)
 {
@@ -572,10 +558,7 @@ cube_get_status (const struct cube *cube)
 
 
 
-/********************
- * struct cube accessor method.
- ******/
-
+/* struct cube accessor method. */
 int
 get_visible_faces (const struct cube *cube, const int block_id)
 {
@@ -585,11 +568,10 @@ get_visible_faces (const struct cube *cube, const int block_id)
 
 
 
-/********************
- * Get the transformation of block number `block_id' from the origin,  and store
- * it in transform. Return 0 on success,  1 on error.
- ******/
-
+/*
+ Get the transformation of block number `block_id' from the origin,  and store
+ it in transform. Return 0 on success,  1 on error.
+*/
 int
 get_block_transform (const struct cube *cube,
 		     const int block_id, Matrix transform)
@@ -601,12 +583,11 @@ get_block_transform (const struct cube *cube,
 
 
 
-/********************
- * Manufacture a SCM object which is a vector of six vectors of (cube_size *
- * cube_size) elements,  each one holding the colour of a patch of the surface of
- * the cube (a number from [0, 5]).
- ********/
-
+/*
+ Manufacture a SCM object which is a vector of six vectors of (cube_size *
+ cube_size) elements,  each one holding the colour of a patch of the surface of
+ the cube (a number from [0, 5]).
+*/
 SCM
 make_scm_cube (const struct cube * cube)
 {
