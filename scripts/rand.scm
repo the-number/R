@@ -32,11 +32,7 @@
                              (random 2))
                        ret)))))))
   
-
-
-;; Invoke the above procedure from a good few menu items for the convenience of
-;; the user.
-
+(define _ gettext)
 
 (define rand-menu (gnubik-create-menu (_ "_Randomize")))
 (define animate-menu (gnubik-create-menu (_ "_Animated") rand-menu))

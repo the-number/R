@@ -45,6 +45,7 @@
           (move-face cube face)
           (execute-move-buffer!)))))
 
+(define _ gettext)
 
 (define dbg-menu (gnubik-create-menu (_ "_Debug")))
 
