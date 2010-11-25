@@ -655,7 +655,7 @@ request_fast_forward ()
 void
 animate_rotation (Move_Data * data)
 {
-  memcpy (&current_movement.move_data, data, sizeof (Move_Data));
+  memmove (&current_movement.move_data, data, sizeof (Move_Data));
 
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
@@ -758,7 +758,7 @@ TIMEOUT_CALLBACK (animate)
 
       else if (move_queue_current (move_queue))
 	{
-	  memcpy (&md->move_data,
+	  memmove (&md->move_data,
 		  move_queue_current (move_queue), sizeof (Move_Data));
 	  move_queue_advance (move_queue);
 	  animate_rotation (&md->move_data);
