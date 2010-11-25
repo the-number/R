@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNUbik 2.0\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"POT-Creation-Date: 2010-11-25 12:54+0100\n"
 "PO-Revision-Date: 2003-08-09 03:18+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sourceforge.net>\n"
@@ -16,57 +16,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1\n"
 
-#: src/colour-sel.c:181
+#: src/colour-sel.c:185
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr "Tidak dapat cipta imej drpd fail %s:  %s"
 
-#: src/colour-sel.c:261
+#: src/colour-sel.c:265
 msgid "Image Selector"
 msgstr "Pemilih Imej"
 
-#: src/colour-sel.c:289
+#: src/colour-sel.c:287
 #, fuzzy
 msgid "All Images"
 msgstr "Imej"
 
-#: src/colour-sel.c:296
+#: src/colour-sel.c:291
 msgid "All Files"
 msgstr ""
 
-#: src/colour-sel.c:440
+#: src/colour-sel.c:435
 msgid "Pattern"
 msgstr "Corak"
 
-#: src/colour-sel.c:441
+#: src/colour-sel.c:436
 msgid "Colour"
 msgstr "Warna"
 
-#: src/colour-sel.c:468
+#: src/colour-sel.c:464
 msgid "Click here to use a pattern on the cube surface"
 msgstr "Klik sini untuk mengguna corak pada permukaan kiub\""
 
-#: src/colour-sel.c:750
+#: src/colour-sel.c:756
 msgid "Colour selector"
 msgstr "Pemilih warna"
 
-#: src/colour-sel.c:776
+#: src/colour-sel.c:781
 msgid "Image"
 msgstr "Imej"
 
-#: src/colour-sel.c:777
+#: src/colour-sel.c:782
 msgid "Se_lect"
 msgstr "Pi_lih"
 
-#: src/colour-sel.c:780
+#: src/colour-sel.c:784
 msgid "Select an image file"
 msgstr "Pilih fail imej"
 
-#: src/colour-sel.c:783
+#: src/colour-sel.c:787
 msgid "_Tiled"
 msgstr "_Berulang"
 
-#: src/colour-sel.c:785
+#: src/colour-sel.c:790
 msgid ""
 "Place a copy of the image\n"
 "on each block"
@@ -74,11 +74,11 @@ msgstr ""
 "Letak salinan bagi imej\n"
 " pada setiap blok"
 
-#: src/colour-sel.c:789
+#: src/colour-sel.c:795
 msgid "_Mosaic"
 msgstr "_Mozek"
 
-#: src/colour-sel.c:792
+#: src/colour-sel.c:799
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
@@ -86,7 +86,7 @@ msgstr ""
 "Letak salinan bagi imej merentasi\n"
 "seluruh permukaan kiub"
 
-#: src/colour-sel.c:852
+#: src/colour-sel.c:859
 #, fuzzy
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
@@ -95,82 +95,92 @@ msgstr ""
 "Contoh bagi warna atau corak. Anda boleh klik dan pilih warna atau corak "
 "baru, atau heret ke ruang ini."
 
-#: src/menus.c:165
+#: src/menus.c:168
 msgid "Sets the number of blocks in each side"
 msgstr "Tetapkan bilangan blok pada setiap tepian"
 
-#: src/menus.c:167
+#: src/menus.c:170
 msgid "Size of cube:"
 msgstr "Saiz kiub:"
 
-#: src/menus.c:207
+#: src/menus.c:209
 msgid "Faster"
 msgstr "Lebih pantas"
 
-#: src/menus.c:210
+#: src/menus.c:212
 msgid "Slower"
 msgstr "Lebih perlahan"
 
-#: src/menus.c:215
+#: src/menus.c:218
 msgid "Controls the speed with which slices rotate"
 msgstr "Kawal kelajuan yang mengilas cebisan"
 
-#: src/menus.c:259
+#: src/menus.c:262
 msgid "Preferences"
 msgstr "Keutamaan"
 
-#: src/menus.c:271
+#: src/menus.c:277
 msgid "Dimensions"
 msgstr "Dimensi"
 
-#: src/menus.c:272
+#: src/menus.c:278
 msgid "Animation"
 msgstr "Animasi"
 
-#: src/menus.c:273
+#: src/menus.c:279
 msgid "Lighting"
 msgstr "Pencahayaan"
 
-#: src/menus.c:282
+#: src/menus.c:288
 msgid "Enable lighting"
 msgstr "Hidupkan pencahayaan"
 
-#: src/menus.c:284
+#: src/menus.c:290
 msgid "Makes the cube appear illuminated"
 msgstr "Jadikan kuib nampak beriluminasi"
 
-#: src/menus.c:354
+#: src/menus.c:360
 msgid "Start cube with new settings?"
 msgstr "Mula kiub dengan tetapan baru?"
 
-#: src/textures.c:203
+#: src/menus.c:519
+msgid "A 3 dimensional magic cube puzzle"
+msgstr ""
+
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/menus.c:524
+msgid "translator-credits"
+msgstr ""
+
+#: src/textures.c:215
 msgid "Pixbuf has wrong number of channels"
 msgstr "Pixbuf mempunyai bilangan saluran yang salah"
 
-#: src/textures.c:211
+#: src/textures.c:224
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Pixbuf mempunyai ruangwarna tak kenali: %d"
 
-#: src/widget-set.c:112
+#: src/widget-set.c:111
 #, fuzzy, c-format
 msgid "Moves: %d / %d"
 msgstr "Pergerakkan: %d"
 
-#: src/widget-set.c:141
+#: src/widget-set.c:139
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Kiub diselesaikan dalam %d pergerakan"
 msgstr[1] "Kiub diselesaikan dalam %d pergerakan"
 
-#: src/widget-set.c:148
+#: src/widget-set.c:149
 #, fuzzy
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr "Kiub TAK selesai! Warna adalag betul, tapi mempunyai orientasi salah"
 
-#: src/widget-set.c:199
+#: src/widget-set.c:198
 msgid "Rewind"
 msgstr ""
 
@@ -178,100 +188,169 @@ msgstr ""
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:205
+#: src/widget-set.c:204
 msgid "Back"
 msgstr ""
 
-#: src/widget-set.c:206
+#: src/widget-set.c:205
 msgid "Make one step backwards"
 msgstr ""
 
-#: src/widget-set.c:212
+#: src/widget-set.c:210
 msgid "Stop"
 msgstr ""
 
-#: src/widget-set.c:213
+#: src/widget-set.c:211
 msgid "Stop running the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:219
+#: src/widget-set.c:216
 msgid "Mark"
 msgstr ""
 
-#: src/widget-set.c:220
+#: src/widget-set.c:218
 msgid "Mark the current place in the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:226
+#: src/widget-set.c:223
 msgid "Forward"
 msgstr ""
 
-#: src/widget-set.c:227
+#: src/widget-set.c:224
 msgid "Make one step forwards"
 msgstr ""
 
-#: src/widget-set.c:233
+#: src/widget-set.c:229
 msgid "Play"
 msgstr ""
 
-#: src/widget-set.c:234
+#: src/widget-set.c:231
 msgid "Run forward through the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:321
+#: src/widget-set.c:313
 msgid "_Play Toolbar"
 msgstr ""
 
-#: src/widget-set.c:328
+#: src/widget-set.c:320
 msgid "_Status Bar"
 msgstr ""
 
 # libgnomeui/gnome-app-helper.c:91
-#: src/widget-set.c:366
-msgid "/_Game"
+#: src/widget-set.c:334
+#, fuzzy
+msgid "_Game"
 msgstr "/_Permainan"
 
-#: src/widget-set.c:367
-msgid "/_Game/_New Game"
-msgstr "/_Permainan/Permainan Ba_ru"
-
-#: src/widget-set.c:368
-msgid "/_Game/sep"
-msgstr "/_Permainan/sep"
-
-#: src/widget-set.c:369
-msgid "/_Game/_Quit"
-msgstr "/_Permainan/_Keluar"
-
-#: src/widget-set.c:370
-msgid "/_Settings"
-msgstr "/_Tetapan"
-
-#: src/widget-set.c:371
-msgid "/_Settings/_Preferences"
-msgstr "/_Tetapan/Ke_utamaan"
-
-#: src/widget-set.c:372
-msgid "/_Settings/_Colours"
-msgstr "/_Tetapan/_Warna"
-
-#: src/widget-set.c:373
+#: src/widget-set.c:335
 #, fuzzy
-msgid "/_Settings/Sho_w\\/Hide"
+msgid "_Settings"
 msgstr "/_Tetapan"
 
-#: src/widget-set.c:379
-msgid "/_Help"
+#: src/widget-set.c:336
+#, fuzzy
+msgid "_Help"
 msgstr "/_Bantuan"
 
-#: src/widget-set.c:380
-msgid "/_Help/_About"
-msgstr "/_Bantuan/_Perihal"
+#: src/widget-set.c:337
+msgid "_Scripts"
+msgstr ""
 
-#: src/widget-set.c:430
+#: src/widget-set.c:345
 #, fuzzy
-msgid "/Settings/Show\\/Hide"
+msgid "_Colours"
+msgstr "Warna"
+
+#: src/widget-set.c:349
+#, fuzzy
+msgid "Sho_w/Hide"
 msgstr "/_Tetapan"
+
+#: src/widget-set.c:361
+#, fuzzy
+msgid "_New Game"
+msgstr "/_Permainan/Permainan Ba_ru"
+
+#: scripts/debug.scm:49
+msgid "_Debug"
+msgstr ""
+
+#: scripts/debug.scm:51
+msgid "_Move"
+msgstr ""
+
+#: scripts/debug.scm:53
+msgid "_Dump state"
+msgstr ""
+
+#: scripts/rand.scm:41
+msgid "_Randomize"
+msgstr ""
+
+#: scripts/rand.scm:42
+#, fuzzy
+msgid "_Animated"
+msgstr "Animasi"
+
+#: scripts/rand.scm:43
+#, fuzzy
+msgid "_Fast"
+msgstr "Lebih pantas"
+
+#: scripts/mellor-solve.scm:402
+msgid "_Solvers"
+msgstr ""
+
+#: scripts/mellor-solve.scm:403
+msgid "_3×3"
+msgstr ""
+
+#: scripts/mellor-solve.scm:407
+msgid "_Full cube"
+msgstr ""
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _edge place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:413
+msgid "Bottom _corner orient"
+msgstr ""
+
+#: scripts/mellor-solve.scm:416
+msgid "_Bottom corner place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:419
+msgid "_Middle slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:425
+msgid "_Top edges"
+msgstr ""
+
+#~ msgid "/_Game/sep"
+#~ msgstr "/_Permainan/sep"
+
+#~ msgid "/_Game/_Quit"
+#~ msgstr "/_Permainan/_Keluar"
+
+#~ msgid "/_Settings/_Preferences"
+#~ msgstr "/_Tetapan/Ke_utamaan"
+
+#~ msgid "/_Settings/_Colours"
+#~ msgstr "/_Tetapan/_Warna"
+
+#~ msgid "/_Help/_About"
+#~ msgstr "/_Bantuan/_Perihal"
+
+#, fuzzy
+#~ msgid "/Settings/Show\\/Hide"
+#~ msgstr "/_Tetapan"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Guna fail imej pada permukaan kiub"

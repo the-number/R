@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNUbik 2.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"POT-Creation-Date: 2010-11-25 12:54+0100\n"
 "PO-Revision-Date: 2008-02-01 20:41+0800\n"
 "Last-Translator: Martina Faust <martina@outback-eternity.com.au>\n"
 "Language-Team: German\n"
@@ -16,57 +16,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/colour-sel.c:181
+#: src/colour-sel.c:185
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr "Erstellung eines Bildes aus der Datei %s ist nicht möglich: %s"
 
-#: src/colour-sel.c:261
+#: src/colour-sel.c:265
 msgid "Image Selector"
 msgstr "Bildauswahl"
 
-#: src/colour-sel.c:289
+#: src/colour-sel.c:287
 #, fuzzy
 msgid "All Images"
 msgstr "Bild"
 
-#: src/colour-sel.c:296
+#: src/colour-sel.c:291
 msgid "All Files"
 msgstr ""
 
-#: src/colour-sel.c:440
+#: src/colour-sel.c:435
 msgid "Pattern"
 msgstr "Muster"
 
-#: src/colour-sel.c:441
+#: src/colour-sel.c:436
 msgid "Colour"
 msgstr "Farben"
 
-#: src/colour-sel.c:468
+#: src/colour-sel.c:464
 msgid "Click here to use a pattern on the cube surface"
 msgstr "Klicken Sie hier, um der Würfeloberfläche ein Muster zuzuweisen"
 
-#: src/colour-sel.c:750
+#: src/colour-sel.c:756
 msgid "Colour selector"
 msgstr "Farbauswahl"
 
-#: src/colour-sel.c:776
+#: src/colour-sel.c:781
 msgid "Image"
 msgstr "Bild"
 
-#: src/colour-sel.c:777
+#: src/colour-sel.c:782
 msgid "Se_lect"
 msgstr "A_uswahl"
 
-#: src/colour-sel.c:780
+#: src/colour-sel.c:784
 msgid "Select an image file"
 msgstr "Auswahl einer Bilddatei"
 
-#: src/colour-sel.c:783
+#: src/colour-sel.c:787
 msgid "_Tiled"
 msgstr "ge_kachelt"
 
-#: src/colour-sel.c:785
+#: src/colour-sel.c:790
 msgid ""
 "Place a copy of the image\n"
 "on each block"
@@ -74,11 +74,11 @@ msgstr ""
 "Projiziere das Bild auf jeden Block\n"
 "des Würfels"
 
-#: src/colour-sel.c:789
+#: src/colour-sel.c:795
 msgid "_Mosaic"
 msgstr "_Mosaik"
 
-#: src/colour-sel.c:792
+#: src/colour-sel.c:799
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
@@ -86,7 +86,7 @@ msgstr ""
 "Projiziere das Bild über den\n"
 "gesamten Würfel"
 
-#: src/colour-sel.c:852
+#: src/colour-sel.c:859
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
 "pattern,  or drag one to this space."
@@ -95,83 +95,93 @@ msgstr ""
 "auszuwählen, können Sie klicken und eine neue Farbe oder ein neues Muster "
 "hierauf ziehen."
 
-#: src/menus.c:165
+#: src/menus.c:168
 msgid "Sets the number of blocks in each side"
 msgstr "Ändert die Anzahl der Blöcke je Seite"
 
-#: src/menus.c:167
+#: src/menus.c:170
 msgid "Size of cube:"
 msgstr "Größe des Würfels:"
 
-#: src/menus.c:207
+#: src/menus.c:209
 msgid "Faster"
 msgstr "Schneller"
 
-#: src/menus.c:210
+#: src/menus.c:212
 msgid "Slower"
 msgstr "Langsamer"
 
-#: src/menus.c:215
+#: src/menus.c:218
 msgid "Controls the speed with which slices rotate"
 msgstr "Stellt die Rotationsgeschwindigkeit der Scheiben ein"
 
-#: src/menus.c:259
+#: src/menus.c:262
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: src/menus.c:271
+#: src/menus.c:277
 msgid "Dimensions"
 msgstr "Abmessungen"
 
-#: src/menus.c:272
+#: src/menus.c:278
 msgid "Animation"
 msgstr "Animation"
 
-#: src/menus.c:273
+#: src/menus.c:279
 msgid "Lighting"
 msgstr "Beleuchtung"
 
-#: src/menus.c:282
+#: src/menus.c:288
 msgid "Enable lighting"
 msgstr "Beleuchtung aktivieren"
 
-#: src/menus.c:284
+#: src/menus.c:290
 msgid "Makes the cube appear illuminated"
 msgstr "Lässt den Würfel beleuchtet aussehen"
 
-#: src/menus.c:354
+#: src/menus.c:360
 msgid "Start cube with new settings?"
 msgstr "Mit den neuen Einstellungen anfangen?"
 
-#: src/textures.c:203
+#: src/menus.c:519
+msgid "A 3 dimensional magic cube puzzle"
+msgstr ""
+
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/menus.c:524
+msgid "translator-credits"
+msgstr ""
+
+#: src/textures.c:215
 msgid "Pixbuf has wrong number of channels"
 msgstr "Die Bilddaten haben eine falsche Anzahl an Kanälen."
 
-#: src/textures.c:211
+#: src/textures.c:224
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Die Bilddaten verwenden einen unbekannten Farbraum: %d"
 
-#: src/widget-set.c:112
+#: src/widget-set.c:111
 #, c-format
 msgid "Moves: %d / %d"
 msgstr "Züge: %d / %d"
 
-#: src/widget-set.c:141
+#: src/widget-set.c:139
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Würfel in %d Züg gelöst"
 msgstr[1] "Würfel in %d Zügen gelöst"
 
-#: src/widget-set.c:148
+#: src/widget-set.c:149
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr ""
 "Der Würfel ist NICHT gelöst! Die Farben stimmen zwar, sind aber falsch "
 "ausgerichtet"
 
-#: src/widget-set.c:199
+#: src/widget-set.c:198
 msgid "Rewind"
 msgstr "Zurückspulen"
 
@@ -179,97 +189,167 @@ msgstr "Zurückspulen"
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr "Gehe zur vorherigen Markierung (oder dem Anfang) der Zugabfolge"
 
-#: src/widget-set.c:205
+#: src/widget-set.c:204
 msgid "Back"
 msgstr "Zurück"
 
-#: src/widget-set.c:206
+#: src/widget-set.c:205
 msgid "Make one step backwards"
 msgstr "Mache einen Schritt zurück"
 
-#: src/widget-set.c:212
+#: src/widget-set.c:210
 msgid "Stop"
 msgstr "Stop"
 
-#: src/widget-set.c:213
+#: src/widget-set.c:211
 msgid "Stop running the sequence of moves"
 msgstr "Halte den Lauf der Zugabfolge an"
 
-#: src/widget-set.c:219
+#: src/widget-set.c:216
 msgid "Mark"
 msgstr "Markieren"
 
-#: src/widget-set.c:220
+#: src/widget-set.c:218
 msgid "Mark the current place in the sequence of moves"
 msgstr "Markiere die aktuelle Stelle in der Zugabfolge"
 
-#: src/widget-set.c:226
+#: src/widget-set.c:223
 msgid "Forward"
 msgstr "Vor"
 
-#: src/widget-set.c:227
+#: src/widget-set.c:224
 msgid "Make one step forwards"
 msgstr "Mache einen Schritt voran"
 
-#: src/widget-set.c:233
+#: src/widget-set.c:229
 msgid "Play"
 msgstr "Abspielen"
 
-#: src/widget-set.c:234
+#: src/widget-set.c:231
 msgid "Run forward through the sequence of moves"
 msgstr "Laufe vorwärts durch die Zugabfolge"
 
-#: src/widget-set.c:321
+#: src/widget-set.c:313
 msgid "_Play Toolbar"
 msgstr "_Abspielen-Werkzeugleiste"
 
-#: src/widget-set.c:328
+#: src/widget-set.c:320
 msgid "_Status Bar"
 msgstr "S_tatus-Werkzeugleiste"
 
-#: src/widget-set.c:366
-msgid "/_Game"
+#: src/widget-set.c:334
+#, fuzzy
+msgid "_Game"
 msgstr "/_Spiel"
 
-#: src/widget-set.c:367
-msgid "/_Game/_New Game"
-msgstr "/_Spiel/_Neues Spiel"
-
-#: src/widget-set.c:368
-msgid "/_Game/sep"
-msgstr "/_Spiel/sep"
-
-#: src/widget-set.c:369
-msgid "/_Game/_Quit"
-msgstr "/_Spiel/_Beenden"
-
-#: src/widget-set.c:370
-msgid "/_Settings"
+#: src/widget-set.c:335
+#, fuzzy
+msgid "_Settings"
 msgstr "/E_instellungen"
 
-#: src/widget-set.c:371
-msgid "/_Settings/_Preferences"
-msgstr "/E_instellungen/E_instellungen"
-
-#: src/widget-set.c:372
-msgid "/_Settings/_Colours"
-msgstr "/E_instellungen/_Farben"
-
-#: src/widget-set.c:373
-msgid "/_Settings/Sho_w\\/Hide"
-msgstr "/E_instellungen/Zeigen\\/Verstecken"
-
-#: src/widget-set.c:379
-msgid "/_Help"
+#: src/widget-set.c:336
+#, fuzzy
+msgid "_Help"
 msgstr "/_Hilfe"
 
-#: src/widget-set.c:380
-msgid "/_Help/_About"
-msgstr "/_Hilfe/_Info"
+#: src/widget-set.c:337
+msgid "_Scripts"
+msgstr ""
 
-#: src/widget-set.c:430
-msgid "/Settings/Show\\/Hide"
-msgstr "/Einstellungen/Zeigen\\/Verstecken"
+#: src/widget-set.c:345
+#, fuzzy
+msgid "_Colours"
+msgstr "Farben"
+
+#: src/widget-set.c:349
+#, fuzzy
+msgid "Sho_w/Hide"
+msgstr "/E_instellungen/Zeigen\\/Verstecken"
+
+#: src/widget-set.c:361
+#, fuzzy
+msgid "_New Game"
+msgstr "/_Spiel/_Neues Spiel"
+
+#: scripts/debug.scm:49
+msgid "_Debug"
+msgstr ""
+
+#: scripts/debug.scm:51
+msgid "_Move"
+msgstr ""
+
+#: scripts/debug.scm:53
+msgid "_Dump state"
+msgstr ""
+
+#: scripts/rand.scm:41
+msgid "_Randomize"
+msgstr ""
+
+#: scripts/rand.scm:42
+#, fuzzy
+msgid "_Animated"
+msgstr "Animation"
+
+#: scripts/rand.scm:43
+#, fuzzy
+msgid "_Fast"
+msgstr "Schneller"
+
+#: scripts/mellor-solve.scm:402
+msgid "_Solvers"
+msgstr ""
+
+#: scripts/mellor-solve.scm:403
+msgid "_3×3"
+msgstr ""
+
+#: scripts/mellor-solve.scm:407
+msgid "_Full cube"
+msgstr ""
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _edge place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:413
+msgid "Bottom _corner orient"
+msgstr ""
+
+#: scripts/mellor-solve.scm:416
+msgid "_Bottom corner place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:419
+msgid "_Middle slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:425
+msgid "_Top edges"
+msgstr ""
+
+#~ msgid "/_Game/sep"
+#~ msgstr "/_Spiel/sep"
+
+#~ msgid "/_Game/_Quit"
+#~ msgstr "/_Spiel/_Beenden"
+
+#~ msgid "/_Settings/_Preferences"
+#~ msgstr "/E_instellungen/E_instellungen"
+
+#~ msgid "/_Settings/_Colours"
+#~ msgstr "/E_instellungen/_Farben"
+
+#~ msgid "/_Help/_About"
+#~ msgstr "/_Hilfe/_Info"
+
+#~ msgid "/Settings/Show\\/Hide"
+#~ msgstr "/Einstellungen/Zeigen\\/Verstecken"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Benutze ein Bild für die Würfeloberfläche"

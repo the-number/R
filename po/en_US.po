@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNUbik 2.0\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-20 19:15+0100\n"
+"POT-Creation-Date: 2010-11-25 12:54+0100\n"
 "PO-Revision-Date: 2003-07-28 10:38+0800\n"
 "Last-Translator: John Darrington <john@darrington.wattle.id.au>\n"
 "Language-Team: American <john@darrington.wattle.id.au>\n"
@@ -15,72 +15,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/colour-sel.c:180
+#: src/colour-sel.c:185
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr ""
 
-#: src/colour-sel.c:260
+#: src/colour-sel.c:265
 msgid "Image Selector"
 msgstr ""
 
-#: src/colour-sel.c:288
+#: src/colour-sel.c:287
 msgid "All Images"
 msgstr ""
 
-#: src/colour-sel.c:295
+#: src/colour-sel.c:291
 msgid "All Files"
 msgstr ""
 
-#: src/colour-sel.c:439
+#: src/colour-sel.c:435
 msgid "Pattern"
 msgstr ""
 
-#: src/colour-sel.c:440
+#: src/colour-sel.c:436
 msgid "Colour"
 msgstr "Color"
 
-#: src/colour-sel.c:467
+#: src/colour-sel.c:464
 msgid "Click here to use a pattern on the cube surface"
 msgstr ""
 
-#: src/colour-sel.c:749
+#: src/colour-sel.c:756
 msgid "Colour selector"
 msgstr "Color selector"
 
-#: src/colour-sel.c:775
+#: src/colour-sel.c:781
 msgid "Image"
 msgstr ""
 
-#: src/colour-sel.c:776
+#: src/colour-sel.c:782
 msgid "Se_lect"
 msgstr ""
 
-#: src/colour-sel.c:779
+#: src/colour-sel.c:784
 msgid "Select an image file"
 msgstr ""
 
-#: src/colour-sel.c:782
+#: src/colour-sel.c:787
 msgid "_Tiled"
 msgstr ""
 
-#: src/colour-sel.c:784
+#: src/colour-sel.c:790
 msgid ""
 "Place a copy of the image\n"
 "on each block"
 msgstr ""
 
-#: src/colour-sel.c:788
+#: src/colour-sel.c:795
 msgid "_Mosaic"
 msgstr ""
 
-#: src/colour-sel.c:791
+#: src/colour-sel.c:799
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
 msgstr ""
 
-#: src/colour-sel.c:851
+#: src/colour-sel.c:859
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
 "pattern,  or drag one to this space."
@@ -88,74 +88,74 @@ msgstr ""
 "A sample of the color or pattern. You can click and select a new color or "
 "pattern, or drag one to this space."
 
-#: src/menus.c:166
+#: src/menus.c:168
 msgid "Sets the number of blocks in each side"
 msgstr ""
 
-#: src/menus.c:168
+#: src/menus.c:170
 msgid "Size of cube:"
 msgstr ""
 
-#: src/menus.c:208
+#: src/menus.c:209
 msgid "Faster"
 msgstr ""
 
-#: src/menus.c:211
+#: src/menus.c:212
 msgid "Slower"
 msgstr ""
 
-#: src/menus.c:216
+#: src/menus.c:218
 msgid "Controls the speed with which slices rotate"
 msgstr ""
 
-#: src/menus.c:260
+#: src/menus.c:262
 msgid "Preferences"
 msgstr ""
 
-#: src/menus.c:272
+#: src/menus.c:277
 msgid "Dimensions"
 msgstr ""
 
-#: src/menus.c:273
+#: src/menus.c:278
 msgid "Animation"
 msgstr ""
 
-#: src/menus.c:274
+#: src/menus.c:279
 msgid "Lighting"
 msgstr ""
 
-#: src/menus.c:283
+#: src/menus.c:288
 msgid "Enable lighting"
 msgstr ""
 
-#: src/menus.c:285
+#: src/menus.c:290
 msgid "Makes the cube appear illuminated"
 msgstr ""
 
-#: src/menus.c:355
+#: src/menus.c:360
 msgid "Start cube with new settings?"
 msgstr ""
 
-#: src/menus.c:524
+#: src/menus.c:519
 msgid "A 3 dimensional magic cube puzzle"
 msgstr ""
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
-#: src/menus.c:531
+#: src/menus.c:524
 msgid "translator-credits"
 msgstr "John Darrington"
 
-#: src/textures.c:203
+#: src/textures.c:215
 msgid "Pixbuf has wrong number of channels"
 msgstr ""
 
-#: src/textures.c:211
+#: src/textures.c:224
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr ""
 
-#: src/widget-set.c:110
+#: src/widget-set.c:111
 #, c-format
 msgid "Moves: %d / %d"
 msgstr ""
@@ -167,25 +167,25 @@ msgid_plural "Cube solved in %d moves"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/widget-set.c:146
+#: src/widget-set.c:149
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr ""
 "Cube is NOT solved! The colors are correct, but have incorrect orientation"
 
-#: src/widget-set.c:197
+#: src/widget-set.c:198
 msgid "Rewind"
 msgstr ""
 
-#: src/widget-set.c:198
+#: src/widget-set.c:200
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:203
+#: src/widget-set.c:204
 msgid "Back"
 msgstr ""
 
-#: src/widget-set.c:204
+#: src/widget-set.c:205
 msgid "Make one step backwards"
 msgstr ""
 
@@ -197,7 +197,7 @@ msgstr ""
 msgid "Stop running the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:217
+#: src/widget-set.c:216
 msgid "Mark"
 msgstr ""
 
@@ -205,52 +205,114 @@ msgstr ""
 msgid "Mark the current place in the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:224
+#: src/widget-set.c:223
 msgid "Forward"
 msgstr ""
 
-#: src/widget-set.c:225
+#: src/widget-set.c:224
 msgid "Make one step forwards"
 msgstr ""
 
-#: src/widget-set.c:231
+#: src/widget-set.c:229
 msgid "Play"
 msgstr ""
 
-#: src/widget-set.c:232
+#: src/widget-set.c:231
 msgid "Run forward through the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:319
+#: src/widget-set.c:313
 msgid "_Play Toolbar"
 msgstr ""
 
-#: src/widget-set.c:326
+#: src/widget-set.c:320
 msgid "_Status Bar"
 msgstr ""
 
-#: src/widget-set.c:341
+#: src/widget-set.c:334
 msgid "_Game"
 msgstr ""
 
-#: src/widget-set.c:342
-#, fuzzy
+#: src/widget-set.c:335
 msgid "_Settings"
-msgstr "/_Settings/_Colors"
+msgstr ""
 
-#: src/widget-set.c:343
+#: src/widget-set.c:336
 msgid "_Help"
 msgstr ""
 
-#: src/widget-set.c:351
-#, fuzzy
-msgid "_Colours"
-msgstr "Color"
+#: src/widget-set.c:337
+msgid "_Scripts"
+msgstr ""
 
-#: src/widget-set.c:356
+#: src/widget-set.c:345
+msgid "_Colours"
+msgstr "_Colors"
+
+#: src/widget-set.c:349
 msgid "Sho_w/Hide"
 msgstr ""
 
-#: src/widget-set.c:371
+#: src/widget-set.c:361
 msgid "_New Game"
+msgstr ""
+
+#: scripts/debug.scm:49
+msgid "_Debug"
+msgstr ""
+
+#: scripts/debug.scm:51
+msgid "_Move"
+msgstr ""
+
+#: scripts/debug.scm:53
+msgid "_Dump state"
+msgstr ""
+
+#: scripts/rand.scm:41
+msgid "_Randomize"
+msgstr ""
+
+#: scripts/rand.scm:42
+msgid "_Animated"
+msgstr ""
+
+#: scripts/rand.scm:43
+msgid "_Fast"
+msgstr ""
+
+#: scripts/mellor-solve.scm:402
+msgid "_Solvers"
+msgstr ""
+
+#: scripts/mellor-solve.scm:403
+msgid "_3×3"
+msgstr ""
+
+#: scripts/mellor-solve.scm:407
+msgid "_Full cube"
+msgstr ""
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _edge place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:413
+msgid "Bottom _corner orient"
+msgstr ""
+
+#: scripts/mellor-solve.scm:416
+msgid "_Bottom corner place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:419
+msgid "_Middle slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:425
+msgid "_Top edges"
 msgstr ""

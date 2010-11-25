@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNUbik 2.0\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 09:15+0100\n"
+"POT-Creation-Date: 2010-11-25 12:54+0100\n"
 "PO-Revision-Date: 2008-12-05 13:55+0200\n"
 "Last-Translator: Ivaylo Valkov <valkov@g00net.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -17,56 +17,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: src/colour-sel.c:181
+#: src/colour-sel.c:185
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr "Неуспех при създаване на изображение от файл %s: %s"
 
-#: src/colour-sel.c:261
+#: src/colour-sel.c:265
 msgid "Image Selector"
 msgstr "Избор на изображение"
 
-#: src/colour-sel.c:289
+#: src/colour-sel.c:287
 msgid "All Images"
 msgstr "Всички изображения"
 
-#: src/colour-sel.c:296
+#: src/colour-sel.c:291
 msgid "All Files"
 msgstr "Всички файлове"
 
-#: src/colour-sel.c:440
+#: src/colour-sel.c:435
 msgid "Pattern"
 msgstr "Шарка"
 
-#: src/colour-sel.c:441
+#: src/colour-sel.c:436
 msgid "Colour"
 msgstr "Цвят"
 
-#: src/colour-sel.c:468
+#: src/colour-sel.c:464
 msgid "Click here to use a pattern on the cube surface"
 msgstr "Използване на шарката върху повърхността на куба"
 
-#: src/colour-sel.c:750
+#: src/colour-sel.c:756
 msgid "Colour selector"
 msgstr "Избор на цвят"
 
-#: src/colour-sel.c:776
+#: src/colour-sel.c:781
 msgid "Image"
 msgstr "Изображение"
 
-#: src/colour-sel.c:777
+#: src/colour-sel.c:782
 msgid "Se_lect"
 msgstr "_Избор"
 
-#: src/colour-sel.c:780
+#: src/colour-sel.c:784
 msgid "Select an image file"
 msgstr "Избор на файл с изображение"
 
-#: src/colour-sel.c:783
+#: src/colour-sel.c:787
 msgid "_Tiled"
 msgstr "На _плочки"
 
-#: src/colour-sel.c:785
+#: src/colour-sel.c:790
 msgid ""
 "Place a copy of the image\n"
 "on each block"
@@ -74,11 +74,11 @@ msgstr ""
 "Поставяне на копие от\n"
 "изображението върху всяко блокче"
 
-#: src/colour-sel.c:789
+#: src/colour-sel.c:795
 msgid "_Mosaic"
 msgstr "_Мозайка"
 
-#: src/colour-sel.c:792
+#: src/colour-sel.c:799
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
@@ -86,7 +86,7 @@ msgstr ""
 "Поставяне на копие от\n"
 "изображението върху целия куб"
 
-#: src/colour-sel.c:852
+#: src/colour-sel.c:859
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
 "pattern,  or drag one to this space."
@@ -94,81 +94,91 @@ msgstr ""
 "Мостра на цвета или шарката. Натиснете за избор на цвят или шарка, или ги "
 "довлачете до тук."
 
-#: src/menus.c:165
+#: src/menus.c:168
 msgid "Sets the number of blocks in each side"
 msgstr "Задаване на броя на блокчетата във всяка страна"
 
-#: src/menus.c:167
+#: src/menus.c:170
 msgid "Size of cube:"
 msgstr "Големина на куба:"
 
-#: src/menus.c:207
+#: src/menus.c:209
 msgid "Faster"
 msgstr "По-бързо"
 
-#: src/menus.c:210
+#: src/menus.c:212
 msgid "Slower"
 msgstr "По-бавно"
 
-#: src/menus.c:215
+#: src/menus.c:218
 msgid "Controls the speed with which slices rotate"
 msgstr "Задаване на скоростта, с която частите се завъртат"
 
-#: src/menus.c:259
+#: src/menus.c:262
 msgid "Preferences"
 msgstr "Настройки"
 
-#: src/menus.c:271
+#: src/menus.c:277
 msgid "Dimensions"
 msgstr "Размери"
 
-#: src/menus.c:272
+#: src/menus.c:278
 msgid "Animation"
 msgstr "Анимация"
 
-#: src/menus.c:273
+#: src/menus.c:279
 msgid "Lighting"
 msgstr "Осветление"
 
-#: src/menus.c:282
+#: src/menus.c:288
 msgid "Enable lighting"
 msgstr "Включване на осветлението"
 
-#: src/menus.c:284
+#: src/menus.c:290
 msgid "Makes the cube appear illuminated"
 msgstr "Кубът изглежда осветен"
 
-#: src/menus.c:354
+#: src/menus.c:360
 msgid "Start cube with new settings?"
 msgstr "Да се създаде ли куб с нови настройки?"
 
-#: src/textures.c:203
+#: src/menus.c:519
+msgid "A 3 dimensional magic cube puzzle"
+msgstr ""
+
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/menus.c:524
+msgid "translator-credits"
+msgstr ""
+
+#: src/textures.c:215
 msgid "Pixbuf has wrong number of channels"
 msgstr "Изображението е с неточен брой канали"
 
-#: src/textures.c:211
+#: src/textures.c:224
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Изображението е с неизвестно цветно пространство: %d"
 
-#: src/widget-set.c:112
+#: src/widget-set.c:111
 #, c-format
 msgid "Moves: %d / %d"
 msgstr "Ходове: %d / %d "
 
-#: src/widget-set.c:141
+#: src/widget-set.c:139
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Кубът беше решен с %d ход"
 msgstr[1] "Кубът беше решен с %d хода"
 
-#: src/widget-set.c:148
+#: src/widget-set.c:149
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr "Кубът не е решен. Цветовете са правилни, но имат сгрешено насочване"
 
-#: src/widget-set.c:199
+#: src/widget-set.c:198
 msgid "Rewind"
 msgstr "Превъртане назад"
 
@@ -177,97 +187,167 @@ msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr ""
 "Отиване на предната отметка (или в началото) от последователността от ходове"
 
-#: src/widget-set.c:205
+#: src/widget-set.c:204
 msgid "Back"
 msgstr "Назад"
 
-#: src/widget-set.c:206
+#: src/widget-set.c:205
 msgid "Make one step backwards"
 msgstr "Показване на предишния ход"
 
-#: src/widget-set.c:212
+#: src/widget-set.c:210
 msgid "Stop"
 msgstr "Спиране"
 
-#: src/widget-set.c:213
+#: src/widget-set.c:211
 msgid "Stop running the sequence of moves"
 msgstr "Спиране на последователността от ходове"
 
-#: src/widget-set.c:219
+#: src/widget-set.c:216
 msgid "Mark"
 msgstr "Отметка"
 
-#: src/widget-set.c:220
+#: src/widget-set.c:218
 msgid "Mark the current place in the sequence of moves"
 msgstr "Създаване на отметка от текущия ход"
 
-#: src/widget-set.c:226
+#: src/widget-set.c:223
 msgid "Forward"
 msgstr "Напред"
 
-#: src/widget-set.c:227
+#: src/widget-set.c:224
 msgid "Make one step forwards"
 msgstr "Показване на следващия ход"
 
-#: src/widget-set.c:233
+#: src/widget-set.c:229
 msgid "Play"
 msgstr "Изпълнение"
 
-#: src/widget-set.c:234
+#: src/widget-set.c:231
 msgid "Run forward through the sequence of moves"
 msgstr "Преминаване през последователността от ходове"
 
-#: src/widget-set.c:321
+#: src/widget-set.c:313
 msgid "_Play Toolbar"
 msgstr "Лен_та с инструменти"
 
-#: src/widget-set.c:328
+#: src/widget-set.c:320
 msgid "_Status Bar"
 msgstr "Лента за _състоянието"
 
-#: src/widget-set.c:366
-msgid "/_Game"
+#: src/widget-set.c:334
+#, fuzzy
+msgid "_Game"
 msgstr "/_Игра"
 
-#: src/widget-set.c:367
-msgid "/_Game/_New Game"
-msgstr "/_Игра/_Нова игра"
-
-#: src/widget-set.c:368
-msgid "/_Game/sep"
-msgstr "/_Игра/sep"
-
-#: src/widget-set.c:369
-msgid "/_Game/_Quit"
-msgstr "/_Игра/_Спиране на програмата"
-
-#: src/widget-set.c:370
-msgid "/_Settings"
+#: src/widget-set.c:335
+#, fuzzy
+msgid "_Settings"
 msgstr "/_Настройки"
 
-#: src/widget-set.c:371
-msgid "/_Settings/_Preferences"
-msgstr "/_Настройки/_Предпочитания"
-
-#: src/widget-set.c:372
-msgid "/_Settings/_Colours"
-msgstr "/_Настройки/_Цветове"
-
-#: src/widget-set.c:373
-msgid "/_Settings/Sho_w\\/Hide"
-msgstr "/_Настройки/П_оказване\\/Скриване"
-
-#: src/widget-set.c:379
-msgid "/_Help"
+#: src/widget-set.c:336
+#, fuzzy
+msgid "_Help"
 msgstr "/Помо_щ"
 
-#: src/widget-set.c:380
-msgid "/_Help/_About"
-msgstr "/Помо_щ/_Относно"
+#: src/widget-set.c:337
+msgid "_Scripts"
+msgstr ""
 
-#: src/widget-set.c:430
-msgid "/Settings/Show\\/Hide"
-msgstr "/Настройки/Показване\\/Скриване"
+#: src/widget-set.c:345
+#, fuzzy
+msgid "_Colours"
+msgstr "Цвят"
+
+#: src/widget-set.c:349
+#, fuzzy
+msgid "Sho_w/Hide"
+msgstr "/_Настройки/П_оказване\\/Скриване"
+
+#: src/widget-set.c:361
+#, fuzzy
+msgid "_New Game"
+msgstr "/_Игра/_Нова игра"
+
+#: scripts/debug.scm:49
+msgid "_Debug"
+msgstr ""
+
+#: scripts/debug.scm:51
+msgid "_Move"
+msgstr ""
+
+#: scripts/debug.scm:53
+msgid "_Dump state"
+msgstr ""
+
+#: scripts/rand.scm:41
+msgid "_Randomize"
+msgstr ""
+
+#: scripts/rand.scm:42
+#, fuzzy
+msgid "_Animated"
+msgstr "Анимация"
+
+#: scripts/rand.scm:43
+#, fuzzy
+msgid "_Fast"
+msgstr "По-бързо"
+
+#: scripts/mellor-solve.scm:402
+msgid "_Solvers"
+msgstr ""
+
+#: scripts/mellor-solve.scm:403
+msgid "_3×3"
+msgstr ""
+
+#: scripts/mellor-solve.scm:407
+msgid "_Full cube"
+msgstr ""
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _edge place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:413
+msgid "Bottom _corner orient"
+msgstr ""
+
+#: scripts/mellor-solve.scm:416
+msgid "_Bottom corner place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:419
+msgid "_Middle slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:425
+msgid "_Top edges"
+msgstr ""
+
+#~ msgid "/_Game/sep"
+#~ msgstr "/_Игра/sep"
+
+#~ msgid "/_Game/_Quit"
+#~ msgstr "/_Игра/_Спиране на програмата"
+
+#~ msgid "/_Settings/_Preferences"
+#~ msgstr "/_Настройки/_Предпочитания"
+
+#~ msgid "/_Settings/_Colours"
+#~ msgstr "/_Настройки/_Цветове"
+
+#~ msgid "/_Help/_About"
+#~ msgstr "/Помо_щ/_Относно"
+
+#~ msgid "/Settings/Show\\/Hide"
+#~ msgstr "/Настройки/Показване\\/Скриване"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Използване на изображение върху повъхността на куба"
