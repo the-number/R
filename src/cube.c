@@ -337,14 +337,14 @@ identify_blocks_2 (const struct cube * cube,
 
   /* Allocate memory for the return object. */
 
-  Slice_Blocks *ret = (Slice_Blocks *) malloc (sizeof (Slice_Blocks));
+  Slice_Blocks *ret = malloc (sizeof (Slice_Blocks));
 
   if (!ret)
     return NULL;
 
   ret->number_blocks = cube->cube_size * cube->cube_size;
 
-  ret->blocks = (int *) malloc (ret->number_blocks * sizeof (int));
+  ret->blocks = malloc (ret->number_blocks * sizeof (int));
 
   if (!ret->blocks)
     {
