@@ -126,6 +126,8 @@ gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
   gae.tooltip = NULL;
   gae.callback = G_CALLBACK (run_scheme);
 
+  scm_permanent_object (callback);
+
   gtk_action_group_add_actions (ag, &gae, 1, callback);
 
   gtk_ui_manager_insert_action_group (uim, ag, 0);
