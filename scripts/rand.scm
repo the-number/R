@@ -37,9 +37,10 @@
 ;; Invoke the above procedure from a good few menu items for the convenience of
 ;; the user.
 
-(define rand-menu (gnubik-create-menu "_Randomize"))
-(define animate-menu (gnubik-create-menu "_Animated" rand-menu))
-(define fast-menu (gnubik-create-menu "_Fast" rand-menu))
+
+(define rand-menu (gnubik-create-menu (_ "_Randomize")))
+(define animate-menu (gnubik-create-menu (_ "_Animated") rand-menu))
+(define fast-menu (gnubik-create-menu (_ "_Fast") rand-menu))
 
 (gnubik-register-script "_8" '(gnubik-randomize 8) animate-menu)
 (gnubik-register-script "_7" '(gnubik-randomize 7) animate-menu)

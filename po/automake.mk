@@ -11,8 +11,6 @@ POFILES=po/bg.po po/ca.po po/da.po po/de.po po/en_US.po po/es.po po/eu.po po/fi.
 
 POTFILE=po/$(DOMAIN).pot
 
-TRANSLATABLE_FILES = $(DIST_SOURCES) 
-
 COPYRIGHT_HOLDER=John Darrington
 
 XGETTEXT_OPTIONS = \
@@ -20,11 +18,13 @@ XGETTEXT_OPTIONS = \
 	--package-name=$(PACKAGE) \
 	--package-version=$(VERSION) \
 	--msgid-bugs-address=$(MSGID_BUGS_ADDRESS) \
+	--from-code=UTF-8 \
 	--add-comments='TRANSLATORS:'
 
-$(POTFILE): $(TRANSLATABLE_FILES) 
+$(POTFILE): $(DIST_SOURCES) $(dist_script_DATA)
 	@$(MKDIR_P) po
-	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS)    $(TRANSLATABLE_FILES) --language=C --keyword=_ --keyword=N_ -o $@
+	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS) $(DIST_SOURCES) --language=C --keyword=_ --keyword=N_ -o $@
+	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS) $(dist_script_DATA) --language=scheme --keyword=_ --keyword=N_ -j -o $@
 
 
 $(POFILES): $(POTFILE)
