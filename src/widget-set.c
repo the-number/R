@@ -410,11 +410,8 @@ void
 error_dialog (GtkWidget * parent, const gchar * format, ...)
 {
   va_list ap;
-
   GtkWidget *dialog;
-
   gchar *message;
-
 
   va_start (ap, format);
 
@@ -426,18 +423,15 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 				   GTK_DIALOG_MODAL,
 				   GTK_MESSAGE_ERROR,
 				   GTK_BUTTONS_CLOSE, message);
-
   g_free (message);
+
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Gnubik error"));
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 
-  /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
-  g_signal_connect_swapped (dialog, "response",
-			    G_CALLBACK (gtk_widget_destroy), dialog);
+  gtk_dialog_run (dialog);
 
-
-
-  gtk_widget_show_all (dialog);
+  gtk_widget_destroy (dialog);
 }
 
 
