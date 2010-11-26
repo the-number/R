@@ -50,33 +50,23 @@ widget_set_init (int *argc, char ***argv)
 }
 
 
-static GtkWidget *window;
-
 GtkWidget *
 create_top_level_widget (void)
 {
-
-  GtkWidget *win;
-
   /* create a new window */
-  win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  GtkWidget *win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
   g_signal_connect (win, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
 
-  window = win;
-
   return win;
-
 }
 
 GtkWidget *
 create_container_widget (GtkWidget * parent)
 {
-  GtkWidget *vbox;
-
   /* create a vbox to hold the drawing area and the menubar */
-  vbox = gtk_vbox_new (FALSE, 0);
+  GtkWidget *vbox = gtk_vbox_new (FALSE, 0);
 
 
   gtk_container_add (GTK_CONTAINER (parent), vbox);
@@ -84,7 +74,6 @@ create_container_widget (GtkWidget * parent)
   gtk_widget_show (vbox);
 
   return vbox;
-
 }
 
 
@@ -407,7 +396,7 @@ create_menubar (GtkWidget * container, GtkWidget * toplevel)
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
-  gtk_window_add_accel_group (window, gtk_ui_manager_get_accel_group (menu_manager));
+  gtk_window_add_accel_group (GTK_WINDOW (main_application_window), gtk_ui_manager_get_accel_group (menu_manager));
 
   gtk_box_pack_start (GTK_BOX (container), menubar, FALSE, TRUE, 0);
 
