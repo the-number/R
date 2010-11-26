@@ -19,7 +19,7 @@ BUILDAUX_DIR=build-aux
 
 AUXFILES=$(BUILDAUX_DIR)/compile $(BUILDAUX_DIR)/config.guess $(BUILDAUX_DIR)/config.sub $(BUILDAUX_DIR)/install-sh $(BUILDAUX_DIR)/missing $(BUILDAUX_DIR)/depcomp $(BUILDAUX_DIR)/texinfo.tex
 
-Makefile.in: aclocal.m4 config.h.in 
+Makefile.in: aclocal.m4 config.h.in ChangeLog
 	automake --add-missing --copy
 
 .PHONY:ChangeLog
