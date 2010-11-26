@@ -396,7 +396,7 @@ create_menubar (GtkWidget * container, GtkWidget * toplevel)
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
-  gtk_window_add_accel_group (GTK_WINDOW (main_application_window), gtk_ui_manager_get_accel_group (menu_manager));
+  gtk_window_add_accel_group (GTK_WINDOW (toplevel), gtk_ui_manager_get_accel_group (menu_manager));
 
   gtk_box_pack_start (GTK_BOX (container), menubar, FALSE, TRUE, 0);
 
