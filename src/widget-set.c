@@ -390,6 +390,8 @@ create_menubar (GtkWidget * container, GtkWidget * toplevel)
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
   GtkActionGroup *action_group = gtk_action_group_new ("menu-actions");
 
+  gtk_action_group_set_translation_domain (action_group, PACKAGE);
+
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
 				sizeof (action_entries[0]), NULL);

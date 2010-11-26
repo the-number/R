@@ -65,8 +65,6 @@ c_main (void *closure, int argc, char *argv[])
 
 
   /* Internationalisation stuff */
-  setlocale (LC_ALL, "");
-  bind_textdomain_codeset (PACKAGE, "UTF-8");
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 
