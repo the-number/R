@@ -1,18 +1,15 @@
 Installation of this program has several prerequisites:
 
-*  The X Window system.  X.Org is the tested platform, but it
-   should work on others too.
-
 *  Mesa,  OpenGL or any other clone of OpenGL.  Mesa is 
    available from http://www.mesa3d.org 
    You can find further information about OpenGL at http://www.opengl.org
  
-*  gtk+-2.0 version 2.6 or later.
+*  gtk+-2.0 version 2.12 or later.
    
 *  You will also need the GTK Mesa/OpenGL extension 
    library ( http://gtkglext.sourceforge.net ).
 
-*  libguile version 1.6.4 or later.
+*  libguile version 1.8 or later.
 
 
 To install the program, do the following steps.
