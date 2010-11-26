@@ -47,7 +47,7 @@
 (define (check-cube-structure cube)
   (if (equal? (car cube) '(1 3 3 3 3))
       #t
-      (begin (gnubik-error-dialog (_ "This script only works on 3󫢫 cubes."))
+      (begin (gnubik-error-dialog (_ "This script only works on 3脳3脳3 cubes."))
              #f)))
 
 
