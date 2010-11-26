@@ -27,3 +27,5 @@ include $(top_srcdir)/po/automake.mk
 
 
 ACLOCAL_AMFLAGS = -I m4
+
+all-local: $(ALL_LOCAL)
