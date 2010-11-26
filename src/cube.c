@@ -227,11 +227,6 @@ set_block_error_message (struct cube *cube, const char *const msg)
   strncpy (cube->error_message, msg, BLOCK_ERROR_MESSAGE_BUFFER_LEN);
 }
 
-void
-print_cube_error (const struct cube *cube, const char *const prefix)
-{
-  printf ("%s: %s\n", prefix, cube->error_message);
-}
 
 
 

@@ -659,11 +659,7 @@ animate_rotation (Move_Data * data)
 
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
-  if (blocks_in_motion == NULL)
-    {
-      print_cube_error (the_cube, "Error rotating block");
-      exit (-1);
-    }
+  assert (blocks_in_motion);
 
   animation_in_progress = 1;
 
@@ -723,11 +719,7 @@ TIMEOUT_CALLBACK (animate)
 
       /* and tell the blocks.c library that a move has taken place */
 
-      if (rotate_slice (the_cube, turn_qty, blocks_in_motion) != 0)
-	{
-	  print_cube_error (the_cube, "Error rotating block");
-	  exit (-1);
-	}
+      rotate_slice (the_cube, turn_qty, blocks_in_motion);
 
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;

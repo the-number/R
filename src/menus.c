@@ -99,12 +99,7 @@ new_game (gpointer p)
       destroy_the_cube ();
       /* create the cube */
       number_of_blocks = create_the_cube (cube_dimension);
-      if (0 > number_of_blocks)
-	{
-	  print_cube_error (the_cube, "Error creating cube");
-	  exit (-1);
-	}
-
+      assert (number_of_blocks > 0);
     }
 
   for (i = 0; i < 8 * cube_dimension; i++)

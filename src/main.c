@@ -31,6 +31,7 @@
 #include "widget-set.h"
 #include "select.h"
 
+#include <assert.h>
 
 #include <libintl.h>
 #include <ctype.h>
@@ -105,11 +106,7 @@ c_main (void *closure, int argc, char *argv[])
 
   /* create the cube */
   number_of_blocks = create_the_cube (cube_dimension);
-  if (0 > number_of_blocks)
-    {
-      print_cube_error (the_cube, "Error creating cube");
-      exit (-1);
-    }
+  assert (number_of_blocks > 0);
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
