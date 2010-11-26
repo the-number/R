@@ -13,9 +13,6 @@
 ;;   You should have received a copy of the GNU General Public License
 ;;   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-
 ;; I'm not normally one for global variables, but this is so pervasive
 ;; throughout this unit I couldn't resist. It is the scheme reflection of
 ;; GNUbik's own cube object.

@@ -15,6 +15,9 @@
 
 
 
+;; For internationalisation
+(define _ gettext)
+
 
 
 ;; Direct access to a cube object. It is assumed the user knows what he is doing
@@ -44,7 +47,7 @@
 (define (check-cube-structure cube)
   (if (equal? (car cube) '(1 3 3 3 3))
       #t
-      (begin (gnubik-error-dialog "This script only works on 3x3x3 cubes.")
+      (begin (gnubik-error-dialog (_ "This script only works on 3󫢫 cubes."))
              #f)))
 
 
