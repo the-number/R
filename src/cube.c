@@ -216,17 +216,6 @@ free_cube (struct cube *cube)
 
 
 
-/*
-  Functions for handling error messages. Note that if the message is longer
-  than BLOCK_ERROR_MESSAGE_BUFFER_LEN then it will be truncated and a trailing
-  NULL will not be supplied.
-*/
-static inline void
-set_block_error_message (struct cube *cube, const char *const msg)
-{
-  strncpy (cube->error_message, msg, BLOCK_ERROR_MESSAGE_BUFFER_LEN);
-}
-
 
 
 

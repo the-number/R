@@ -84,10 +84,6 @@ struct cube
 
   /* A set of attributes for every block (including internal ones!) */
   Block *blocks;
-
-  /* A holding area for error messages. */
-  char error_message[BLOCK_ERROR_MESSAGE_BUFFER_LEN];
-
 };
 
 
