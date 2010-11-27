@@ -429,7 +429,7 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 
-  gtk_dialog_run (dialog);
+  gtk_dialog_run (GTK_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 }

@@ -21,10 +21,9 @@
 
 #include <gtk/gtk.h>
 
-void request_new_game (GtkWidget * w, gpointer data);
+void request_new_game (void);
 
-void preferences (GtkWidget * w, gpointer data);
-
+void preferences (GtkWidget *w, GtkWindow *);
 /* Close  a window without doing anything else */
 void close_no_action (GtkWidget * w, gpointer data);
 

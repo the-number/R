@@ -78,29 +78,21 @@ set_lighting (GtkToggleButton * b, gpointer user_data)
 
 extern Move_Queue *move_queue;
 
-gboolean new_game (gpointer p);
 
-gboolean
+static gboolean
 new_game (gpointer p)
 {
   int i;
 
-  int reallocate = GPOINTER_TO_INT (p);
-
   if (is_animating ())
     return TRUE;
 
-  if (reallocate)
-    {
+  re_initialize_glarea ();
 
-      re_initialize_glarea ();
-
-
-      destroy_the_cube ();
-      /* create the cube */
-      number_of_blocks = create_the_cube (cube_dimension);
-      assert (number_of_blocks > 0);
-    }
+  destroy_the_cube ();
+  /* create the cube */
+  number_of_blocks = create_the_cube (cube_dimension);
+  assert (number_of_blocks > 0);
 
   for (i = 0; i < 8 * cube_dimension; i++)
     {
@@ -131,14 +123,12 @@ new_game (gpointer p)
    If data is non zero,  then all it's data will be reallocated
 */
 void
-request_new_game (GtkWidget * w, gpointer reallocate)
+request_new_game (void)
 {
-
   request_stop ();
   if (is_animating ())
     abort_animation ();
-  g_idle_add (new_game, reallocate);
-
+  g_idle_add (new_game, NULL);
 }
 
 
@@ -239,20 +229,14 @@ create_animation_widget (void)
 
 
 void
-preferences (GtkWidget * w, gpointer data)
+preferences (GtkWidget * w, GtkWindow *toplevel)
 {
   gint response;
 
-  GtkWidget *frame_dimensions;
-  GtkWidget *frame_animation;
   GtkWidget *dimensions;
   GtkWidget *animations;
 
-  GtkWidget *frame_lighting;
   GtkWidget *button_lighting;
-
-  GtkWindow *toplevel = GTK_WINDOW (data);
-
 
   GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Preferences"),
 						   toplevel,
@@ -266,13 +250,12 @@ preferences (GtkWidget * w, gpointer data)
 
   GtkWidget *vbox = GTK_DIALOG (dialog)->vbox;
 
+
+  GtkWidget *frame_dimensions = gtk_frame_new (_("Dimensions"));
+  GtkWidget *frame_animation = gtk_frame_new (_("Animation"));
+  GtkWidget *frame_lighting = gtk_frame_new (_("Lighting"));
+
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
-
-
-  frame_dimensions = gtk_frame_new (_("Dimensions"));
-  frame_animation = gtk_frame_new (_("Animation"));
-  frame_lighting = gtk_frame_new (_("Lighting"));
-
 
   dimensions = create_dimension_widget ();
   gtk_container_add (GTK_CONTAINER (frame_dimensions), dimensions);
@@ -289,12 +272,9 @@ preferences (GtkWidget * w, gpointer data)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_lighting),
 				glIsEnabled (GL_LIGHTING));
 
-
   gtk_box_pack_start (GTK_BOX (vbox), frame_dimensions, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame_animation, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame_lighting, FALSE, 0, 0);
-
-
 
   g_signal_connect (button_lighting, "toggled", G_CALLBACK (set_lighting), 0);
 
@@ -312,6 +292,7 @@ extern GtkWidget *main_application_window;
 
 static gboolean new_values = FALSE;
 
+/* 
 static void
 yesnoresp (GtkWidget * w, gint resp, gpointer data)
 {
@@ -335,12 +316,12 @@ yesnoresp (GtkWidget * w, gint resp, gpointer data)
   gtk_widget_destroy (w);
 
 }
+*/
 
 /* Close the preferences window,  and update all the necessary values */
 static void
 confirm_preferences (void)
 {
-
   if (new_values)
     frameQty = new_frameQty;
 
@@ -354,14 +335,16 @@ confirm_preferences (void)
 				GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
 				_("Start cube with new settings?"));
 
-      g_signal_connect_swapped (dialog, "response",
-				G_CALLBACK (yesnoresp), dialog);
+      if ( GTK_RESPONSE_YES == gtk_dialog_run (GTK_DIALOG (dialog)))
+	{
+	  cube_dimension = new_dim;
 
-      gtk_widget_show_all (dialog);
+	  request_new_game ();
+	}
+
+      gtk_widget_destroy (dialog);
     }
 }
-
-
 
 
 static void
@@ -370,8 +353,6 @@ value_changed (GtkAdjustment * adj, gpointer user_data)
   new_values = TRUE;
   new_frameQty = adj->value;
 }
-
-
 
 
 static void
