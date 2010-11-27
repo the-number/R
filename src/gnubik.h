@@ -25,7 +25,6 @@
 void error_check (const char *file, int line_no, const char *string);
 
 extern int cube_dimension;
-extern int number_of_blocks;
 
 #ifndef M_PI
 # define M_PI           3.14159265358979323846

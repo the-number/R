@@ -329,7 +329,7 @@ drawCube (void)
 #endif
 
 
-  for (i = 0; i < number_of_blocks; i++)
+  for (i = 0; i < cube_get_number_of_blocks (the_cube); i++)
     {
 
       int j = 0;

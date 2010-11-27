@@ -76,13 +76,12 @@ new_game (gpointer p)
 
   destroy_the_cube ();
   /* create the cube */
-  number_of_blocks = create_the_cube (cube_dimension);
-  assert (number_of_blocks > 0);
+  create_the_cube (cube_dimension);
 
   for (i = 0; i < 8 * cube_dimension; i++)
     {
       Slice_Blocks *slice =
-	identify_blocks (the_cube, rand () % number_of_blocks, rand () % 3);
+	identify_blocks (the_cube, rand () % cube_get_number_of_blocks (the_cube), rand () % 3);
 
       rotate_slice (the_cube, rand () % 2 + 1, slice);
 

@@ -50,7 +50,6 @@ destroy_the_cube (void)
 
 
 
-
 /* Cube co-ordinates have their origin at the centre of the cube,  and their
    units are equivalent to one half of the length of one edge of a block. */
 /* This func initialises the positions of the blocks which comprise the cube.
@@ -69,6 +68,7 @@ destroy_the_cube (void)
    |   0 |   1 |   2 |   3 |
 */
 
+
 
 
 
@@ -550,6 +550,11 @@ get_visible_faces (const struct cube *cube, const int block_id)
 }
 
 
+int
+cube_get_number_of_blocks (const struct cube *cube)
+{
+  return cube->number_blocks;
+}
 
 
 /*

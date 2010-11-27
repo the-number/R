@@ -131,6 +131,8 @@ void get_quadrant_vector (const struct cube *cube,
 			  const int face, const int quadrant, vector v);
 
 
+int cube_get_number_of_blocks (const struct cube *cube);
+
 
 #include <libguile.h>
 

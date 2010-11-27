@@ -48,8 +48,6 @@ extern int frameQty;
 
 int cube_dimension = 3;
 static short solved = 0;
-int number_of_blocks;
-
 
 
 GtkWidget *main_application_window;
@@ -105,8 +103,7 @@ c_main (void *closure, int argc, char *argv[])
 
 
   /* create the cube */
-  number_of_blocks = create_the_cube (cube_dimension);
-  assert (number_of_blocks > 0);
+  create_the_cube (cube_dimension);
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
@@ -117,7 +114,7 @@ c_main (void *closure, int argc, char *argv[])
       for (i = 0; i < 8 * cube_dimension; i++)
 	{
 	  Slice_Blocks *blocks = identify_blocks (the_cube,
-						  rand () % number_of_blocks,
+						  rand () % cube_get_number_of_blocks (the_cube),
 						  rand () % 3);
 
 	  rotate_slice (the_cube, rand () % 2 + 1, blocks);
