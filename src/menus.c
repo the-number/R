@@ -292,31 +292,6 @@ extern GtkWidget *main_application_window;
 
 static gboolean new_values = FALSE;
 
-/* 
-static void
-yesnoresp (GtkWidget * w, gint resp, gpointer data)
-{
-  switch (resp)
-    {
-    case GTK_RESPONSE_YES:
-
-      cube_dimension = new_dim;
-
-      request_new_game (w, GINT_TO_POINTER (1));
-
-      break;
-
-    case GTK_RESPONSE_NO:
-      break;
-
-    default:
-      g_assert_not_reached ();
-    }
-
-  gtk_widget_destroy (w);
-
-}
-*/
 
 /* Close the preferences window,  and update all the necessary values */
 static void
