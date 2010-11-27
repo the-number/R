@@ -173,14 +173,9 @@ draw_face (GLint face, GLint col_outline, int block_id)
 
   centre_point[3] = 1.0;
 
-
-
-
-
   /* First Draw the surface of the cube,  that is the plastic material
      he thing is constructed from */
   glColor3fv (colors[col_outline]);
-
 
   /* This polygon is drawn as four quadrants,  thus:
      _______
@@ -195,7 +190,6 @@ draw_face (GLint face, GLint col_outline, int block_id)
      The reason for this is to provide support for an enhanced selection
      mechanism which can detect which edge of the face is being pointed to.
    */
-
 
   p1[0] = 0;
   p1[1] = 0;
