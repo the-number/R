@@ -20,7 +20,6 @@
 #include "guile-hooks.h"
 
 #include <stdlib.h>
-#include <memory.h>
 #include <dirent.h>
 #include <stdio.h>
 

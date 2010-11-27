@@ -18,7 +18,6 @@
 */
 
 #include <config.h>
-#include <memory.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
