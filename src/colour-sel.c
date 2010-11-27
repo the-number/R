@@ -751,20 +751,17 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
   GtkWidget *colourSelector;
 
   GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Colour selector"),
-					GTK_WINDOW (main_application_window),
-					GTK_DIALOG_MODAL
-					| GTK_DIALOG_DESTROY_WITH_PARENT,
-					GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
-					GTK_STOCK_REFRESH, 0,
-					GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
-					NULL);
+						   window,
+						   GTK_DIALOG_MODAL
+						   | GTK_DIALOG_DESTROY_WITH_PARENT,
+						   GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+						   GTK_STOCK_REFRESH, 0,
+						   GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+						   NULL);
 
   colour_menu_window = &(dialog->window);
 
-
-
   g_signal_connect (dialog, "show", G_CALLBACK (reset_swatch), 0);
-
 
   colourSelector = createColourSelector ();
 
@@ -779,12 +776,10 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
     button_use_image = gtk_button_new_with_mnemonic (_("Se_lect"));
 
     gtk_widget_set_tooltip_text (button_use_image, _("Select an image file"));
-    //                    _("Use an image file on the cube face"));
 
     button_tile = gtk_radio_button_new_with_mnemonic (0, _("_Tiled"));
     gtk_widget_set_tooltip_text (button_tile,
-				 _
-				 ("Place a copy of the image\non each block"));
+				 _("Place a copy of the image\non each block"));
 
     button_mosaic =
       gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON
@@ -792,11 +787,7 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
 						      _("_Mosaic"));
 
     gtk_widget_set_tooltip_text (button_mosaic,
-				 _
-				 ("Place a copy of the image across\nthe entire face of the cube"));
-
-
-
+				 _("Place a copy of the image across\nthe entire face of the cube"));
 
     g_signal_connect (button_tile, "toggled",
 		      G_CALLBACK (set_image_distr), (gpointer) TILED);
