@@ -18,11 +18,11 @@
 
 #include <config.h>
 #include "widget-set.h"
-#include "menus-gtk.h"
 #include "colour-sel.h"
 #include "version.h"
 #include "move-queue.h"
 #include "ui.h"
+#include "dialogs.h"
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>

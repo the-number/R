@@ -30,7 +30,6 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "menus-gtk.h"
 
 #define BOX_PADDING 10
 
