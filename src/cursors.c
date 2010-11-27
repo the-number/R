@@ -337,9 +337,8 @@ static const unsigned char w_mask_bits[] = {
   0x00, 0x0e, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00
 };
 
-
-/* We have defined cursors at intervals of 45 degrees */
-const static const float cursor_interval = 22.5;
+/* The angle between successive cursor intervals. */
+static const float cursor_interval = 22.5;
 
 static const unsigned char *cursors_data[] = {
   s_data_bits,
@@ -439,7 +438,7 @@ get_cursor (float angle, unsigned char **data, unsigned char **mask,
     angle += 360.0;
 
 
-  index = frac = angle / (float) cursor_interval;
+  index = frac = angle / cursor_interval;
   frac = frac - index;
 
   if (frac > 0.5)
