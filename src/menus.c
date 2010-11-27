@@ -42,8 +42,6 @@ extern int frameQty;
 static int new_frameQty;
 static int new_dim;
 
-static void confirm_preferences (void);
-
 static void set_lighting (GtkToggleButton * b, gpointer user_data);
 
 
@@ -226,7 +224,25 @@ create_animation_widget (void)
   return vboxOuter;
 }
 
+static gboolean new_values = FALSE;
 
+static gboolean
+confirm_preferences (GtkWindow *window)
+{
+  /* Popup dialog asking whether to restart the cube */
+  GtkWidget *dialog =
+    gtk_message_dialog_new (window,
+			    GTK_DIALOG_MODAL |
+			    GTK_DIALOG_DESTROY_WITH_PARENT,
+			    GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+			    _("Start cube with new settings?"));
+
+  gint resp = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return (GTK_RESPONSE_YES == resp);
+}
 
 void
 preferences (GtkWidget * w, GtkWindow *toplevel)
@@ -283,43 +299,21 @@ preferences (GtkWidget * w, GtkWindow *toplevel)
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 
   if (response == GTK_RESPONSE_ACCEPT)
-    confirm_preferences ();
+    {
+      if (new_values)
+	frameQty = new_frameQty;
+
+      if (new_dim == cube_dimension || confirm_preferences (toplevel))
+	{
+	  cube_dimension = new_dim;
+	  request_new_game ();
+	}
+    }
 
   gtk_widget_destroy (dialog);
 }
 
-extern GtkWidget *main_application_window;
 
-static gboolean new_values = FALSE;
-
-
-/* Close the preferences window,  and update all the necessary values */
-static void
-confirm_preferences (void)
-{
-  if (new_values)
-    frameQty = new_frameQty;
-
-  if (new_dim != cube_dimension)
-    {
-      /* Popup dialog asking whether to restart the cube */
-      GtkWidget *dialog =
-	gtk_message_dialog_new (GTK_WINDOW (main_application_window),
-				GTK_DIALOG_MODAL |
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
-				_("Start cube with new settings?"));
-
-      if ( GTK_RESPONSE_YES == gtk_dialog_run (GTK_DIALOG (dialog)))
-	{
-	  cube_dimension = new_dim;
-
-	  request_new_game ();
-	}
-
-      gtk_widget_destroy (dialog);
-    }
-}
 
 
 static void
