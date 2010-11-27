@@ -320,25 +320,25 @@ draw_face (GLint face, GLint col_outline, int block_id)
 
     if (rendering[face]->type == IMAGED && rendering[face]->distr == MOSAIC)
       {
-	image_segment_size = 1.0 / cube_dimension;
+	image_segment_size = 1.0 / cube_get_dimension (the_cube);
 	switch (face)
 	  {
 	  case 0:
 	  case 1:
-	    xpos = block_id % cube_dimension;
+	    xpos = block_id % cube_get_dimension (the_cube);
 	    ypos =
-	      block_id % (cube_dimension * cube_dimension) / cube_dimension;
+	      block_id % (cube_get_dimension (the_cube) * cube_get_dimension (the_cube)) / cube_get_dimension (the_cube);
 	    break;
 	  case 2:
 	  case 3:
-	    xpos = block_id % cube_dimension;
-	    ypos = block_id / (cube_dimension * cube_dimension);
+	    xpos = block_id % cube_get_dimension (the_cube);
+	    ypos = block_id / (cube_get_dimension (the_cube) * cube_get_dimension (the_cube));
 	    break;
 	  case 4:
 	  case 5:
-	    xpos = block_id / (cube_dimension * cube_dimension);
+	    xpos = block_id / (cube_get_dimension (the_cube) * cube_get_dimension (the_cube));
 	    ypos =
-	      block_id % (cube_dimension * cube_dimension) / cube_dimension;
+	      block_id % (cube_get_dimension (the_cube) * cube_get_dimension (the_cube)) / cube_get_dimension (the_cube);
 	    break;
 	  }
 
@@ -346,19 +346,19 @@ draw_face (GLint face, GLint col_outline, int block_id)
 	switch (face)
 	  {
 	  case 0:
-	    xpos = cube_dimension - xpos - 1;
+	    xpos = cube_get_dimension (the_cube) - xpos - 1;
 	    /* fallthrough */
 	  case 1:
-	    ypos = cube_dimension - ypos - 1;
+	    ypos = cube_get_dimension (the_cube) - ypos - 1;
 	    break;
 	  case 5:
-	    xpos = cube_dimension - xpos - 1;
+	    xpos = cube_get_dimension (the_cube) - xpos - 1;
 	    /* fallthrough */
 	  case 4:
-	    ypos = cube_dimension - ypos - 1;
+	    ypos = cube_get_dimension (the_cube) - ypos - 1;
 	    break;
 	  case 2:
-	    xpos = cube_dimension - xpos - 1;
+	    xpos = cube_get_dimension (the_cube) - xpos - 1;
 	    break;
 	  }
       }

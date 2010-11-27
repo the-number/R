@@ -556,6 +556,13 @@ cube_get_number_of_blocks (const struct cube *cube)
   return cube->number_blocks;
 }
 
+int
+cube_get_dimension (const struct cube *cube)
+{
+  return cube->cube_size;
+}
+
+
 
 /*
  Get the transformation of block number `block_id' from the origin,  and store

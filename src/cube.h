@@ -132,7 +132,7 @@ void get_quadrant_vector (const struct cube *cube,
 
 
 int cube_get_number_of_blocks (const struct cube *cube);
-
+int cube_get_dimension (const struct cube *cube);
 
 #include <libguile.h>
 

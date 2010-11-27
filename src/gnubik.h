@@ -18,13 +18,9 @@
 #ifndef GNUBIK_H
 #define GNUBIK_H
 
-
-
 #define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
 
 void error_check (const char *file, int line_no, const char *string);
-
-extern int cube_dimension;
 
 #ifndef M_PI
 # define M_PI           3.14159265358979323846

@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-void request_new_game (void);
+void request_new_game (GtkAction *a, gint *new_dim);
 
 void preferences_dialog (GtkWidget *w, GtkWindow *);
 

@@ -68,6 +68,7 @@ static gboolean
 new_game (gpointer p)
 {
   int i;
+  int *new_dimension = p;
 
   if (is_animating ())
     return TRUE;
@@ -76,9 +77,9 @@ new_game (gpointer p)
 
   destroy_the_cube ();
   /* create the cube */
-  create_the_cube (cube_dimension);
+  create_the_cube (*new_dimension);
 
-  for (i = 0; i < 8 * cube_dimension; i++)
+  for (i = 0; i < 8 * cube_get_dimension (the_cube); i++)
     {
       Slice_Blocks *slice =
 	identify_blocks (the_cube, rand () % cube_get_number_of_blocks (the_cube), rand () % 3);
@@ -106,13 +107,15 @@ new_game (gpointer p)
 /* Request that the game be restarted
    If data is non zero,  then all it's data will be reallocated
 */
+static int new_dim;
 void
-request_new_game (void)
+request_new_game (GtkAction *act, int *dim)
 {
+  new_dim = *dim;
   request_stop ();
   if (is_animating ())
     abort_animation ();
-  g_idle_add (new_game, NULL);
+  g_idle_add (new_game, dim);
 }
 
 
@@ -129,7 +132,7 @@ create_dimension_widget (void)
   GtkWidget *hbox = gtk_hbox_new (FALSE, BOX_PADDING);
 
   GtkObject *adj =
-    gtk_adjustment_new (cube_dimension, 1, G_MAXFLOAT, 1, 1, 0);
+    gtk_adjustment_new (cube_get_dimension (the_cube), 1, G_MAXFLOAT, 1, 1, 0);
 
   GtkWidget *entry = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
 
@@ -142,7 +145,7 @@ create_dimension_widget (void)
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
 
 
-  new_dim = cube_dimension;
+  new_dim = cube_get_dimension (the_cube);
 
   g_signal_connect (entry, "changed", G_CALLBACK (size_changed), 0);
 
@@ -289,10 +292,9 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
       if (new_values)
 	frameQty = new_frameQty;
 
-      if (new_dim == cube_dimension || confirm_preferences (toplevel))
+      if (new_dim == cube_get_dimension (the_cube) || confirm_preferences (toplevel))
 	{
-	  cube_dimension = new_dim;
-	  request_new_game ();
+	  request_new_game (NULL, &new_dim);
 	}
     }
 

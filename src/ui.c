@@ -279,7 +279,7 @@ drawCube (void)
 
 #if DEBUG
   {
-    GLfloat offset = 1.6 * cube_dimension;
+    GLfloat offset = 1.6 * cube_get_dimension (the_cube);
 
     /* Show the directions of the axes */
     glColor3f (1, 1, 1);
@@ -289,7 +289,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (2 * cube_dimension, 0, 0);
+    glVertex3f (2 * cube_get_dimension (the_cube), 0, 0);
     glEnd ();
 
 
@@ -303,7 +303,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 2 * cube_dimension, 0);
+    glVertex3f (0, 2 * cube_get_dimension (the_cube), 0);
     glEnd ();
 
     glRasterPos3d (0.1 * offset, offset, 0);
@@ -317,7 +317,7 @@ drawCube (void)
 
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 0, 2 * cube_dimension);
+    glVertex3f (0, 0, 2 * cube_get_dimension (the_cube));
     glEnd ();
 
     glRasterPos3d (0.1 * offset, 0, offset);
@@ -782,7 +782,7 @@ turn_indicator (int axis, int dir)
     {
       /* one each side of the cube */
       GLfloat location =
-	(i == 0) ? cube_dimension * 2.0 : -(cube_dimension * 2.0);
+	(i == 0) ? cube_get_dimension (the_cube) * 2.0 : -(cube_get_dimension (the_cube) * 2.0);
 
       /* Inside is dark grey */
       glFrontFace (GL_CCW);
@@ -811,8 +811,8 @@ drawInd (GLfloat location, int axis, int dir)
   int j;
   int theta;
 
-  const GLfloat radius = cube_dimension / 2.0;
-  const GLfloat strip_width = 0.1 * cube_dimension;
+  const GLfloat radius = cube_get_dimension (the_cube) / 2.0;
+  const GLfloat strip_width = 0.1 * cube_get_dimension (the_cube);
   const GLint segments = 3;
   const GLfloat arrowlength = 0.1;
 

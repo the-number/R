@@ -328,35 +328,46 @@ static const GtkActionEntry action_entries[] = {
 
   {
    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
-   NULL, "preferences", G_CALLBACK (preferences_dialog)},
+   NULL, "preferences", G_CALLBACK (preferences_dialog)
+  },
 
   {
    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
-   NULL, "colours", G_CALLBACK (colour_select_menu)},
+   NULL, "colours", G_CALLBACK (colour_select_menu)
+  },
 
   {
    "show-hide-action", NULL, N_("Sho_w/Hide"),
-   NULL, "show-hide", G_CALLBACK (create_show_hide_menu)},
+   NULL, "show-hide", G_CALLBACK (create_show_hide_menu)
+  },
 
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
-   NULL, "about", G_CALLBACK (about_dialog)},
+   NULL, "about", G_CALLBACK (about_dialog)
+  },
 
   {
    "quit-action", GTK_STOCK_QUIT, NULL,
-   "<control>Q", "quit", G_CALLBACK (gtk_main_quit)},
-
-  {
-   "new-game-action", NULL, N_("_New Game"),
-   "<control>N", "new-game", G_CALLBACK (request_new_game)}
+   "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
+  }
 
 };
+
+
+
+static const GtkActionEntry game_action_entries[] =
+  {
+    {
+   "new-game-action", NULL, N_("_New Game"),
+   "<control>N", "new-game", G_CALLBACK (request_new_game)
+    }
+  };
 
 
 static const char menu_tree[] = "<ui>\
   <menubar name=\"MainMenu\">\
     <menu name=\"game-menu\" action=\"game-menu-action\">\
-     <menuitem name=\"new-game\" action=\"new-game-action\"/>\
+     <menuitem name=\"new-game\" action=\"new-game-action\"/> \
      <menuitem name=\"quit\" action=\"quit-action\"/>\
     </menu>\
     <menu name=\"settings-menu\" action=\"settings-menu-action\">\
@@ -372,20 +383,30 @@ static const char menu_tree[] = "<ui>\
   </menubar>\
 </ui>";
 
+int new_game_dimension = 3;
+
 GtkWidget *
 create_menubar (GtkWidget * container, GtkWidget * toplevel)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
-  GtkActionGroup *action_group = gtk_action_group_new ("menu-actions");
+  GtkActionGroup *action_group = gtk_action_group_new ("dialog-actions");
+  GtkActionGroup *game_action_group = gtk_action_group_new ("game-actions");
 
   gtk_action_group_set_translation_domain (action_group, PACKAGE);
+  gtk_action_group_set_translation_domain (game_action_group, PACKAGE);
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
 				sizeof (action_entries[0]), toplevel);
 
+  gtk_action_group_add_actions (game_action_group, game_action_entries,
+				sizeof (game_action_entries) /
+				sizeof (game_action_entries[0]), &new_game_dimension);
+
+
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
+  gtk_ui_manager_insert_action_group (menu_manager, game_action_group, 0);
 
   if (0 ==
       gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree,

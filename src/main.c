@@ -30,11 +30,11 @@
 #include "glarea.h"
 #include "widget-set.h"
 #include "select.h"
+#include "cube.h"
 
 #include <assert.h>
 
 #include <libintl.h>
-#include <ctype.h>
 
 static const char help_string[];
 
@@ -46,9 +46,8 @@ void app_opts (int *argc, char **argv);
 extern int frameQty;
 
 
-int cube_dimension = 3;
 static short solved = 0;
-
+static int initial_cube_dimension = 3;
 
 GtkWidget *main_application_window;
 
@@ -60,8 +59,6 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *play_toolbar;
   GtkWidget *statusbar;
   GtkWidget *glxarea;
-
-
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -101,9 +98,8 @@ c_main (void *closure, int argc, char *argv[])
 
   statusbar = create_statusbar (form);
 
-
   /* create the cube */
-  create_the_cube (cube_dimension);
+  create_the_cube (initial_cube_dimension);
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
@@ -111,7 +107,7 @@ c_main (void *closure, int argc, char *argv[])
     {
       int i;
       srand (time (0));
-      for (i = 0; i < 8 * cube_dimension; i++)
+      for (i = 0; i < 8 * cube_get_dimension (the_cube); i++)
 	{
 	  Slice_Blocks *blocks = identify_blocks (the_cube,
 						  rand () % cube_get_number_of_blocks (the_cube),
@@ -142,6 +138,7 @@ main (int argc, char **argv)
   scm_boot_guile (argc, argv, c_main, 0);
   return 0;
 }
+
 
 
 
@@ -184,7 +181,7 @@ app_opts (int *argc, char **argv)
 	  solved = 1;
 	  break;
 	case 'z':
-	  sscanf (optarg, "%d", &cube_dimension);
+	  sscanf (optarg, "%d", &initial_cube_dimension);
 	  break;
 	case 'h':
 	  printf ("%s", help_string);
