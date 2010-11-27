@@ -383,7 +383,7 @@ create_menubar (GtkWidget * container, GtkWidget * toplevel)
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
-				sizeof (action_entries[0]), NULL);
+				sizeof (action_entries[0]), toplevel);
 
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
 

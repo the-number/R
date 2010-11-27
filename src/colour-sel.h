@@ -22,7 +22,7 @@
 #include <GL/gl.h>
 #include <gtk/gtk.h>
 
-void colour_select_menu (GtkWidget * w, gpointer data);
+void colour_select_menu (GtkWidget *w, GtkWindow *window);
 
 enum distrib_type
 { TILED, MOSAIC };

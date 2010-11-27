@@ -735,11 +735,10 @@ drag_data_received (GtkWidget * widget,
 static GdkDrawable **colour_menu_window = 0;
 
 void
-colour_select_menu (GtkWidget * w, gpointer data)
+colour_select_menu (GtkWidget * w, GtkWindow *window)
 {
   int i;
 
-  GtkWidget *dialog;
   GtkWidget *hbox_swatch;
   GtkWidget *table;
 
@@ -751,9 +750,7 @@ colour_select_menu (GtkWidget * w, gpointer data)
   GtkWidget *hbox_cs;
   GtkWidget *colourSelector;
 
-
-
-  dialog = gtk_dialog_new_with_buttons (_("Colour selector"),
+  GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Colour selector"),
 					GTK_WINDOW (main_application_window),
 					GTK_DIALOG_MODAL
 					| GTK_DIALOG_DESTROY_WITH_PARENT,
