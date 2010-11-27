@@ -52,7 +52,6 @@ void set_swatch_pattern (gint swatch, gint pattern);
 
 
 
-void initialise_rendering (gint i);
 
 
 gboolean
@@ -311,7 +310,7 @@ popupImageSelector (GtkWidget * w, GtkWidget * parent)
 }
 
 
-void
+static void
 initialise_rendering (gint i)
 {
   /* If this is happening for the very first time */

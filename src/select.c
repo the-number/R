@@ -62,7 +62,6 @@ static gboolean enableDisableSelection (GtkWidget * w,
 					gpointer data);
 
 static GtkWidget *glxarea;
-extern GtkWidget *toplevel;
 
 
 static gboolean timerActive;

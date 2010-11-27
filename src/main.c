@@ -52,7 +52,6 @@ int number_of_blocks;
 
 
 
-static GtkWidget *glxarea;
 GtkWidget *main_application_window;
 
 static void
@@ -62,6 +61,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *menubar;
   GtkWidget *play_toolbar;
   GtkWidget *statusbar;
+  GtkWidget *glxarea;
 
 
 
