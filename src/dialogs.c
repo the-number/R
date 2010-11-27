@@ -18,7 +18,7 @@
 
 #include <config.h>
 #include <gtk/gtk.h>
-#include "menus-gtk.h"
+#include "dialogs.h"
 #include <stdlib.h>
 
 #include "cube.h"
@@ -29,7 +29,6 @@
 #include "widget-set.h"
 #include "gnubik.h"
 
-#include <memory.h>
 #include <glib.h>
 #include <assert.h>
 

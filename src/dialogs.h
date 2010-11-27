@@ -1,5 +1,4 @@
 /*
-    Menu definition code.
     Copyright (C) 2003  John Darrington
 
     This program is free software; you can redistribute it and/or modify
@@ -16,8 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MENUS_GTK_H
-#define MENUS_GTK_H
+#ifndef DIALOGS_H
+#define DIALOGS_H
 
 #include <gtk/gtk.h>
 

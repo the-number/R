@@ -23,40 +23,25 @@ src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS) \
 
 
 src_gnubik_SOURCES = \
-	src/colour-sel.c  \
-	src/colour-sel.h \
-	src/cube.c \
-	src/cube.h \
+	src/colour-sel.c src/colour-sel.h \
+	src/cube.c src/cube.h \
 	src/cube_i.h \
-	src/cursors.c  \
-	src/cursors.h \
-	src/drwBlock.c \
-	src/drwBlock.h \
+	src/cursors.c src/cursors.h \
+	src/drwBlock.c src/drwBlock.h \
 	src/glarea-common.c \
-	src/glarea.c    \
-	src/glarea.h \
+	src/glarea.c src/glarea.h \
 	src/gnubik.h \
 	src/gnubik.xpm \
-	src/guile-hooks.c  \
-	src/guile-hooks.h  \
+	src/guile-hooks.c src/guile-hooks.h  \
 	src/main.c \
-	src/menus.c \
-	src/menus-gtk.h \
-	src/move-queue.c \
-	src/move-queue.h \
+	src/dialogs.c src/dialogs.h \
+	src/move-queue.c src/move-queue.h \
 	src/move-queue_i.h \
-	src/quarternion.c  \
-	src/quarternion.h \
-	src/select.c    \
-	src/select.h \
-	src/textures.c  \
-	src/textures.h \
-	src/txfm.c \
-	src/txfm.h \
-	src/ui.c \
-	src/ui.h \
-	src/version.c \
-	src/version.h \
-	src/widget-set.c \
-	src/widget-set.h 
+	src/quarternion.c src/quarternion.h \
+	src/select.c src/select.h \
+	src/textures.c src/textures.h \
+	src/txfm.c src/txfm.h \
+	src/ui.c src/ui.h \
+	src/version.c src/version.h \
+	src/widget-set.c src/widget-set.h 
 
