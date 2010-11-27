@@ -328,7 +328,7 @@ static const GtkActionEntry action_entries[] = {
 
   {
    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
-   NULL, "preferences", G_CALLBACK (preferences)},
+   NULL, "preferences", G_CALLBACK (preferences_dialog)},
 
   {
    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
@@ -340,7 +340,7 @@ static const GtkActionEntry action_entries[] = {
 
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
-   NULL, "about", G_CALLBACK (about)},
+   NULL, "about", G_CALLBACK (about_dialog)},
 
   {
    "quit-action", GTK_STOCK_QUIT, NULL,

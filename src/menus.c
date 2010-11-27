@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003, 2004  John Darrington
+    Copyright (C) 2003, 2004, 2010  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,18 +46,6 @@ static void set_lighting (GtkToggleButton * b, gpointer user_data);
 
 
 static void value_changed (GtkAdjustment * adj, gpointer user_data);
-
-
-#if DEBUG
-static void manual_move (GtkWidget * w, Move_Data * data);
-
-static void
-fill_value (GtkAdjustment * adj, int *p)
-{
-  *p = (int) adj->value;
-}
-
-#endif
 
 
 static void
@@ -245,7 +233,7 @@ confirm_preferences (GtkWindow *window)
 }
 
 void
-preferences (GtkWidget * w, GtkWindow *toplevel)
+preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 {
   gint response;
 
@@ -337,114 +325,8 @@ size_changed (GtkEditable * editable, gpointer data)
 }
 
 
-#if DEBUG
 void
-move (GtkWidget * w, gpointer data)
-{
-  GtkWidget *dialog;
-
-  GtkWidget *hbox1;
-  GtkWidget *hbox2;
-  GtkWidget *hbox4;
-  GtkWidget *button_turn;
-  GtkWidget *button_close;
-  GtkObject *adj1, *adj2, *adj4;
-  GtkWidget *label1, *label2, *label4;
-  GtkWidget *sb1, *sb2, *sb4;
-
-  static Move_Data md;
-
-  dialog = gtk_dialog_new ();
-
-
-  button_turn = gtk_button_new_with_label ("Turn");
-  button_close = gtk_button_new_with_label ("Close");
-
-
-  hbox1 = gtk_hbox_new (TRUE, 0);
-  adj1 = gtk_adjustment_new (0, 0, number_of_blocks - 1, 1, 1, 0);
-
-  g_signal_connect (adj1, "value-changed", G_CALLBACK (fill_value),
-		    &md.slice);
-
-  sb1 = gtk_spin_button_new (GTK_ADJUSTMENT (adj1), 0, 0);
-  label1 = gtk_label_new ("Block to move:");
-
-
-  hbox2 = gtk_hbox_new (TRUE, 0);
-  adj2 = gtk_adjustment_new (0, 0, 2, 1, 1, 0);
-  g_signal_connect (adj2, "value-changed", G_CALLBACK (fill_value), &md.axis);
-  sb2 = gtk_spin_button_new (GTK_ADJUSTMENT (adj2), 0, 0);
-  label2 = gtk_label_new ("Axis:");
-
-  hbox4 = gtk_hbox_new (TRUE, 0);
-  adj4 = gtk_adjustment_new (0, 0, 1, 1, 1, 0);
-  g_signal_connect (adj4, "value-changed", G_CALLBACK (fill_value), &md.dir);
-  sb4 = gtk_spin_button_new (GTK_ADJUSTMENT (adj4), 0, 0);
-  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sb4), TRUE);
-  label4 = gtk_label_new ("Direction:");
-
-
-
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area),
-		     button_turn);
-
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area),
-		     button_close);
-
-
-  gtk_box_pack_start (GTK_BOX (hbox1), label1, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox1), sb1, TRUE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (hbox2), label2, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox2), sb2, TRUE, TRUE, 0);
-
-
-  gtk_box_pack_start (GTK_BOX (hbox4), label4, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox4), sb4, TRUE, TRUE, 0);
-
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox1);
-
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox2);
-
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox4);
-
-  /* Ensure that the dialog box is destroyed when the user responds. */
-
-
-  g_signal_connect (button_turn, "clicked", G_CALLBACK (manual_move), &md);
-
-  g_signal_connect_swapped (button_close,
-			    "clicked",
-			    G_CALLBACK (gtk_widget_destroy),
-			    (gpointer) dialog);
-
-
-
-  gtk_widget_show_all (dialog);
-}
-
-
-
-
-
-
-/* Manually make a move on the cube */
-static void
-manual_move (GtkWidget * w, Move_Data * data)
-{
-  /* Just loose the first argument and call the next function */
-
-  request_rotation (data);
-
-  postRedisplay ();
-}
-
-
-#endif
-
-void
-about (GtkWidget * w, GtkWindow * toplevel)
+about_dialog (GtkWidget * w, GtkWindow * toplevel)
 {
   /* Create the widgets */
   GtkWidget *dialog = gtk_about_dialog_new ();

@@ -23,13 +23,8 @@
 
 void request_new_game (void);
 
-void preferences (GtkWidget *w, GtkWindow *);
-/* Close  a window without doing anything else */
-void close_no_action (GtkWidget * w, gpointer data);
+void preferences_dialog (GtkWidget *w, GtkWindow *);
 
-void about (GtkWidget * w, GtkWindow *);
-
-void move (GtkWidget * w, gpointer data);
-
+void about_dialog (GtkWidget * w, GtkWindow *);
 
 #endif
