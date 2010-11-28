@@ -19,7 +19,6 @@
 #include <config.h>
 #include "widget-set.h"
 #include "colour-sel.h"
-#include "version.h"
 #include "move-queue.h"
 #include "ui.h"
 #include "dialogs.h"
