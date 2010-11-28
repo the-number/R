@@ -29,7 +29,6 @@
 #include "glarea.h"
 #include "select.h"
 #include "widget-set.h"
-#include "gnubik.h"
 
 
 #include "quarternion.h"

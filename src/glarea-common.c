@@ -21,7 +21,6 @@
 #include <GL/glu.h>
 #include <math.h>
 #include "glarea.h"
-#include "gnubik.h"
 #include "cube.h"
 
 GLdouble fovy = -1;

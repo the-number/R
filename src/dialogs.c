@@ -27,7 +27,6 @@
 #include "ui.h"
 #include "drwBlock.h"
 #include "widget-set.h"
-#include "gnubik.h"
 
 #include <glib.h>
 #include <assert.h>

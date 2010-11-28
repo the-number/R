@@ -33,7 +33,6 @@
 #include "colour-sel.h"
 
 #include <math.h>
-#include "gnubik.h"
 
 
 /* We use a little bit of glut in debug mode */
