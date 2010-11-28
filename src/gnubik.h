@@ -22,8 +22,4 @@
 
 void error_check (const char *file, int line_no, const char *string);
 
-#ifndef M_PI
-# define M_PI           3.14159265358979323846
-#endif
-
 #endif
