@@ -278,52 +278,22 @@ create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
 
 /* Toggle the visibility of a widget */
 static void
-toggle_visibility (GtkMenuItem * menuitem, gpointer user_data)
+toggle_visibility (GtkToggleAction *ta, gpointer user_data)
 {
-  GtkWidget **w = (user_data);
+  GObject **w = user_data;
 
-  g_assert (*w);
-
-  if (GTK_WIDGET_VISIBLE (*w))
-    gtk_widget_hide (*w);
-  else
-    gtk_widget_show (*w);
+  g_object_set (*w, 
+		"visible", gtk_toggle_action_get_active (ta),
+		NULL);
 }
 
-static GtkWidget *
-create_show_hide_menu (void)
+static const GtkActionEntry action_entries[] =
 {
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-
-  menu = gtk_menu_new ();
-
-  menuitem = gtk_menu_item_new_with_mnemonic (_("_Play Toolbar"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  gtk_widget_show (menuitem);
-
-  g_signal_connect (menuitem, "activate",
-		    G_CALLBACK (toggle_visibility), &play_toolbar);
-
-  menuitem = gtk_menu_item_new_with_mnemonic (_("_Status Bar"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  gtk_widget_show (menuitem);
-
-  g_signal_connect (menuitem, "activate",
-		    G_CALLBACK (toggle_visibility), &statusbar);
-
-
-
-  return menu;
-}
-
-
-static const GtkActionEntry action_entries[] = {
   {"game-menu-action", NULL, N_("_Game")},
   {"settings-menu-action", NULL, N_("_Settings")},
   {"help-menu-action", NULL, N_("_Help")},
+  {"show-hide-menu-action", NULL, N_("Sho_w/Hide")},
   {"scripts-menu-action", NULL, N_("_Scripts")},
-
 
   {
    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
@@ -336,11 +306,6 @@ static const GtkActionEntry action_entries[] = {
   },
 
   {
-   "show-hide-action", NULL, N_("Sho_w/Hide"),
-   NULL, "show-hide", G_CALLBACK (create_show_hide_menu)
-  },
-
-  {
    "about-action", GTK_STOCK_ABOUT, NULL,
    NULL, "about", G_CALLBACK (about_dialog)
   },
@@ -349,9 +314,7 @@ static const GtkActionEntry action_entries[] = {
    "quit-action", GTK_STOCK_QUIT, NULL,
    "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
   }
-
 };
-
 
 
 static const GtkActionEntry game_action_entries[] =
@@ -363,6 +326,25 @@ static const GtkActionEntry game_action_entries[] =
   };
 
 
+static const GtkToggleActionEntry statusbar_action_entries[] =
+  {
+    {
+   "statusbar-action", NULL, N_("_Status Bar"),
+   NULL, "show-hide-statusbar", G_CALLBACK (toggle_visibility), TRUE
+    },
+  };
+
+
+static const GtkToggleActionEntry toolbar_action_entries[] =
+  {
+    {
+   "toolbar-action", NULL, N_("_Play Toolbar"),
+   NULL, "show-hide-toolbar", G_CALLBACK (toggle_visibility), TRUE
+    }
+  };
+
+
+
 static const char menu_tree[] = "<ui>\
   <menubar name=\"MainMenu\">\
     <menu name=\"game-menu\" action=\"game-menu-action\">\
@@ -372,7 +354,10 @@ static const char menu_tree[] = "<ui>\
     <menu name=\"settings-menu\" action=\"settings-menu-action\">\
      <menuitem name=\"preferences\" action=\"preferences-action\"/>\
      <menuitem name=\"colours\" action=\"colours-action\"/>\
-     <menuitem name=\"show-hide\" action=\"show-hide-action\"/>\
+     <menu name=\"show-hide-menu\" action=\"show-hide-menu-action\">\
+     <menuitem name=\"toggle-toolbar\" action=\"toolbar-action\"/>\
+     <menuitem name=\"toggle-statusbar\" action=\"statusbar-action\"/>\
+     </menu>\
     </menu>\
     <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
     </menu>\
@@ -385,15 +370,19 @@ static const char menu_tree[] = "<ui>\
 int new_game_dimension = 3;
 
 GtkWidget *
-create_menubar (GtkWidget * container, GtkWidget * toplevel)
+create_menubar (GtkWidget * container, GtkWidget *toplevel)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
   GtkActionGroup *action_group = gtk_action_group_new ("dialog-actions");
   GtkActionGroup *game_action_group = gtk_action_group_new ("game-actions");
+  GtkActionGroup *toolbar_action_group = gtk_action_group_new ("toolbar-actions");
+  GtkActionGroup *statusbar_action_group = gtk_action_group_new ("statusbar-actions");
 
   gtk_action_group_set_translation_domain (action_group, PACKAGE);
   gtk_action_group_set_translation_domain (game_action_group, PACKAGE);
+  gtk_action_group_set_translation_domain (toolbar_action_group, PACKAGE);
+  gtk_action_group_set_translation_domain (statusbar_action_group, PACKAGE);
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
@@ -403,9 +392,18 @@ create_menubar (GtkWidget * container, GtkWidget * toplevel)
 				sizeof (game_action_entries) /
 				sizeof (game_action_entries[0]), &new_game_dimension);
 
+  gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
+				sizeof (toolbar_action_entries) /
+				sizeof (toolbar_action_entries[0]), &play_toolbar);
+
+  gtk_action_group_add_toggle_actions (statusbar_action_group, statusbar_action_entries,
+				sizeof (statusbar_action_entries) /
+				sizeof (statusbar_action_entries[0]), &statusbar);
 
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, game_action_group, 0);
+  gtk_ui_manager_insert_action_group (menu_manager, toolbar_action_group, 0);
+  gtk_ui_manager_insert_action_group (menu_manager, statusbar_action_group, 0);
 
   if (0 ==
       gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree,
