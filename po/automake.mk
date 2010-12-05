@@ -6,7 +6,7 @@ MSGMERGE=msgmerge
 MSGFMT=msgfmt
 
 
-POFILES=po/bg.po po/ca.po po/da.po po/de.po po/en_US.po po/es.po po/eu.po po/fi.po po/gr.po po/fr.po po/he.po po/it.po po/ms.po po/nl.po po/no.po po/pl.po po/pt_BR.po po/pt_PT.po po/tr.po po/uk.po po/ro.po po/ru.po po/sv.po po/zh_CN.po 
+POFILES=po/bg.po po/ca.po po/da.po po/de.po po/el.po po/en_US.po po/es.po po/eu.po po/fi.po po/fr.po po/he.po po/it.po po/ms.po po/nl.po po/no.po po/pl.po po/pt_BR.po po/pt_PT.po po/tr.po po/uk.po po/ro.po po/ru.po po/sv.po po/zh_CN.po 
 
 
 POTFILE=po/$(DOMAIN).pot
