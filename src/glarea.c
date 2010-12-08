@@ -153,9 +153,9 @@ initialize_gl_capability (GtkWidget * glxarea)
   gint i;
 
   const GdkGLConfigMode mode[] = {
-    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM,
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM | GDK_GL_MODE_DEPTH,
 
-    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH,
   };
 
   GdkScreen *screen = gtk_widget_get_screen (glxarea);
