@@ -64,7 +64,6 @@ modelViewInit (void)
 	     origin[0], origin[1], origin[2], 0.0, 1.0, 0.0);
 
 
-
   quarternion_to_matrix (m, &cube_view);
   glMultMatrixf (m);
 
@@ -80,7 +79,6 @@ modelViewInit (void)
    */
   glRotatef (90.0, 1, 0, 0);
   glRotatef (-90.0, 0, 0, 1);
-
 }
 
 
@@ -123,7 +121,6 @@ accPerspective (GLdouble fovy, GLdouble aspect,
   left = -right;
   accFrustum (left, right, bottom, top, zNear, zFar, pixdx, pixdy, eyedx,
 	      eyedy, focus);
-
 }
 
 
@@ -144,7 +141,6 @@ projection_init (int jitter)
 
   accPerspective (fovy, 1, cp_near, cp_far,
 		  j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
-
 }
 
 
