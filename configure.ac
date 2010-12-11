@@ -93,14 +93,7 @@ AX_CHECK_GLUT
 AC_C_CONST
 AC_C_INLINE
 
-
-
 AC_CHECK_FUNCS(getopt_long)
-AC_CHECK_FUNCS(getpwuid)
-
-dnl Checks for header files.
-AC_CHECK_HEADERS([malloc.h pwd.h])
-
 
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)

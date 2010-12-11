@@ -23,16 +23,9 @@
 #include <dirent.h>
 #include <stdio.h>
 
-#if HAVE_PWD_H
-#include <pwd.h>
-#endif
-
-#include <unistd.h>
-
 #include "cube.h"
 #include "ui.h"
 #include "widget-set.h"
-
 
 
 /* When a script runs,  the first cube movement that is requested by the script
@@ -264,10 +257,6 @@ read_script_directory (const char *dir_name)
 void
 startup_guile_scripts (GtkUIManager * ui_manager)
 {
-  static const char local_dir[] = "/.gnubik/scripts";
-  const char *home_dir;
-  char *buffer;
-
   /* Register C functions that the scheme world can access. */
 
   scm_c_define_gsubr ("gnubik-create-menu", 1, 1, 0, gnubik_create_menu);
@@ -292,23 +281,11 @@ startup_guile_scripts (GtkUIManager * ui_manager)
   read_script_directory (GUILEDIR);
   read_script_directory (SCRIPTDIR);
 
-  /* Run all the user scripts in $(HOME)/.gnubik/scripts. */
-
-  home_dir = getenv ("HOME");
-
-#if HAVE_GETPWUID
-  if (home_dir == NULL)
-    home_dir = getpwuid (getuid ())->pw_dir;
-#endif
-
-  if (home_dir)
     {
-      buffer = malloc (strlen (home_dir) + strlen (local_dir) + 1);
-      strcpy (buffer, home_dir);
-      strcat (buffer, local_dir);
+      gchar *cfd = g_strdup_printf ("%s/gnubik",g_get_user_config_dir ());
 
-      read_script_directory (buffer);
+      read_script_directory (cfd);
 
-      free (buffer);
+      g_free (cfd);
     }
 }
