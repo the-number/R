@@ -41,11 +41,9 @@
 void
 widget_set_init (int *argc, char ***argv)
 {
-
   gtk_init (argc, argv);
 
   gtk_gl_init (argc, argv);
-
 }
 
 
@@ -57,7 +55,6 @@ create_top_level_widget (void)
 
   g_signal_connect (win, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
-
   return win;
 }
 
@@ -66,7 +63,6 @@ create_container_widget (GtkWidget * parent)
 {
   /* create a vbox to hold the drawing area and the menubar */
   GtkWidget *vbox = gtk_vbox_new (FALSE, 0);
-
 
   gtk_container_add (GTK_CONTAINER (parent), vbox);
 
@@ -83,7 +79,6 @@ extern Move_Queue *move_queue;
 void
 update_statusbar (void)
 {
-
   static int context = 0;
 
   static guint mesg_id = 0;
@@ -104,7 +99,6 @@ update_statusbar (void)
     gtk_statusbar_remove (GTK_STATUSBAR (statusbar), context, mesg_id);
 
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
-
 }
 
 void
@@ -140,15 +134,12 @@ declare_win (const struct cube *cube)
       g_assert_not_reached ();
     }
 
-
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 }
 
 GtkWidget *
 create_statusbar (GtkWidget * container)
 {
-
-
   statusbar = gtk_statusbar_new ();
 
   gtk_box_pack_start (GTK_BOX (container), statusbar, FALSE, TRUE, 0);
@@ -156,7 +147,6 @@ create_statusbar (GtkWidget * container)
   gtk_widget_show (statusbar);
 
   return statusbar;
-
 }
 
 
@@ -367,7 +357,7 @@ static const char menu_tree[] = "<ui>\
   </menubar>\
 </ui>";
 
-int new_game_dimension = 3;
+static int new_game_dimension = 3;
 
 GtkWidget *
 create_menubar (GtkWidget * container, GtkWidget *toplevel)
