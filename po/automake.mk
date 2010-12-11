@@ -23,7 +23,7 @@ POFILES=po/bg.po \
 	po/nl.po \
 	po/pl.po \
 	po/pt_BR.po \
-	po/pt_PT.po \
+	po/pt.po \
 	po/tr.po \
 	po/uk.po \
 	po/ro.po \
