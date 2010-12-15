@@ -761,63 +761,7 @@ TIMEOUT_CALLBACK (animate)
 
 }				/* end animate () */
 
-/* Draw the little indicators to show which way the blocks turn */
-void
-drawInd (GLfloat location, int axis, int dir)
-{
-  int j;
-  int theta;
-
-  const GLfloat radius = cube_get_dimension (the_cube) / 2.0;
-  const GLfloat strip_width = 0.1 * cube_get_dimension (the_cube);
-  const GLint segments = 3;
-  const GLfloat arrowlength = 0.1;
-
-  /* define a point data type */
-  typedef GLfloat point3[3];
-
-  point3 circ;
-
-  for (j = 0; j < segments; j++)
-    {
-
-      const GLfloat stop = 100 + (j * 360 / segments);
-      const GLfloat start = 0 + (j * 360 / segments);
-
-      GLfloat width = strip_width;
-      GLfloat terminal;
-      const GLfloat crit =
-	dir ? (stop - start) * (1 - arrowlength) + start : (stop -
-							    start) *
-	arrowlength + start;
-
-
-      glBegin (GL_TRIANGLE_STRIP);
-      for (theta = start; theta <= stop; theta++)
-	{
-
-	  terminal = dir ? stop : start;
-	  if ((theta > crit && dir) || (theta < crit && !dir))
-	    {
-	      width =
-		strip_width * fabs ((terminal - theta) / (terminal - crit));
-	    }
-	  else
-	    width = strip_width;
-	  circ[axis] = location + (width * ((theta % 2) * 2 - 1));
-	  circ[(axis + 1) % 3] = radius * sin (radians (theta));
-	  circ[(axis + 2) % 3] = radius * cos (radians (theta));
-	  glVertex3fv (circ);
-	}
-      glEnd ();
-    }
-
-}
-
-
-
 float cursorAngle;
-
 
 /*
 This func is called whenever a new set of polygons have been selected.
@@ -825,7 +769,6 @@ Call redisplay */
 void
 selection_func (void)
 {
-
   GLfloat turn_axis[4];
 
   struct facet_selection *selection = 0;
