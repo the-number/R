@@ -1,73 +1,71 @@
 # Swedish translation of gnubik.
-# Copyright (C) 2006 Daniel Nylander
+# Copyright (C) 2006, 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
-# Daniel Nylander <po@danielnylander.se>, 2006.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.2-4\n"
+"Project-Id-Version: gnubik 2.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-25 12:54+0100\n"
-"PO-Revision-Date: 2006-01-09 08:26+0100\n"
+"POT-Creation-Date: 2009-01-06 11:48+0900\n"
+"PO-Revision-Date: 2010-12-15 15:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
-"Language: sv\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: src/colour-sel.c:185
+#: src/colour-sel.c:181
 #, c-format
 msgid "Cannot create image from file %s: %s"
-msgstr "Kan inte skapa bild från fil %s: %s"
+msgstr "Kan inte skapa bild från filen %s: %s"
 
-#: src/colour-sel.c:265
+#: src/colour-sel.c:261
 msgid "Image Selector"
-msgstr "Bildväljaren"
+msgstr "Bildväljare"
 
-#: src/colour-sel.c:287
-#, fuzzy
+#: src/colour-sel.c:289
 msgid "All Images"
-msgstr "Bild"
+msgstr "Alla bilder"
 
-#: src/colour-sel.c:291
+#: src/colour-sel.c:296
 msgid "All Files"
-msgstr ""
+msgstr "Alla filer"
 
-#: src/colour-sel.c:435
+#: src/colour-sel.c:440
 msgid "Pattern"
 msgstr "Mönster"
 
-#: src/colour-sel.c:436
+#: src/colour-sel.c:441
 msgid "Colour"
 msgstr "Färg"
 
-#: src/colour-sel.c:464
+#: src/colour-sel.c:468
 msgid "Click here to use a pattern on the cube surface"
 msgstr "Klicka här för att använda ett mönster på kubens yta"
 
-#: src/colour-sel.c:756
+#: src/colour-sel.c:750
 msgid "Colour selector"
-msgstr "Färgväljaren"
+msgstr "Färgväljare"
 
-#: src/colour-sel.c:781
+#: src/colour-sel.c:776
 msgid "Image"
 msgstr "Bild"
 
-#: src/colour-sel.c:782
+#: src/colour-sel.c:777
 msgid "Se_lect"
 msgstr "Vä_lj"
 
-#: src/colour-sel.c:784
+#: src/colour-sel.c:780
 msgid "Select an image file"
 msgstr "Välj en bildfil"
 
-#: src/colour-sel.c:787
+#: src/colour-sel.c:783
 msgid "_Tiled"
 msgstr "_Rutad"
 
-#: src/colour-sel.c:790
+#: src/colour-sel.c:785
 msgid ""
 "Place a copy of the image\n"
 "on each block"
@@ -75,11 +73,11 @@ msgstr ""
 "Placera en kopia av bilden\n"
 "på varje block"
 
-#: src/colour-sel.c:795
+#: src/colour-sel.c:789
 msgid "_Mosaic"
 msgstr "_Mosaik"
 
-#: src/colour-sel.c:799
+#: src/colour-sel.c:792
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
@@ -87,269 +85,182 @@ msgstr ""
 "Placera en kopia av bilden på\n"
 "hela kubens yta"
 
-#: src/colour-sel.c:859
-#, fuzzy
-msgid ""
-"A sample of the colour or pattern. You can click and select a new colour or "
-"pattern,  or drag one to this space."
-msgstr ""
-"Ett test av färgen eller mönstret. Du kan klicka och välja en ny färg eller "
-"nytt mönster, eller dra en till denna ruta."
+#: src/colour-sel.c:852
+msgid "A sample of the colour or pattern. You can click and select a new colour or pattern,  or drag one to this space."
+msgstr "Ett test av färgen eller mönstret. Du kan klicka och välja en ny färg eller nytt mönster, eller dra en till denna ruta."
 
-#: src/menus.c:168
+#: src/menus.c:165
 msgid "Sets the number of blocks in each side"
 msgstr "Sätt antal block på varje sida"
 
-#: src/menus.c:170
+#: src/menus.c:167
 msgid "Size of cube:"
 msgstr "Kubens storlek:"
 
-#: src/menus.c:209
+#: src/menus.c:207
 msgid "Faster"
 msgstr "Snabbare"
 
-#: src/menus.c:212
+#: src/menus.c:210
 msgid "Slower"
 msgstr "Långsammare"
 
-#: src/menus.c:218
+#: src/menus.c:215
 msgid "Controls the speed with which slices rotate"
 msgstr "Kontrollerar hastigheten som delarna roterar med"
 
-#: src/menus.c:262
+#: src/menus.c:259
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: src/menus.c:277
+#: src/menus.c:271
 msgid "Dimensions"
 msgstr "Dimensioner"
 
-#: src/menus.c:278
+#: src/menus.c:272
 msgid "Animation"
 msgstr "Animering"
 
-#: src/menus.c:279
+#: src/menus.c:273
 msgid "Lighting"
 msgstr "Belysning"
 
-#: src/menus.c:288
+#: src/menus.c:282
 msgid "Enable lighting"
 msgstr "Aktivera belysning"
 
-#: src/menus.c:290
+#: src/menus.c:284
 msgid "Makes the cube appear illuminated"
 msgstr "Gör att kuben verkar upplyst"
 
-#: src/menus.c:360
+#: src/menus.c:354
 msgid "Start cube with new settings?"
 msgstr "Starta kub med nya inställningar?"
 
-#: src/menus.c:519
-msgid "A 3 dimensional magic cube puzzle"
-msgstr ""
-
-#. TRANSLATORS: Do not translate this string. Instead, use it to list
-#. the people who have helped with translation to your language.
-#: src/menus.c:524
-msgid "translator-credits"
-msgstr ""
-
-#: src/textures.c:215
+#: src/textures.c:203
 msgid "Pixbuf has wrong number of channels"
 msgstr "Pixbuf har fel antal kanaler"
 
-#: src/textures.c:224
+#: src/textures.c:211
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Pixbuf har okänd färgrymd: %d"
 
-#: src/widget-set.c:111
+#: src/widget-set.c:114
 #, c-format
 msgid "Moves: %d / %d"
 msgstr "Vridningar: %d / %d"
 
-#: src/widget-set.c:139
+#: src/widget-set.c:140
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "Kub löst i %d vridning"
-msgstr[1] "Kub löst i %d vridningar"
+msgstr[0] "Kuben löst i %d vridning"
+msgstr[1] "Kuben löst i %d vridningar"
 
-#: src/widget-set.c:149
-#, fuzzy
-msgid ""
-"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr "Kub är INTE löst! Färgerna är korrekt men har inkorrekt orientering"
+#: src/widget-set.c:146
+msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr "Kuben är INTE löst! Färgerna är korrekta men har inkorrekt orientering"
 
-#: src/widget-set.c:198
+#: src/widget-set.c:200
 msgid "Rewind"
 msgstr "Spola bakåt"
 
-#: src/widget-set.c:200
+#: src/widget-set.c:201
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr "Gå till föregående markering (eller början) av vridningssekvensen"
 
-#: src/widget-set.c:204
+#: src/widget-set.c:206
 msgid "Back"
 msgstr "Tillbaka"
 
-#: src/widget-set.c:205
+#: src/widget-set.c:207
 msgid "Make one step backwards"
 msgstr "Gå ett steg bakåt"
 
-#: src/widget-set.c:210
+#: src/widget-set.c:213
 msgid "Stop"
 msgstr "Stopp"
 
-#: src/widget-set.c:211
+#: src/widget-set.c:214
 msgid "Stop running the sequence of moves"
 msgstr "Stopp körning av vridningssekvensen"
 
-#: src/widget-set.c:216
+#: src/widget-set.c:220
 msgid "Mark"
 msgstr "Markera"
 
-#: src/widget-set.c:218
+#: src/widget-set.c:221
 msgid "Mark the current place in the sequence of moves"
 msgstr "Markera nuvarande plats i vridningssekvensen"
 
-#: src/widget-set.c:223
+#: src/widget-set.c:227
 msgid "Forward"
 msgstr "Framåt"
 
-#: src/widget-set.c:224
+#: src/widget-set.c:228
 msgid "Make one step forwards"
 msgstr "Gå ett steg framåt"
 
-#: src/widget-set.c:229
+#: src/widget-set.c:234
 msgid "Play"
 msgstr "Spela"
 
-#: src/widget-set.c:231
+#: src/widget-set.c:235
 msgid "Run forward through the sequence of moves"
 msgstr "Kör framåt genom vridningssekvensen"
 
-#: src/widget-set.c:313
+#: src/widget-set.c:322
 msgid "_Play Toolbar"
 msgstr "_Kontrollrad"
 
-#: src/widget-set.c:320
+#: src/widget-set.c:329
 msgid "_Status Bar"
-msgstr "_Statusrad"
+msgstr "S_tatusrad"
 
-#: src/widget-set.c:334
-#, fuzzy
-msgid "_Game"
+#: src/widget-set.c:367
+msgid "/_Game"
 msgstr "/_Spel"
 
-#: src/widget-set.c:335
-#, fuzzy
-msgid "_Settings"
-msgstr "/_Alternativ"
-
-#: src/widget-set.c:336
-#, fuzzy
-msgid "_Help"
-msgstr "/_Hjälp"
-
-#: src/widget-set.c:337
-msgid "_Scripts"
-msgstr ""
-
-#: src/widget-set.c:345
-#, fuzzy
-msgid "_Colours"
-msgstr "Färg"
-
-#: src/widget-set.c:349
-#, fuzzy
-msgid "Sho_w/Hide"
-msgstr "/_Alternativ/Vi_sa\\/Göm"
-
-#: src/widget-set.c:361
-#, fuzzy
-msgid "_New Game"
+#: src/widget-set.c:368
+msgid "/_Game/_New Game"
 msgstr "/_Spel/_Nytt spel"
 
-#: scripts/debug.scm:49
-msgid "_Debug"
-msgstr ""
+#: src/widget-set.c:369
+msgid "/_Game/sep"
+msgstr "/_Spel/sep"
 
-#: scripts/debug.scm:51
-msgid "_Move"
-msgstr ""
+#: src/widget-set.c:370
+msgid "/_Game/_Quit"
+msgstr "/_Spel/_Avsluta"
 
-#: scripts/debug.scm:53
-msgid "_Dump state"
-msgstr ""
+#: src/widget-set.c:371
+msgid "/_Settings"
+msgstr "/_Inställningar"
 
-#: scripts/rand.scm:41
-msgid "_Randomize"
-msgstr ""
+#: src/widget-set.c:372
+msgid "/_Settings/_Preferences"
+msgstr "/_Inställningar/_Inställningar"
 
-#: scripts/rand.scm:42
-#, fuzzy
-msgid "_Animated"
-msgstr "Animering"
+#: src/widget-set.c:373
+msgid "/_Settings/_Colours"
+msgstr "/_Inställningar/_Färger"
 
-#: scripts/rand.scm:43
-#, fuzzy
-msgid "_Fast"
-msgstr "Snabbare"
+#: src/widget-set.c:374
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Inställningar/Vi_sa\\/Göm"
 
-#: scripts/mellor-solve.scm:402
-msgid "_Solvers"
-msgstr ""
+#: src/widget-set.c:380
+msgid "/_Help"
+msgstr "/_Hjälp"
 
-#: scripts/mellor-solve.scm:403
-msgid "_3×3"
-msgstr ""
+#: src/widget-set.c:381
+msgid "/_Help/_About"
+msgstr "/_Hjälp/_Om"
 
-#: scripts/mellor-solve.scm:407
-msgid "_Full cube"
-msgstr ""
-
-#: scripts/mellor-solve.scm:410
-msgid "Bottom _edge place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:413
-msgid "Bottom _corner orient"
-msgstr ""
-
-#: scripts/mellor-solve.scm:416
-msgid "_Bottom corner place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:419
-msgid "_Middle slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:422
-msgid "_Top slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:425
-msgid "_Top edges"
-msgstr ""
-
-#~ msgid "/_Game/sep"
-#~ msgstr "/_Spel/sep"
-
-#~ msgid "/_Game/_Quit"
-#~ msgstr "/_Spel/_Avsluta"
-
-#~ msgid "/_Settings/_Preferences"
-#~ msgstr "/_Alternativ/_Inställningar"
-
-#~ msgid "/_Settings/_Colours"
-#~ msgstr "/_Alternativ/_Färger"
-
-#~ msgid "/_Help/_About"
-#~ msgstr "/_Hjälp/_Om"
-
-#~ msgid "/Settings/Show\\/Hide"
-#~ msgstr "/Alternativ/Visa\\/Göm"
+#: src/widget-set.c:431
+msgid "/Settings/Show\\/Hide"
+msgstr "/Inställningar/Visa\\/Dölj"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Använd en bildfil på kubens yta"
