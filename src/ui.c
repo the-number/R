@@ -761,48 +761,6 @@ TIMEOUT_CALLBACK (animate)
 
 }				/* end animate () */
 
-
-/* Render the turn indicators on the scene.
-Axis is the axis.  */
-void
-turn_indicator (int axis, int dir)
-{
-  int i;
-
-  if (!itemIsSelected ())
-    return;
-
-
-  /* Don't  render invisible faces */
-  glEnable (GL_CULL_FACE);
-
-
-  for (i = 0; i < 2; i++)
-    {
-      /* one each side of the cube */
-      GLfloat location =
-	(i == 0) ? cube_get_dimension (the_cube) * 2.0 : -(cube_get_dimension (the_cube) * 2.0);
-
-      /* Inside is dark grey */
-      glFrontFace (GL_CCW);
-      glColor3f (0.7, 0.7, 0.7);
-      drawInd (location, axis, dir);
-
-
-      /* Outside is light grey */
-      glFrontFace (GL_CW);
-      glColor3f (0.3, 0.3, 0.3);
-      drawInd (location, axis, dir);
-
-    }
-
-  /* We reset this to avoid trouble later ! */
-  glFrontFace (GL_CCW);
-}
-
-
-
-
 /* Draw the little indicators to show which way the blocks turn */
 void
 drawInd (GLfloat location, int axis, int dir)
