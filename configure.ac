@@ -87,7 +87,12 @@ PKG_CHECK_MODULES(GTK_GL_EXT, gtkglext-1.0,,)
 
 dnl Glut is used only if building with debug info
 dnl If it's there, then include it. Otherwise don't bother
-AX_CHECK_GLUT
+if test x"$debug" = x"true" ; then 
+  AX_CHECK_GLUT
+  if test "x$no_glut" = x"yes"; then
+     AC_MSG_ERROR("Debug features requested but no GLUT library seems to be installed")
+  fi
+fi
 
 
 AC_C_CONST
