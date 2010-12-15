@@ -77,16 +77,16 @@ void free_slice_blocks (Slice_Blocks * slice_blocks);
    containing the block with block_id). The return object must be freed with
    free_slice_blocks. Axis is in the interval [0,  3). */
 Slice_Blocks *identify_blocks (const struct cube *cube,
-			       const int block_id, const int axis);
+			       int block_id, int axis);
 
 Slice_Blocks *identify_blocks_2 (const struct cube *cube,
-				 const GLfloat slice, const int axis);
+				 GLfloat slice, int axis);
 
 
 /* As above,  but return all blocks in the surface face corresponding
    to the axis (which may now be anywhere in the interval [0,  6)). */
 Slice_Blocks *identify_surface_blocks (const struct cube *cube,
-				       const int axis);
+				       int axis);
 
 
 /*  Rotate a complete slice,  as identified by a prior call to
@@ -94,41 +94,41 @@ Slice_Blocks *identify_surface_blocks (const struct cube *cube,
     slice_blocks object must have been previously created with one of the
     identify_blocks functions. */
 int rotate_slice (struct cube *cube,
-		  const int turns, const Slice_Blocks * slice_blocks);
+		  int turns, const Slice_Blocks *slice_blocks);
 
 
 /* Get a copy of the tranformation of the specified block. The return value is
    zero on success,  one otherwise. */
 int get_block_transform (const struct cube *cube,
-			 const int block, Matrix transform);
+			 int block, Matrix transform);
 
 
 /* Return an int identifying all the visible faces in this block. */
-int get_visible_faces (const struct cube *cube, const int block);
+int get_visible_faces (const struct cube *cube, int block);
 
 
 /* Get a copy of the centre point of the face into p. */
 void get_face_centre (const struct cube *cube,
-		      const int block, const int face, point p);
+		      int block, int face, point p);
 
 
 /* Set the normal vector for block/face to v. This value gets transformed by
    the MODELVIEW CTM before saving. */
 void set_normal_vector (struct cube *cube,
-			const int block, const int face, const vector v);
+			int block, int face, const vector v);
 
 
 /* Set the vector for block/face/quadrant to v. This value gets transformed by
    the MODELVIEW CTM before saving. */
 void set_quadrant_vector (struct cube *cube,
-			  const int block,
-			  const int face, const int quadrant, const vector v);
+			  int block,
+			  int face, int quadrant, const vector v);
 
 
 /* Get a copy of the direction vector for the block/face/quadrant. */
 void get_quadrant_vector (const struct cube *cube,
-			  const int block,
-			  const int face, const int quadrant, vector v);
+			  int block,
+			  int face, int quadrant, vector v);
 
 
 int cube_get_number_of_blocks (const struct cube *cube);

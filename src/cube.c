@@ -33,7 +33,7 @@
 struct cube *the_cube = NULL;
 
 int
-create_the_cube (const int dim)
+create_the_cube (int dim)
 {
   the_cube = new_cube (dim);
   if (the_cube == NULL)
@@ -74,17 +74,17 @@ destroy_the_cube (void)
 
 /* Utility function to fetch a particular face of the cube. */
 static inline Face *
-get_face (struct cube *cube, const int block, const int face)
+get_face (struct cube *cube, int block, int face)
 {
   return cube->blocks[block].face + face;
 }
 
 /* Set the centre point of the face to (x0,  x1,  x2,  x3). */
 static inline void
-set_face_centre (Block * block,
-		 const int face,
-		 const GLfloat x0, const GLfloat x1,
-		 const GLfloat x2, const GLfloat x3)
+set_face_centre (Block *block,
+		 int face,
+		 GLfloat x0, GLfloat x1,
+		 GLfloat x2, GLfloat x3)
 {
   point *centre = &block->face[face].centre;
 
@@ -100,7 +100,7 @@ set_face_centre (Block * block,
    function performs the transformation. Later on we will also be needing the
    inverse transformation. */
 static inline int
-block_index_to_coords (const struct cube *cube, const int i)
+block_index_to_coords (const struct cube *cube, int i)
 {
   return 2 * i - (cube->cube_size - 1);
 }
@@ -114,7 +114,7 @@ block_coords_to_index (const struct cube *cube, const double i)
 
 /* The constructor itself. */
 struct cube *
-new_cube (const int cube_size)
+new_cube (int cube_size)
 {
   /* Looping variables. */
   int i, k;
@@ -227,7 +227,7 @@ free_cube (struct cube *cube)
 /* Quick cosine function for angles expressed in quarters of complete
    revolutions. */
 static inline int
-cos_quadrant (const int quarters)
+cos_quadrant (int quarters)
 {
   switch (abs (quarters) % 4)
     {
@@ -243,7 +243,7 @@ cos_quadrant (const int quarters)
 /* Quick sine function,  for angles expressed in quarters of complete
    revolutions. */
 static inline int
-sin_quadrant (const int quarters)
+sin_quadrant (int quarters)
 {
   return cos_quadrant (quarters - 1);
 }
@@ -252,7 +252,7 @@ sin_quadrant (const int quarters)
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
 int
-rotate_slice (struct cube *cube, const int turns, const Slice_Blocks * slice)
+rotate_slice (struct cube *cube, int turns, const Slice_Blocks *slice)
 {
   /* Iterator for array of blocks in the current slice. */
   const int *i;
@@ -305,7 +305,7 @@ rotate_slice (struct cube *cube, const int turns, const Slice_Blocks * slice)
 
 Slice_Blocks *
 identify_blocks_2 (const struct cube * cube,
-		   const GLfloat slice_depth, const int axis)
+		   GLfloat slice_depth, int axis)
 {
   /* Looping variables. */
   int j = 0;
@@ -354,7 +354,7 @@ identify_blocks_2 (const struct cube * cube,
 /* Get the blocks in the same slice as the block with block_id. */
 
 Slice_Blocks *
-identify_blocks (const struct cube * cube, const int block_id, const int axis)
+identify_blocks (const struct cube * cube, int block_id, int axis)
 {
   return identify_blocks_2
     (cube, cube->blocks[block_id].transformation[12 + axis], axis);
@@ -365,7 +365,7 @@ identify_blocks (const struct cube * cube, const int block_id, const int axis)
 /* Get the block in the surface slice corresponding to the axis. */
 
 Slice_Blocks *
-identify_surface_blocks (const struct cube * cube, const int axis)
+identify_surface_blocks (const struct cube * cube, int axis)
 {
   if (axis < 3)
     return identify_blocks_2 (cube, cube->cube_size - 1, axis);
@@ -399,7 +399,7 @@ free_slice_blocks (Slice_Blocks * slice)
 */
 void
 set_normal_vector (struct cube *cube,
-		   const int block, const int face, const vector v)
+		   int block, int face, const vector v)
 {
   Matrix view;
   vector *dest = &get_face (cube, block, face)->normal;
@@ -419,8 +419,8 @@ set_normal_vector (struct cube *cube,
 */
 void
 set_quadrant_vector (struct cube *cube,
-		     const int block,
-		     const int face, const int quadrant, const vector v)
+		     int block,
+		     int face, int quadrant, const vector v)
 {
   Matrix view;
   vector *dest = get_face (cube, block, face)->quadrants + quadrant;
@@ -438,8 +438,8 @@ set_quadrant_vector (struct cube *cube,
 /* Return the quadrant vector in v. */
 void
 get_quadrant_vector (const struct cube *cube,
-		     const int block,
-		     const int face, const int quadrant, vector v)
+		     int block,
+		     int face, int quadrant, vector v)
 {
   memcpy (v,
 	  get_face ((struct cube * const) cube, block,
@@ -544,7 +544,7 @@ cube_get_status (const struct cube *cube)
 
 /* struct cube accessor method. */
 int
-get_visible_faces (const struct cube *cube, const int block_id)
+get_visible_faces (const struct cube *cube, int block_id)
 {
   return cube->blocks[block_id].visible_faces;
 }
@@ -570,7 +570,7 @@ cube_get_dimension (const struct cube *cube)
 */
 int
 get_block_transform (const struct cube *cube,
-		     const int block_id, Matrix transform)
+		     int block_id, Matrix transform)
 {
   memcpy (transform, cube->blocks[block_id].transformation, sizeof (Matrix));
 

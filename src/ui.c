@@ -478,7 +478,7 @@ request_back ()
 /* Internal functionality for the following two functions. */
 
 static void
-_request_play (const int one_move)
+_request_play (int one_move)
 {
   if (!animation_in_progress && move_queue && move_queue_current (move_queue))
     {
