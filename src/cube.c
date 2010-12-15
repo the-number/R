@@ -543,7 +543,7 @@ cube_get_status (const struct cube *cube)
 
 
 /* struct cube accessor method. */
-int
+unsigned int
 get_visible_faces (const struct cube *cube, int block_id)
 {
   return cube->blocks[block_id].visible_faces;

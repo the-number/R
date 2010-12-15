@@ -56,7 +56,7 @@ typedef struct _Block
 {
   /* Bit-field indicating which faces are on the surface of the cube,  and
      should therefore be rendered to the framebuffer. */
-  int visible_faces;
+  unsigned int visible_faces;
 
   /* A set of attributes for each face (including internal ones!) */
   Face face[6];
