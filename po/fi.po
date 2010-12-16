@@ -1,18 +1,19 @@
 # Message file for Finnish version of GNUbik
 # Copyright © 2004 John Darrington
+# This file is distributed under the same license as the gnubik package.
 # John Darrington <john@darrington.wattle.id.au>, 2004.
 # Niko Itäjärvi <niko.itajarvi@nwps.ws>, 2004.
 # Jorma Karvonen <karvjorm@users.sf.net>, 2007.
+# Jorma Karvonen <karvonen.jorma@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.0\n"
+"Project-Id-Version: gnubik 2.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-25 12:54+0100\n"
-"PO-Revision-Date: 2007-12-03 23:25+0200\n"
-"Last-Translator: Jorma Karvonen <karvjorm@users.sf.net>\n"
-"Language-Team: Finnish <karvjorm@users.sf.net>\n"
-"Language: fi\n"
+"POT-Creation-Date: 2009-01-06 11:48+0900\n"
+"PO-Revision-Date: 2010-11-30 10:44+0200\n"
+"Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
+"Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,340 +22,251 @@ msgstr ""
 "X-Poedit-Country: FINLAND\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: src/colour-sel.c:185
+#: src/colour-sel.c:181
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr "Kuvan luonti epäonnistui tiedostosta %s: %s"
 
-#: src/colour-sel.c:265
+#: src/colour-sel.c:261
 msgid "Image Selector"
 msgstr "Kuvavalitsija"
 
-#: src/colour-sel.c:287
-#, fuzzy
+#: src/colour-sel.c:289
 msgid "All Images"
-msgstr "Kuva"
+msgstr "Kaikki kuvat"
 
-#: src/colour-sel.c:291
+#: src/colour-sel.c:296
 msgid "All Files"
-msgstr ""
+msgstr "Kaikki tiedostot"
 
-#: src/colour-sel.c:435
+#: src/colour-sel.c:440
 msgid "Pattern"
 msgstr "Kuvio"
 
-#: src/colour-sel.c:436
+#: src/colour-sel.c:441
 msgid "Colour"
 msgstr "Väri"
 
-#: src/colour-sel.c:464
+#: src/colour-sel.c:468
 msgid "Click here to use a pattern on the cube surface"
-msgstr "Paina tästä käyttääksesi kuviota kuutiossa"
+msgstr "Napsauta tästä käyttääksesi kuviota kuutiossa"
 
-#: src/colour-sel.c:756
+#: src/colour-sel.c:750
 msgid "Colour selector"
 msgstr "Värivalitsija"
 
-#: src/colour-sel.c:781
+#: src/colour-sel.c:776
 msgid "Image"
 msgstr "Kuva"
 
-#: src/colour-sel.c:782
+#: src/colour-sel.c:777
 msgid "Se_lect"
 msgstr "_Valitse"
 
-#: src/colour-sel.c:784
+#: src/colour-sel.c:780
 msgid "Select an image file"
 msgstr "Valitse kuvatiedosto"
 
-#: src/colour-sel.c:787
+#: src/colour-sel.c:783
 msgid "_Tiled"
 msgstr "_Laatoitettu"
 
-#: src/colour-sel.c:790
+#: src/colour-sel.c:785
 msgid ""
 "Place a copy of the image\n"
 "on each block"
 msgstr ""
-"Aseta kopio kuvasta\n"
-"jokaiselle pohjalle"
+"Aseta kuvan kopio\n"
+"jokaiselle sivulle"
 
-#: src/colour-sel.c:795
+#: src/colour-sel.c:789
 msgid "_Mosaic"
 msgstr "_Mosaiikki"
 
-#: src/colour-sel.c:799
+#: src/colour-sel.c:792
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
 msgstr ""
-"Aseta kopio kuvasta poikki\n"
+"Aseta kuvan kopio kautta\n"
 "koko kuution"
 
-#: src/colour-sel.c:859
-#, fuzzy
-msgid ""
-"A sample of the colour or pattern. You can click and select a new colour or "
-"pattern,  or drag one to this space."
-msgstr ""
-"Malli väristä tai kuviosta. Voit klikata ja valita uuden värin tai kuvion, "
-"tai joko siirtää valitun tähän kohtaan."
+#: src/colour-sel.c:852
+msgid "A sample of the colour or pattern. You can click and select a new colour or pattern,  or drag one to this space."
+msgstr "Värinäyte tai kuvionäyte. Voit napsauttaa ja valita uuden värin tai kuvion, tai siirtää valitun tähän kohtaan."
 
-#: src/menus.c:168
+#: src/menus.c:165
 msgid "Sets the number of blocks in each side"
-msgstr "Aseta reunojan määrä joka puolelle"
+msgstr "Asettaa reunojen määrän joka puolella"
 
-#: src/menus.c:170
+#: src/menus.c:167
 msgid "Size of cube:"
-msgstr "Kuution koko"
+msgstr "Kuution koko:"
 
-#: src/menus.c:209
+#: src/menus.c:207
 msgid "Faster"
 msgstr "Nopeampaa"
 
-#: src/menus.c:212
+#: src/menus.c:210
 msgid "Slower"
 msgstr "Hitaampaa"
 
-#: src/menus.c:218
+#: src/menus.c:215
 msgid "Controls the speed with which slices rotate"
-msgstr "Kontrolloi pyörimisnopeutta"
+msgstr "Ohjaa siivujen pyörimisnopeutta"
 
-#: src/menus.c:262
+#: src/menus.c:259
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: src/menus.c:277
+#: src/menus.c:271
 msgid "Dimensions"
 msgstr "Ulottuvuus"
 
-#: src/menus.c:278
+#: src/menus.c:272
 msgid "Animation"
 msgstr "Animaatio"
 
-#: src/menus.c:279
+#: src/menus.c:273
 msgid "Lighting"
 msgstr "Valaistus"
 
-#: src/menus.c:288
+#: src/menus.c:282
 msgid "Enable lighting"
-msgstr "Aktivoi valaistus"
+msgstr "Ota valaistus käyttöön"
 
-#: src/menus.c:290
+#: src/menus.c:284
 msgid "Makes the cube appear illuminated"
 msgstr "Tekee kuutiosta valaistun"
 
-#: src/menus.c:360
+#: src/menus.c:354
 msgid "Start cube with new settings?"
 msgstr "Aloita kuutio uusin asetuksin?"
 
-#: src/menus.c:519
-msgid "A 3 dimensional magic cube puzzle"
-msgstr ""
-
-#. TRANSLATORS: Do not translate this string. Instead, use it to list
-#. the people who have helped with translation to your language.
-#: src/menus.c:524
-msgid "translator-credits"
-msgstr ""
-
-#: src/textures.c:215
+#: src/textures.c:203
 msgid "Pixbuf has wrong number of channels"
-msgstr "Pixbufin arvo on väärä"
+msgstr "Pixbufilla on väärä kanavamäärä"
 
-#: src/textures.c:224
+#: src/textures.c:211
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Pixbufilla on tuntematon väriarvo: %d"
 
-#: src/widget-set.c:111
+#: src/widget-set.c:114
 #, c-format
 msgid "Moves: %d / %d"
 msgstr "Siirrot: %d / %d"
 
-#: src/widget-set.c:139
+#: src/widget-set.c:140
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Kuutio ratkaistu %d siirrolla"
 msgstr[1] "Kuutio ratkaistu %d siirrolla"
 
-#: src/widget-set.c:149
-#, fuzzy
-msgid ""
-"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr ""
-"Kuutiota ei ole ratkaistu! Värit ovat oikein, mutta sinulla on väärä suuntaus"
+#: src/widget-set.c:146
+msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr "Kuutiota EI ole ratkaistu! Värit ovat oikein, mutta sinulla on väärä suuntaus"
 
-#: src/widget-set.c:198
+#: src/widget-set.c:200
 msgid "Rewind"
 msgstr "Palaa takaisin"
 
-#: src/widget-set.c:200
+#: src/widget-set.c:201
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Siirry edelliseen siirtosekvenssin merkkiin (tai alkuun)"
+msgstr "Siirry edelliseen siirtosarjan merkkiin (tai alkuun)"
 
-#: src/widget-set.c:204
+#: src/widget-set.c:206
 msgid "Back"
 msgstr "Paluu"
 
-#: src/widget-set.c:205
+#: src/widget-set.c:207
 msgid "Make one step backwards"
 msgstr "Siirry askel taaksepäin"
 
-#: src/widget-set.c:210
+#: src/widget-set.c:213
 msgid "Stop"
 msgstr "Pysähdy"
 
-#: src/widget-set.c:211
+#: src/widget-set.c:214
 msgid "Stop running the sequence of moves"
-msgstr "Pysäytä siirtojen sekvenssi"
+msgstr "Pysäytä siirtojen sarja"
 
-#: src/widget-set.c:216
+#: src/widget-set.c:220
 msgid "Mark"
 msgstr "Merkitse"
 
-#: src/widget-set.c:218
+#: src/widget-set.c:221
 msgid "Mark the current place in the sequence of moves"
-msgstr "Merkitse nykyinen paikka siirtosekvenssissä"
+msgstr "Merkitse nykyinen paikka siirtosarjassa"
 
-#: src/widget-set.c:223
+#: src/widget-set.c:227
 msgid "Forward"
 msgstr "Eteenpäin"
 
-#: src/widget-set.c:224
+#: src/widget-set.c:228
 msgid "Make one step forwards"
 msgstr "Askella yksi askel eteenpäin"
 
-#: src/widget-set.c:229
+#: src/widget-set.c:234
 msgid "Play"
 msgstr "Pelaa"
 
-#: src/widget-set.c:231
+#: src/widget-set.c:235
 msgid "Run forward through the sequence of moves"
-msgstr "Aja eteenpäin siirtosekvenssin kautta"
+msgstr "Suorita eteenpäin siirtosarjan kautta"
 
-#: src/widget-set.c:313
+#: src/widget-set.c:322
 msgid "_Play Toolbar"
 msgstr "_Pelaa-työkalupalkki"
 
-#: src/widget-set.c:320
+#: src/widget-set.c:329
 msgid "_Status Bar"
 msgstr "_Tilapalkki"
 
-#: src/widget-set.c:334
-#, fuzzy
-msgid "_Game"
+#: src/widget-set.c:367
+msgid "/_Game"
 msgstr "/_Peli"
 
-#: src/widget-set.c:335
-#, fuzzy
-msgid "_Settings"
-msgstr "/_Optioinnit"
-
-#: src/widget-set.c:336
-#, fuzzy
-msgid "_Help"
-msgstr "/_Opaste"
-
-#: src/widget-set.c:337
-msgid "_Scripts"
-msgstr ""
-
-#: src/widget-set.c:345
-#, fuzzy
-msgid "_Colours"
-msgstr "Väri"
-
-#: src/widget-set.c:349
-#, fuzzy
-msgid "Sho_w/Hide"
-msgstr "/_Optioinnit/_Näytä\\/Piilota"
-
-#: src/widget-set.c:361
-#, fuzzy
-msgid "_New Game"
+#: src/widget-set.c:368
+msgid "/_Game/_New Game"
 msgstr "/_Peli/_Uusi Peli"
 
-#: scripts/debug.scm:49
-msgid "_Debug"
-msgstr ""
+#: src/widget-set.c:369
+msgid "/_Game/sep"
+msgstr "/_Peli/erotin"
 
-#: scripts/debug.scm:51
-msgid "_Move"
-msgstr ""
+#: src/widget-set.c:370
+msgid "/_Game/_Quit"
+msgstr "/_Peli/_Lopeta"
 
-#: scripts/debug.scm:53
-msgid "_Dump state"
-msgstr ""
+#: src/widget-set.c:371
+msgid "/_Settings"
+msgstr "/_Asetukset"
 
-#: scripts/rand.scm:41
-msgid "_Randomize"
-msgstr ""
+#: src/widget-set.c:372
+msgid "/_Settings/_Preferences"
+msgstr "/_Asetukset/_Lisäasetukset"
 
-#: scripts/rand.scm:42
-#, fuzzy
-msgid "_Animated"
-msgstr "Animaatio"
+#: src/widget-set.c:373
+msgid "/_Settings/_Colours"
+msgstr "/_Asetukset/_Värit"
 
-#: scripts/rand.scm:43
-#, fuzzy
-msgid "_Fast"
-msgstr "Nopeampaa"
+#: src/widget-set.c:374
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Asetukset/_Näytä\\/Piilota"
 
-#: scripts/mellor-solve.scm:402
-msgid "_Solvers"
-msgstr ""
+#: src/widget-set.c:380
+msgid "/_Help"
+msgstr "/_Opaste"
 
-#: scripts/mellor-solve.scm:403
-msgid "_3×3"
-msgstr ""
+#: src/widget-set.c:381
+msgid "/_Help/_About"
+msgstr "/_Opaste/O_hjelmasta"
 
-#: scripts/mellor-solve.scm:407
-msgid "_Full cube"
-msgstr ""
-
-#: scripts/mellor-solve.scm:410
-msgid "Bottom _edge place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:413
-msgid "Bottom _corner orient"
-msgstr ""
-
-#: scripts/mellor-solve.scm:416
-msgid "_Bottom corner place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:419
-msgid "_Middle slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:422
-msgid "_Top slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:425
-msgid "_Top edges"
-msgstr ""
-
-#~ msgid "/_Game/sep"
-#~ msgstr "/_Peli/sep"
-
-#~ msgid "/_Game/_Quit"
-#~ msgstr "/_Peli/_Lopeta"
-
-#~ msgid "/_Settings/_Preferences"
-#~ msgstr "/_Optioinnit/_Asetukset"
-
-#~ msgid "/_Settings/_Colours"
-#~ msgstr "/_Optioinnit/_Värit"
-
-#~ msgid "/_Help/_About"
-#~ msgstr "/_Opaste/O_hjelmasta"
-
-#~ msgid "/Settings/Show\\/Hide"
-#~ msgstr "/_Optioinnit/Näytä\\/Piilota"
+#: src/widget-set.c:431
+msgid "/Settings/Show\\/Hide"
+msgstr "/_Asetukset/Näytä\\/Piilota"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Käytä kuvatiedostoja kuutiossa"
