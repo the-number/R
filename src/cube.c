@@ -557,7 +557,7 @@ cube_get_number_of_blocks (const struct cube *cube)
 }
 
 int
-cube_get_dimension (const struct cube *cube)
+cube_get_size (const struct cube *cube)
 {
   return cube->cube_size;
 }

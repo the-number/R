@@ -278,7 +278,7 @@ drawCube (void)
 
 #if DEBUG
   {
-    GLfloat offset = 1.6 * cube_get_dimension (the_cube);
+    GLfloat offset = 1.6 * cube_get_size (the_cube);
 
     /* Show the directions of the axes */
     glColor3f (1, 1, 1);
@@ -288,7 +288,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (2 * cube_get_dimension (the_cube), 0, 0);
+    glVertex3f (2 * cube_get_size (the_cube), 0, 0);
     glEnd ();
 
 
@@ -302,7 +302,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 2 * cube_get_dimension (the_cube), 0);
+    glVertex3f (0, 2 * cube_get_size (the_cube), 0);
     glEnd ();
 
     glRasterPos3d (0.1 * offset, offset, 0);
@@ -316,7 +316,7 @@ drawCube (void)
 
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 0, 2 * cube_get_dimension (the_cube));
+    glVertex3f (0, 0, 2 * cube_get_size (the_cube));
     glEnd ();
 
     glRasterPos3d (0.1 * offset, 0, offset);

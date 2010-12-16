@@ -107,7 +107,7 @@ c_main (void *closure, int argc, char *argv[])
     {
       int i;
       srand (time (0));
-      for (i = 0; i < 8 * cube_get_dimension (the_cube); i++)
+      for (i = 0; i < 8 * cube_get_size (the_cube); i++)
 	{
 	  Slice_Blocks *blocks = identify_blocks (the_cube,
 						  rand () % cube_get_number_of_blocks (the_cube),
