@@ -49,7 +49,6 @@ typedef struct _Move_Data
   int slice;
   int dir;			/* 0 or 1. */
   int axis;
-
 } Move_Data;
 
 

@@ -21,7 +21,7 @@
 
 #include "move-queue.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 
@@ -43,7 +43,7 @@ new_move_queue (void)
 {
   Move_Queue *ret;
 
-  if ((ret = malloc (sizeof (Move_Queue))) == NULL)
+  if ((ret = malloc (sizeof (*ret))) == NULL)
     return NULL;
 
   _initialize_new_object (ret);
@@ -89,7 +89,7 @@ move_queue_push (Move_Queue * move_queue, const Move_Data * move_data)
 {
   struct _Move_Queue_Item *new_element;
 
-  if ((new_element = malloc (sizeof (struct _Move_Queue_Item))) == NULL)
+  if ((new_element = malloc (sizeof (*new_element))) == NULL)
     return 0;
 
   memcpy (&new_element->data, move_data, sizeof (*move_data));
