@@ -147,7 +147,7 @@ texInit (void)
    Returns NULL if it cannot be created.
 */
 GLuint
-create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
+create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError **gerr)
 {
   GLuint texName;
 

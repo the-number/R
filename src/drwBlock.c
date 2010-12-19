@@ -1,6 +1,6 @@
 /*
   The routines which actually draw the blocks of the cube.
-  Copyright (C) 1998,  2003 John Darrington
+  Copyright (C) 1998, 2003, 2010 John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,10 +20,9 @@
 #include <config.h>
 
 /*
-  glLoadName is a Mesa/OpenGL command,  which loads a `name' so that the
-  selection mechanism can identify  an object .
+  NB: glLoadName is a Mesa/OpenGL command,  which loads a `name' so
+  that the selection mechanism can identify  an object .
 */
-
 
 #include <GL/gl.h>
 #include "drwBlock.h"
@@ -31,9 +30,6 @@
 #include "cube.h"
 #include "textures.h"
 #include "colour-sel.h"
-
-#include <math.h>
-
 
 /* We use a little bit of glut in debug mode */
 #if DEBUG && HAVE_GL_GLUT_H
@@ -111,9 +107,7 @@ draw_block (GLboolean highlight, int block_id)
 	  glTranslated (SHIFT (i), 0, 0);
 	  glRotatef (90, 0, 1, 0);
 	  break;
-
 	}
-
 
       /* make sure all  the sides are faced with their visible
          surface pointing to the outside!!  */
@@ -139,14 +133,8 @@ draw_block (GLboolean highlight, int block_id)
       glPopMatrix ();
     }
   glPopName ();
-
-
-  /*
-     showBlock (block_id);
-   */
-
-}				/* end block */
-
+  
+}  /* end block */
 
 
 /* render the face,  with a specified fill,  and outline colour */
@@ -313,33 +301,44 @@ draw_face (GLint face, GLint col_outline, int block_id)
 
   glBegin (GL_POLYGON);
   {
-    GLfloat image_segment_size;
+    GLfloat iss_x = 0;
+    GLfloat iss_y = 0;
     GLint xpos = 0;
     GLint ypos = 0;
 
     if (rendering[face]->type == IMAGED && rendering[face]->distr == MOSAIC)
       {
-	image_segment_size = 1.0 / cube_get_size (the_cube, 0);
 	switch (face)
 	  {
 	  case 0:
 	  case 1:
+	    iss_x = 1.0 / cube_get_size (the_cube, 0);
+	    iss_y = 1.0 / cube_get_size (the_cube, 1);
 	    xpos = block_id % cube_get_size (the_cube, 0);
 	    ypos =
-	      block_id % (cube_get_size (the_cube, 0) * cube_get_size (the_cube, 1)) / cube_get_size (the_cube, 1);
+	      (block_id % (cube_get_size (the_cube, 0)
+			   * cube_get_size (the_cube, 1)))
+			   / cube_get_size (the_cube, 0);
 	    break;
 	  case 2:
 	  case 3:
-	    xpos = block_id % cube_get_size (the_cube, 1);
+	    iss_x = 1.0 / cube_get_size (the_cube, 0);
+	    iss_y = 1.0 / cube_get_size (the_cube, 2);
+	    xpos = block_id % ( cube_get_size (the_cube, 0) 
+				* cube_get_size (the_cube, 1))
+	                        % cube_get_size (the_cube, 0);
 	    ypos =
 	      block_id / (cube_get_size (the_cube, 0) * cube_get_size (the_cube, 1));
 	    break;
 	  case 4:
 	  case 5:
+	    iss_x = 1.0 / cube_get_size (the_cube, 2);
+	    iss_y = 1.0 / cube_get_size (the_cube, 1);
 	    xpos =
 	      block_id / (cube_get_size (the_cube, 0) * cube_get_size (the_cube, 1));
 	    ypos =
-	      block_id % (cube_get_size (the_cube, 0) * cube_get_size (the_cube, 1)) / cube_get_size (the_cube, 0);
+	      block_id % (cube_get_size (the_cube, 0) * cube_get_size (the_cube, 1))
+	         / cube_get_size (the_cube, 0);
 	    break;
 	  }
 
@@ -366,26 +365,25 @@ draw_face (GLint face, GLint col_outline, int block_id)
     else
       {				/* TILED */
 	xpos = ypos = 0;
-	image_segment_size = 1.0;
+	iss_x = iss_y = 1.0;
       }
 
-    glTexCoord2f (image_segment_size * xpos, image_segment_size * (ypos + 1));
+    glTexCoord2f (iss_x * xpos,
+		  iss_y * (ypos + 1));
     glVertex3d (-1, -1, 0);
 
-    glTexCoord2f (image_segment_size * (xpos + 1),
-		  image_segment_size * (ypos + 1));
+    glTexCoord2f (iss_x * (xpos + 1),
+		  iss_y * (ypos + 1));
     glVertex3d (1, -1, 0);
 
-    glTexCoord2f (image_segment_size * (xpos + 1),
-		  image_segment_size * (ypos));
+    glTexCoord2f (iss_x * (xpos + 1),
+		  iss_y * ypos);
     glVertex3d (1, 1, 0);
 
-    glTexCoord2f (image_segment_size * (xpos), image_segment_size * (ypos));
+    glTexCoord2f (iss_x * xpos, iss_y * ypos);
     glVertex3d (-1, 1, 0);
-
   }
   glEnd ();
-
 
   glDisable (GL_TEXTURE_2D);
 
@@ -426,7 +424,7 @@ setColour (int i, GLfloat red, GLfloat green, GLfloat blue)
 
 
 void
-getColour (int i, GLfloat * red, GLfloat * green, GLfloat * blue)
+getColour (int i, GLfloat *red, GLfloat *green, GLfloat *blue)
 {
   *red = colors[i][0];
   *green = colors[i][1];
