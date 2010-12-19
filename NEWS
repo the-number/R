@@ -1,5 +1,9 @@
 GNUbik 2.4-pre
 
+	* Cubes no longer are restricted to cubic form.
+	  General right-angled parallelepipeds are now 
+          possible.
+
 	* Corrected minor errors in the documentation.
 
 	* Fixed some portability issues.
