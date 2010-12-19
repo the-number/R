@@ -32,6 +32,7 @@
 #include "select.h"
 #include "cube.h"
 
+#include <gtk/gtkgl.h>
 #include <assert.h>
 
 #include <libintl.h>
@@ -64,16 +65,18 @@ c_main (void *closure, int argc, char *argv[])
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 
-  widget_set_init (&argc, &argv);
+  gtk_init (&argc, &argv);
+  gtk_gl_init (&argc, &argv);
 
 #if DEBUG && HAVE_GL_GLUT_H
   glutInit ();
 #endif
 
-
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
-  main_application_window = create_top_level_widget ();
+  main_application_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+  g_signal_connect (main_application_window, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
   gtk_window_set_icon_name (GTK_WINDOW(main_application_window), "gnubik");
 
@@ -81,10 +84,10 @@ c_main (void *closure, int argc, char *argv[])
   /* process arguments specific to this program */
   app_opts (&argc, argv);
 
-  /* Create a container widget.   A `thing' which will contain the menubar
-     and the gl area */
-  form = create_container_widget (main_application_window);
+  /* create a vbox to hold the drawing area and the menubar */
+  form = gtk_vbox_new (FALSE, 0);
 
+  gtk_container_add (GTK_CONTAINER (main_application_window), form);
 
   menubar = create_menubar (form, main_application_window);
   play_toolbar = create_play_toolbar (form, main_application_window);
@@ -92,9 +95,6 @@ c_main (void *closure, int argc, char *argv[])
   glxarea = create_gl_area (form);
 
   gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
-
-  gtk_widget_show (glxarea);
-
 
   statusbar = create_statusbar (form);
 
@@ -111,7 +111,7 @@ c_main (void *closure, int argc, char *argv[])
   /* initialise the selection mechanism */
   initSelection (glxarea, 50, 1, selection_func);
 
-  gtk_widget_show (main_application_window);
+  gtk_widget_show_all (main_application_window);
 
   gtk_main ();
 }

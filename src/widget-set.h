@@ -24,12 +24,6 @@
 
 extern GtkWidget *main_application_window;
 
-void widget_set_init (int *argc, char ***argv);
-
-GtkWidget *create_top_level_widget (void);
-
-GtkWidget *create_container_widget (GtkWidget * parent);
-
 GtkWidget *create_menubar (GtkWidget * container, GtkWidget * toplevel);
 
 

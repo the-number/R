@@ -17,60 +17,20 @@
 */
 
 #include <config.h>
+
 #include "widget-set.h"
-#include "colour-sel.h"
 #include "move-queue.h"
 #include "ui.h"
 #include "dialogs.h"
-
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-
-#include <gtk/gtkgl.h>
-
+#include "guile-hooks.h"
+#include "colour-sel.h"
 #include "drwBlock.h"
 
-#include "guile-hooks.h"
+#include <gtk/gtk.h>
 
 #include <libintl.h>
 #define _(String) gettext (String)
 #define N_(String) (String)
-
-
-
-void
-widget_set_init (int *argc, char ***argv)
-{
-  gtk_init (argc, argv);
-
-  gtk_gl_init (argc, argv);
-}
-
-
-GtkWidget *
-create_top_level_widget (void)
-{
-  /* create a new window */
-  GtkWidget *win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-  g_signal_connect (win, "delete-event", G_CALLBACK (gtk_main_quit), 0);
-
-  return win;
-}
-
-GtkWidget *
-create_container_widget (GtkWidget * parent)
-{
-  /* create a vbox to hold the drawing area and the menubar */
-  GtkWidget *vbox = gtk_vbox_new (FALSE, 0);
-
-  gtk_container_add (GTK_CONTAINER (parent), vbox);
-
-  gtk_widget_show (vbox);
-
-  return vbox;
-}
-
 
 
 static GtkWidget *statusbar;
@@ -150,7 +110,6 @@ create_statusbar (GtkWidget * container)
 }
 
 
-
 static GList *play_button_list;
 
 void
@@ -167,7 +126,6 @@ set_toolbar_state (unsigned flags)
 
 
 static GtkWidget *play_toolbar;
-
 
 GtkWidget *
 create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
