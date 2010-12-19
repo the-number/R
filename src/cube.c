@@ -151,17 +151,15 @@ new_cube (int s0, int s1, int s2)
 
       /* Flagging only certain faces as visible allows us to avoid rendering
          invisible surfaces,  thus slowing down animation. */
-#if 0
+
       block->visible_faces
-	= FACE_0 * (0 == i / cube_size_2)
-	+ FACE_1 * (cube_size - 1 == i / cube_size_2)
-	+ FACE_2 * (0 == i / cube_size % cube_size)
-	+ FACE_3 * (cube_size - 1 == i / cube_size % cube_size)
-	+ FACE_4 * (0 == i % cube_size)
-	+ FACE_5 * (cube_size - 1 == i % cube_size);
-#else
-      block->visible_faces = ~0x00000000;
-#endif
+	= (FACE_0 * (0 == i / (cube_get_size (ret, 0) * cube_get_size (ret, 1))))
+	| (FACE_1 * (cube_get_size (ret,2) - 1 == i / (cube_get_size (ret, 0) * cube_get_size (ret, 1))))
+	| (FACE_2 * (0 == i / cube_get_size (ret, 0) % cube_get_size (ret, 1)))
+	| (FACE_3 * (cube_get_size (ret, 1) - 1 == i / cube_get_size (ret, 0) % cube_get_size (ret, 1)))
+	| FACE_4 * (0 == i % cube_get_size (ret, 0))
+	| FACE_5 * (cube_get_size (ret, 0) - 1 == i % cube_get_size (ret, 0))
+	;
 
       /* Initialize all transformations to the identity matrix,  then set the
          translation part to correspond to the initial position of the
