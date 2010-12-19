@@ -49,10 +49,6 @@ void set_swatch_colour (gint swatch, GdkColor * color);
 void set_swatch_pattern (gint swatch, gint pattern);
 
 
-
-
-
-
 gboolean
 draw_swatch (GtkWidget * widget, GdkEventExpose * event, gpointer data);
 
@@ -127,12 +123,11 @@ gboolean set_distr_control_sensitivity (gint swatch);
 
 
 static GdkPixbuf *
-create_pixbuf_from_file (const gchar * filename, GError ** gerr)
+create_pixbuf_from_file (const gchar *filename, GError **gerr)
 {
-  GdkPixbuf *unscaled_pixbuf;
   GdkPixbuf *pixbuf;
 
-  unscaled_pixbuf = gdk_pixbuf_new_from_file (filename, gerr);
+  GdkPixbuf *unscaled_pixbuf = gdk_pixbuf_new_from_file (filename, gerr);
 
   if (*gerr)
     return 0;
@@ -147,9 +142,7 @@ create_pixbuf_from_file (const gchar * filename, GError ** gerr)
   g_object_unref (unscaled_pixbuf);
   unscaled_pixbuf = 0;
 
-
   return pixbuf;
-
 }
 
 
@@ -172,7 +165,6 @@ set_swatch_image (gint theSwatch, const gchar * filename, GtkWidget * fs)
       g_clear_error (&gerr);
       return FALSE;
     }
-
 
   proposed_face_rendering[theSwatch].sr.pixbuf = pixbuf;
 
@@ -204,7 +196,6 @@ set_swatch_image (gint theSwatch, const gchar * filename, GtkWidget * fs)
 static void
 set_swatch_from_fs (GtkFileChooser * fc)
 {
-
   gchar *filename = gtk_file_chooser_get_filename (fc);
 
   /* The fc widget is destroyed in the caller function -
@@ -220,7 +211,6 @@ set_swatch_from_fs (GtkFileChooser * fc)
   set_swatch_image (selected_swatch, filename, GTK_WIDGET (fc));
 
   g_free (filename);
-
 }
 
 
@@ -308,7 +298,6 @@ popupImageSelector (GtkWidget * w, GtkWidget * parent)
   set_distr_control_sensitivity (-1);
 
   gtk_widget_destroy (fc);
-
 }
 
 
@@ -344,8 +333,6 @@ reset_swatch (void)
 {
   int i;
 
-
-
   for (i = 0; i < 6; ++i)
     {
       int j;
@@ -367,10 +354,7 @@ reset_swatch (void)
 	}
 
       set_swatch_pattern (i, current_face_rendering[i].sr.stock_pattern);
-
     }
-
-
 }
 
 
@@ -379,7 +363,6 @@ reset_swatch (void)
 static void
 set_swatch (void)
 {
-
   int i;
 
   /* Set the proposed gc's to be the same as the current ones */
@@ -394,11 +377,7 @@ set_swatch (void)
 	  current_face_rendering[i].sr.color[j] =
 	    proposed_face_rendering[i].sr.color[j];
 	}
-
-
     }
-
-
 }
 
 
@@ -412,35 +391,23 @@ createColourSelector (void)
 
   gchar *texture_tip = 0;
 
-
-
   GtkWidget *button_box;
   GtkWidget *button_no_texture;
 
   GtkWidget *frame_texture;
   GtkWidget *frame_colour;
 
-  GtkWidget *vbox;
-
-
-
-  vbox = gtk_vbox_new (FALSE, BOX_PADDING);
+  GtkWidget *vbox = gtk_vbox_new (FALSE, BOX_PADDING);
 
   colourSelectorWidget = gtk_color_selection_new ();
 
   gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION
 					       (colourSelectorWidget), FALSE);
 
-
-
   frame_texture = gtk_frame_new (_("Pattern"));
   frame_colour = gtk_frame_new (_("Colour"));
 
-
-
   button_box = gtk_hbutton_box_new ();
-
-
 
   gtk_box_set_spacing (GTK_BOX (button_box), 0);
 
@@ -448,7 +415,6 @@ createColourSelector (void)
 
 
   gtk_button_box_set_child_size (GTK_BUTTON_BOX (button_box), 25, 25);
-
 
   button_no_texture = gtk_button_new ();
 
@@ -460,18 +426,15 @@ createColourSelector (void)
 			    G_CALLBACK (set_distr_control_sensitivity),
 			    (gpointer) - 1);
 
-
   texture_tip =
     g_strdup (_("Click here to use a pattern on the cube surface"));
   gtk_widget_set_tooltip_text (button_no_texture, texture_tip);
 
   for (i = 0; i < 6; ++i)
     {
-
-      GtkWidget *button;
       GtkWidget *drawingArea;
 
-      button = gtk_button_new ();
+      GtkWidget *button = gtk_button_new ();
 
       gtk_widget_set_tooltip_text (button, texture_tip);
 
@@ -488,12 +451,10 @@ createColourSelector (void)
 				G_CALLBACK (set_distr_control_sensitivity),
 				(gpointer) - 1);
 
-
       gtk_container_add (GTK_CONTAINER (button), drawingArea);
 
 
       gtk_container_add (GTK_CONTAINER (button_box), button);
-
     }
 
   g_free (texture_tip);
@@ -506,14 +467,11 @@ createColourSelector (void)
   gtk_container_add (GTK_CONTAINER (vbox), frame_colour);
 
 
-
   gtk_container_add (GTK_CONTAINER (frame_texture), button_box);
 
   gtk_container_add (GTK_CONTAINER (vbox), frame_texture);
 
-
   return vbox;
-
 }
 
 
@@ -544,7 +502,6 @@ get_image_distr (void)
 				distr == TILED);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_mosaic),
 				distr == MOSAIC);
-
 }
 
 
@@ -592,7 +549,6 @@ drag_data_received (GtkWidget * widget,
 
 	if ((selection_data->format != 16) || (selection_data->length != 8))
 	  {
-
 	    g_warning ("Received invalid color data");
 
 	    return;
@@ -603,7 +559,6 @@ drag_data_received (GtkWidget * widget,
 	colour.red = vals[0];
 	colour.green = vals[1];
 	colour.blue = vals[2];
-
 
 	if (immediate_mode)
 	  {
@@ -627,7 +582,6 @@ drag_data_received (GtkWidget * widget,
 	  {
 	    set_swatch_colour (swatch, &colour);
 	  }
-
       }
       break;
     case RDRAG_FILELIST:
@@ -671,17 +625,13 @@ drag_data_received (GtkWidget * widget,
 		continue;
 	      }
 
-
-
 	    if (immediate_mode)
 	      {
 		GLint texName;
 
-		GdkPixbuf *pixbuf = 0;
 		GError *gerr = 0;
 
-
-		pixbuf = create_pixbuf_from_file (filename, &gerr);
+		GdkPixbuf *pixbuf = create_pixbuf_from_file (filename, &gerr);
 
 		if (gerr)
 		  {
@@ -699,11 +649,9 @@ drag_data_received (GtkWidget * widget,
 		    return;
 		  }
 
-
 		current_face_rendering[swatch].rendering.type = IMAGED;
 		current_face_rendering[swatch].rendering.texName = texName;
 		current_face_rendering[swatch].rendering.distr = TILED;
-
 
 		current_face_rendering[swatch].sr.pixbuf = pixbuf;
 
@@ -712,9 +660,6 @@ drag_data_received (GtkWidget * widget,
 	      {
 		set_swatch_image (swatch, filename, main_application_window);
 	      }
-
-
-
 
 	    /* For now,  just use the first one.
 	       Later,  we'll add some method for disambiguating multiple files
@@ -730,7 +675,6 @@ drag_data_received (GtkWidget * widget,
       break;
       /* Ignore all others */
     }
-
 }
 
 static GdkDrawable **colour_menu_window = 0;
@@ -759,7 +703,6 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
 						   GTK_STOCK_REFRESH, 0,
 						   GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 						   NULL);
-
 
   gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
 
@@ -823,20 +766,16 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
     gtk_container_add (GTK_CONTAINER (frame), image_select_hbox);
   }
 
-
-
   table = gtk_table_new (2, 3, TRUE);
 
   for (i = 0; i < 6; ++i)
     {
-
-      GtkWidget *button;
       const GtkTargetEntry target[2] = {
 	{"text/uri-list", 0, RDRAG_FILELIST},
 	{"application/x-color", 0, RDRAG_COLOUR},
       };
-
-      button = gtk_button_new ();
+      
+      GtkWidget *button = gtk_button_new ();
 
       gtk_drag_dest_set (button, GTK_DEST_DEFAULT_ALL,
 			 target, 2, GDK_ACTION_COPY);
@@ -869,11 +808,9 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
 				(gpointer) i);
 
 
-
       gtk_container_add (GTK_CONTAINER (button), swatch[i]);
       gtk_table_attach (GTK_TABLE (table), button, i % 3, i % 3 + 1, i / 3,
 			i / 3 + 1, GTK_EXPAND, GTK_EXPAND, 0, 0);
-
     }
 
   g_signal_connect (dialog, "response",
@@ -892,12 +829,10 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox_cs);
 
 
-
   gtk_widget_show_all (dialog);
 
-}				/* end of colour_select_menu (..... */
-
-
+}
+/* end of colour_select_menu (..... */
 
 
 gboolean
@@ -951,7 +886,6 @@ set_gc_foreground (GdkGC * gc, GLdouble red, GLdouble green, GLdouble blue)
 
 
   gdk_gc_set_rgb_fg_color (gc, &fg);
-
 }
 
 
@@ -960,8 +894,6 @@ set_gc_foreground (GdkGC * gc, GLdouble red, GLdouble green, GLdouble blue)
 static GdkGC *
 get_gc_for_swatch (gint i, GtkWidget * w)
 {
-
-
   if (!the_gcs[i])
     {
       GLfloat red;
@@ -981,44 +913,30 @@ get_gc_for_swatch (gint i, GtkWidget * w)
     }
 
   return the_gcs[i];
-
 }
 
 
 gboolean
 draw_swatch (GtkWidget * widget, GdkEventExpose * event, gpointer data)
 {
+  int i = (int) data;
 
-  int i;
-  GdkGC *gc = 0;
-
-
-  i = (int) data;
-
-  gc = get_gc_for_swatch (i, widget);
-
+  GdkGC *gc = get_gc_for_swatch (i, widget);
 
   switch (proposed_face_rendering[i].rendering.type)
     {
-
     case COLORED:
-      {
-
-
-	gdk_draw_rectangle (widget->window,
-			    gc,
-			    TRUE, 0, 0,
-			    widget->allocation.width,
-			    widget->allocation.height);
-      }
+      gdk_draw_rectangle (widget->window,
+			  gc,
+			  TRUE, 0, 0,
+			  widget->allocation.width,
+			  widget->allocation.height);
       break;
 
     case IMAGED:
       {
 	GdkPixbuf *scaled_pixbuf = 0;
 	gint width, height;
-
-
 
 	gdk_drawable_get_size (widget->window, &width, &height);
 
@@ -1028,9 +946,7 @@ draw_swatch (GtkWidget * widget, GdkEventExpose * event, gpointer data)
 	  gdk_pixbuf_scale_simple (proposed_face_rendering[i].sr.pixbuf,
 				   width, height, GDK_INTERP_NEAREST);
 
-
 	g_assert (scaled_pixbuf);
-
 
 	gdk_draw_pixbuf (widget->window,
 			 gc,
@@ -1043,7 +959,6 @@ draw_swatch (GtkWidget * widget, GdkEventExpose * event, gpointer data)
       g_assert_not_reached ();
       break;
     };
-
 
   return TRUE;
 }
@@ -1082,13 +997,11 @@ preset_cs (GtkButton * button, gpointer user_data)
 gboolean
 select_side (GtkToggleButton * togglebutton, gpointer user_data)
 {
-
   selected_swatch = (int) user_data;
 
   get_image_distr ();
 
   return FALSE;
-
 }
 
 
@@ -1096,20 +1009,13 @@ select_side (GtkToggleButton * togglebutton, gpointer user_data)
 void
 set_swatch_colour (gint swatch, GdkColor * color)
 {
-
-  GdkGC *gc = 0;
-
-  gc = get_gc_for_swatch (swatch, 0);
+  GdkGC *gc = get_gc_for_swatch (swatch, 0);
 
   /* If the type was imaged,  (we're now changing to COLORED),  set the
      texture to the off value */
   if (proposed_face_rendering[swatch].rendering.type == IMAGED)
-    {
-
       proposed_face_rendering[swatch].rendering.texName = -1;
-    }
-
-
+  
   proposed_face_rendering[swatch].rendering.type = COLORED;
 
   proposed_face_rendering[swatch].sr.color[0] = color->red / 65535.0;
@@ -1120,7 +1026,6 @@ set_swatch_colour (gint swatch, GdkColor * color)
 		     color->green / 65535.0, color->blue / 65535.0);
 
   set_distr_control_sensitivity (swatch);
-
 }
 
 /* This function sets the currently selected swatch to
@@ -1128,13 +1033,9 @@ set_swatch_colour (gint swatch, GdkColor * color)
 gboolean
 update_swatch_colours (GtkWidget * w, gpointer user_data)
 {
-
   GtkColorSelection *clr_sel = GTK_COLOR_SELECTION (user_data);
 
-
-
   GdkColor color;
-
 
   /* If this callback is a result of the colour select widget being
      preset,  then just ignore it */
@@ -1144,7 +1045,6 @@ update_swatch_colours (GtkWidget * w, gpointer user_data)
       return FALSE;
     }
 
-
   gtk_color_selection_get_current_color (clr_sel, &color);
 
   set_swatch_colour (selected_swatch, &color);
@@ -1152,69 +1052,50 @@ update_swatch_colours (GtkWidget * w, gpointer user_data)
 
   draw_swatch (swatch[selected_swatch], 0, (gpointer) selected_swatch);
 
-
-
   return FALSE;
-
 }
 
 
 static void
 set_face_rendering (gint face)
 {
-  GLfloat red = 0;
-  GLfloat blue = 0;
-  GLfloat green = 0;
-
-  red = current_face_rendering[face].sr.color[0];
-  green = current_face_rendering[face].sr.color[1];
-  blue = current_face_rendering[face].sr.color[2];
+  GLfloat red = current_face_rendering[face].sr.color[0];
+  GLfloat green = current_face_rendering[face].sr.color[1];
+  GLfloat blue = current_face_rendering[face].sr.color[2];
 
   setColour (face, red, green, blue);
-
 }
 
 /* Set the colours of the cube,  from the colour swatch */
 void
 set_cube_rendering (void)
 {
-
   int i;
 
-
   for (i = 0; i < 6; ++i)
-    {
-      set_face_rendering (i);
-    }
+    set_face_rendering (i);
 
   postRedisplay ();
-
 }
 
 
 void
 set_swatch_pattern (gint swatch, gint pattern)
 {
-
-  GdkGC *gc = 0;
-  GdkPixmap *pixmap;
-
-  gc = get_gc_for_swatch (swatch, 0);
+  GdkGC *gc = get_gc_for_swatch (swatch, 0);
 
   if (-1 == pattern)
     {
-
       gdk_gc_set_fill (gc, GDK_SOLID);
-
     }
   else
     {
       /* Set the graphics context to that appropriate for the pattern selected */
+      GdkPixmap *pixmap;
 
       gdk_gc_set_function (gc, GDK_COPY);
 
       gdk_gc_set_fill (gc, GDK_OPAQUE_STIPPLED);
-
 
       pixmap =
 	gdk_bitmap_create_from_data (0, (gchar *) stock_pattern[pattern].data,
@@ -1222,16 +1103,13 @@ set_swatch_pattern (gint swatch, gint pattern)
 
       gdk_gc_set_stipple (gc, pixmap);
     }
-
 }
 
 /* Select a texture */
 static void
 select_texture (GtkButton * button, gpointer user_data)
 {
-
   int i = (int) user_data;
-
 
   proposed_face_rendering[selected_swatch].rendering.type = COLORED;
   proposed_face_rendering[selected_swatch].sr.stock_pattern = i;
@@ -1250,7 +1128,6 @@ select_texture (GtkButton * button, gpointer user_data)
   set_swatch_pattern (selected_swatch, i);
 
   draw_swatch (swatch[selected_swatch], 0, (gpointer) selected_swatch);
-
 }
 
 void
@@ -1265,13 +1142,10 @@ redraw_swatches (void)
 }
 
 
-
-
 /* Set the sensitivity of the TILE/MOSAIC buttons */
 gboolean
 set_distr_control_sensitivity (gint swatch)
 {
-
   if (swatch == -1)
     swatch = selected_swatch;
 

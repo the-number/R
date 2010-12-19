@@ -29,7 +29,6 @@
 #define _(String) gettext (String)
 #define N_(String) (String)
 
-
 static GLubyte Image[6][checkImageHeight][checkImageWidth][4];
 static unsigned char xbm[6][checkImageHeight * checkImageWidth / 8];
 
@@ -63,7 +62,6 @@ texMakePatterns (void)
 	}
     }
 
-
   /* Diagonal Striped */
   k = 1;
   shift = 0;
@@ -86,7 +84,6 @@ texMakePatterns (void)
 	    }
 	}
     }
-
 
   /* Checked patterns */
   for (k = 2; k < 6; ++k)
@@ -113,11 +110,7 @@ texMakePatterns (void)
 	    }
 	}
     }
-
-
-
 }
-
 
 
 void
@@ -134,7 +127,6 @@ texInit (void)
   glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   for (i = 0; i < 6; ++i)
     {
-
       stock_pattern[i].texName = texName[i];
 
       glBindTexture (GL_TEXTURE_2D, texName[i]);
@@ -149,8 +141,6 @@ texInit (void)
       stock_pattern[i].data = xbm[i];
       stock_pattern[i].texFunc = GL_MODULATE;
     }
-
-
 }
 
 /* Create a texture from a gdk_pixbuf.
@@ -159,12 +149,10 @@ texInit (void)
 GLuint
 create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
 {
-
   GLuint texName;
 
   glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
   glGenTextures (1, &texName);
-
 
   glBindTexture (GL_TEXTURE_2D, texName);
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -173,25 +161,17 @@ create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
   {
-    int width;
-    int height;
     guchar *pixels;
-
-    gboolean has_alpha;
-    int channels;
-
     GLenum format;
-    GdkColorspace colourSpace;
 
-    GQuark domain = g_quark_from_string ("rubik_texture");
+    GQuark domain = g_quark_from_string ("gnubik-texture");
 
-    width = gdk_pixbuf_get_width (pixbuf);
-    height = gdk_pixbuf_get_height (pixbuf);
-    colourSpace = gdk_pixbuf_get_colorspace (pixbuf);
+    int width = gdk_pixbuf_get_width (pixbuf);
+    int height = gdk_pixbuf_get_height (pixbuf);
+    GdkColorspace colourSpace = gdk_pixbuf_get_colorspace (pixbuf);
 
-
-    channels = gdk_pixbuf_get_n_channels (pixbuf);
-    has_alpha = gdk_pixbuf_get_has_alpha (pixbuf);
+    int channels = gdk_pixbuf_get_n_channels (pixbuf);
+    gboolean has_alpha = gdk_pixbuf_get_has_alpha (pixbuf);
 
     /* This seems to cover all the cases that gdk_pixbuf
        supports at the moment */
@@ -211,8 +191,7 @@ create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
 	    if (gerr)
 	      {
 		*gerr = g_error_new (domain, 0,
-				     _
-				     ("Pixbuf has wrong number of channels"));
+				     _("Pixbuf has wrong number of channels"));
 	      }
 	    return 0;
 	  }
@@ -235,5 +214,4 @@ create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
   }
 
   return texName;
-
 }
