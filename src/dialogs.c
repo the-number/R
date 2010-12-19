@@ -225,6 +225,8 @@ confirm_preferences (GtkWindow *window)
 			    GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
 			    _("Start cube with new settings?"));
 
+  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
+
   gint resp = gtk_dialog_run (GTK_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
@@ -258,6 +260,8 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
   GtkWidget *frame_dimensions = gtk_frame_new (_("Dimensions"));
   GtkWidget *frame_animation = gtk_frame_new (_("Animation"));
   GtkWidget *frame_lighting = gtk_frame_new (_("Lighting"));
+
+  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
 
@@ -330,6 +334,8 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
   /* Create the widgets */
   GtkWidget *dialog = gtk_about_dialog_new ();
 
+  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
+
   gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
 
@@ -341,12 +347,14 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 
   gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog), copyleft_notice);
 
+  gtk_about_dialog_set_logo_icon_name (GTK_ABOUT_DIALOG (dialog), "gnubik");
+
   gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (dialog),
 				 _("A 3 dimensional magic cube puzzle"));
 
   gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (dialog),
-					   /* TRANSLATORS: Do not translate this string. Instead, use it to list
-					      the people who have helped with translation to your language. */
+       /* TRANSLATORS: Do not translate this string. Instead, use it to list
+	  the people who have helped with translation to your language. */
 					   _("translator-credits"));
 
   gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),

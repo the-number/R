@@ -25,7 +25,6 @@
 #include "version.h"
 #include "ui.h"
 #include "select.h"
-#include "gnubik.xpm"
 #include "glarea.h"
 #include "widget-set.h"
 #include "cursors.h"
@@ -43,7 +42,6 @@
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
 
-static void set_icon (GtkWidget * shell_widget);
 
 typedef void display (GtkWidget *);
 
@@ -237,8 +235,6 @@ graphics_area_init (GtkWidget * w, gpointer data)
 
   modelViewInit ();
 
-  set_icon (w);
-
   set_the_colours (w, "gnubik");
 }
 
@@ -317,25 +313,6 @@ postRedisplay (void)
     }
 }
 
-
-
-/* Set the icon for the program */
-static void
-set_icon (GtkWidget * shell_widget)
-{
-  GdkPixmap *pixmap;
-
-  GdkWindow *window;
-
-  GdkBitmap *mask;
-
-  window = gtk_widget_get_parent_window (shell_widget);
-
-  pixmap =
-    gdk_pixmap_create_from_xpm_d (window, &mask, 0, (gchar **) gnubik_xpm);
-
-  gdk_window_set_icon (window, 0, pixmap, mask);
-}
 
 
 /* Error string display.  This is always called by a macro

@@ -266,6 +266,9 @@ popupImageSelector (GtkWidget * w, GtkWidget * parent)
 				    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				    GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL);
 
+  gtk_window_set_icon_name (GTK_WINDOW (fc), "gnubik");
+
+
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (fc),
 				       g_get_home_dir ());
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fc), FALSE);
@@ -756,6 +759,9 @@ colour_select_menu (GtkWidget * w, GtkWindow *window)
 						   GTK_STOCK_REFRESH, 0,
 						   GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 						   NULL);
+
+
+  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
 
   colour_menu_window = &(dialog->window);
 
