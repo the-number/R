@@ -21,7 +21,6 @@
 #include <getopt.h>
 #include <math.h>
 #include "drwBlock.h"
-#include "cube.h"
 #include "version.h"
 #include "ui.h"
 #include "select.h"

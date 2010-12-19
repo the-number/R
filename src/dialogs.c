@@ -59,15 +59,18 @@ set_lighting (GtkToggleButton * b, gpointer user_data)
 }
 
 
-
 extern Move_Queue *move_queue;
 
+struct preferences_state
+{
+  GtkObject *adj[3];
+  GtkWidget *entry[3];
+};
 
 static gboolean
 new_game (gpointer p)
 {
-  int i;
-  int *new_dimension = p;
+  struct preferences_state *ps = p;
 
   if (is_animating ())
     return TRUE;
@@ -76,17 +79,11 @@ new_game (gpointer p)
 
   destroy_the_cube ();
   /* create the cube */
-  create_the_cube (*new_dimension);
+  create_the_cube (gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
+		   gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
+		   gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2])));
 
-  for (i = 0; i < 8 * cube_get_size (the_cube); i++)
-    {
-      Slice_Blocks *slice =
-	identify_blocks (the_cube, rand () % cube_get_number_of_blocks (the_cube), rand () % 3);
-
-      rotate_slice (the_cube, rand () % 2 + 1, slice);
-
-      free_slice_blocks (slice);
-    }
+  cube_scramble (the_cube);
 
   postRedisplay ();
 
@@ -97,61 +94,102 @@ new_game (gpointer p)
   set_toolbar_state (0);
   update_statusbar ();
 
-
   return FALSE;
 }
-
 
 
 /* Request that the game be restarted
    If data is non zero,  then all it's data will be reallocated
 */
-static int new_dim;
+
 void
-request_new_game (GtkAction *act, int *dim)
+request_new_game (GtkAction *act, struct preferences_state *ps)
 {
-  new_dim = *dim;
   request_stop ();
   if (is_animating ())
     abort_animation ();
-  g_idle_add (new_game, dim);
+  g_idle_add (new_game, ps);
 }
 
 
-static void size_changed (GtkEditable * editable, gpointer data);
-
 #define BOX_PADDING 10
 
-static GtkWidget *
-create_dimension_widget (void)
-{
-  GtkWidget *label;
 
+static struct preferences_state *
+create_pref_state (GtkBox *parent)
+{
+  gint i;
+  struct preferences_state *ps = g_malloc (sizeof (*ps));
+
+  for (i = 0; i < 3 ; ++i)
+    {
+      ps->adj[i] = gtk_adjustment_new (cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
+      g_object_ref (ps->adj[i]);
+      ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
+      g_object_ref (ps->entry[i]);
+      gtk_box_pack_start (parent, ps->entry[i], FALSE, FALSE, 0);
+    }
+
+  return ps;
+}
+
+
+/* Allows only cubic cubes if the togglebutton is active */
+static void
+toggle_regular (GtkToggleButton *button, gpointer data)
+{
+  gint i;
+  struct preferences_state * ps = data;
+
+  if ( gtk_toggle_button_get_active (button))
+    {
+      for (i = 0; i < 3 ; ++i)
+	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ps->entry[i]),
+					GTK_ADJUSTMENT (ps->adj[0]));
+      gtk_adjustment_value_changed (GTK_ADJUSTMENT (ps->adj[0]));
+    }
+  else
+    {
+      for (i = 0; i < 3 ; ++i)
+	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ps->entry[i]),
+					GTK_ADJUSTMENT (ps->adj[i]));
+    }
+}
+
+
+static struct preferences_state *
+create_dimension_widget (GtkContainer *parent)
+{
+  GtkWidget *label = gtk_label_new (_("Size of cube:"));
 
   GtkWidget *hbox = gtk_hbox_new (FALSE, BOX_PADDING);
+  GtkWidget *vbox = gtk_vbox_new (TRUE, BOX_PADDING);
+  GtkWidget *checkbox = gtk_check_button_new_with_label (_("Regular cube"));
+  GtkWidget *vbox2 = gtk_vbox_new (TRUE, BOX_PADDING);
 
-  GtkObject *adj =
-    gtk_adjustment_new (cube_get_size (the_cube), 1, G_MAXFLOAT, 1, 1, 0);
+  struct preferences_state *ps  = create_pref_state (GTK_BOX (vbox));
 
-  GtkWidget *entry = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
-
-  gtk_widget_set_tooltip_text (entry,
+  gtk_widget_set_tooltip_text (vbox,
 			       _("Sets the number of blocks in each side"));
 
-  label = gtk_label_new (_("Size of cube:"));
+  gtk_widget_set_tooltip_text (checkbox,
+			       _("Allow only cubes with all sides equal size"));
 
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  g_signal_connect (checkbox, "toggled", G_CALLBACK (toggle_regular), ps);
 
+  gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), checkbox, TRUE, FALSE, 0);
 
-  new_dim = cube_get_size (the_cube);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
 
-  g_signal_connect (entry, "changed", G_CALLBACK (size_changed), 0);
-
+  new_dim = cube_get_size (the_cube, 0);
 
   gtk_widget_show_all (hbox);
 
-  return hbox;
+  gtk_container_add (parent, hbox);
+
+  return ps;
 }
 
 
@@ -160,24 +198,16 @@ create_dimension_widget (void)
 static GtkWidget *
 create_animation_widget (void)
 {
-  GtkWidget *vboxOuter;
-  GtkWidget *label1;
   GtkWidget *label2;
-  GtkWidget *vbox;
-  GtkObject *adjustment;
   GtkWidget *scrollbar;
-  GtkWidget *hbox;
 
+  GtkWidget *vboxOuter = gtk_vbox_new (TRUE, BOX_PADDING);
+  GtkWidget *vbox = gtk_vbox_new (FALSE, BOX_PADDING);
 
+  GtkObject *adjustment = gtk_adjustment_new (frameQty, 0, 99, 1, 1, 0);
 
-  vboxOuter = gtk_vbox_new (TRUE, BOX_PADDING);
-  vbox = gtk_vbox_new (FALSE, BOX_PADDING);
-
-  adjustment = gtk_adjustment_new (frameQty, 0, 99, 1, 1, 0);
-
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  label1 = gtk_label_new (_("Faster"));
+  GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
+  GtkWidget *label1 = gtk_label_new (_("Faster"));
   gtk_label_set_justify (GTK_LABEL (label1), GTK_JUSTIFY_LEFT);
 
   label2 = gtk_label_new (_("Slower"));
@@ -185,29 +215,21 @@ create_animation_widget (void)
 
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adjustment));
   gtk_widget_set_tooltip_text (scrollbar,
-			       _
-			       ("Controls the speed with which slices rotate"));
-
+			       _("Controls the speed with which slices rotate"));
 
   gtk_box_pack_start (GTK_BOX (hbox), label1, TRUE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), label2, TRUE, FALSE, 0);
-
 
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), scrollbar, TRUE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vboxOuter), vbox, TRUE, TRUE, 0);
 
-
   /* Add any necessary callbacks */
-
   g_signal_connect (adjustment, "value-changed",
 		    G_CALLBACK (value_changed), 0);
 
   /* Show the widgets */
-
   gtk_widget_show_all (vbox);
-
-
 
   return vboxOuter;
 }
@@ -239,7 +261,6 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 {
   gint response;
 
-  GtkWidget *dimensions;
   GtkWidget *animations;
 
   GtkWidget *button_lighting;
@@ -265,8 +286,7 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
 
-  dimensions = create_dimension_widget ();
-  gtk_container_add (GTK_CONTAINER (frame_dimensions), dimensions);
+  struct preferences_state *xxx = create_dimension_widget (GTK_CONTAINER (frame_dimensions));
 
   animations = create_animation_widget ();
   gtk_container_add (GTK_CONTAINER (frame_animation), animations);
@@ -295,9 +315,9 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
       if (new_values)
 	frameQty = new_frameQty;
 
-      if (new_dim == cube_get_size (the_cube) || confirm_preferences (toplevel))
+      if (new_dim == cube_get_size (the_cube, 0) || confirm_preferences (toplevel))
 	{
-	  request_new_game (NULL, &new_dim);
+	  request_new_game (NULL, xxx);
 	}
     }
 
@@ -312,19 +332,6 @@ value_changed (GtkAdjustment * adj, gpointer user_data)
 {
   new_values = TRUE;
   new_frameQty = adj->value;
-}
-
-
-static void
-size_changed (GtkEditable * editable, gpointer data)
-{
-  gchar *str;
-
-  str = gtk_editable_get_chars (GTK_EDITABLE (editable), 0, -1);
-
-  new_dim = g_strtod (str, 0);
-
-  g_free (str);
 }
 
 

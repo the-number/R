@@ -76,8 +76,8 @@ typedef struct _Block
 
 struct cube
 {
-  /* The number of blocks per side of the cube. */
-  int cube_size;
+  /* The number of blocks on each side of the cube */
+  int size[3];
 
   /* cube_size ** 3 */
   int number_blocks;

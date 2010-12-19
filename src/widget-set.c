@@ -357,8 +357,6 @@ static const char menu_tree[] = "<ui>\
   </menubar>\
 </ui>";
 
-static int new_game_dimension = 3;
-
 GtkWidget *
 create_menubar (GtkWidget * container, GtkWidget *toplevel)
 {
@@ -380,7 +378,7 @@ create_menubar (GtkWidget * container, GtkWidget *toplevel)
 
   gtk_action_group_add_actions (game_action_group, game_action_entries,
 				sizeof (game_action_entries) /
-				sizeof (game_action_entries[0]), &new_game_dimension);
+				sizeof (game_action_entries[0]), NULL);
 
   gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
 				sizeof (toolbar_action_entries) /

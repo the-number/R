@@ -43,7 +43,7 @@ enum
 
 
 /* Create a new cube object with the given number of faces per side. */
-struct cube *new_cube (int cube_dimension);
+struct cube *new_cube (int, int, int);
 
 
 /* Free up memory used by the cube. */
@@ -81,13 +81,6 @@ Slice_Blocks *identify_blocks (const struct cube *cube,
 
 Slice_Blocks *identify_blocks_2 (const struct cube *cube,
 				 GLfloat slice, int axis);
-
-
-/* As above,  but return all blocks in the surface face corresponding
-   to the axis (which may now be anywhere in the interval [0,  6)). */
-Slice_Blocks *identify_surface_blocks (const struct cube *cube,
-				       int axis);
-
 
 /*  Rotate a complete slice,  as identified by a prior call to
     identify_blocks. The return value is zero on success,  one otherwise. The
@@ -132,7 +125,10 @@ void get_quadrant_vector (const struct cube *cube,
 
 
 int cube_get_number_of_blocks (const struct cube *cube);
-int cube_get_size (const struct cube *cube);
+int cube_get_size (const struct cube *cube, int dim);
+
+void cube_scramble (struct cube *cube);
+
 
 #include <libguile.h>
 
@@ -146,7 +142,7 @@ SCM make_scm_cube (const struct cube *cube);
 ***/
 extern struct cube *the_cube;
 
-int create_the_cube (int dim);
+int create_the_cube (int, int, int);
 
 void destroy_the_cube (void);
 

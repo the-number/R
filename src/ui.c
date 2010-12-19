@@ -30,7 +30,6 @@
 #include "select.h"
 #include "widget-set.h"
 
-
 #include "quarternion.h"
 
 
@@ -38,10 +37,8 @@
 #include <GL/glut.h>
 #endif
 
-
 static short abort_requested = 0;
 static Slice_Blocks *blocks_in_motion;
-
 
 void drawInd (GLfloat location, int axis, int dir);
 
@@ -118,7 +115,6 @@ rotate_cube (int axis, int dir)
   GLdouble step = 2.0;
   Quarternion rot;
   vector v;
-
 
   if (dir)
     step = -step;
@@ -278,7 +274,7 @@ drawCube (void)
 
 #if DEBUG
   {
-    GLfloat offset = 1.6 * cube_get_size (the_cube);
+    GLfloat offset = 1.6 * cube_get_size (the_cube, 0);
 
     /* Show the directions of the axes */
     glColor3f (1, 1, 1);
@@ -288,7 +284,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (2 * cube_get_size (the_cube), 0, 0);
+    glVertex3f (2 * cube_get_size (the_cube, 0), 0, 0);
     glEnd ();
 
 
@@ -302,7 +298,7 @@ drawCube (void)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 2 * cube_get_size (the_cube), 0);
+    glVertex3f (0, 2 * cube_get_size (the_cube, 1), 0);
     glEnd ();
 
     glRasterPos3d (0.1 * offset, offset, 0);
@@ -316,7 +312,7 @@ drawCube (void)
 
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 0, 2 * cube_get_size (the_cube));
+    glVertex3f (0, 0, 2 * cube_get_size (the_cube, 2));
     glEnd ();
 
     glRasterPos3d (0.1 * offset, 0, offset);
@@ -327,10 +323,8 @@ drawCube (void)
   }
 #endif
 
-
   for (i = 0; i < cube_get_number_of_blocks (the_cube); i++)
     {
-
       int j = 0;
 
       /* Find out if this block is one of those currently being
@@ -345,40 +339,33 @@ drawCube (void)
       glPushMatrix ();
       if (blocks_in_motion && j != blocks_in_motion->number_blocks)
 	{
-
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
 	     animation angle is */
 	  GLdouble angle = animation_angle;
 
+	  int unity = 1;
+	  if (!current_movement.move_data.dir)
+	    unity = -1;
 
-	  {
-	    int unity = 1;
-	    if (!current_movement.move_data.dir)
-	      unity = -1;
-
-	    switch (current_movement.move_data.axis)
-	      {
-	      case 0:
-	      case 3:
-		glRotatef (angle, unity, 0, 0);
-		break;
-	      case 1:
-	      case 4:
-		glRotatef (angle, 0, unity, 0);
-		break;
-	      case 2:
-	      case 5:
-		glRotatef (angle, 0, 0, unity);
-		break;
-
-	      }
-
-	  }
+	  switch (current_movement.move_data.axis)
+	    {
+	    case 0:
+	    case 3:
+	      glRotatef (angle, unity, 0, 0);
+	      break;
+	    case 1:
+	    case 4:
+	      glRotatef (angle, 0, unity, 0);
+	      break;
+	    case 2:
+	    case 5:
+	      glRotatef (angle, 0, 0, unity);
+	      break;
+	    }
 	}
       {
 	Matrix M;
-
 
 	/* place the block in its current position and
 	   orientation */
@@ -393,7 +380,6 @@ drawCube (void)
       }
 
       glPopMatrix ();
-
     }
 }
 
@@ -416,12 +402,10 @@ radians (int deg)
 void
 mouse (int button)
 {
-
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
   if (animation_in_progress)
     return;
-
 
   switch (button)
     {
@@ -429,15 +413,12 @@ mouse (int button)
       /* this is inherently dangerous.  If an event is missed somehow,
          turn direction could get out of sync */
 
-
       inverted_rotation = 1;
       pending_movement.dir = !pending_movement.dir;
 
       postRedisplay ();
       break;
-
     case 1:
-
       /* Make a move */
       if (itemIsSelected ())
 	{
@@ -447,7 +428,6 @@ mouse (int button)
       postRedisplay ();
 
       break;
-
     }
 }
 
@@ -677,7 +657,6 @@ abort_animation (void)
 /* a timeout  calls this func,  to animate the cube */
 TIMEOUT_CALLBACK (animate)
 {
-
   struct _Current_Movement *md = (struct _Current_Movement *) data;
 
   /* how many degrees motion per frame */
@@ -758,8 +737,8 @@ TIMEOUT_CALLBACK (animate)
     }
 
   return FALSE;
-
 }				/* end animate () */
+
 
 float cursorAngle;
 
@@ -780,7 +759,6 @@ selection_func (void)
 
   if (0 != (selection = selectedItems ()))
     {
-
       vector v;
 
       getTurnAxis (selection, turn_axis);
@@ -813,12 +791,9 @@ selection_func (void)
 	transform (proj, v);
 
 	cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
-
       }
 
-
       selectionIsValid = 1;
-
     }
   else
     {
@@ -830,5 +805,4 @@ selection_func (void)
   inverted_rotation = 0;
 
   postRedisplay ();
-
 }

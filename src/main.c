@@ -47,7 +47,7 @@ extern int frameQty;
 
 
 static short solved = 0;
-static int initial_cube_dimension = 3;
+static int initial_cube_size[3] = {3, 3, 3};
 
 GtkWidget *main_application_window;
 
@@ -89,8 +89,6 @@ c_main (void *closure, int argc, char *argv[])
   menubar = create_menubar (form, main_application_window);
   play_toolbar = create_play_toolbar (form, main_application_window);
 
-
-
   glxarea = create_gl_area (form);
 
   gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
@@ -101,29 +99,17 @@ c_main (void *closure, int argc, char *argv[])
   statusbar = create_statusbar (form);
 
   /* create the cube */
-  create_the_cube (initial_cube_dimension);
-
+  create_the_cube (initial_cube_size[0],
+		   initial_cube_size[1],
+		   initial_cube_size[2]);
+  
   /* If a solved cube has not been requested,  then do some random
      moves on it */
   if (!solved)
-    {
-      int i;
-      srand (time (0));
-      for (i = 0; i < 8 * cube_get_size (the_cube); i++)
-	{
-	  Slice_Blocks *blocks = identify_blocks (the_cube,
-						  rand () % cube_get_number_of_blocks (the_cube),
-						  rand () % 3);
-
-	  rotate_slice (the_cube, rand () % 2 + 1, blocks);
-
-	  free_slice_blocks (blocks);
-	}
-    }
-
+    cube_scramble (the_cube);
+  
   /* initialise the selection mechanism */
   initSelection (glxarea, 50, 1, selection_func);
-
 
   gtk_widget_show (main_application_window);
 
@@ -150,7 +136,6 @@ have already been extracted */
 void
 app_opts (int *argc, char **argv)
 {
-
 #ifdef HAVE_GETOPT_LONG
 #define GETOPT(A,  B,  C,  D,  E) getopt_long (A,  B,  C,  D,  E)
 #else
@@ -174,6 +159,7 @@ app_opts (int *argc, char **argv)
 
   while ((c = GETOPT (*argc, argv, shortopts, longopts, &longind)) != -1)
     {
+      int i;
       switch (c)
 	{
 	case 'a':
@@ -183,7 +169,18 @@ app_opts (int *argc, char **argv)
 	  solved = 1;
 	  break;
 	case 'z':
-	  sscanf (optarg, "%d", &initial_cube_dimension);
+	    initial_cube_size[0] = atoi (strtok (optarg, ","));
+	    if ( initial_cube_size[0] <= 0)
+	      initial_cube_size[0] = 3;
+	    
+	    for (i = 1; i < 3; ++i)
+	      {
+		char *x = strtok (NULL, ",");
+		initial_cube_size[i] = x ? atoi (x) : -1;
+
+		if ( initial_cube_size[i] <= 0)
+		  initial_cube_size[i] = initial_cube_size[i-1];
+	      }
 	  break;
 	case 'h':
 	  printf ("%s", help_string);
@@ -197,18 +194,13 @@ app_opts (int *argc, char **argv)
 	default:
 	  break;
 	}
-
     }
-
 }
-
-
-
 
 static const char help_string[] =
   "-h\n--help\tShow this help message\n\n"
   "-v\n--version\tShow version number\n\n"
   "-s\n--solved\tStart with the cube already solved\n\n"
-  "-z n\n--size=n\tShow a   n x n x n   sized cube \n\n"
+  "-z n,m,p\n--size=n\tShow a   n x m x p   sized cube \n\n"
   "-a n\n--animation=n\tNumber of intermediate positions to be shown in animations\n\n"
   "\n\nBug reports to " PACKAGE_BUGREPORT "\n";

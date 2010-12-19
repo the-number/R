@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <libguile.h>
+#include <assert.h>
 
 #include "cube.h"
 
@@ -33,12 +34,12 @@
 struct cube *the_cube = NULL;
 
 int
-create_the_cube (int dim)
+create_the_cube (int dim0, int dim1, int dim2)
 {
-  the_cube = new_cube (dim);
+  the_cube = new_cube (dim0, dim1, dim2);
   if (the_cube == NULL)
     exit (1);
-  return dim == 0 ? 0 : the_cube->number_blocks;
+  return the_cube->number_blocks;
 }
 
 void
@@ -100,21 +101,21 @@ set_face_centre (Block *block,
    function performs the transformation. Later on we will also be needing the
    inverse transformation. */
 static inline int
-block_index_to_coords (const struct cube *cube, int i)
+block_index_to_coords (const struct cube *cube, int i, int dim)
 {
-  return 2 * i - (cube->cube_size - 1);
+  return 2 * i - (cube->size[dim] - 1);
 }
 
 static inline int
-block_coords_to_index (const struct cube *cube, const double i)
+block_coords_to_index (const struct cube *cube, double i, int dim)
 {
-  return (int) ((i + (cube->cube_size - 1)) / 2.0);
+  return (int) ((i + (cube->size[dim] - 1)) / 2.0);
 }
 
 
 /* The constructor itself. */
 struct cube *
-new_cube (int cube_size)
+new_cube (int s0, int s1, int s2)
 {
   /* Looping variables. */
   int i, k;
@@ -122,20 +123,19 @@ new_cube (int cube_size)
   /* The object that is returned to the caller. */
   struct cube *ret;
 
-  /* We'll be needing this value quite a bit. */
-  const int cube_size_2 = cube_size * cube_size;
-
-
   /* Allocate memory,  and initialize constant members of the cube. */
 
-  if (cube_size == 0)
+  if (s1 <= 0 || s1 <= 0 || s2 <= 0)
     return NULL;
 
   if (NULL == (ret = malloc (sizeof (struct cube))))
     return NULL;
 
-  ret->cube_size = cube_size;
-  ret->number_blocks = cube_size_2 * cube_size;
+  ret->size[0] = s0;
+  ret->size[1] = s1;
+  ret->size[2] = s2;
+
+  ret->number_blocks = ret->size[0] * ret->size[1] * ret->size[2];
 
   if (NULL == (ret->blocks = calloc (ret->number_blocks, sizeof (Block))))
     {
@@ -144,17 +144,14 @@ new_cube (int cube_size)
       return NULL;
     }
 
-
   /* Loop over the array of blocks,  and initialize each one. */
-
   for (i = 0; i < ret->number_blocks; ++i)
     {
       Block *block = ret->blocks + i;
 
-
       /* Flagging only certain faces as visible allows us to avoid rendering
          invisible surfaces,  thus slowing down animation. */
-
+#if 0
       block->visible_faces
 	= FACE_0 * (0 == i / cube_size_2)
 	+ FACE_1 * (cube_size - 1 == i / cube_size_2)
@@ -162,7 +159,9 @@ new_cube (int cube_size)
 	+ FACE_3 * (cube_size - 1 == i / cube_size % cube_size)
 	+ FACE_4 * (0 == i % cube_size)
 	+ FACE_5 * (cube_size - 1 == i % cube_size);
-
+#else
+      block->visible_faces = ~0x00000000;
+#endif
 
       /* Initialize all transformations to the identity matrix,  then set the
          translation part to correspond to the initial position of the
@@ -173,11 +172,15 @@ new_cube (int cube_size)
       for (k = 0; k < 4; ++k)
 	block->transformation[5 * k] = 1;
 
-      block->transformation[12] = block_index_to_coords (ret, i % cube_size);
-      block->transformation[13]
-	= block_index_to_coords (ret, (i / cube_size) % cube_size);
+      block->transformation[12] =
+	block_index_to_coords (ret, i % ret->size[0], 0);
+
+      block->transformation[13] =
+	block_index_to_coords (ret, (i / ret->size[0]) % ret->size[1], 1);
+
       block->transformation[14]
-	= block_index_to_coords (ret, (i / cube_size_2) % cube_size);
+	= block_index_to_coords (ret, (i / (ret->size[0] * ret->size[1])) 
+				 % ret->size[2], 2);
 
 
       /* Set all the face centres. */
@@ -308,9 +311,8 @@ identify_blocks_2 (const struct cube * cube,
 		   GLfloat slice_depth, int axis)
 {
   /* Looping variables. */
-  int j = 0;
+  int dim, j = 0;
   Block *i;
-
 
   /* Allocate memory for the return object. */
 
@@ -319,7 +321,13 @@ identify_blocks_2 (const struct cube * cube,
   if (!ret)
     return NULL;
 
-  ret->number_blocks = cube->cube_size * cube->cube_size;
+
+  ret->number_blocks = 1;
+  for (dim = 0; dim < 3; ++dim)
+    {
+      if ( dim != axis)
+	ret->number_blocks *= cube->size[dim];
+    }
 
   ret->blocks = malloc (ret->number_blocks * sizeof (int));
 
@@ -344,11 +352,8 @@ identify_blocks_2 (const struct cube * cube,
     if (fabs (i->transformation[12 + axis] - slice_depth) < 0.1)
       ret->blocks[j++] = i - cube->blocks;
 
-
   return ret;
-
-}				/* End of function identify_blocks_2 (). */
-
+}
 
 
 /* Get the blocks in the same slice as the block with block_id. */
@@ -361,18 +366,6 @@ identify_blocks (const struct cube * cube, int block_id, int axis)
 }
 
 
-
-/* Get the block in the surface slice corresponding to the axis. */
-
-Slice_Blocks *
-identify_surface_blocks (const struct cube * cube, int axis)
-{
-  if (axis < 3)
-    return identify_blocks_2 (cube, cube->cube_size - 1, axis);
-
-  else
-    return identify_blocks_2 (cube, -(cube->cube_size - 1), axis - 3);
-}
 
 
 
@@ -557,9 +550,11 @@ cube_get_number_of_blocks (const struct cube *cube)
 }
 
 int
-cube_get_size (const struct cube *cube)
+cube_get_size (const struct cube *cube, int dim)
 {
-  return cube->cube_size;
+  assert (dim >= 0);
+  assert (dim < 3);
+  return cube->size[dim];
 }
 
 
@@ -576,6 +571,24 @@ get_block_transform (const struct cube *cube,
 
   return 0;
 }
+
+
+void
+cube_scramble (struct cube *cube)
+{
+  int i;
+
+  for (i = 0; i < 2 * cube_get_number_of_blocks (cube); i++)
+    {
+      Slice_Blocks *slice =
+	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), rand () % 3);
+
+      rotate_slice (cube, rand () % 2 + 1, slice);
+
+      free_slice_blocks (slice);
+    }
+}
+
 
 
 
@@ -587,6 +600,7 @@ get_block_transform (const struct cube *cube,
 SCM
 make_scm_cube (const struct cube * cube)
 {
+#if 0
   SCM scm_face_vector;
   Block *block;
   int face;
@@ -674,4 +688,8 @@ make_scm_cube (const struct cube * cube)
 			       scm_from_int (cube->cube_size),
 			       scm_from_int (cube->cube_size)),
 		   scm_face_vector);
+
+#endif
+
+  return SCM_UNDEFINED;
 }

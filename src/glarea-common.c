@@ -127,7 +127,9 @@ accPerspective (GLdouble fovy, GLdouble aspect,
 void
 projection_init (int jitter)
 {
-  bounding_sphere_radius = 2 * cube_get_size (the_cube);
+  bounding_sphere_radius = 2 * cube_get_size (the_cube, 0);
+  bounding_sphere_radius = MAX (bounding_sphere_radius, 2 * cube_get_size (the_cube, 1));
+  bounding_sphere_radius = MAX (bounding_sphere_radius, 2 * cube_get_size (the_cube, 2));
 
   fovy = 33.0;
   cp_near = (GLdouble) bounding_sphere_radius / (tan (fovy * M_PI / 360.0));

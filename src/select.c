@@ -120,7 +120,6 @@ initSelection (GtkWidget * rendering, int holdoff,
 void
 disableSelection (void)
 {
-
   g_source_remove (timer);
   timerActive = FALSE;
 }
