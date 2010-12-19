@@ -75,6 +75,8 @@ c_main (void *closure, int argc, char *argv[])
      goes in */
   main_application_window = create_top_level_widget ();
 
+  gtk_window_set_icon_name (GTK_WINDOW(main_application_window), "gnubik");
+
 
   /* process arguments specific to this program */
   app_opts (&argc, argv);

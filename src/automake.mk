@@ -31,7 +31,6 @@ src_gnubik_SOURCES = \
 	src/glarea-common.c \
 	src/glarea.c src/glarea.h \
 	src/gnubik.h \
-	src/gnubik.xpm \
 	src/guile-hooks.c src/guile-hooks.h  \
 	src/main.c \
 	src/dialogs.c src/dialogs.h \
@@ -44,4 +43,5 @@ src_gnubik_SOURCES = \
 	src/ui.c src/ui.h \
 	src/version.c src/version.h \
 	src/widget-set.c src/widget-set.h 
+
 
