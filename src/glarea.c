@@ -29,7 +29,6 @@
 #include "cursors.h"
 #include "textures.h"
 #include "colour-sel.h"
-#include "gnubik.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
