@@ -29,10 +29,6 @@ extern int frameQty;
 
 
 typedef guint t_keysym;
-#define GNUBIK_Left GDK_Left
-#define GNUBIK_Right GDK_Right
-#define GNUBIK_Up GDK_Up
-#define GNUBIK_Down GDK_Down
 
 #define add_timeout(interval,  proc,  data) g_timeout_add (interval,  proc,  data)
 
