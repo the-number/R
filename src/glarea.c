@@ -483,8 +483,8 @@ handleRedisplay (gpointer glxarea)
 static void
 set_mouse_cursor (GtkWidget * glxarea)
 {
-  unsigned char *mask_bits;
-  unsigned char *data_bits;
+  const unsigned char *mask_bits;
+  const unsigned char *data_bits;
   int hot_x, hot_y;
   int width, height;
 
