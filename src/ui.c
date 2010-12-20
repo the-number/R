@@ -40,9 +40,7 @@
 static short abort_requested = 0;
 static Slice_Blocks *blocks_in_motion;
 
-void drawInd (GLfloat location, int axis, int dir);
-
-TIMEOUT_CALLBACK (animate);
+static gboolean animate (gpointer data);
 
 
 /* picture rate in ms. 40ms = 25 frames per sec */
@@ -643,7 +641,7 @@ animate_rotation (Move_Data * data)
 
   set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  add_timeout (picture_rate, animate, &current_movement);
+  g_timeout_add (picture_rate, animate, &current_movement);
 }
 
 
@@ -655,7 +653,8 @@ abort_animation (void)
 
 
 /* a timeout  calls this func,  to animate the cube */
-TIMEOUT_CALLBACK (animate)
+static gboolean 
+animate (gpointer data)
 {
   struct _Current_Movement *md = (struct _Current_Movement *) data;
 
@@ -674,7 +673,7 @@ TIMEOUT_CALLBACK (animate)
   if (fabs (animation_angle) < 90.0 && !abort_requested)
     {
       /* call this timeout again */
-      add_timeout (picture_rate, animate, data);
+      g_timeout_add (picture_rate, animate, data);
     }
   else
     {

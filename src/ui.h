@@ -30,10 +30,6 @@ extern int frameQty;
 
 typedef guint t_keysym;
 
-#define add_timeout(interval,  proc,  data) g_timeout_add (interval,  proc,  data)
-
-#define TIMEOUT_CALLBACK(X) gboolean X (gpointer data)
-
 
 void abort_animation (void);
 
