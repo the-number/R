@@ -1,4 +1,4 @@
-themedir = $(DESTDIR)$(datadir)/icons/gnome
+themedir = $(DESTDIR)$(datadir)/icons/hicolor
 context = apps
 sizes = 16 22 24 32 48
 
