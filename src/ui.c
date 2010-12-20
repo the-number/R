@@ -149,7 +149,7 @@ arrows (t_keysym keysym, int shifted)
 
   switch (keysym)
     {
-    case GNUBIK_Right:
+    case GDK_Right:
       if (shifted)
 	{
 	  dir = 0;
@@ -161,7 +161,7 @@ arrows (t_keysym keysym, int shifted)
 	  axis = 1;
 	}
       break;
-    case GNUBIK_Left:
+    case GDK_Left:
 
       if (shifted)
 	{
@@ -174,11 +174,11 @@ arrows (t_keysym keysym, int shifted)
 	  axis = 1;
 	}
       break;
-    case GNUBIK_Up:
+    case GDK_Up:
       axis = 0;
       dir = 0;
       break;
-    case GNUBIK_Down:
+    case GDK_Down:
       axis = 0;
       dir = 1;
       break;
