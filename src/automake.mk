@@ -30,7 +30,6 @@ src_gnubik_SOURCES = \
 	src/drwBlock.c src/drwBlock.h \
 	src/glarea-common.c \
 	src/glarea.c src/glarea.h \
-	src/gnubik.h \
 	src/guile-hooks.c src/guile-hooks.h  \
 	src/main.c \
 	src/dialogs.c src/dialogs.h \

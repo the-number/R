@@ -240,20 +240,18 @@ get_widget_height (GtkWidget * w)
   return w->allocation.height;
 }
 
-#if 1
+
 
 #include "select.h"
 #include <float.h>
 #include <stdio.h>
 #include "ui.h"
 #include "glarea.h"
-#include "gnubik.h"
 
 #include <assert.h>
 #include <string.h>
 #include <GL/glu.h>
 
-#endif
 
 #define BUFSIZE 512
 

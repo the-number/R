@@ -22,6 +22,11 @@
 #include <gtk/gtk.h>
 
 
+#define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
+
+void error_check (const char *file, int line_no, const char *string);
+
+
 extern GLdouble fovy;
 extern GLdouble cp_near, cp_far;
 
