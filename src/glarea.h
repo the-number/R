@@ -27,22 +27,15 @@
 void error_check (const char *file, int line_no, const char *string);
 
 
-extern GLdouble fovy;
-extern GLdouble cp_near, cp_far;
-
-
 void re_initialize_glarea (void);
 
 
 GtkWidget *create_gl_area (GtkWidget * containerWidget);
 
-
+void perspectiveSet (void);
 void modelViewInit (void);
-
 void postRedisplay (void);
-
 void lighting_init (void);
-
 void projection_init (int jitter);
 
 #endif

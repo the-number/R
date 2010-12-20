@@ -23,9 +23,9 @@
 #include "glarea.h"
 #include "cube.h"
 
-GLdouble fovy = -1;
-GLdouble cp_near = -1;
-GLdouble cp_far = -1;
+static GLdouble fovy = -1;
+static GLdouble cp_near = -1;
+static GLdouble cp_far = -1;
 
 
 /* Start with the unit quarternion */
@@ -45,6 +45,11 @@ static const struct jitter_v j8[8] = {
 };
 
 
+void
+perspectiveSet (void)
+{
+  gluPerspective (fovy, 1, cp_near, cp_far);
+}
 
 /* Wrapper to set the modelview matrix */
 void

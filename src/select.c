@@ -282,9 +282,6 @@ pickPolygons (int x, int y)
   GLint hits;
 
   assert (granularity > 0);
-  assert (fovy > 0);
-  assert (cp_near > 0);
-  assert (cp_far > 0);
 
   height = get_widget_height (glxarea);
 
@@ -304,8 +301,8 @@ pickPolygons (int x, int y)
   gluPickMatrix ((GLdouble) x, (GLdouble) (height - y),
 		 granularity, granularity, viewport);
 
-  gluPerspective (fovy, 1, cp_near, cp_far);
 
+  perspectiveSet ();
   modelViewInit ();
   drawCube ();
   glMatrixMode (GL_PROJECTION);
