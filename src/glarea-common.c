@@ -31,7 +31,7 @@ GLdouble cp_far = -1;
 /* Start with the unit quarternion */
 Quarternion cube_view = { 1, 0, 0, 0 };
 
-static GLint bounding_sphere_radius = 0;
+static GLdouble bounding_sphere_radius = 0;
 
 struct jitter_v
 {
@@ -127,12 +127,13 @@ accPerspective (GLdouble fovy, GLdouble aspect,
 void
 projection_init (int jitter)
 {
-  bounding_sphere_radius = 2 * cube_get_size (the_cube, 0);
-  bounding_sphere_radius = MAX (bounding_sphere_radius, 2 * cube_get_size (the_cube, 1));
-  bounding_sphere_radius = MAX (bounding_sphere_radius, 2 * cube_get_size (the_cube, 2));
+  bounding_sphere_radius = cube_get_size (the_cube, 0) * cube_get_size (the_cube, 0);
+  bounding_sphere_radius += cube_get_size (the_cube, 1) * cube_get_size (the_cube, 1);
+  bounding_sphere_radius += cube_get_size (the_cube, 2) * cube_get_size (the_cube, 2);
+  bounding_sphere_radius = sqrt (bounding_sphere_radius);
 
   fovy = 33.0;
-  cp_near = (GLdouble) bounding_sphere_radius / (tan (fovy * M_PI / 360.0));
+  cp_near = bounding_sphere_radius / (tan (fovy * M_PI / 360.0));
   cp_far = cp_near + 2 * bounding_sphere_radius;
 
   glEnable (GL_DEPTH_TEST);
