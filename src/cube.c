@@ -397,9 +397,7 @@ set_normal_vector (struct cube *cube,
 
   glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
-  memcpy (dest, v, sizeof (vector));
-
-  transform (view, *dest);
+  transform (view, v, *dest);
 }
 
 
@@ -418,9 +416,7 @@ set_quadrant_vector (struct cube *cube,
 
   glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
-  memcpy (dest, v, sizeof (vector));
-
-  transform (view, *dest);
+  transform (view, v, *dest);
 }
 
 
@@ -532,13 +528,6 @@ cube_get_status (const struct cube *cube)
 
 
 
-
-/* struct cube accessor method. */
-unsigned int
-get_visible_faces (const struct cube *cube, int block_id)
-{
-  return cube->blocks[block_id].visible_faces;
-}
 
 
 int

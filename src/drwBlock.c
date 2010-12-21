@@ -178,6 +178,7 @@ draw_face (GLint face, GLint col_outline, int block_id)
      mechanism which can detect which edge of the face is being pointed to.
    */
 
+
   p1[0] = 0;
   p1[1] = 0;
   p1[2] = 0;
@@ -188,7 +189,6 @@ draw_face (GLint face, GLint col_outline, int block_id)
   p2[3] = 1;
 
   vector_from_points (p2, p1, v);
-
   set_normal_vector (the_cube, block_id, face, v);
 
   glPushName (0);

@@ -32,7 +32,10 @@ typedef pv point, vector;
 void vector_mult (vector v, float scalar);
 
 /* pre-multiply point/vector pv by matrix tx */
-void transform (const Matrix tx, pv x);
+void transform_in_place (const Matrix tx, pv x);
+
+void transform (const Matrix M, const pv x, pv q);
+
 
 /* Pre Multiply Matrix N,  by Matrix M,   the result is left in N */
 void pre_mult (const Matrix M, Matrix N);

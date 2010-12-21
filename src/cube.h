@@ -97,7 +97,12 @@ int get_block_transform (const struct cube *cube,
 
 
 /* Return an int identifying all the visible faces in this block. */
-unsigned int get_visible_faces (const struct cube *cube, int block);
+static inline unsigned int
+get_visible_faces (const struct cube *cube, int block_id)
+{
+  return cube->blocks[block_id].visible_faces;
+}
+
 
 
 /* Get a copy of the centre point of the face into p. */

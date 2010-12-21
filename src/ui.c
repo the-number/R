@@ -226,7 +226,6 @@ static void
 getTurnAxis (struct facet_selection *items, GLfloat * vector)
 {
   Matrix t;
-  int i;
 
   /* Each edge (quadrant) on a block represents a different axis */
   const GLfloat axes[6][4][4] = {
@@ -246,21 +245,9 @@ getTurnAxis (struct facet_selection *items, GLfloat * vector)
       exit (1);
     }
 
-  /* Select the untransformed vector for the selected edge */
-  for (i = 0; i < 4; i++)
-    vector[i] = axes[items->face][items->quadrant][i];
-
-  /* transform it,  so that we go the right way */
-  transform (t, vector);
-
-  /*
-     printf ("Post transform Turn vector is : (");
-     for (i=0; i < 3 ; i++ )
-     printf ("%d, ", (int) vector[i]);
-     printf ("%d)\n", (int) vector[3]);
-   */
-
-
+  /* Select the untransformed vector for the selected edge
+     and transform it,  so that we go the right way */
+  transform (t, axes[items->face][items->quadrant], vector);
 }
 
 
@@ -755,7 +742,6 @@ selection_func (void)
   if (animation_in_progress)
     return;
 
-
   if (0 != (selection = selectedItems ()))
     {
       vector v;
@@ -774,9 +760,9 @@ selection_func (void)
 	the_cube->blocks[selection->block].transformation[12 +
 							  pending_movement.axis];
 
-
       /* Here we take the orientation of the selected quadrant and multiply it
-         by the projection matrix.  The result gives us the angle (on the screen)       at which the mouse cursor needs to be drawn. */
+         by the projection matrix.  The result gives us the angle (on the screen)
+	 at which the mouse cursor needs to be drawn. */
       {
 
 	Matrix proj;
@@ -786,8 +772,7 @@ selection_func (void)
 	get_quadrant_vector (the_cube, selection->block,
 			     selection->face, selection->quadrant, v);
 
-
-	transform (proj, v);
+	transform_in_place (proj, v);
 
 	cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }

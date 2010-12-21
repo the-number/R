@@ -1,5 +1,4 @@
 /*
-
     A little library to do matrix arithmetic
     Copyright (C) 1998  John Darrington
 
@@ -19,6 +18,7 @@
 
 #include <config.h>
 #include <stdio.h>
+#include <string.h>
 #include "txfm.h"
 #include <assert.h>
 
@@ -37,17 +37,14 @@ plot (point p)
 
 
 
-
-
 /* Pre-multiply a point or vector x,  by matrix M */
 void
-transform (const Matrix M, pv x)
+transform_in_place (const Matrix M, pv x)
 {
   int i, j;
 
   /* Temporary point variable for result */
   pv q = { 0, 0, 0, 0 };
-
 
   /* for each row */
   for (i = 0; i < MATRIX_DIM; i++)
@@ -60,7 +57,23 @@ transform (const Matrix M, pv x)
   /* Now copy  q into x */
   for (i = 0; i < MATRIX_DIM; i++)
     x[i] = q[i];
+}
 
+/* Pre-multiply a point or vector x,  by matrix M, placing the result into q */
+void
+transform (const Matrix M, const pv x, pv q)
+{
+  int i, j;
+
+  memset (q, 0, sizeof (*q) * MATRIX_DIM);
+
+  /* for each row */
+  for (i = 0; i < MATRIX_DIM; i++)
+    {
+      /* for each column */
+      for (j = 0; j < MATRIX_DIM; j++)
+	q[i] += M[i + MATRIX_DIM * j] * x[j];
+    }
 }
 
 
@@ -118,7 +131,6 @@ pre_mult (const Matrix M, Matrix N)
   /* Now copy  T into N */
   for (i = 0; i < MATRIX_DIM * MATRIX_DIM; i++)
     N[i] = T[i];
-
 }
 
 
