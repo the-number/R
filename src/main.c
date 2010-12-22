@@ -92,7 +92,7 @@ c_main (void *closure, int argc, char *argv[])
   menubar = create_menubar (form, main_application_window);
   play_toolbar = create_play_toolbar (form, main_application_window);
 
-  glxarea = create_gl_area (form);
+  glxarea = create_gl_area ();
 
   gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
 

@@ -30,7 +30,7 @@ void error_check (const char *file, int line_no, const char *string);
 void re_initialize_glarea (void);
 
 
-GtkWidget *create_gl_area (GtkWidget * containerWidget);
+GtkWidget *create_gl_area (void);
 
 void perspectiveSet (void);
 void modelViewInit (void);

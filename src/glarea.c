@@ -178,7 +178,7 @@ initialize_gl_capability (GtkWidget * glxarea)
 
 
 GtkWidget *
-create_gl_area (GtkWidget * containerWidget)
+create_gl_area (void)
 {
   const GtkTargetEntry target[2] = {
     {"text/uri-list", 0, RDRAG_FILELIST},
