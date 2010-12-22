@@ -49,39 +49,10 @@ static void display_raw (GtkWidget * glxarea);
 static display *display_func = NULL;
 
 
-static void graphics_area_init (GtkWidget * w, gpointer data);
-
 static gboolean handleRedisplay (gpointer glxarea);
 
 void projection_init (int jitter);
 
-
-static void resize (GtkWidget * w, GtkAllocation * alloc, gpointer data);
-
-
-static gboolean cube_orientate_keys (GtkWidget * w,
-				     GdkEventKey * event,
-				     gpointer clientData);
-
-static gboolean z_rotate (GtkWidget * w, GdkEventScroll * event,
-			  gpointer clientData);
-
-
-static gboolean cube_orientate_mouse (GtkWidget * w,
-				      GdkEventMotion * event,
-				      gpointer clientData);
-
-
-static gboolean buttons (GtkWidget * w,
-			 GdkEventButton * event, gpointer clientData);
-
-
-
-static gboolean cube_controls (GtkWidget * w,
-			       GdkEventButton * event, gpointer clientData);
-
-
-static void expose (GtkWidget * w, GdkEventExpose * event);
 
 
 static GtkWidget *glwidget;
@@ -95,8 +66,8 @@ re_initialize_glarea (void)
 
 
 /* Resize callback.  */
-static void
-resize (GtkWidget * w, GtkAllocation * alloc, gpointer data)
+void
+resize_viewport (GtkWidget * w, GtkAllocation * alloc, gpointer data)
 {
   GLint min_dim;
   gint height = alloc->height;
@@ -141,7 +112,6 @@ have_accumulation_buffer (void)
   return GL_TRUE;
 }
 
-static void register_gl_callbacks (GtkWidget * glxarea);
 
 static void
 initialize_gl_capability (GtkWidget * glxarea)
@@ -187,7 +157,6 @@ create_gl_area (void)
 
   GtkWidget *glxarea = gtk_drawing_area_new ();
 
-
   initialize_gl_capability (glxarea);
 
   gtk_drag_dest_set (glxarea, GTK_DEST_DEFAULT_ALL,
@@ -197,11 +166,7 @@ create_gl_area (void)
   g_signal_connect (glxarea, "drag_data_received",
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 
-
   glwidget = glxarea;
-
-  register_gl_callbacks (glxarea);
-
 
   return glxarea;
 }
@@ -209,7 +174,7 @@ create_gl_area (void)
 
 extern float cursorAngle;
 
-static void
+void
 graphics_area_init (GtkWidget * w, gpointer data)
 {
   GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
@@ -234,48 +199,6 @@ graphics_area_init (GtkWidget * w, gpointer data)
   modelViewInit ();
 
   set_the_colours (w, "gnubik");
-}
-
-
-static void
-register_gl_callbacks (GtkWidget * glxarea)
-{
-  g_signal_connect (glxarea, "realize", G_CALLBACK (graphics_area_init), 0);
-
-  g_signal_connect (glxarea, "expose_event", G_CALLBACK (expose), 0);
-
-  g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize), 0);
-
-
-  gtk_widget_add_events (GTK_WIDGET (glxarea),
-			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
-			 | GDK_BUTTON_RELEASE_MASK
-			 /* | GDK_BUTTON_MOTION_MASK */
-			 | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
-			 | GDK_VISIBILITY_NOTIFY_MASK
-			 | GDK_POINTER_MOTION_MASK);
-
-
-  GTK_WIDGET_SET_FLAGS (glxarea, GTK_CAN_FOCUS);
-
-
-  g_signal_connect (glxarea, "key_press_event",
-		    G_CALLBACK (cube_orientate_keys), 0);
-
-  g_signal_connect (glxarea, "motion_notify_event",
-		    G_CALLBACK (cube_orientate_mouse), 0);
-
-
-  g_signal_connect (glxarea, "scroll_event", G_CALLBACK (z_rotate), 0);
-
-
-  g_signal_connect (glxarea, "button_press_event", G_CALLBACK (buttons), 0);
-
-  g_signal_connect (glxarea, "button_release_event", G_CALLBACK (buttons), 0);
-
-
-  g_signal_connect (glxarea, "button_press_event",
-		    G_CALLBACK (cube_controls), 0);
 }
 
 
@@ -328,8 +251,8 @@ error_check (const char *file, int line_no, const char *string)
 
 
 /* Expose callback.  Just redraw the scene */
-static void
-expose (GtkWidget * w, GdkEventExpose * event)
+void
+on_expose (GtkWidget * w, GdkEventExpose * event)
 {
   postRedisplay ();
 }
@@ -341,18 +264,17 @@ static gboolean button_down = FALSE;
 
 /* Rotate the cube about the z axis (relative to the viewer ) */
 gboolean
-z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer clientData)
+z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer data)
 {
 
   rotate_cube (2, !event->direction);
 
   return FALSE;
-
 }
 
 /* Record the state of button 1 */
 gboolean
-buttons (GtkWidget * w, GdkEventButton * event, gpointer clientData)
+on_button_press_release (GtkWidget *w, GdkEventButton * event, gpointer data)
 {
 
   /* In GTK1-2,  buttons 4 and 5 mean mouse wheel scrolling */
@@ -379,14 +301,13 @@ buttons (GtkWidget * w, GdkEventButton * event, gpointer clientData)
       button_down = FALSE;
     }
 
-
   return FALSE;
 }
 
 
 gboolean
-cube_orientate_mouse (GtkWidget * w,
-		      GdkEventMotion * event, gpointer clientData)
+cube_orientate_mouse (GtkWidget *w,
+		      GdkEventMotion * event, gpointer data)
 {
 
   static gdouble last_mouse_x = -1;
@@ -424,14 +345,12 @@ cube_orientate_mouse (GtkWidget * w,
   if (xmotion < 0)
     rotate_cube (1, 0);
 
-
   return FALSE;
 }
 
 gboolean
-cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer clientData)
+cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
 {
-
   int shifted = 0;
 
   if (event->state & GDK_SHIFT_MASK)
@@ -448,11 +367,10 @@ cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer clientData)
 
 /* Input callback.  Despatch input events to approprite handlers */
 gboolean
-cube_controls (GtkWidget * w, GdkEventButton * event, gpointer clientData)
+cube_controls (GtkWidget *w, GdkEventButton * event, gpointer data)
 {
   if (event->type != GDK_BUTTON_PRESS)
     return TRUE;
-
 
   mouse (event->button);
 

@@ -107,6 +107,43 @@ c_main (void *closure, int argc, char *argv[])
      moves on it */
   if (!solved)
     cube_scramble (the_cube);
+
+  g_signal_connect (glxarea, "realize", G_CALLBACK (graphics_area_init), 0);
+
+  g_signal_connect (glxarea, "expose_event", G_CALLBACK (on_expose), 0);
+
+  g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize_viewport), 0);
+
+
+  gtk_widget_add_events (GTK_WIDGET (glxarea),
+			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
+			 | GDK_BUTTON_RELEASE_MASK
+			 /* | GDK_BUTTON_MOTION_MASK */
+			 | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
+			 | GDK_VISIBILITY_NOTIFY_MASK
+			 | GDK_POINTER_MOTION_MASK);
+
+
+  GTK_WIDGET_SET_FLAGS (glxarea, GTK_CAN_FOCUS);
+
+
+  g_signal_connect (glxarea, "key_press_event",
+		    G_CALLBACK (cube_orientate_keys), 0);
+
+  g_signal_connect (glxarea, "motion_notify_event",
+		    G_CALLBACK (cube_orientate_mouse), 0);
+
+  g_signal_connect (glxarea, "scroll_event",
+		    G_CALLBACK (z_rotate), 0);
+
+  g_signal_connect (glxarea, "button_press_event",
+		    G_CALLBACK (on_button_press_release), 0);
+
+  g_signal_connect (glxarea, "button_release_event",
+		    G_CALLBACK (on_button_press_release), 0);
+
+  g_signal_connect (glxarea, "button_press_event",
+		    G_CALLBACK (cube_controls), 0);
   
   /* initialise the selection mechanism */
   initSelection (glxarea, 50, 1, selection_func);
