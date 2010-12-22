@@ -85,7 +85,7 @@ free_move_queue (Move_Queue * move_queue)
    memory to grow the queue. */
 
 int
-move_queue_push (Move_Queue * move_queue, const Move_Data * move_data)
+move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
 {
   struct _Move_Queue_Item *new_element;
 
@@ -125,7 +125,7 @@ move_queue_push (Move_Queue * move_queue, const Move_Data * move_data)
    memory to grow the queue. In all other cases 1 (one) will be returned. */
 
 int
-move_queue_push_current (Move_Queue * move_queue, const Move_Data * move_data)
+move_queue_push_current (Move_Queue * move_queue, const struct move_data *move_data)
 {
   /* If there are no data in the queue,  then perform a standard push
      operation. Also do this if we are at the tail. */
@@ -149,10 +149,10 @@ move_queue_push_current (Move_Queue * move_queue, const Move_Data * move_data)
 /* Routine to get the data at the 'current' position in the queue. If there are
    no data in the queue,  NULL will be returned. */
 
-const Move_Data *
+const struct move_data *
 move_queue_current (const Move_Queue * move_queue)
 {
-  return (const Move_Data *) move_queue->current;
+  return move_queue->current;
 }
 
 

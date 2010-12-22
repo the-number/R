@@ -44,12 +44,13 @@
 
 
 /* A structure containing information about a movement taking place. */
-typedef struct _Move_Data
+struct move_data
 {
   int slice;
-  int dir;			/* 0 or 1. */
-  int axis;
-} Move_Data;
+  short dir;   /* 0 = cw, 1 = ccw */
+  short axis;  /* [0,2] */
+  short turns; /* Normally 1 or 2 */
+};
 
 
 #include "move-queue_i.h"
@@ -72,13 +73,13 @@ void free_move_queue (Move_Queue * move_queue);
    unless there is insufficient memory to grow the queue. A local copy of the
    move_data object is made,  so the incumbent object remains in the ownership of
    the calling application. */
-int move_queue_push (Move_Queue * move_queue, const Move_Data * move_data);
+int move_queue_push (Move_Queue * move_queue, const struct move_data * move_data);
 
 
 /* Add a new Move_Data item at the current place in the queue,  dropping all
    subsequent moves. */
 int move_queue_push_current (Move_Queue * move_queue,
-			     const Move_Data * move_data);
+			     const struct move_data * move_data);
 
 
 /* Remove the current item and all those that come afterwards. */
@@ -86,7 +87,7 @@ void move_queue_truncate (Move_Queue * move_queue);
 
 
 /* Return the data regarded as the current item on the queue. */
-const Move_Data *move_queue_current (const Move_Queue * move_queue);
+const struct move_data *move_queue_current (const Move_Queue * move_queue);
 
 
 /* Move the current item upwards (towards the first,  or oldest,  item pushed onto

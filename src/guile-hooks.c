@@ -177,12 +177,12 @@ gnubik_rotate_animated (SCM list)
 
   for (; !SCM_NULLP (list); list = SCM_CDR (list))
     {
-      Move_Data move;
+      struct move_data move;
 
       move.axis = scm_to_int (SCM_CAAR (list));
       move.slice = scm_to_int (SCM_CADAR (list));
       move.dir = scm_to_int (SCM_CADDAR (list));
-
+      move.turns = 1;
       request_delayed_rotation (&move);
     }
 

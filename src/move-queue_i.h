@@ -36,7 +36,7 @@
 
 struct _Move_Queue_Item
 {
-  Move_Data data;
+  struct move_data data;
   int mark;
   struct _Move_Queue_Item *next;
 };

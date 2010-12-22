@@ -253,7 +253,7 @@ sin_quadrant (int quarters)
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
 int
-rotate_slice (struct cube *cube, int turns, const Slice_Blocks *slice)
+rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice)
 {
   /* Iterator for array of blocks in the current slice. */
   const int *i;
@@ -267,6 +267,9 @@ rotate_slice (struct cube *cube, int turns, const Slice_Blocks *slice)
     0, 0, 0, 1
   };
 
+  /* Rotating backward 90 deg is the same as forward by 270 deg */
+  if (dir == 1 && turns == 1)
+    turns = 3;
 
   /* ... and then assigning values to the active elements. */
 
@@ -282,7 +285,6 @@ rotate_slice (struct cube *cube, int turns, const Slice_Blocks *slice)
   rotation[(slice->axis + 2) % 3 + 4 * ((slice->axis + 1) % 3)]
     = -sin_quadrant (turns);
 
-
   /* Apply the rotation matrix to all the blocks in this slice. We iterate
      backwards to avoid recalculating the end of the loop with every
      iteration. */
@@ -290,8 +292,8 @@ rotate_slice (struct cube *cube, int turns, const Slice_Blocks *slice)
     pre_mult (rotation, cube->blocks[*i].transformation);
 
   return 0;
-
-}				/* End of function rotate_slice (). */
+}
+/* End of function rotate_slice (). */
 
 
 
@@ -570,7 +572,7 @@ cube_scramble (struct cube *cube)
       Slice_Blocks *slice =
 	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), rand () % 3);
 
-      rotate_slice (cube, rand () % 2 + 1, slice);
+      rotate_slice (cube, rand () % 2 + 1, 0, slice);
 
       free_slice_blocks (slice);
     }

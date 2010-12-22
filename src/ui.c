@@ -59,7 +59,7 @@ Move_Queue *move_queue = 0;
 /* The move taking place NOW */
 static struct _Current_Movement
 {
-  Move_Data move_data;
+  struct move_data move_data;
   int stop_requested;
 }
 current_movement;
@@ -74,19 +74,11 @@ request_stop ()
 }
 
 
-
-
-
-void animate_rotation (Move_Data * data);
-
-
-
-
+static void animate_rotation (struct move_data * data);
 
 
 /* The move that will take place when the mouse is clicked */
-static Move_Data pending_movement = { -1, -1, -1 };
-
+static struct move_data pending_movement = { -1, -1, -1, 0 };
 
 
 static int selectionIsValid = 0;
@@ -427,10 +419,10 @@ request_back ()
     {
       current_movement.stop_requested = 1;
 
-      Move_Data next_move;
+      struct move_data next_move;
 
       memcpy (&next_move,
-	      move_queue_current (move_queue), sizeof (Move_Data));
+	      move_queue_current (move_queue), sizeof (next_move));
 
       next_move.dir = !next_move.dir;
 
@@ -449,7 +441,7 @@ _request_play (int one_move)
     {
       current_movement.stop_requested = one_move;
 
-      Move_Data next_move;
+      struct move_data next_move;
 
       memcpy (&next_move,
 	      move_queue_current (move_queue), sizeof (next_move));
@@ -480,9 +472,8 @@ request_forward ()
 /* The usual rotation request,  called when user uses mouse to rotate the cube by
    hand. The move is put into the `current' place,  and all the moves in the
    move_queue afterwards are zapped. */
-
 void
-request_rotation (Move_Data * data)
+request_rotation (struct move_data * data)
 {
   if (move_queue == NULL)
     move_queue = new_move_queue ();
@@ -493,14 +484,12 @@ request_rotation (Move_Data * data)
 }
 
 
-
-
 /* The rotation request called from script-fu. In this case the moves are
    appended to the move_queue,  so the script can race ahead and work out the
    moves,  leaving the graphics to catch up later. */
 
 void
-request_delayed_rotation (Move_Data * data)
+request_delayed_rotation (struct move_data * data)
 {
   if (move_queue == NULL)
     move_queue = new_move_queue ();
@@ -545,7 +534,7 @@ request_queue_rewind ()
 {
   int mark_result;
   Slice_Blocks *blocks;
-  const Move_Data *move_data;
+  const struct move_data *move_data;
 
   if (!move_queue)
     return;
@@ -560,8 +549,7 @@ request_queue_rewind ()
 	  blocks = identify_blocks_2 (the_cube,
 				      move_data->slice, move_data->axis);
 
-	  rotate_slice (the_cube, move_data->dir == 0 ? 1 : 3,	/* This is backwards. */
-			blocks);
+	  rotate_slice (the_cube, move_data->turns, move_data->dir, blocks);
 
 	  free_slice_blocks (blocks);
 	}
@@ -580,14 +568,11 @@ request_queue_rewind ()
 }
 
 
-
-
 /* Script callback. */
-
 void
 request_fast_forward ()
 {
-  const Move_Data *move_data;
+  const struct move_data *move_data;
   Slice_Blocks *blocks;
 
   if (!move_queue)
@@ -601,7 +586,7 @@ request_fast_forward ()
       blocks = identify_blocks_2 (the_cube,
 				  move_data->slice, move_data->axis);
 
-      rotate_slice (the_cube, move_data->dir == 0 ? 3 : 1, blocks);
+      rotate_slice (the_cube, move_data->turns, move_data->dir, blocks);
 
       free_slice_blocks (blocks);
     }
@@ -615,10 +600,10 @@ request_fast_forward ()
 
 /* Does exactly what it says on the tin :-) */
 
-void
-animate_rotation (Move_Data * data)
+static void
+animate_rotation (struct move_data * data)
 {
-  memmove (&current_movement.move_data, data, sizeof (Move_Data));
+  memmove (&current_movement.move_data, data, sizeof (*data));
 
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
@@ -643,21 +628,18 @@ abort_animation (void)
 static gboolean 
 animate (gpointer data)
 {
-  struct _Current_Movement *md = (struct _Current_Movement *) data;
+  struct _Current_Movement *md = data;
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (frameQty + 1);
 
-
   /*  decrement the current angle */
   animation_angle -= increment;
-
 
   /* and redraw it */
   postRedisplay ();
 
-
-  if (fabs (animation_angle) < 90.0 && !abort_requested)
+  if (fabs (animation_angle) < 90.0 * md->move_data.turns && !abort_requested)
     {
       /* call this timeout again */
       g_timeout_add (picture_rate, animate, data);
@@ -665,24 +647,12 @@ animate (gpointer data)
   else
     {
       /* we have finished the animation sequence now */
-      int turn_qty = 0;
       enum Cube_Status status;
 
       animation_angle = 0.0;
-      /* -90 degrees equals +270 degrees */
-      switch (md->move_data.dir)
-	{
-	case 1:
-	  turn_qty = 1;
-	  break;
-	case 0:
-	  turn_qty = 3;
-	  break;
-	}
 
       /* and tell the blocks.c library that a move has taken place */
-
-      rotate_slice (the_cube, turn_qty, blocks_in_motion);
+      rotate_slice (the_cube, md->move_data.turns, md->move_data.dir, blocks_in_motion);
 
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;
@@ -714,12 +684,10 @@ animate (gpointer data)
       else if (move_queue_current (move_queue))
 	{
 	  memmove (&md->move_data,
-		  move_queue_current (move_queue), sizeof (Move_Data));
+		  move_queue_current (move_queue), sizeof (md->move_data));
 	  move_queue_advance (move_queue);
 	  animate_rotation (&md->move_data);
 	}
-
-
     }
 
   return FALSE;
@@ -759,6 +727,8 @@ selection_func (void)
 	=
 	the_cube->blocks[selection->block].transformation[12 +
 							  pending_movement.axis];
+
+      pending_movement.turns = 1;
 
       /* Here we take the orientation of the selected quadrant and multiply it
          by the projection matrix.  The result gives us the angle (on the screen)
