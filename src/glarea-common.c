@@ -23,15 +23,18 @@
 #include "glarea.h"
 #include "cube.h"
 
-static GLdouble fovy = -1;
-static GLdouble cp_near = -1;
-static GLdouble cp_far = -1;
+struct scene_view 
+{
+  GLdouble fovy ;
+  GLdouble cp_near ;
+  GLdouble cp_far ;
+  GLdouble bounding_sphere_radius ;
+};
 
+static struct scene_view the_scene;
 
 /* Start with the unit quarternion */
 Quarternion cube_view = { 1, 0, 0, 0 };
-
-static GLdouble bounding_sphere_radius = 0;
 
 struct jitter_v
 {
@@ -39,16 +42,16 @@ struct jitter_v
   GLdouble y;
 };
 
-static const struct jitter_v j8[8] = {
+static const struct jitter_v j8[8] = 
+{
   {0.5625, 0.4375}, {0.0625, 0.9375}, {0.3125, 0.6875}, {0.6875, 0.8125},
   {0.8125, 0.1875}, {0.9375, 0.5625}, {0.4375, 0.0625}, {0.1875, 0.3125}
 };
 
-
 void
 perspectiveSet (void)
 {
-  gluPerspective (fovy, 1, cp_near, cp_far);
+  gluPerspective (the_scene.fovy, 1, the_scene.cp_near, the_scene.cp_far);
 }
 
 /* Wrapper to set the modelview matrix */
@@ -65,7 +68,7 @@ modelViewInit (void)
 
   glMatrixMode (GL_MODELVIEW);
   glLoadIdentity ();
-  gluLookAt (0, 0, bounding_sphere_radius + cp_near,
+  gluLookAt (0, 0, the_scene.bounding_sphere_radius + the_scene.cp_near,
 	     origin[0], origin[1], origin[2], 0.0, 1.0, 0.0);
 
 
@@ -113,18 +116,20 @@ accFrustum (GLdouble left, GLdouble right, GLdouble bottom, GLdouble top,
 
 
 static void
-accPerspective (GLdouble fovy, GLdouble aspect,
-		GLdouble zNear, GLdouble zFar, GLdouble pixdx, GLdouble pixdy,
+accPerspective (const struct scene_view *sv,
+		GLdouble aspect,
+		GLdouble pixdx, GLdouble pixdy,
 		GLdouble eyedx, GLdouble eyedy, GLdouble focus)
 {
   GLdouble fov2, left, right, top, bottom;
 
-  fov2 = (fovy * M_PI / 180.0) / 2.0;
-  top = zNear / (cos (fov2) / sin (fov2));
+  fov2 = (sv->fovy * M_PI / 180.0) / 2.0;
+  top = sv->cp_near / (cos (fov2) / sin (fov2));
   bottom = -top;
   right = top * aspect;
   left = -right;
-  accFrustum (left, right, bottom, top, zNear, zFar, pixdx, pixdy, eyedx,
+  accFrustum (left, right, bottom, top,
+	      sv->cp_near, sv->cp_far, pixdx, pixdy, eyedx,
 	      eyedy, focus);
 }
 
@@ -132,14 +137,14 @@ accPerspective (GLdouble fovy, GLdouble aspect,
 void
 projection_init (int jitter)
 {
-  bounding_sphere_radius = cube_get_size (the_cube, 0) * cube_get_size (the_cube, 0);
-  bounding_sphere_radius += cube_get_size (the_cube, 1) * cube_get_size (the_cube, 1);
-  bounding_sphere_radius += cube_get_size (the_cube, 2) * cube_get_size (the_cube, 2);
-  bounding_sphere_radius = sqrt (bounding_sphere_radius);
+  the_scene.bounding_sphere_radius = cube_get_size (the_cube, 0) * cube_get_size (the_cube, 0);
+  the_scene.bounding_sphere_radius += cube_get_size (the_cube, 1) * cube_get_size (the_cube, 1);
+  the_scene.bounding_sphere_radius += cube_get_size (the_cube, 2) * cube_get_size (the_cube, 2);
+  the_scene.bounding_sphere_radius = sqrt (the_scene.bounding_sphere_radius);
 
-  fovy = 33.0;
-  cp_near = bounding_sphere_radius / (tan (fovy * M_PI / 360.0));
-  cp_far = cp_near + 2 * bounding_sphere_radius;
+  the_scene.fovy = 33.0;
+  the_scene.cp_near = the_scene.bounding_sphere_radius / (tan (the_scene.fovy * M_PI / 360.0));
+  the_scene.cp_far = the_scene.cp_near + 2 * the_scene.bounding_sphere_radius;
 
   glEnable (GL_DEPTH_TEST);
   glClearColor (0, 0, 0, 0);
@@ -147,10 +152,9 @@ projection_init (int jitter)
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
 
-  accPerspective (fovy, 1, cp_near, cp_far,
+  accPerspective (&the_scene, 1, 
 		  j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
 }
-
 
 void
 lighting_init (void)
