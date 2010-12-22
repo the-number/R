@@ -51,19 +51,17 @@ static display *display_func = NULL;
 
 static gboolean handleRedisplay (gpointer glxarea);
 
-void projection_init (int jitter);
-
-
 
 static GtkWidget *glwidget;
-
-void set_scene_view (void);
-
 
 void
 re_initialize_glarea (void)
 {
-  set_scene_view ();
+  scene_init ();
+  lighting_init ();
+  texInit ();
+  projection_init (0);
+  modelViewInit ();
 }
 
 
@@ -193,21 +191,6 @@ on_realize (GtkWidget *w, gpointer data)
   gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
 
   set_the_colours (w, "gnubik");
-}
-
-
-void
-set_scene_view (void)
-{
-  lighting_init ();
-
-  texInit ();
-
-  projection_init (0);
-
-  modelViewInit ();
-
-
 }
 
 
@@ -454,7 +437,7 @@ static void
 render_scene (GLint jitter)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+  
   projection_init (jitter);
   modelViewInit ();
   ERR_CHECK ("Error in display");

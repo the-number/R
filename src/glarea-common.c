@@ -135,7 +135,7 @@ accPerspective (const struct scene_view *sv,
 
 
 void
-projection_init (int jitter)
+scene_init (void)
 {
   the_scene.bounding_sphere_radius = cube_get_size (the_cube, 0) * cube_get_size (the_cube, 0);
   the_scene.bounding_sphere_radius += cube_get_size (the_cube, 1) * cube_get_size (the_cube, 1);
@@ -145,7 +145,11 @@ projection_init (int jitter)
   the_scene.fovy = 33.0;
   the_scene.cp_near = the_scene.bounding_sphere_radius / (tan (the_scene.fovy * M_PI / 360.0));
   the_scene.cp_far = the_scene.cp_near + 2 * the_scene.bounding_sphere_radius;
+}
 
+void
+projection_init (int jitter)
+{
   glEnable (GL_DEPTH_TEST);
   glClearColor (0, 0, 0, 0);
 

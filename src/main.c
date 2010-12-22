@@ -108,6 +108,8 @@ c_main (void *closure, int argc, char *argv[])
   if (!solved)
     cube_scramble (the_cube);
 
+  scene_init ();
+
   g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), 0);
 
   g_signal_connect (glxarea, "expose_event", G_CALLBACK (on_expose), 0);

@@ -31,6 +31,7 @@ void re_initialize_glarea (void);
 
 GtkWidget *create_gl_area (void);
 
+void scene_init (void);
 void perspectiveSet (void);
 void modelViewInit (void);
 void postRedisplay (void);
