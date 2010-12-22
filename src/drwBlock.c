@@ -63,7 +63,7 @@ static GLfloat colors[][3] = {
 };
 
 
-void draw_face (GLint face, GLint col_outline, int block_id);
+static void draw_face (GLint face, GLint col_outline, int block_id);
 
 /* this macro produces +1 if i is even. -1 if i is odd */
 /* We use it to transform the faces of the block from zero,  to the
@@ -120,14 +120,6 @@ draw_block (GLboolean highlight, int block_id)
 	{
 	  glLoadName (i);
 	  draw_face (i, (highlight ? COL_WHITE : COL_BLACK), block_id);
-	  /*
-	     {
-	     point p;
-	     get_face_centre (block_id,  i,  p);
-	     }
-	   */
-
-
 	}
 
       glPopMatrix ();
@@ -138,7 +130,7 @@ draw_block (GLboolean highlight, int block_id)
 
 
 /* render the face,  with a specified fill,  and outline colour */
-void
+static void
 draw_face (GLint face, GLint col_outline, int block_id)
 {
   point p1;
