@@ -406,15 +406,12 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 #endif
 
 void
-set_the_colours (GtkWidget * w, const char *progname)
+set_the_colours (GtkWidget *w, const char *progname)
 {
 #if !X_DISPLAY_MISSING
   int i;
 
-  Display *dpy;
-
-  dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
-
+  Display *dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
 
   for (i = 0; i < 6; ++i)
     {

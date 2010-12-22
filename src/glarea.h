@@ -38,6 +38,7 @@ void lighting_init (void);
 void projection_init (int jitter);
 
 /* Callbacks for signals on the glarea widget */
+void on_realize (GtkWidget *w, gpointer data);
 void resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data);
 gboolean cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data);
 void graphics_area_init (GtkWidget *w, gpointer data);

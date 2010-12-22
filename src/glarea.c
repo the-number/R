@@ -57,11 +57,13 @@ void projection_init (int jitter);
 
 static GtkWidget *glwidget;
 
+void set_scene_view (void);
+
 
 void
 re_initialize_glarea (void)
 {
-  graphics_area_init (glwidget, 0);
+  set_scene_view ();
 }
 
 
@@ -175,7 +177,7 @@ create_gl_area (void)
 extern float cursorAngle;
 
 void
-graphics_area_init (GtkWidget * w, gpointer data)
+on_realize (GtkWidget *w, gpointer data)
 {
   GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
   GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (w);
@@ -190,6 +192,13 @@ graphics_area_init (GtkWidget * w, gpointer data)
 
   gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
 
+  set_the_colours (w, "gnubik");
+}
+
+
+void
+set_scene_view (void)
+{
   lighting_init ();
 
   texInit ();
@@ -198,7 +207,7 @@ graphics_area_init (GtkWidget * w, gpointer data)
 
   modelViewInit ();
 
-  set_the_colours (w, "gnubik");
+
 }
 
 
