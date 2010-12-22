@@ -49,7 +49,6 @@ static void value_changed (GtkAdjustment * adj, gpointer user_data);
 static void
 set_lighting (GtkToggleButton * b, gpointer user_data)
 {
-
   if (gtk_toggle_button_get_active (b))
     glEnable (GL_LIGHTING);
   else
@@ -66,6 +65,38 @@ struct preferences_state
   GtkObject *adj[3];
   GtkWidget *entry[3];
 };
+
+static struct preferences_state *
+pref_state_create (GtkBox *parent)
+{
+  gint i;
+  struct preferences_state *ps = g_malloc (sizeof (*ps));
+
+  for (i = 0; i < 3 ; ++i)
+    {
+      ps->adj[i] = gtk_adjustment_new (cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
+      g_object_ref (ps->adj[i]);
+      ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
+      g_object_ref (ps->entry[i]);
+      gtk_box_pack_start (parent, ps->entry[i], FALSE, FALSE, 0);
+    }
+
+  return ps;
+}
+
+static void
+pref_state_destroy (struct preferences_state *ps)
+{
+  int i;
+  for (i = 0; i < 3 ; ++i)
+    {
+      g_object_unref (ps->adj[i]);
+      g_object_unref (ps->entry[i]);
+    }
+
+  g_free (ps);
+}
+
 
 static gboolean
 new_game (gpointer p)
@@ -94,6 +125,8 @@ new_game (gpointer p)
   set_toolbar_state (0);
   update_statusbar ();
 
+  pref_state_destroy (ps);
+
   return FALSE;
 }
 
@@ -114,24 +147,6 @@ request_new_game (GtkAction *act, struct preferences_state *ps)
 
 #define BOX_PADDING 10
 
-
-static struct preferences_state *
-create_pref_state (GtkBox *parent)
-{
-  gint i;
-  struct preferences_state *ps = g_malloc (sizeof (*ps));
-
-  for (i = 0; i < 3 ; ++i)
-    {
-      ps->adj[i] = gtk_adjustment_new (cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
-      g_object_ref (ps->adj[i]);
-      ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
-      g_object_ref (ps->entry[i]);
-      gtk_box_pack_start (parent, ps->entry[i], FALSE, FALSE, 0);
-    }
-
-  return ps;
-}
 
 
 /* Allows only cubic cubes if the togglebutton is active */
@@ -167,7 +182,7 @@ create_dimension_widget (GtkContainer *parent)
   GtkWidget *checkbox = gtk_check_button_new_with_label (_("Regular cube"));
   GtkWidget *vbox2 = gtk_vbox_new (TRUE, BOX_PADDING);
 
-  struct preferences_state *ps  = create_pref_state (GTK_BOX (vbox));
+  struct preferences_state *ps  = pref_state_create (GTK_BOX (vbox));
 
   gtk_widget_set_tooltip_text (vbox,
 			       _("Sets the number of blocks in each side"));
@@ -286,7 +301,7 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
 
-  struct preferences_state *xxx = create_dimension_widget (GTK_CONTAINER (frame_dimensions));
+  struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions));
 
   animations = create_animation_widget ();
   gtk_container_add (GTK_CONTAINER (frame_animation), animations);
@@ -317,10 +332,10 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 
       if (new_dim == cube_get_size (the_cube, 0) || confirm_preferences (toplevel))
 	{
-	  request_new_game (NULL, xxx);
+	  request_new_game (NULL, ps);
 	}
     }
-
+  
   gtk_widget_destroy (dialog);
 }
 
