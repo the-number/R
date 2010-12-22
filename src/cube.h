@@ -20,6 +20,7 @@
 #ifndef CUBE_H
 #define CUBE_H
 
+#include <stdbool.h>
 
 #include "cube_i.h"
 
@@ -133,6 +134,7 @@ int cube_get_size (const struct cube *cube, int dim);
 
 void cube_scramble (struct cube *cube);
 
+bool cube_square_axis (const struct cube *cube, int axis);
 
 #include <libguile.h>
 

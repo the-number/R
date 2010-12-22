@@ -1,7 +1,7 @@
 /*
   Copyright (c) 2009        John Darrington
   Copyright (c) 2004        Dale Mellor,  John Darrington
-  copyright (c) 1998,  2003  John Darrington
+  copyright (c) 1998, 2003, 2010 John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -69,6 +69,7 @@ destroy_the_cube (void)
    |   0 |   1 |   2 |   3 |
 */
 
+
 
 
 
@@ -221,10 +222,6 @@ free_cube (struct cube *cube)
 
 
 
-/*
-  Object mutator rotate_slice.
-*/
-
 /* Quick cosine function for angles expressed in quarters of complete
    revolutions. */
 static inline int
@@ -267,6 +264,7 @@ rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice
     0, 0, 0, 1
   };
 
+ 
   /* Rotating backward 90 deg is the same as forward by 270 deg */
   if (dir == 1 && turns == 1)
     turns = 3;
@@ -569,14 +567,42 @@ cube_scramble (struct cube *cube)
 
   for (i = 0; i < 2 * cube_get_number_of_blocks (cube); i++)
     {
+      int turns = rand () % 2 + 1;
+      const int axis = rand () % 3;
       Slice_Blocks *slice =
-	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), rand () % 3);
+	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), axis);
 
-      rotate_slice (cube, rand () % 2 + 1, 0, slice);
+      /* Insist upon 180 degree turns if the section is non-square */
+      if ( !cube_square_axis (cube, axis))
+	turns = 2;
+
+      rotate_slice (cube, turns, 0, slice);
 
       free_slice_blocks (slice);
     }
 }
+
+
+/* Return true iff the section orthogonal to the axis is square. */
+bool
+cube_square_axis (const struct cube *cube, int axis)
+{
+  int other_axis_size = -1;
+  int j;
+  for (j = 0; j  < 3 ; ++j)
+    {
+      if (j == axis)
+	continue;
+	
+      if ( other_axis_size != -1 &&
+	   other_axis_size != cube_get_size (cube, j))
+	return false;
+      other_axis_size = cube_get_size (cube, j);
+    }
+  return true;
+}
+
+
 
 
 

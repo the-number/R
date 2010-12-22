@@ -83,7 +83,6 @@ free_move_queue (Move_Queue * move_queue)
    new,  locally-managed copy is made of the incumbent datum. Return 1 (one) if
    the operation is successful; 0 (zero) indicates that there was insufficient
    memory to grow the queue. */
-
 int
 move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
 {
@@ -123,7 +122,6 @@ move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
    there are no data in the queue),  then a regular push operation is performed
    at the tail,  and in this case zero may be returned if there is insufficient
    memory to grow the queue. In all other cases 1 (one) will be returned. */
-
 int
 move_queue_push_current (Move_Queue * move_queue, const struct move_data *move_data)
 {
@@ -148,7 +146,6 @@ move_queue_push_current (Move_Queue * move_queue, const struct move_data *move_d
 
 /* Routine to get the data at the 'current' position in the queue. If there are
    no data in the queue,  NULL will be returned. */
-
 const struct move_data *
 move_queue_current (const Move_Queue * move_queue)
 {
@@ -170,7 +167,6 @@ move_queue_current (const Move_Queue * move_queue)
    list which will make the logic more complicated and use a (tiny) amount of
    extra memory,  or to use the list in the opposite direction but then pushing,
    poping and advancing all become expensive operations. */
-
 int
 move_queue_retard (Move_Queue * move_queue)
 {
@@ -200,7 +196,6 @@ move_queue_retard (Move_Queue * move_queue)
 
 
 /* Remove the current object and all those that come afterwards. */
-
 void
 move_queue_truncate (Move_Queue * move_queue)
 {
@@ -237,7 +232,6 @@ move_queue_truncate (Move_Queue * move_queue)
    current position is already at the tail (which will also be the case if the
    queue is empty) then no action takes place and 0 (zero) is returned to
    indicate that no more data are available for consideration. */
-
 int
 move_queue_advance (Move_Queue * move_queue)
 {
@@ -254,7 +248,6 @@ move_queue_advance (Move_Queue * move_queue)
 
 
 /* A simple compound accessor. */
-
 Move_Queue_Progress
 move_queue_progress (const Move_Queue * move_queue)
 {
@@ -270,7 +263,6 @@ move_queue_progress (const Move_Queue * move_queue)
 
 
 /* And a mutator. */
-
 void
 move_queue_mark_current (Move_Queue * move_queue)
 {

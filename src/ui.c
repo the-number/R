@@ -478,6 +478,10 @@ request_rotation (struct move_data * data)
   if (move_queue == NULL)
     move_queue = new_move_queue ();
 
+  /* Insist upon 180 degree turns if the section is non-square */
+  if ( !cube_square_axis (the_cube, data->axis))
+    data->turns = 2;
+
   move_queue_push_current (move_queue, data);
 
   request_play ();
@@ -493,6 +497,10 @@ request_delayed_rotation (struct move_data * data)
 {
   if (move_queue == NULL)
     move_queue = new_move_queue ();
+
+  /* Insist upon 180 degree turns if the section is non-square */
+  if ( !cube_square_axis (the_cube, data->axis))
+    data->turns = 2;
 
   move_queue_push (move_queue, data);
 }
@@ -696,16 +704,15 @@ animate (gpointer data)
 
 float cursorAngle;
 
-/*
-This func is called whenever a new set of polygons have been selected.
-Call redisplay */
+/* 
+   This func is called whenever a new set of polygons have been selected.
+ */
 void
 selection_func (void)
 {
   GLfloat turn_axis[4];
 
   struct facet_selection *selection = 0;
-
 
   if (animation_in_progress)
     return;
@@ -727,8 +734,10 @@ selection_func (void)
 	=
 	the_cube->blocks[selection->block].transformation[12 +
 							  pending_movement.axis];
-
+      
+      /* Default to a turn of 90 degrees */
       pending_movement.turns = 1;
+
 
       /* Here we take the orientation of the selected quadrant and multiply it
          by the projection matrix.  The result gives us the angle (on the screen)
