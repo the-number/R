@@ -38,7 +38,6 @@
 extern int frameQty;
 
 static int new_frameQty;
-static int new_dim;
 
 static void set_lighting (GtkToggleButton * b, gpointer user_data);
 
@@ -175,6 +174,7 @@ toggle_regular (GtkToggleButton *button, gpointer data)
 static struct preferences_state *
 create_dimension_widget (GtkContainer *parent)
 {
+  gint i;
   GtkWidget *label = gtk_label_new (_("Size of cube:"));
 
   GtkWidget *hbox = gtk_hbox_new (FALSE, BOX_PADDING);
@@ -198,7 +198,9 @@ create_dimension_widget (GtkContainer *parent)
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
 
-  new_dim = cube_get_size (the_cube, 0);
+  for (i = 0; i < 3; ++i)
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps->entry[i]),
+			       cube_get_size (the_cube, i)),
 
   gtk_widget_show_all (hbox);
 
@@ -327,10 +329,22 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
 
   if (response == GTK_RESPONSE_ACCEPT)
     {
+      gboolean new_size = FALSE;
+      int i;
       if (new_values)
 	frameQty = new_frameQty;
+      
+      for (i = 0; i < 3; ++i)
+	{
+	  if ( cube_get_size (the_cube, i) != 
+	       gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[i])))
+	    {
+	      new_size = TRUE;
+	      break;
+	    }
+	}
 
-      if (new_dim == cube_get_size (the_cube, 0) || confirm_preferences (toplevel))
+      if (new_size && confirm_preferences (toplevel))
 	{
 	  request_new_game (NULL, ps);
 	}
