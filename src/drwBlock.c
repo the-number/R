@@ -76,7 +76,7 @@ static GLfloat colors[][3] = {
 };
 
 
-static void draw_face (GLint face, int block_id);
+static void draw_face (GLint face, int block_id, GLboolean draw_names);
 
 /* this macro produces +1 if i is even. -1 if i is odd */
 /* We use it to transform the faces of the block from zero,  to the
@@ -85,7 +85,7 @@ static void draw_face (GLint face, int block_id);
 
 /*  render the block pointed to by attrib. */
 void
-draw_block (int block_id)
+draw_block (int block_id, GLboolean ancilliary)
 {
   int i;
 
@@ -130,7 +130,7 @@ draw_block (int block_id)
       if (get_visible_faces (the_cube, block_id) & mask)
 	{
 	  glLoadName (i);
-	  draw_face (i, block_id);
+	  draw_face (i, block_id, ancilliary);
 	}
 
       glPopMatrix ();
@@ -140,9 +140,11 @@ draw_block (int block_id)
 }  /* end block */
 
 
-/* render the face,  with a specified fill,  and outline colour */
+/* render FACE of BLOCK_ID.
+   If DRAW_NAMES is true, the render the ancillary polygons used for selection.
+ */
 static void
-draw_face (GLint face, int block_id)
+draw_face (GLint face, int block_id, GLboolean draw_names)
 {
   point p1;
   point p2;
@@ -154,12 +156,6 @@ draw_face (GLint face, int block_id)
      coloured. That is,  covered by a sticky label */
   const GLfloat lratio = 0.9;
 
-  /* the dead zone is the space on the square,  which pointing to with
-     the mouse will not change the selection.  This gives a bit of
-     histeresis,  and makes it easier to use. */
-  const GLfloat deadZone = 0.02;
-  const GLfloat limit1 = (1 - deadZone);
-  const GLfloat limit2 = (1 - 2 * deadZone);
 
   centre_point[3] = 1.0;
 
@@ -167,113 +163,120 @@ draw_face (GLint face, int block_id)
      he thing is constructed from */
   glColor3fv (colors[COL_BLACK]);
 
-  /* This polygon is drawn as four quadrants,  thus:
-     _______
-     |\     /|
-     | \   / |
-     |  \ /  |
-     |   \   |
-     |  / \  |
-     | /   \ |
-     |/____ \|
+  if (draw_names)
+    {
+      /* the dead zone is the space on the square,  which pointing to with
+	 the mouse will not change the selection.  This gives a bit of
+	 histeresis,  and makes it easier to use. */
+      const GLfloat deadZone = 0.02;
+      const GLfloat limit1 = (1 - deadZone);
+      const GLfloat limit2 = (1 - 2 * deadZone);
 
-     The reason for this is to provide support for an enhanced selection
-     mechanism which can detect which edge of the face is being pointed to.
-   */
+      /* This polygon is drawn as four quadrants,  thus:
+	 _______
+	 |\     /|
+	 | \   / |
+	 |  \ /  |
+	 |   \   |
+	 |  / \  |
+	 | /   \ |
+	 |/____ \|
+
+	 The reason for this is to provide support for an enhanced selection
+	 mechanism which can detect which edge of the face is being pointed to.
+      */
+
+      p1[0] = 0;
+      p1[1] = 0;
+      p1[2] = 0;
+      p1[3] = 1;
+      p2[0] = 0;
+      p2[1] = 0;
+      p2[2] = 1;
+      p2[3] = 1;
+
+      vector_from_points (p2, p1, v);
+      set_normal_vector (the_cube, block_id, face, v);
+
+      glPushName (0);
+
+      p1[0] = -deadZone;
+      p1[1] = 0;
+      p1[2] = 0;
+      p1[3] = 1;
+      p2[0] = -limit1;
+      p2[1] = 0;
+      p2[2] = 0;
+      p2[3] = 1;
+
+      glBegin (GL_POLYGON);
+      glVertex3fv (p1);
+      glVertex3d (-limit1, limit2, 0);
+      glVertex3d (-limit1, -limit2, 0);
+      glEnd ();
+
+      vector_from_points (p2, p1, v);
+      set_quadrant_vector (the_cube, block_id, face, 0, v);
+
+      glLoadName (1);
+
+      p1[0] = 0;
+      p1[1] = -deadZone;
+      p1[2] = 0;
+      p2[0] = 0;
+      p2[1] = limit1;
+      p2[2] = 0;
+
+      glBegin (GL_POLYGON);
+      glVertex3fv (p1);
+      glVertex3d (limit2, limit1, 0);
+      glVertex3d (-limit2, limit1, 0);
+      glEnd ();
+
+      vector_from_points (p2, p1, v);
+      set_quadrant_vector (the_cube, block_id, face, 1, v);
+
+      glLoadName (2);
+
+      p1[0] = deadZone;
+      p1[1] = 0;
+      p1[2] = 0;
+      p2[0] = limit1;
+      p2[1] = 0;
+      p2[2] = 0;
+
+      glBegin (GL_POLYGON);
+      glVertex3fv (p1);
+      glVertex3d (limit1, -limit2, 0);
+      glVertex3d (limit1, limit2, 0);
+      glEnd ();
+
+      vector_from_points (p2, p1, v);
+      set_quadrant_vector (the_cube, block_id, face, 2, v);
+
+      glLoadName (3);
 
 
-  p1[0] = 0;
-  p1[1] = 0;
-  p1[2] = 0;
-  p1[3] = 1;
-  p2[0] = 0;
-  p2[1] = 0;
-  p2[2] = 1;
-  p2[3] = 1;
+      p1[0] = 0;
+      p1[1] = deadZone;
+      p1[2] = 0;
+      p2[0] = 0;
+      p2[1] = -limit1;
+      p2[2] = 0;
 
-  vector_from_points (p2, p1, v);
-  set_normal_vector (the_cube, block_id, face, v);
+      glBegin (GL_POLYGON);
+      {
+	glVertex3d (0, -deadZone, 0);
+	glVertex3fv (p1);
+	glVertex3d (-limit2, -limit1, 0);
+	glVertex3d (limit2, -limit1, 0);
+      }
+      glEnd ();
+      glPopName ();
 
-  glPushName (0);
-
-  p1[0] = -deadZone;
-  p1[1] = 0;
-  p1[2] = 0;
-  p1[3] = 1;
-  p2[0] = -limit1;
-  p2[1] = 0;
-  p2[2] = 0;
-  p2[3] = 1;
-
-
-  glBegin (GL_POLYGON);
-  glVertex3fv (p1);
-  glVertex3d (-limit1, limit2, 0);
-  glVertex3d (-limit1, -limit2, 0);
-  glEnd ();
-
-  vector_from_points (p2, p1, v);
-  set_quadrant_vector (the_cube, block_id, face, 0, v);
-
-  glLoadName (1);
-
-  p1[0] = 0;
-  p1[1] = -deadZone;
-  p1[2] = 0;
-  p2[0] = 0;
-  p2[1] = limit1;
-  p2[2] = 0;
-
-  glBegin (GL_POLYGON);
-  glVertex3fv (p1);
-  glVertex3d (limit2, limit1, 0);
-  glVertex3d (-limit2, limit1, 0);
-  glEnd ();
-
-  vector_from_points (p2, p1, v);
-  set_quadrant_vector (the_cube, block_id, face, 1, v);
-
-  glLoadName (2);
-
-  p1[0] = deadZone;
-  p1[1] = 0;
-  p1[2] = 0;
-  p2[0] = limit1;
-  p2[1] = 0;
-  p2[2] = 0;
-
-  glBegin (GL_POLYGON);
-  glVertex3fv (p1);
-  glVertex3d (limit1, -limit2, 0);
-  glVertex3d (limit1, limit2, 0);
-  glEnd ();
-
-  vector_from_points (p2, p1, v);
-  set_quadrant_vector (the_cube, block_id, face, 2, v);
-
-  glLoadName (3);
-
-
-  p1[0] = 0;
-  p1[1] = deadZone;
-  p1[2] = 0;
-  p2[0] = 0;
-  p2[1] = -limit1;
-  p2[2] = 0;
-
-  glBegin (GL_POLYGON);
-  {
-    glVertex3d (0, -deadZone, 0);
-    glVertex3fv (p1);
-    glVertex3d (-limit2, -limit1, 0);
-    glVertex3d (limit2, -limit1, 0);
-  }
-  glEnd ();
-  glPopName ();
-
-  vector_from_points (p2, p1, v);
-  set_quadrant_vector (the_cube, block_id, face, 3, v);
-
+      vector_from_points (p2, p1, v);
+      set_quadrant_vector (the_cube, block_id, face, 3, v);
+    }
 
   if (!(face % 2))
     {

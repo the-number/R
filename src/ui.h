@@ -43,7 +43,7 @@ void selection_func (void);
 void arrows (t_keysym keysym, int shifted);
 void mouse (int button);
 int vector2axis (GLfloat *vector);
-void drawCube (void);
+void drawCube (GLboolean anc);
 
 /* 
 void request_stop (void);

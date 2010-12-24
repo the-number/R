@@ -438,7 +438,7 @@ render_scene (GLint jitter)
   modelViewInit ();
   ERR_CHECK ("Error in display");
 
-  drawCube ();
+  drawCube (FALSE);
   ERR_CHECK ("Error in display");
 }
 

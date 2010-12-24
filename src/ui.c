@@ -225,8 +225,9 @@ getTurnAxis (struct facet_selection *items, GLfloat * vector)
 
 /* render the cube */
 void
-drawCube (void)
+drawCube (GLboolean ancilliary)
 {
+  g_print ("%s %d\n", __FUNCTION__, ancilliary);
   int i;
 
 #if DEBUG
@@ -331,7 +332,7 @@ drawCube (void)
 	glMultMatrixf (M);
 
 	/* and draw the block */
-	draw_block (i);
+	draw_block (i, ancilliary);
 	glPopMatrix ();
 
       }

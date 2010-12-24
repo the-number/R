@@ -219,7 +219,7 @@ pickPolygons (struct cublet_selection *cs)
 
   perspectiveSet ();
   modelViewInit ();
-  drawCube ();
+  drawCube (TRUE);
   glMatrixMode (GL_PROJECTION);
   glPopMatrix ();
 
