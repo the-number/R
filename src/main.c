@@ -59,6 +59,39 @@ extern struct animation animation;
 
 struct cublet_selection *the_cublet_selection;
 
+static gboolean
+on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+  struct cublet_selection *cs = data;
+
+  if (event->type == GDK_ENTER_NOTIFY)
+    select_enable (cs);
+
+  if (event->type == GDK_LEAVE_NOTIFY)
+    select_disable (cs);
+
+  return TRUE;
+}
+
+static gboolean
+enable_selection  (GtkWidget *widget, GdkEventExpose *event, gpointer data)
+{
+  int x, y;
+  gtk_widget_get_pointer (widget, &x, &y);
+
+  struct cublet_selection *cs = data;
+  GdkRectangle area = event->area;
+
+
+  if ( x < area.x || y < area.y || x >= area.x + area.width || y >= area.y + area.height )
+    select_disable (cs);
+  else
+    select_enable (cs);
+
+  return TRUE;
+}
+
+
 static void
 c_main (void *closure, int argc, char *argv[])
 {
@@ -116,7 +149,7 @@ c_main (void *closure, int argc, char *argv[])
 
   g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), 0);
 
-  g_signal_connect (glxarea, "expose_event", G_CALLBACK (on_expose), 0);
+  g_signal_connect (glxarea, "expose-event", G_CALLBACK (on_expose), 0);
 
   g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize_viewport), 0);
 
@@ -141,6 +174,18 @@ c_main (void *closure, int argc, char *argv[])
 
   g_signal_connect (glxarea, "scroll_event",
 		    G_CALLBACK (z_rotate), 0);
+
+  g_signal_connect (glxarea, "expose-event",
+		    G_CALLBACK (enable_selection), the_cublet_selection);
+
+  g_signal_connect (glxarea, "enter-notify-event",
+		    G_CALLBACK (on_crossing), the_cublet_selection);
+
+  g_signal_connect (glxarea, "leave-notify-event",
+		    G_CALLBACK (on_crossing), the_cublet_selection);
+
+  g_signal_connect (glxarea, "enter-notify-event",
+		    G_CALLBACK (on_crossing), the_cublet_selection);
 
   g_signal_connect (glxarea, "button_press_event",
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);

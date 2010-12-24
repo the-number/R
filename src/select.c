@@ -98,7 +98,8 @@ select_create (GtkWidget *rendering, int holdoff,
 void
 select_disable (struct cublet_selection *cs)
 {
-  g_source_remove (cs->timer);
+  if (cs->timer)
+    g_source_remove (cs->timer);
   cs->timer = 0;
 }
 

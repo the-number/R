@@ -246,10 +246,11 @@ error_check (const char *file, int line_no, const char *string)
 
 
 /* Expose callback.  Just redraw the scene */
-void
+gboolean
 on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 {
   postRedisplay ();
+  return FALSE;
 }
 
 
