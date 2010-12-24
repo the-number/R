@@ -51,7 +51,7 @@ int get_widget_height (GtkWidget *w);
 
 
 /* Identify the block at screen co-ordinates x,  y */
-struct facet_selection *pickPolygons (struct cublet_selection *, int x, int y);
+struct facet_selection *pickPolygons (struct cublet_selection *);
 
 
 /* returns true if a block has been selected */

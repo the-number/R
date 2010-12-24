@@ -187,7 +187,7 @@ struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
    then calls choose_items,  to determine which of them is closest to the screen.
 */
 struct facet_selection *
-pickPolygons (struct cublet_selection *cs, int x, int y)
+pickPolygons (struct cublet_selection *cs)
 {
   GLint height;
 
@@ -212,7 +212,7 @@ pickPolygons (struct cublet_selection *cs, int x, int y)
 
   glGetIntegerv (GL_VIEWPORT, viewport);
 
-  gluPickMatrix ((GLdouble) x, (GLdouble) (height - y),
+  gluPickMatrix ((GLdouble) cs->mouse_x, (GLdouble) (height - cs->mouse_y),
 		 cs->granularity, cs->granularity, viewport);
 
 
@@ -309,7 +309,7 @@ selectedItems (const struct cublet_selection *cs)
 void
 updateSelection (struct cublet_selection *cs)
 {
-  cs->current_selection = pickPolygons (cs, cs->mouse_x, cs->mouse_y);
+  cs->current_selection = pickPolygons (cs);
 
   if (cs->action)
     cs->action ();
