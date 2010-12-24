@@ -266,7 +266,7 @@ rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice
 
  
   /* Rotating backward 90 deg is the same as forward by 270 deg */
-  if (dir == 1 && turns == 1)
+  if (dir == 0 && turns == 1)
     turns = 3;
 
   /* ... and then assigning values to the active elements. */

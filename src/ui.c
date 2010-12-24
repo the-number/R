@@ -380,12 +380,13 @@ mouse (int button)
       /* Make a move */
       if (itemIsSelected (the_cublet_selection))
 	{
-	  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, pending_movement.axis);
+	  g_print ("%s:%d Axis: %d; Direction: %d\n", __FILE__, __LINE__,
+		   pending_movement.axis,
+		   pending_movement.dir);
 
 	  /* Insist upon 180 degree turns if the section is non-square */
 	  if ( !cube_square_axis (the_cube, pending_movement.axis))
 	    pending_movement.turns = 2;
-
 
 	  animate_rotation (&pending_movement);
 	}
@@ -401,7 +402,6 @@ mouse (int button)
 static void
 animate_rotation (struct move_data *data)
 {
-  
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
   g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, data->axis);
@@ -451,6 +451,8 @@ animate (gpointer data)
       enum Cube_Status status;
 
       animation_angle = 0.0;
+
+      g_print ("Finished Dir: %d\n", md->dir);
 
       /* and tell the blocks.c library that a move has taken place */
       rotate_slice (the_cube, md->turns, md->dir, blocks_in_motion);
@@ -508,8 +510,6 @@ float cursorAngle;
 void
 selection_func (void)
 {
-  GLfloat turn_axis[4];
-
   struct facet_selection *selection = 0;
 
   if (animation_in_progress)
@@ -517,17 +517,20 @@ selection_func (void)
 
   if (0 != (selection = selectedItems (the_cublet_selection)))
     {
+      GLfloat turn_axis[4];
       vector v;
 
       getTurnAxis (selection, turn_axis);
+      pending_movement.axis = vector2axis (turn_axis);
+
 
       pending_movement.dir = turnDir (turn_axis);
       if (inverted_rotation)
 	pending_movement.dir = !pending_movement.dir;
 
-      pending_movement.axis = vector2axis (turn_axis);
-
-      g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, pending_movement.axis);
+      g_print ("%s:%d Axis %d; Dir %d\n", __FILE__, __LINE__,
+	       pending_movement.axis,
+	       pending_movement.dir);
 
       /* !!!!!! We are accessing private cube data. */
       pending_movement.slice
