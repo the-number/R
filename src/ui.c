@@ -55,9 +55,6 @@ static void animate_rotation (struct move_data * data);
 static struct move_data pending_movement = { -1, -1, -1, 0 };
 
 
-static int selectionIsValid = 0;
-
-
 extern Quarternion cube_view;
 
 
@@ -537,13 +534,11 @@ selection_func (void)
 	cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }
 
-      selectionIsValid = 1;
     }
   else
     {
       pending_movement.dir = -1;
       pending_movement.axis = -1;
-      selectionIsValid = 0;
     }
 
   inverted_rotation = 0;
