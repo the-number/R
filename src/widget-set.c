@@ -19,7 +19,6 @@
 #include <config.h>
 
 #include "widget-set.h"
-#include "move-queue.h"
 #include "ui.h"
 #include "dialogs.h"
 #include "guile-hooks.h"
@@ -34,7 +33,7 @@
 
 
 static GtkWidget *statusbar;
-extern Move_Queue *move_queue;
+
 #define MSGLEN 100
 void
 update_statusbar (void)

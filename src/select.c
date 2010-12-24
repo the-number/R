@@ -135,7 +135,7 @@ gboolean
 UnsetMotion (gpointer data)
 {
   struct cublet_selection *cs = data;
-  g_print ("%s %p\n", __FUNCTION__, data);
+
   if (cs->motion == FALSE)
     {				/* if not moved since last time */
 

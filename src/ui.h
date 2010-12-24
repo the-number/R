@@ -22,11 +22,17 @@
 #include <GL/gl.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "move-queue.h"
 
 extern int frameQty;
 
-
+/* A structure containing information about a movement taking place. */
+struct move_data
+{
+  int slice;
+  short dir;   /* 0 = cw, 1 = ccw */
+  short axis;  /* [0,2] */
+  short turns; /* Normally 1 or 2 */
+};
 
 typedef guint t_keysym;
 
@@ -39,6 +45,7 @@ void mouse (int button);
 int vector2axis (GLfloat *vector);
 void drawCube (void);
 
+/* 
 void request_stop (void);
 void request_play (void);
 void request_forward (void);
@@ -50,6 +57,7 @@ void request_queue_rewind (void);
 void request_fast_forward (void);
 
 void request_rotation (struct move_data *data);
+*/
 
 /* Rotate the cube about the axis (screen relative) in direction dir */
 void rotate_cube (int axis, int dir);

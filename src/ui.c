@@ -53,26 +53,6 @@ int frameQty = 2;
 static int inverted_rotation = 0;
 
 
-Move_Queue *move_queue = 0;
-
-
-/* The move taking place NOW */
-static struct _Current_Movement
-{
-  struct move_data move_data;
-  int stop_requested;
-}
-current_movement;
-
-
-/* Toolbar callback. The stop will happen when the current animation
-   completes. */
-void
-request_stop ()
-{
-  current_movement.stop_requested = 1;
-}
-
 
 static void animate_rotation (struct move_data * data);
 
@@ -322,10 +302,10 @@ drawCube (void)
 	  GLdouble angle = animation_angle;
 
 	  int unity = 1;
-	  if (!current_movement.move_data.dir)
+	  if (!pending_movement.dir)
 	    unity = -1;
 
-	  switch (current_movement.move_data.axis)
+	  switch (pending_movement.axis)
 	    {
 	    case 0:
 	    case 3:
@@ -399,7 +379,14 @@ mouse (int button)
       /* Make a move */
       if (itemIsSelected (the_cublet_selection))
 	{
-	  request_rotation (&pending_movement);
+	  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, pending_movement.axis);
+
+	  /* Insist upon 180 degree turns if the section is non-square */
+	  if ( !cube_square_axis (the_cube, pending_movement.axis))
+	    pending_movement.turns = 2;
+
+
+	  animate_rotation (&pending_movement);
 	}
 
       postRedisplay ();
@@ -409,211 +396,14 @@ mouse (int button)
 }
 
 
-
-/* Toolbar callback. Use stop_requested to ensure that only one step occurs. */
-
-void
-request_back ()
-{
-  if (!animation_in_progress && move_queue && move_queue_retard (move_queue))
-    {
-      current_movement.stop_requested = 1;
-
-      struct move_data next_move;
-
-      memcpy (&next_move,
-	      move_queue_current (move_queue), sizeof (next_move));
-
-      next_move.dir = !next_move.dir;
-
-      animate_rotation (&next_move);
-    }
-}
-
-
-
-/* Internal functionality for the following two functions. */
-
-static void
-_request_play (int one_move)
-{
-  if (!animation_in_progress && move_queue && move_queue_current (move_queue))
-    {
-      current_movement.stop_requested = one_move;
-
-      struct move_data next_move;
-
-      memcpy (&next_move,
-	      move_queue_current (move_queue), sizeof (next_move));
-
-      move_queue_advance (move_queue);
-
-      animate_rotation (&next_move);
-    }
-}
-
-
-/* Toolbar `play' callback. */
-void
-request_play ()
-{
-  _request_play (0);
-}
-
-/* Toolbar `forward' callback. */
-void
-request_forward ()
-{
-  _request_play (1);
-}
-
-
-
-/* The usual rotation request,  called when user uses mouse to rotate the cube by
-   hand. The move is put into the `current' place,  and all the moves in the
-   move_queue afterwards are zapped. */
-void
-request_rotation (struct move_data * data)
-{
-  if (move_queue == NULL)
-    move_queue = new_move_queue ();
-
-  /* Insist upon 180 degree turns if the section is non-square */
-  if ( !cube_square_axis (the_cube, data->axis))
-    data->turns = 2;
-
-  move_queue_push_current (move_queue, data);
-
-  request_play ();
-}
-
-
-/* The rotation request called from script-fu. In this case the moves are
-   appended to the move_queue,  so the script can race ahead and work out the
-   moves,  leaving the graphics to catch up later. */
-
-void
-request_delayed_rotation (struct move_data * data)
-{
-  if (move_queue == NULL)
-    move_queue = new_move_queue ();
-
-  /* Insist upon 180 degree turns if the section is non-square */
-  if ( !cube_square_axis (the_cube, data->axis))
-    data->turns = 2;
-
-  move_queue_push (move_queue, data);
-}
-
-
-
-
-/* Script-fu calls this function on startup,  and then the above function as each
-   move is computed. This way,  the moves computed are appended to the move_queue
-   from the current point forwards (and forward data that was on the queue is
-   discarded). */
-
-void
-request_truncate_move_queue ()
-{
-  if (move_queue)
-    move_queue_truncate (move_queue);
-}
-
-
-
-/* Toolbar callback. */
-
-void
-request_mark_move_queue ()
-{
-  if (move_queue)
-    move_queue_mark_current (move_queue);
-}
-
-
-
-
-/* Toolbar callback. All the moves take place on the_cube,  not via the animation
-   routines,  so the effect is to unwind the queue instantaneously. */
-
-void
-request_queue_rewind ()
-{
-  int mark_result;
-  Slice_Blocks *blocks;
-  const struct move_data *move_data;
-
-  if (!move_queue)
-    return;
-
-  do
-    {
-      if ((mark_result = move_queue_retard (move_queue)) == 0)
-	break;
-
-      if ((move_data = move_queue_current (move_queue)) != NULL)
-	{
-	  blocks = identify_blocks_2 (the_cube,
-				      move_data->slice, move_data->axis);
-
-	  rotate_slice (the_cube, move_data->turns, move_data->dir, blocks);
-
-	  free_slice_blocks (blocks);
-	}
-    }
-  while (mark_result == 1);
-
-
-  postRedisplay ();
-  set_toolbar_state ((move_queue_progress (move_queue).current == 0
-		      ? 0 : PLAY_TOOLBAR_BACK)
-		     |
-		     (move_queue_current (move_queue)
-		      ? PLAY_TOOLBAR_PLAY : 0));
-
-  update_statusbar ();
-}
-
-
-/* Script callback. */
-void
-request_fast_forward ()
-{
-  const struct move_data *move_data;
-  Slice_Blocks *blocks;
-
-  if (!move_queue)
-    return;
-
-  for (move_data = move_queue_current (move_queue);
-       move_data != NULL;
-       move_data = (move_queue_advance (move_queue),
-		    move_queue_current (move_queue)))
-    {
-      blocks = identify_blocks_2 (the_cube,
-				  move_data->slice, move_data->axis);
-
-      rotate_slice (the_cube, move_data->turns, move_data->dir, blocks);
-
-      free_slice_blocks (blocks);
-    }
-
-  postRedisplay ();
-  set_toolbar_state (PLAY_TOOLBAR_BACK);
-  update_statusbar ();
-}
-
-
-
 /* Does exactly what it says on the tin :-) */
-
 static void
-animate_rotation (struct move_data * data)
+animate_rotation (struct move_data *data)
 {
-  memmove (&current_movement.move_data, data, sizeof (*data));
-
+  
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
+
+  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, data->axis);
 
   assert (blocks_in_motion);
 
@@ -621,7 +411,7 @@ animate_rotation (struct move_data * data)
 
   set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  g_timeout_add (picture_rate, animate, &current_movement);
+  g_timeout_add (picture_rate, animate, data);
 }
 
 
@@ -636,7 +426,9 @@ abort_animation (void)
 static gboolean 
 animate (gpointer data)
 {
-  struct _Current_Movement *md = data;
+  struct move_data *md = data;
+
+  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, md->axis);
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (frameQty + 1);
@@ -647,7 +439,7 @@ animate (gpointer data)
   /* and redraw it */
   postRedisplay ();
 
-  if (fabs (animation_angle) < 90.0 * md->move_data.turns && !abort_requested)
+  if (fabs (animation_angle) < 90.0 * md->turns && !abort_requested)
     {
       /* call this timeout again */
       g_timeout_add (picture_rate, animate, data);
@@ -660,18 +452,20 @@ animate (gpointer data)
       animation_angle = 0.0;
 
       /* and tell the blocks.c library that a move has taken place */
-      rotate_slice (the_cube, md->move_data.turns, md->move_data.dir, blocks_in_motion);
+      rotate_slice (the_cube, md->turns, md->dir, blocks_in_motion);
 
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;
 
       animation_in_progress = 0;
 
+#if 0
       set_toolbar_state ((move_queue_progress (move_queue).current == 0
 			  ? 0 : PLAY_TOOLBAR_BACK)
 			 |
 			 (move_queue_current (move_queue)
 			  ? PLAY_TOOLBAR_PLAY : 0));
+#endif
 
       update_statusbar ();
       updateSelection (the_cublet_selection);
@@ -685,17 +479,20 @@ animate (gpointer data)
       /* If there are more animations in the queue,  go again unless a stop has
          been requested. */
 
+#if 0
       if (md->stop_requested)
-	md->stop_requested = 0;
-
-
-      else if (move_queue_current (move_queue))
+	{
+	  md->stop_requested = 0;
+	}
+      else 
+	if (move_queue_current (move_queue))
 	{
 	  memmove (&md->move_data,
 		  move_queue_current (move_queue), sizeof (md->move_data));
 	  move_queue_advance (move_queue);
 	  animate_rotation (&md->move_data);
 	}
+#endif
     }
 
   return FALSE;
@@ -728,6 +525,8 @@ selection_func (void)
 	pending_movement.dir = !pending_movement.dir;
 
       pending_movement.axis = vector2axis (turn_axis);
+
+      g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, pending_movement.axis);
 
       /* !!!!!! We are accessing private cube data. */
       pending_movement.slice
