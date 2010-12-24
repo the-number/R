@@ -67,6 +67,7 @@ update_statusbar (void)
 void
 declare_win (const struct cube *cube)
 {
+#if WIDGETS_NOT_DISABLED
   static int context = 0;
 
   static guint mesg_id = 0;
@@ -98,6 +99,7 @@ declare_win (const struct cube *cube)
     }
 
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
+#endif
 }
 
 #if WIDGETS_NOT_DISABLED
