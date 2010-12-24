@@ -46,13 +46,19 @@ typedef void display (GtkWidget *);
 static void display_anti_alias (GtkWidget * glxarea);
 static void display_raw (GtkWidget * glxarea);
 
-static display *display_func = NULL;
-
-
 static gboolean handleRedisplay (gpointer glxarea);
 
 
-static GtkWidget *glwidget;
+struct display_context 
+{
+  gboolean redisplayPending;
+  display *display_func;
+  GtkWidget *glwidget;
+  guint idle_id;
+};
+
+static struct display_context dc;
+
 
 void
 re_initialize_glarea (void)
@@ -169,7 +175,7 @@ create_gl_area (void)
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 #endif
 
-  glwidget = glxarea;
+  dc.glwidget = glxarea;
 
   return glxarea;
 }
@@ -197,17 +203,17 @@ on_realize (GtkWidget *w, gpointer data)
 }
 
 
-static gboolean redisplayPending = FALSE;
 
-static guint idle_id;
+
+
 
 void
 postRedisplay (void)
 {
-  if (display_func == NULL)
+  if (dc.display_func == NULL)
     {
-      GdkGLContext *glcontext = gtk_widget_get_gl_context (glwidget);
-      GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glwidget);
+      GdkGLContext *glcontext = gtk_widget_get_gl_context (dc.glwidget);
+      GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc.glwidget);
 
       if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
 	{
@@ -216,16 +222,16 @@ postRedisplay (void)
 	}
 
       if (have_accumulation_buffer ())
-	display_func = display_anti_alias;
+	dc.display_func = display_anti_alias;
       else
-	display_func = display_raw;
+	dc.display_func = display_raw;
     }
 
-  if (!redisplayPending)
+  if (!dc.redisplayPending)
     {
-      idle_id = g_idle_add (handleRedisplay, glwidget);
+      dc.idle_id = g_idle_add (handleRedisplay, dc.glwidget);
 
-      redisplayPending = TRUE;
+      dc.redisplayPending = TRUE;
     }
 }
 
@@ -360,10 +366,10 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 static gboolean
 handleRedisplay (gpointer glxarea)
 {
-  display_func (GTK_WIDGET (glxarea));
-  redisplayPending = FALSE;
+  dc.display_func (GTK_WIDGET (glxarea));
+  dc.redisplayPending = FALSE;
 
-  g_source_remove (idle_id);
+  g_source_remove (dc.idle_id);
 
   return TRUE;
 }
