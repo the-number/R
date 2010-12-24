@@ -76,18 +76,16 @@ static GLfloat colors[][3] = {
 };
 
 
-static void draw_face (GLint face, GLint col_outline, int block_id);
+static void draw_face (GLint face, int block_id);
 
 /* this macro produces +1 if i is even. -1 if i is odd */
 /* We use it to transform the faces of the block from zero,  to the
    appropriate place */
 #define SHIFT(i) ((i%2) * 2 -1)
 
-/*  render the block pointed to by attrib.
-    if highlight is true,  then the outline is white,
-    otherwise it is black */
+/*  render the block pointed to by attrib. */
 void
-draw_block (GLboolean highlight, int block_id)
+draw_block (int block_id)
 {
   int i;
 
@@ -132,7 +130,7 @@ draw_block (GLboolean highlight, int block_id)
       if (get_visible_faces (the_cube, block_id) & mask)
 	{
 	  glLoadName (i);
-	  draw_face (i, (highlight ? COL_WHITE : COL_BLACK), block_id);
+	  draw_face (i, block_id);
 	}
 
       glPopMatrix ();
@@ -144,7 +142,7 @@ draw_block (GLboolean highlight, int block_id)
 
 /* render the face,  with a specified fill,  and outline colour */
 static void
-draw_face (GLint face, GLint col_outline, int block_id)
+draw_face (GLint face, int block_id)
 {
   point p1;
   point p2;
@@ -167,7 +165,7 @@ draw_face (GLint face, GLint col_outline, int block_id)
 
   /* First Draw the surface of the cube,  that is the plastic material
      he thing is constructed from */
-  glColor3fv (colors[col_outline]);
+  glColor3fv (colors[COL_BLACK]);
 
   /* This polygon is drawn as four quadrants,  thus:
      _______

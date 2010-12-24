@@ -331,7 +331,7 @@ drawCube (void)
 	glMultMatrixf (M);
 
 	/* and draw the block */
-	draw_block (0, i);
+	draw_block (i);
 	glPopMatrix ();
 
       }

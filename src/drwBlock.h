@@ -25,7 +25,7 @@
 /* The texture names for each face */
 extern struct pattern_parameters face_patterns[6];
 
-void draw_block (GLboolean highlight, int block_id);
+void draw_block (int block_id);
 
 void setColour (int i, GLfloat red, GLfloat green, GLfloat blue);
 
