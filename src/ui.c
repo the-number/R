@@ -397,7 +397,7 @@ mouse (int button)
       break;
     case 1:
       /* Make a move */
-      if (itemIsSelected ())
+      if (itemIsSelected (the_cublet_selection))
 	{
 	  request_rotation (&pending_movement);
 	}
@@ -674,7 +674,7 @@ animate (gpointer data)
 			  ? PLAY_TOOLBAR_PLAY : 0));
 
       update_statusbar ();
-      updateSelection ();
+      updateSelection (the_cublet_selection);
 
       if (NOT_SOLVED != (status = cube_get_status (the_cube)))
 	declare_win (the_cube);
@@ -717,7 +717,7 @@ selection_func (void)
   if (animation_in_progress)
     return;
 
-  if (0 != (selection = selectedItems ()))
+  if (0 != (selection = selectedItems (the_cublet_selection)))
     {
       vector v;
 

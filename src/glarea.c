@@ -247,7 +247,7 @@ error_check (const char *file, int line_no, const char *string)
 
 /* Expose callback.  Just redraw the scene */
 void
-on_expose (GtkWidget * w, GdkEventExpose * event)
+on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 {
   postRedisplay ();
 }
@@ -259,7 +259,7 @@ static gboolean button_down = FALSE;
 
 /* Rotate the cube about the z axis (relative to the viewer ) */
 gboolean
-z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer data)
+z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
 
   rotate_cube (2, !event->direction);
@@ -269,17 +269,15 @@ z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer data)
 
 /* Record the state of button 1 */
 gboolean
-on_button_press_release (GtkWidget *w, GdkEventButton * event, gpointer data)
+on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
-
+  struct cublet_selection *cs = data;
   /* In GTK1-2,  buttons 4 and 5 mean mouse wheel scrolling */
   if (event->button == 4)
     rotate_cube (2, 1);
 
   if (event->button == 5)
     rotate_cube (2, 0);
-
-
 
   if (event->button != 1)
     return FALSE;
@@ -288,11 +286,11 @@ on_button_press_release (GtkWidget *w, GdkEventButton * event, gpointer data)
   if (event->type == GDK_BUTTON_PRESS)
     {
       button_down = TRUE;
-      disableSelection ();
+      disableSelection (cs);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
-      enableSelection ();
+      enableSelection (cs);
       button_down = FALSE;
     }
 
@@ -301,24 +299,19 @@ on_button_press_release (GtkWidget *w, GdkEventButton * event, gpointer data)
 
 
 gboolean
-cube_orientate_mouse (GtkWidget *w,
-		      GdkEventMotion * event, gpointer data)
+cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
 {
-
   static gdouble last_mouse_x = -1;
   static gdouble last_mouse_y = -1;
 
   gint xmotion = 0;
   gint ymotion = 0;
 
-
-
   if (!button_down)
     return FALSE;
 
-  if (itemIsSelected ())
+  if (itemIsSelected (the_cublet_selection))
     return FALSE;
-
 
   if (last_mouse_x >= 0)
     xmotion = event->x - last_mouse_x;
@@ -344,7 +337,7 @@ cube_orientate_mouse (GtkWidget *w,
 }
 
 gboolean
-cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
+cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
   int shifted = 0;
 
@@ -407,7 +400,7 @@ set_mouse_cursor (GtkWidget * glxarea)
   GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
   GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
 
-  if (itemIsSelected ())
+  if (itemIsSelected (the_cublet_selection))
     {
       get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
 		  &hot_x, &hot_y);

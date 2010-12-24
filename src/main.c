@@ -56,6 +56,9 @@ struct application_options
 
 static struct application_options opts = { false, {3,3,3}};
 
+
+struct cublet_selection *the_cublet_selection;
+
 static void
 c_main (void *closure, int argc, char *argv[])
 {
@@ -107,6 +110,10 @@ c_main (void *closure, int argc, char *argv[])
 
   scene_init ();
 
+  /* initialise the selection mechanism */
+  the_cublet_selection = initSelection (glxarea, 50, 1, selection_func);
+
+
   g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), 0);
 
   g_signal_connect (glxarea, "expose_event", G_CALLBACK (on_expose), 0);
@@ -136,16 +143,14 @@ c_main (void *closure, int argc, char *argv[])
 		    G_CALLBACK (z_rotate), 0);
 
   g_signal_connect (glxarea, "button_press_event",
-		    G_CALLBACK (on_button_press_release), 0);
+		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
   g_signal_connect (glxarea, "button_release_event",
-		    G_CALLBACK (on_button_press_release), 0);
+		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
   g_signal_connect (glxarea, "button_press_event",
 		    G_CALLBACK (cube_controls), 0);
   
-  /* initialise the selection mechanism */
-  initSelection (glxarea, 50, 1, selection_func);
 
   gtk_widget_show_all (window);
 

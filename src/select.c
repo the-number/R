@@ -36,158 +36,88 @@ in the cube (if any) the cursor is located upon.
 #include <stdio.h>
 #include "ui.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 #include <assert.h>
-
-static int idle_threshold;
-static gboolean motion = FALSE;
-static gboolean Stop_Detected = FALSE;
-
-static int mouse_x = -1;
-static int mouse_y = -1;
-
-static double granularity = -1;
-static void (*action) (void);
-
-
 
 static gboolean detect_motion (GtkWidget * w,
 			       GdkEventMotion * event, gpointer user_data);
 
 static gboolean UnsetMotion (gpointer data);
 
+struct cublet_selection 
+{
+  guint timer;
+  void (*action) (void);
+  gint idle_threshold;
+  double granularity;
+  GtkWidget *glwidget;
 
-static gboolean enableDisableSelection (GtkWidget * w,
-					GdkEventCrossing * event,
-					gpointer data);
+  gboolean motion;
+  gboolean stop_detected;
 
-static GtkWidget *glxarea;
+  /* A copy of the last selection taken */
+  struct facet_selection *current_selection;
 
-
-static guint timer;
-
-/* is the selection mechanism necessary ? */
-static gboolean needSelection;
-
-
-
-
+  gint mouse_x;
+  gint mouse_y;
+};
 
 /* Initialise the selection mechanism.  Holdoff is the time for which
 the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. Do_this is a pointer to a function
 to be called when a new block is selected. */
-void
-initSelection (GtkWidget * rendering, int holdoff,
+struct cublet_selection *
+initSelection (GtkWidget *rendering, int holdoff,
 	       double precision, void (*do_this) (void))
 {
-  needSelection = FALSE;
-  idle_threshold = holdoff;
-  granularity = precision;
+  struct cublet_selection *cs = malloc (sizeof *cs);
+
+  cs->idle_threshold = holdoff;
+  cs->granularity = precision;
 
   g_signal_connect (rendering, "motion_notify_event",
-		    G_CALLBACK (detect_motion), 0);
+		    G_CALLBACK (detect_motion), cs);
 
-  action = do_this;
+  cs->action = do_this;
 
-  timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
+  cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 
-  /* Add a handler to for all those occasions when we don't need the
-     selection mechanism going */
+  cs->glwidget = rendering;
 
-  g_signal_connect (rendering, "enter-notify-event",
-		    G_CALLBACK (enableDisableSelection), 0);
-
-  g_signal_connect (rendering, "leave-notify-event",
-		    G_CALLBACK (enableDisableSelection), 0);
-
-
-  g_signal_connect (rendering, "visibility-notify-event",
-		    G_CALLBACK (enableDisableSelection), 0);
-
-
-  g_signal_connect (rendering, "unmap-event",
-		    G_CALLBACK (enableDisableSelection), 0);
-
-  glxarea = rendering;
+  return cs;
 }
 
 
 void
-disableSelection (void)
+disableSelection (struct cublet_selection *cs)
 {
-  g_source_remove (timer);
-  timer = 0;
+  g_source_remove (cs->timer);
+  cs->timer = 0;
 }
 
 void
-enableSelection (void)
+enableSelection (struct cublet_selection *cs)
 {
-  if (0 == timer)
-    timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
-
-  needSelection = TRUE;
+  if (0 == cs->timer)
+    cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 }
-
-
-/* When the window is not mapped,  kill the selection mechanism.  It wastes
-processor time */
-static gboolean
-enableDisableSelection (GtkWidget * w,
-			GdkEventCrossing * event, gpointer data)
-{
-  /* This is a kludge to work around a rather horrible bug;  for some
-     reason,  some  platforms emit a EnterNotify and LeaveNotify (in
-     that order) when animations occur.  This workaround makes sure
-     that the window is not `entered twice' */
-  static int entered = 0;
-
-
-  switch (event->type)
-    {
-
-    case GDK_ENTER_NOTIFY:
-      entered++;
-      needSelection = FALSE;
-      if (0 == timer)
-	timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
-
-      break;
-    case GDK_LEAVE_NOTIFY:
-      updateSelection ();
-      entered--;
-      if (entered > 0)
-	break;
-
-      needSelection = TRUE;
-      g_source_remove (timer);
-      timer = 0;
-
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
-}
-
-
-
 
 /* This callback occurs whenever the mouse is moving */
 static gboolean
-detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer user_data)
+detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer data)
 {
+  struct cublet_selection *cs = data;
 
   if (event->type != GDK_MOTION_NOTIFY)
     return FALSE;
 
-  mouse_x = event->x;
-  mouse_y = event->y;
+  cs->mouse_x = event->x;
+  cs->mouse_y = event->y;
 
-  motion = TRUE;
-  Stop_Detected = FALSE;
+  cs->motion = TRUE;
+  cs->stop_detected = FALSE;
 
   return FALSE;
 }
@@ -197,29 +127,29 @@ detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer user_data)
 
 
 /* This callback occurs at regular intervals.   The period is determined by
-idle_threshold.  It checks to see if the mouse has moved,  since the last
+cs->idle_threshold.  It checks to see if the mouse has moved,  since the last
 call of this function.
 Post-condition:  motion is FALSE.
 */
 gboolean
 UnsetMotion (gpointer data)
 {
-
-  if (motion == FALSE)
+  struct cublet_selection *cs = data;
+  g_print ("%s %p\n", __FUNCTION__, data);
+  if (cs->motion == FALSE)
     {				/* if not moved since last time */
 
-      if (!Stop_Detected)
+      if (!cs->stop_detected)
 	{
 	  /* in here,  things happen upon the mouse stopping */
-	  Stop_Detected = TRUE;
-	  updateSelection ();
+	  cs->stop_detected = TRUE;
+	  updateSelection (cs);
 	}
     }
 
-  motion = FALSE;
+  cs->motion = FALSE;
 
   return TRUE;
-
 }				/* end UnsetMotion */
 
 
@@ -248,14 +178,8 @@ get_widget_height (GtkWidget * w)
 
 
 
-static int noItemSelected = 1;
-
-
 struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
 
-
-/* Structure to hold copy of the last selection taken */
-static struct facet_selection current_selection = { -1, -1, -1 };
 
 
 /* Identify the block at screen co-ordinates x,  y .  This func determines all
@@ -263,7 +187,7 @@ static struct facet_selection current_selection = { -1, -1, -1 };
    then calls choose_items,  to determine which of them is closest to the screen.
 */
 struct facet_selection *
-pickPolygons (int x, int y)
+pickPolygons (struct cublet_selection *cs, int x, int y)
 {
   GLint height;
 
@@ -271,9 +195,9 @@ pickPolygons (int x, int y)
   GLuint selectBuf[BUFSIZE];
   GLint hits;
 
-  assert (granularity > 0);
+  assert (cs->granularity > 0);
 
-  height = get_widget_height (glxarea);
+  height = get_widget_height (cs->glwidget);
 
   glSelectBuffer (BUFSIZE, selectBuf);
 
@@ -289,7 +213,7 @@ pickPolygons (int x, int y)
   glGetIntegerv (GL_VIEWPORT, viewport);
 
   gluPickMatrix ((GLdouble) x, (GLdouble) (height - y),
-		 granularity, granularity, viewport);
+		 cs->granularity, cs->granularity, viewport);
 
 
   perspectiveSet ();
@@ -373,40 +297,26 @@ choose_items (GLint hits, GLuint buffer[])
 
 /* an accessor func to get the value of the currently selected items */
 struct facet_selection *
-selectedItems (void)
+selectedItems (const struct cublet_selection *cs)
 {
-  if (noItemSelected)
-    return NULL;
-
-  return &current_selection;
+  return cs->current_selection;
 }
 
 
 
 /* This func,  determines which block the mouse is pointing at,  and if it
-   has changed,  calls the function ptr "action" */
+   has changed,  calls the function ptr "cs->action" */
 void
-updateSelection (void)
+updateSelection (struct cublet_selection *cs)
 {
-  struct facet_selection *selected_polygons = pickPolygons (mouse_x, mouse_y);
+  cs->current_selection = pickPolygons (cs, cs->mouse_x, cs->mouse_y);
 
-  if (selected_polygons == NULL)
-    {
-      noItemSelected = 1;
-    }
-  else
-    {
-      noItemSelected = 0;
-
-      current_selection = *selected_polygons;
-    }
-
-  if (action)
-    action ();
+  if (cs->action)
+    cs->action ();
 }
 
-int
-itemIsSelected (void)
+gboolean
+itemIsSelected (struct cublet_selection *cs)
 {
-  return !noItemSelected;
+  return (NULL != cs->current_selection);
 }

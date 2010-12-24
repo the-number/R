@@ -29,30 +29,33 @@ struct facet_selection
   int quadrant;
 };
 
+struct cublet_selection ;
+
+
 /* Initialise the selection library */
-void initSelection (GtkWidget *glxarea, int holdoff,
+struct cublet_selection * initSelection (GtkWidget *glxarea, int holdoff,
 		    GLdouble precision, void (*do_this) (void));
 
 /* Temporarily enable/disable selection */
-void disableSelection (void);
-void enableSelection (void);
+void disableSelection (struct cublet_selection *);
+void enableSelection (struct cublet_selection *);
 
 /* Return  a pointer to a structre containing the selected items */
-struct facet_selection *selectedItems (void);
+struct facet_selection *selectedItems (const struct cublet_selection *cs);
 
 /* Force an update of the selected block */
-void updateSelection (void);
-
-/* returns 1 if a block has been selected */
-int itemIsSelected (void);
+void updateSelection (struct cublet_selection *);
 
 
 int get_widget_height (GtkWidget *w);
 
 
 /* Identify the block at screen co-ordinates x,  y */
-struct facet_selection *pickPolygons (int x, int y);
+struct facet_selection *pickPolygons (struct cublet_selection *, int x, int y);
 
+
+/* returns true if a block has been selected */
+gboolean itemIsSelected (struct cublet_selection *cs);
 
 
 #endif
