@@ -46,12 +46,9 @@ typedef void display (GtkWidget *);
 static void display_anti_alias (GtkWidget * glxarea);
 static void display_raw (GtkWidget * glxarea);
 
-static gboolean handleRedisplay (gpointer glxarea);
-
 
 struct display_context 
 {
-  gboolean redisplayPending;
   display *display_func;
   GtkWidget *glwidget;
   guint idle_id;
@@ -59,6 +56,8 @@ struct display_context
 
 static struct display_context dc;
 
+
+static gboolean handleRedisplay (gpointer);
 
 void
 re_initialize_glarea (void)
@@ -227,12 +226,8 @@ postRedisplay (void)
 	dc.display_func = display_raw;
     }
 
-  if (!dc.redisplayPending)
-    {
-      dc.idle_id = g_idle_add (handleRedisplay, dc.glwidget);
-
-      dc.redisplayPending = TRUE;
-    }
+  if (0 == dc.idle_id)
+    dc.idle_id = g_idle_add (handleRedisplay, &dc);
 }
 
 
@@ -364,12 +359,12 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 */
 
 static gboolean
-handleRedisplay (gpointer glxarea)
+handleRedisplay (gpointer data)
 {
-  dc.display_func (GTK_WIDGET (glxarea));
-  dc.redisplayPending = FALSE;
-
-  g_source_remove (dc.idle_id);
+  struct display_context *disp_ctx = data;
+  disp_ctx->display_func (GTK_WIDGET (disp_ctx->glwidget));
+  g_source_remove (disp_ctx->idle_id);
+  disp_ctx->idle_id = 0;
 
   return TRUE;
 }
