@@ -64,8 +64,6 @@ static gboolean enableDisableSelection (GtkWidget * w,
 static GtkWidget *glxarea;
 
 
-static gboolean timerActive;
-
 static guint timer;
 
 /* is the selection mechanism necessary ? */
@@ -94,8 +92,6 @@ initSelection (GtkWidget * rendering, int holdoff,
 
   timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
 
-  timerActive = TRUE;
-
   /* Add a handler to for all those occasions when we don't need the
      selection mechanism going */
 
@@ -121,17 +117,14 @@ void
 disableSelection (void)
 {
   g_source_remove (timer);
-  timerActive = FALSE;
+  timer = 0;
 }
 
 void
 enableSelection (void)
 {
-  if (!timerActive)
-    {
-      timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
-      timerActive = TRUE;
-    }
+  if (0 == timer)
+    timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
 
   needSelection = TRUE;
 }
@@ -156,11 +149,8 @@ enableDisableSelection (GtkWidget * w,
     case GDK_ENTER_NOTIFY:
       entered++;
       needSelection = FALSE;
-      if (!timerActive)
-	{
-	  timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
-	  timerActive = TRUE;
-	}
+      if (0 == timer)
+	timer = g_timeout_add (idle_threshold, UnsetMotion, 0);
 
       break;
     case GDK_LEAVE_NOTIFY:
@@ -171,7 +161,7 @@ enableDisableSelection (GtkWidget * w,
 
       needSelection = TRUE;
       g_source_remove (timer);
-      timerActive = FALSE;
+      timer = 0;
 
       break;
 
