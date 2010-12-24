@@ -36,28 +36,32 @@
 #include <assert.h>
 
 #include <libintl.h>
+#include <stdbool.h>
 
 static const char help_string[];
 
 
-void app_opts (int *argc, char **argv);
+static void app_opts (int *argc, char **argv);
 
 /* this is the number of frames drawn when a slice of the cube rotates
    90 degrees */
 extern int frameQty;
 
 
-static short solved = 0;
-static int initial_cube_size[3] = {3, 3, 3};
+struct application_options
+{
+  bool solved ;
+  int initial_cube_size[3] ;
+};
 
-static GtkWidget *main_application_window;
+static struct application_options opts = { false, {3,3,3}};
 
 static void
 c_main (void *closure, int argc, char *argv[])
 {
   GtkWidget *form;
   GtkWidget *glxarea;
-
+  GtkWidget *window;
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
@@ -71,11 +75,11 @@ c_main (void *closure, int argc, char *argv[])
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
-  main_application_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  g_signal_connect (main_application_window, "delete-event", G_CALLBACK (gtk_main_quit), 0);
+  g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
-  gtk_window_set_icon_name (GTK_WINDOW(main_application_window), "gnubik");
+  gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
 
 
   /* process arguments specific to this program */
@@ -84,7 +88,7 @@ c_main (void *closure, int argc, char *argv[])
   /* create a vbox to hold the drawing area and the menubar */
   form = gtk_vbox_new (FALSE, 0);
 
-  gtk_container_add (GTK_CONTAINER (main_application_window), form);
+  gtk_container_add (GTK_CONTAINER (window), form);
 
   glxarea = create_gl_area ();
 
@@ -92,13 +96,13 @@ c_main (void *closure, int argc, char *argv[])
 
 
   /* create the cube */
-  create_the_cube (initial_cube_size[0],
-		   initial_cube_size[1],
-		   initial_cube_size[2]);
+  create_the_cube (opts.initial_cube_size[0],
+		   opts.initial_cube_size[1],
+		   opts.initial_cube_size[2]);
   
   /* If a solved cube has not been requested,  then do some random
      moves on it */
-  if (!solved)
+  if (!opts.solved)
     cube_scramble (the_cube);
 
   scene_init ();
@@ -143,7 +147,7 @@ c_main (void *closure, int argc, char *argv[])
   /* initialise the selection mechanism */
   initSelection (glxarea, 50, 1, selection_func);
 
-  gtk_widget_show_all (main_application_window);
+  gtk_widget_show_all (window);
 
   gtk_main ();
 }
@@ -160,12 +164,9 @@ main (int argc, char **argv)
 }
 
 
-
-
-
 /* process the options we're interested in.  X resource overrides should
 have already been extracted */
-void
+static void
 app_opts (int *argc, char **argv)
 {
 #ifdef HAVE_GETOPT_LONG
@@ -198,20 +199,20 @@ app_opts (int *argc, char **argv)
 	  sscanf (optarg, "%d", &frameQty);
 	  break;
 	case 's':
-	  solved = 1;
+	  opts.solved = 1;
 	  break;
 	case 'z':
-	    initial_cube_size[0] = atoi (strtok (optarg, ","));
-	    if ( initial_cube_size[0] <= 0)
-	      initial_cube_size[0] = 3;
+	    opts.initial_cube_size[0] = atoi (strtok (optarg, ","));
+	    if ( opts.initial_cube_size[0] <= 0)
+	      opts.initial_cube_size[0] = 3;
 	    
 	    for (i = 1; i < 3; ++i)
 	      {
 		char *x = strtok (NULL, ",");
-		initial_cube_size[i] = x ? atoi (x) : -1;
+		opts.initial_cube_size[i] = x ? atoi (x) : -1;
 
-		if ( initial_cube_size[i] <= 0)
-		  initial_cube_size[i] = initial_cube_size[i-1];
+		if ( opts.initial_cube_size[i] <= 0)
+		  opts.initial_cube_size[i] = opts.initial_cube_size[i-1];
 	      }
 	  break;
 	case 'h':
