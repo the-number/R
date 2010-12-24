@@ -215,7 +215,6 @@ getTurnAxis (const struct facet_selection *items, GLfloat * vector)
 void
 drawCube (GLboolean ancilliary)
 {
-  g_print ("%s %d\n", __FUNCTION__, ancilliary);
   int i;
 
 #if DEBUG
@@ -357,9 +356,6 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       /* Make a move */
       if (select_is_selected (the_cublet_selection))
 	{
-	  g_print ("%s:%d Axis: %d; Direction: %d\n", __FILE__, __LINE__,
-		   pending_movement.axis,
-		   pending_movement.dir);
 
 	  /* Insist upon 180 degree turns if the section is non-square */
 	  if ( !cube_square_axis (the_cube, pending_movement.axis))
@@ -382,8 +378,6 @@ static void
 animate_rotation (struct move_data *data)
 {
   blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
-
-  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, data->axis);
 
   assert (blocks_in_motion);
 
@@ -408,8 +402,6 @@ animate (gpointer data)
 {
   struct move_data *md = data;
 
-  g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, md->axis);
-
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (animation.frameQty + 1);
 
@@ -430,8 +422,6 @@ animate (gpointer data)
       enum Cube_Status status;
 
       animation.animation_angle = 0.0;
-
-      g_print ("Finished Dir: %d\n", md->dir);
 
       /* and tell the blocks.c library that a move has taken place */
       rotate_slice (the_cube, md->turns, md->dir, blocks_in_motion);
@@ -506,9 +496,6 @@ selection_func (void)
       if (inverted_rotation)
 	pending_movement.dir = !pending_movement.dir;
 
-      g_print ("%s:%d Axis %d; Dir %d\n", __FILE__, __LINE__,
-	       pending_movement.axis,
-	       pending_movement.dir);
 
       /* !!!!!! We are accessing private cube data. */
       pending_movement.slice

@@ -193,7 +193,6 @@ struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
 static struct facet_selection *
 pickPolygons (struct cublet_selection *cs)
 {
-  g_print ("%s %p\n",__FUNCTION__, cs);
   GLint height;
 
   GLint viewport[4];
