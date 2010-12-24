@@ -24,10 +24,10 @@
 
 extern GtkWidget *main_application_window;
 
-GtkWidget *create_menubar (GtkWidget * container, GtkWidget * toplevel);
+GtkWidget *create_menubar (GtkWidget *container, GtkWidget *toplevel);
 
 
-GtkWidget *create_play_toolbar (GtkWidget * container, GtkWidget * toplevel);
+GtkWidget *create_play_toolbar (GtkWidget *container, GtkWidget *toplevel);
 enum
 {
   PLAY_TOOLBAR_BACK = 0x0b << 0,
@@ -36,17 +36,17 @@ enum
 };
 void set_toolbar_state (unsigned state);
 
-GtkWidget *create_statusbar (GtkWidget * container);
+GtkWidget *create_statusbar (GtkWidget *container);
 void update_statusbar (void);
 
-void set_the_colours (GtkWidget * w, const char *progname);
+void set_the_colours (GtkWidget *w, const char *progname);
 void setCubeColours (char *progname);
 
 /* Declare that the cube has been solved */
 void declare_win (const struct cube *);
 
 /* Popup an error dialog box */
-void error_dialog (GtkWidget * parent, const char *format, ...);
+void error_dialog (GtkWidget *parent, const char *format, ...);
 
 
 #endif

@@ -23,7 +23,7 @@
 
 #define MATRIX_DIM 4
 
-typedef GLfloat Matrix[MATRIX_DIM * MATRIX_DIM];
+typedef GLfloat Matrix[MATRIX_DIM *MATRIX_DIM];
 typedef GLfloat pv[MATRIX_DIM];
 typedef pv point, vector;
 

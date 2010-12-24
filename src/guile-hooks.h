@@ -26,6 +26,6 @@
    the UI manager. The scripts can callback to the C world to register
    themselves. The function must be called exactly once. */
 
-void startup_guile_scripts (GtkUIManager * uim);
+void startup_guile_scripts (GtkUIManager *uim);
 
 #endif /* defined GUILE_HOOKS_H. */

@@ -29,7 +29,7 @@ void draw_block (GLboolean highlight, int block_id);
 
 void setColour (int i, GLfloat red, GLfloat green, GLfloat blue);
 
-void getColour (int i, GLfloat * red, GLfloat * green, GLfloat * blue);
+void getColour (int i, GLfloat *red, GLfloat *green, GLfloat *blue);
 
 
 #endif

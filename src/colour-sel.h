@@ -45,10 +45,10 @@ extern struct cube_rendering *rendering[];
 
 
 void
-drag_data_received (GtkWidget * widget,
-		    GdkDragContext * dc,
+drag_data_received (GtkWidget *widget,
+		    GdkDragContext *dc,
 		    gint x, gint y,
-		    GtkSelectionData * selection_data,
+		    GtkSelectionData *selection_data,
 		    guint info, guint t, gpointer user_data);
 
 #endif

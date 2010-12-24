@@ -37,6 +37,6 @@ extern struct pattern_parameters stock_pattern[6];
 void texInit (void);
 
 
-GLuint create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr);
+GLuint create_pattern_from_pixbuf (const GdkPixbuf *pixbuf, GError **gerr);
 
 #endif

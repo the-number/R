@@ -30,7 +30,7 @@ struct facet_selection
 };
 
 /* Initialise the selection library */
-void initSelection (GtkWidget * glxarea, int holdoff,
+void initSelection (GtkWidget *glxarea, int holdoff,
 		    GLdouble precision, void (*do_this) (void));
 
 /* Temporarily enable/disable selection */
@@ -47,7 +47,7 @@ void updateSelection (void);
 int itemIsSelected (void);
 
 
-int get_widget_height (GtkWidget * w);
+int get_widget_height (GtkWidget *w);
 
 
 /* Identify the block at screen co-ordinates x,  y */

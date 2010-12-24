@@ -71,7 +71,7 @@ typedef struct _Slice_Blocks
 
 
 /* Free the resources associated with an instance of the above structure. */
-void free_slice_blocks (Slice_Blocks * slice_blocks);
+void free_slice_blocks (Slice_Blocks *slice_blocks);
 
 
 /* Return the identity of all the blocks in a particular slice (or the one

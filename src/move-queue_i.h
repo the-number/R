@@ -24,13 +24,13 @@
 
 
 /*
- * The queue is implemented as a singly-linked list of _Move_Queue_Item
- * objects. For maximum efficiency pushes are made at the back (tail),  pops at
- * the front (head),  and the normal direction of recursion is towards the tail;
- * retarding the cursor is the one (relatively) expensive operation.
+ *The queue is implemented as a singly-linked list of _Move_Queue_Item
+ *objects. For maximum efficiency pushes are made at the back (tail),  pops at
+ *the front (head),  and the normal direction of recursion is towards the tail;
+ *retarding the cursor is the one (relatively) expensive operation.
  *
- * Note that the cursor,  current,  points to the next move to be made (the true
- * location of the cursor is between this move and the previous move).
+ *Note that the cursor,  current,  points to the next move to be made (the true
+ *location of the cursor is between this move and the previous move).
  */
 
 

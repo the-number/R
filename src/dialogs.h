@@ -26,6 +26,6 @@ void request_new_game (GtkAction *act, struct preferences_state *ps);
 
 void preferences_dialog (GtkWidget *w, GtkWindow *);
 
-void about_dialog (GtkWidget * w, GtkWindow *);
+void about_dialog (GtkWidget *w, GtkWindow *);
 
 #endif
