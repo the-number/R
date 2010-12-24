@@ -64,12 +64,16 @@ struct cublet_selection
   gint mouse_y;
 };
 
+/* Identify the block at screen co-ordinates x,  y */
+static struct facet_selection *pickPolygons (struct cublet_selection *);
+
+
 /* Initialise the selection mechanism.  Holdoff is the time for which
 the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. Do_this is a pointer to a function
 to be called when a new block is selected. */
 struct cublet_selection *
-initSelection (GtkWidget *rendering, int holdoff,
+select_create (GtkWidget *rendering, int holdoff,
 	       double precision, void (*do_this) (void))
 {
   struct cublet_selection *cs = malloc (sizeof *cs);
@@ -91,14 +95,14 @@ initSelection (GtkWidget *rendering, int holdoff,
 
 
 void
-disableSelection (struct cublet_selection *cs)
+select_disable (struct cublet_selection *cs)
 {
   g_source_remove (cs->timer);
   cs->timer = 0;
 }
 
 void
-enableSelection (struct cublet_selection *cs)
+select_enable (struct cublet_selection *cs)
 {
   if (0 == cs->timer)
     cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
@@ -143,7 +147,7 @@ UnsetMotion (gpointer data)
 	{
 	  /* in here,  things happen upon the mouse stopping */
 	  cs->stop_detected = TRUE;
-	  updateSelection (cs);
+	  select_update (cs);
 	}
     }
 
@@ -154,7 +158,7 @@ UnsetMotion (gpointer data)
 
 
 
-int
+static int
 get_widget_height (GtkWidget * w)
 {
   return w->allocation.height;
@@ -186,7 +190,7 @@ struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
    candidate blocks.  That is,  all blocks which orthogonally project to x,  y.  It
    then calls choose_items,  to determine which of them is closest to the screen.
 */
-struct facet_selection *
+static struct facet_selection *
 pickPolygons (struct cublet_selection *cs)
 {
   g_print ("%s %p\n",__FUNCTION__, cs);
@@ -297,8 +301,8 @@ choose_items (GLint hits, GLuint buffer[])
 }
 
 /* an accessor func to get the value of the currently selected items */
-struct facet_selection *
-selectedItems (const struct cublet_selection *cs)
+const struct facet_selection *
+select_get (const struct cublet_selection *cs)
 {
   return cs->current_selection;
 }
@@ -308,7 +312,7 @@ selectedItems (const struct cublet_selection *cs)
 /* This func,  determines which block the mouse is pointing at,  and if it
    has changed,  calls the function ptr "cs->action" */
 void
-updateSelection (struct cublet_selection *cs)
+select_update (struct cublet_selection *cs)
 {
   cs->current_selection = pickPolygons (cs);
 
@@ -317,7 +321,7 @@ updateSelection (struct cublet_selection *cs)
 }
 
 gboolean
-itemIsSelected (struct cublet_selection *cs)
+select_is_selected (struct cublet_selection *cs)
 {
   return (NULL != cs->current_selection);
 }

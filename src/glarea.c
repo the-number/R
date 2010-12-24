@@ -286,11 +286,11 @@ on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data)
   if (event->type == GDK_BUTTON_PRESS)
     {
       button_down = TRUE;
-      disableSelection (cs);
+      select_disable (cs);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
-      enableSelection (cs);
+      select_enable (cs);
       button_down = FALSE;
     }
 
@@ -310,7 +310,7 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   if (!button_down)
     return FALSE;
 
-  if (itemIsSelected (the_cublet_selection))
+  if (select_is_selected (the_cublet_selection))
     return FALSE;
 
   if (last_mouse_x >= 0)
@@ -400,7 +400,7 @@ set_mouse_cursor (GtkWidget * glxarea)
   GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
   GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
 
-  if (itemIsSelected (the_cublet_selection))
+  if (select_is_selected (the_cublet_selection))
     {
       get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
 		  &hot_x, &hot_y);

@@ -111,7 +111,7 @@ c_main (void *closure, int argc, char *argv[])
   scene_init ();
 
   /* initialise the selection mechanism */
-  the_cublet_selection = initSelection (glxarea, 50, 1, selection_func);
+  the_cublet_selection = select_create (glxarea, 50, 1, selection_func);
 
 
   g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), 0);

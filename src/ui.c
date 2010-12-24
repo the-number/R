@@ -195,7 +195,7 @@ vector2axis (GLfloat * vector)
 /* Determine the axis about which to rotate the slice,  from the objects
 selected by the cursor position */
 static void
-getTurnAxis (struct facet_selection *items, GLfloat * vector)
+getTurnAxis (const struct facet_selection *items, GLfloat * vector)
 {
   Matrix t;
 
@@ -378,7 +378,7 @@ mouse (int button)
       break;
     case 1:
       /* Make a move */
-      if (itemIsSelected (the_cublet_selection))
+      if (select_is_selected (the_cublet_selection))
 	{
 	  g_print ("%s:%d Axis: %d; Direction: %d\n", __FILE__, __LINE__,
 		   pending_movement.axis,
@@ -471,7 +471,7 @@ animate (gpointer data)
 #endif
 
       update_statusbar ();
-      updateSelection (the_cublet_selection);
+      select_update (the_cublet_selection);
 
       if (NOT_SOLVED != (status = cube_get_status (the_cube)))
 	declare_win (the_cube);
@@ -510,12 +510,12 @@ float cursorAngle;
 void
 selection_func (void)
 {
-  struct facet_selection *selection = 0;
+  const struct facet_selection *selection = 0;
 
   if (animation_in_progress)
     return;
 
-  if (0 != (selection = selectedItems (the_cublet_selection)))
+  if (0 != (selection = select_get (the_cublet_selection)))
     {
       GLfloat turn_axis[4];
       vector v;
