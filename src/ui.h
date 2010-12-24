@@ -36,6 +36,14 @@ struct move_data
 
 typedef guint t_keysym;
 
+struct animation
+{
+  /* picture rate in ms. 40ms = 25 frames per sec */
+  int picture_rate ;
+  GLfloat animation_angle ;
+  gboolean animation_in_progress ;
+  int frameQty ;
+};
 
 void abort_animation (void);
 

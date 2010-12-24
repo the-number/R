@@ -45,8 +45,6 @@ static void app_opts (int *argc, char **argv);
 
 /* this is the number of frames drawn when a slice of the cube rotates
    90 degrees */
-extern int frameQty;
-
 
 struct application_options
 {
@@ -55,6 +53,8 @@ struct application_options
 };
 
 static struct application_options opts = { false, {3,3,3}};
+
+extern struct animation animation;
 
 
 struct cublet_selection *the_cublet_selection;
@@ -201,7 +201,7 @@ app_opts (int *argc, char **argv)
       switch (c)
 	{
 	case 'a':
-	  sscanf (optarg, "%d", &frameQty);
+	  sscanf (optarg, "%d", &animation.frameQty);
 	  break;
 	case 's':
 	  opts.solved = 1;

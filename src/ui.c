@@ -43,16 +43,10 @@ static Slice_Blocks *blocks_in_motion;
 static gboolean animate (gpointer data);
 
 
-/* picture rate in ms. 40ms = 25 frames per sec */
-static const int picture_rate = 40;
-static GLfloat animation_angle = 0;
-static int animation_in_progress = 0;
-int frameQty = 2;
+struct animation animation = {40, 0, false, 2};
 
 
 static int inverted_rotation = 0;
-
-
 
 static void animate_rotation (struct move_data * data);
 
@@ -64,16 +58,13 @@ static struct move_data pending_movement = { -1, -1, -1, 0 };
 static int selectionIsValid = 0;
 
 
-double radians (int deg);
-
-
 extern Quarternion cube_view;
 
 
 int
 is_animating (void)
 {
-  return animation_in_progress;
+  return animation.animation_in_progress;
 }
 
 
@@ -300,7 +291,7 @@ drawCube (GLboolean ancilliary)
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
 	     animation angle is */
-	  GLdouble angle = animation_angle;
+	  GLdouble angle = animation.animation_angle;
 
 	  int unity = 1;
 	  if (!pending_movement.dir)
@@ -344,25 +335,13 @@ drawCube (GLboolean ancilliary)
 
 
 
-
-
-/* degrees to radians convertion */
-double
-radians (int deg)
-{
-  return ((double) deg * M_PI / 180.0);
-}
-
-
-
-
 /* handle mouse clicks */
 void
 mouse (int button)
 {
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
-  if (animation_in_progress)
+  if (animation.animation_in_progress)
     return;
 
   switch (button)
@@ -408,11 +387,11 @@ animate_rotation (struct move_data *data)
 
   assert (blocks_in_motion);
 
-  animation_in_progress = 1;
+  animation.animation_in_progress = 1;
 
   set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  g_timeout_add (picture_rate, animate, data);
+  g_timeout_add (animation.picture_rate, animate, data);
 }
 
 
@@ -432,25 +411,25 @@ animate (gpointer data)
   g_print ("%s:%d Axis %d\n", __FILE__, __LINE__, md->axis);
 
   /* how many degrees motion per frame */
-  GLfloat increment = 90.0 / (frameQty + 1);
+  GLfloat increment = 90.0 / (animation.frameQty + 1);
 
   /*  decrement the current angle */
-  animation_angle -= increment;
+  animation.animation_angle -= increment;
 
   /* and redraw it */
   postRedisplay ();
 
-  if (fabs (animation_angle) < 90.0 * md->turns && !abort_requested)
+  if (fabs (animation.animation_angle) < 90.0 * md->turns && !abort_requested)
     {
       /* call this timeout again */
-      g_timeout_add (picture_rate, animate, data);
+      g_timeout_add (animation.picture_rate, animate, data);
     }
   else
     {
       /* we have finished the animation sequence now */
       enum Cube_Status status;
 
-      animation_angle = 0.0;
+      animation.animation_angle = 0.0;
 
       g_print ("Finished Dir: %d\n", md->dir);
 
@@ -460,7 +439,7 @@ animate (gpointer data)
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;
 
-      animation_in_progress = 0;
+      animation.animation_in_progress = 0;
 
 #if 0
       set_toolbar_state ((move_queue_progress (move_queue).current == 0
@@ -512,7 +491,7 @@ selection_func (void)
 {
   const struct facet_selection *selection = 0;
 
-  if (animation_in_progress)
+  if (animation.animation_in_progress)
     return;
 
   if (0 != (selection = select_get (the_cublet_selection)))
