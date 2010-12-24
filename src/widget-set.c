@@ -39,6 +39,8 @@ extern Move_Queue *move_queue;
 void
 update_statusbar (void)
 {
+#if WIDGETS_NOT_DISABLED
+
   static int context = 0;
 
   static guint mesg_id = 0;
@@ -59,6 +61,7 @@ update_statusbar (void)
     gtk_statusbar_remove (GTK_STATUSBAR (statusbar), context, mesg_id);
 
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
+#endif
 }
 
 void
@@ -97,6 +100,7 @@ declare_win (const struct cube *cube)
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 }
 
+#if WIDGETS_NOT_DISABLED
 GtkWidget *
 create_statusbar (GtkWidget * container)
 {
@@ -112,9 +116,12 @@ create_statusbar (GtkWidget * container)
 
 static GList *play_button_list;
 
+#endif
+
 void
 set_toolbar_state (unsigned flags)
 {
+#if WIDGETS_NOT_DISABLED
   GList *list;
 
   for (list = play_button_list; list != NULL; list = list->next)
@@ -122,8 +129,10 @@ set_toolbar_state (unsigned flags)
       gtk_widget_set_sensitive (GTK_WIDGET (list->data), flags & 1);
       flags >>= 1;
     }
+#endif
 }
 
+#if WIDGETS_NOT_DISABLED
 
 static GtkWidget *play_toolbar;
 
@@ -369,6 +378,8 @@ create_menubar (GtkWidget * container, GtkWidget *toplevel)
   return menubar;
 }
 
+#endif
+
 /* Popup an error dialog box */
 void
 error_dialog (GtkWidget * parent, const gchar * format, ...)
@@ -399,46 +410,3 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 }
 
 
-
-#if !X_DISPLAY_MISSING
-#include <X11/Xlib.h>
-#include <gdk/gdkx.h>
-#endif
-
-void
-set_the_colours (GtkWidget *w, const char *progname)
-{
-#if !X_DISPLAY_MISSING
-  int i;
-
-  Display *dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
-
-  for (i = 0; i < 6; ++i)
-    {
-      char *colour = 0;
-      char resname[20];
-      GdkColor xcolour;
-      g_snprintf (resname, 20, "color%d", i);
-      colour = XGetDefault (dpy, progname, resname);
-
-      if (!colour)
-	continue;
-
-      if (!gdk_color_parse (colour, &xcolour))
-	{
-	  g_warning ("colour %s not in database\n", colour);
-	}
-      else
-	{
-	  /* convert colours to GLfloat values,  and set them */
-	  const unsigned short full = ~0;
-
-	  GLfloat red = (GLfloat) xcolour.red / full;
-	  GLfloat green = (GLfloat) xcolour.green / full;
-	  GLfloat blue = (GLfloat) xcolour.blue / full;
-
-	  setColour (i, red, green, blue);
-	}
-    }
-#endif
-}

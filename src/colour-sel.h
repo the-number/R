@@ -37,7 +37,6 @@ struct cube_rendering
 };
 
 
-extern struct cube_rendering *rendering[];
 
 #define RDRAG_COLOUR 0
 #define RDRAG_FILELIST 1

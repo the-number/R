@@ -22,8 +22,6 @@
 #include <gtk/gtk.h>
 #include "cube.h"
 
-extern GtkWidget *main_application_window;
-
 GtkWidget *create_menubar (GtkWidget *container, GtkWidget *toplevel);
 
 

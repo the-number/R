@@ -59,7 +59,9 @@ re_initialize_glarea (void)
 {
   scene_init ();
   lighting_init ();
+#if WIDGETS_NOT_DISABLED
   texInit ();
+#endif
   projection_init (0);
   modelViewInit ();
 }
@@ -162,9 +164,10 @@ create_gl_area (void)
   gtk_drag_dest_set (glxarea, GTK_DEST_DEFAULT_ALL,
 		     target, 2, GDK_ACTION_COPY);
 
-
+#if WIDGETS_NOT_DISABLED
   g_signal_connect (glxarea, "drag_data_received",
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
+#endif
 
   glwidget = glxarea;
 

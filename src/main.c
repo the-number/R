@@ -50,15 +50,12 @@ extern int frameQty;
 static short solved = 0;
 static int initial_cube_size[3] = {3, 3, 3};
 
-GtkWidget *main_application_window;
+static GtkWidget *main_application_window;
 
 static void
 c_main (void *closure, int argc, char *argv[])
 {
   GtkWidget *form;
-  GtkWidget *menubar;
-  GtkWidget *play_toolbar;
-  GtkWidget *statusbar;
   GtkWidget *glxarea;
 
   /* Internationalisation stuff */
@@ -89,14 +86,10 @@ c_main (void *closure, int argc, char *argv[])
 
   gtk_container_add (GTK_CONTAINER (main_application_window), form);
 
-  menubar = create_menubar (form, main_application_window);
-  play_toolbar = create_play_toolbar (form, main_application_window);
-
   glxarea = create_gl_area ();
 
   gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
 
-  statusbar = create_statusbar (form);
 
   /* create the cube */
   create_the_cube (initial_cube_size[0],
@@ -243,3 +236,47 @@ static const char help_string[] =
   "-z n,m,p\n--size=n\tShow a   n x m x p   sized cube \n\n"
   "-a n\n--animation=n\tNumber of intermediate positions to be shown in animations\n\n"
   "\n\nBug reports to " PACKAGE_BUGREPORT "\n";
+
+
+#if !X_DISPLAY_MISSING
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
+#endif
+
+void
+set_the_colours (GtkWidget *w, const char *progname)
+{
+#if !X_DISPLAY_MISSING
+  int i;
+
+  Display *dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
+
+  for (i = 0; i < 6; ++i)
+    {
+      char *colour = 0;
+      char resname[20];
+      GdkColor xcolour;
+      g_snprintf (resname, 20, "color%d", i);
+      colour = XGetDefault (dpy, progname, resname);
+
+      if (!colour)
+	continue;
+
+      if (!gdk_color_parse (colour, &xcolour))
+	{
+	  g_warning ("colour %s not in database\n", colour);
+	}
+      else
+	{
+	  /* convert colours to GLfloat values,  and set them */
+	  const unsigned short full = ~0;
+
+	  GLfloat red = (GLfloat) xcolour.red / full;
+	  GLfloat green = (GLfloat) xcolour.green / full;
+	  GLfloat blue = (GLfloat) xcolour.blue / full;
+
+	  setColour (i, red, green, blue);
+	}
+    }
+#endif
+}

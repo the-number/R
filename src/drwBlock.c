@@ -47,6 +47,19 @@ renderString (const char *string)
 
 #endif
 
+
+
+static struct cube_rendering current_face_rendering[6];
+
+static struct cube_rendering *rendering[6] = {
+ &current_face_rendering[0],
+ &current_face_rendering[1],
+ &current_face_rendering[2],
+ &current_face_rendering[3],
+ &current_face_rendering[4],
+ &current_face_rendering[5],
+};
+
 typedef enum
 {
   COL_RED = 0, COL_GREEN, COL_BLUE,
