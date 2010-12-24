@@ -330,18 +330,19 @@ drawCube (GLboolean ancilliary)
 }
 
 
-
-
 /* handle mouse clicks */
-void
-mouse (int button)
+gboolean
+on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
+  if (event->type != GDK_BUTTON_PRESS)
+    return TRUE;
+
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
   if (animation.animation_in_progress)
-    return;
+    return TRUE;
 
-  switch (button)
+  switch (event->button)
     {
     case 3:
       /* this is inherently dangerous.  If an event is missed somehow,
@@ -371,6 +372,8 @@ mouse (int button)
 
       break;
     }
+
+  return TRUE;
 }
 
 

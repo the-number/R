@@ -149,7 +149,7 @@ c_main (void *closure, int argc, char *argv[])
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
   g_signal_connect (glxarea, "button_press_event",
-		    G_CALLBACK (cube_controls), 0);
+		    G_CALLBACK (on_mouse_button), 0);
   
 
   gtk_widget_show_all (window);

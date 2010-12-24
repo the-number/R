@@ -19,6 +19,7 @@
 #ifndef UI_H
 #define UI_H
 
+#include <gtk/gtk.h>
 #include <GL/gl.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -47,9 +48,9 @@ struct animation
 
 void abort_animation (void);
 
+gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 void selection_func (void);
 void arrows (t_keysym keysym, int shifted);
-void mouse (int button);
 int vector2axis (GLfloat *vector);
 void drawCube (GLboolean anc);
 

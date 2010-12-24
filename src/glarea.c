@@ -351,24 +351,6 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 
 
 
-
-
-/* Input callback.  Despatch input events to approprite handlers */
-gboolean
-cube_controls (GtkWidget *w, GdkEventButton * event, gpointer data)
-{
-  if (event->type != GDK_BUTTON_PRESS)
-    return TRUE;
-
-  mouse (event->button);
-
-  return TRUE;
-}
-
-
-
-
-
 /* Pair of mutually co-operating funcs to handle redisplays,
    avoiding unnecessary overhead.  For example when the window
    is covered by another one
