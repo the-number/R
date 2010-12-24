@@ -450,7 +450,6 @@ animate (gpointer data)
 #endif
 
       update_statusbar ();
-      select_update (the_cublet_selection);
 
       if (NOT_SOLVED != (status = cube_get_status (the_cube)))
 	declare_win (the_cube);
