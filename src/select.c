@@ -44,6 +44,7 @@ in the cube (if any) the cursor is located upon.
 static gboolean detect_motion (GtkWidget * w,
 			       GdkEventMotion * event, gpointer user_data);
 
+
 static gboolean UnsetMotion (gpointer data);
 
 struct cublet_selection 
@@ -135,7 +136,7 @@ cs->idle_threshold.  It checks to see if the mouse has moved,  since the last
 call of this function.
 Post-condition:  motion is FALSE.
 */
-gboolean
+static gboolean
 UnsetMotion (gpointer data)
 {
   struct cublet_selection *cs = data;
@@ -154,7 +155,7 @@ UnsetMotion (gpointer data)
   cs->motion = FALSE;
 
   return TRUE;
-}				/* end UnsetMotion */
+}  /* end UnsetMotion */
 
 
 
