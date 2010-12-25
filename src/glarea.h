@@ -34,7 +34,7 @@ GtkWidget *create_gl_area (void);
 void scene_init (void);
 void perspectiveSet (void);
 void modelViewInit (void);
-void postRedisplay (void);
+void postRedisplay (struct display_context *);
 void lighting_init (void);
 void projection_init (int jitter);
 

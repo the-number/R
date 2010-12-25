@@ -170,6 +170,13 @@ create_gl_area (void)
   the_display_context.glcontext = NULL;
   the_display_context.gldrawable = NULL;
 
+  g_signal_connect (glxarea, "realize",
+		    G_CALLBACK (on_realize), &the_display_context);
+  g_signal_connect (glxarea, "expose-event",
+		    G_CALLBACK (on_expose), &the_display_context);
+  g_signal_connect (glxarea, "size-allocate",
+		    G_CALLBACK (resize_viewport), &the_display_context);
+
   return glxarea;
 }
 
@@ -203,10 +210,10 @@ on_realize (GtkWidget *w, gpointer data)
 
 
 void
-postRedisplay (void)
+postRedisplay (struct display_context *dc)
 {
-  if (0 == the_display_context.idle_id)
-    the_display_context.idle_id = g_idle_add (handleRedisplay, &the_display_context);
+  if (0 == dc->idle_id)
+    dc->idle_id = g_idle_add (handleRedisplay, dc);
 }
 
 
@@ -226,7 +233,8 @@ error_check (const char *file, int line_no, const char *string)
 gboolean
 on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 {
-  postRedisplay ();
+  struct display_context *dc = data;
+  postRedisplay (dc);
   return FALSE;
 }
 
@@ -237,7 +245,6 @@ static gboolean button_down = FALSE;
 gboolean
 z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
-
   rotate_cube (2, !event->direction);
 
   return FALSE;

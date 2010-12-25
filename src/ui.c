@@ -95,7 +95,7 @@ rotate_cube (int axis, int dir)
 
   quarternion_from_rotation (&rot, v, step);
   quarternion_pre_mult (&cube_view, &rot);
-  postRedisplay ();
+  postRedisplay (&the_display_context);
 }
 
 /* orientate the whole cube with the arrow keys */
@@ -350,7 +350,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       inverted_rotation = 1;
       pending_movement.dir = !pending_movement.dir;
 
-      postRedisplay ();
+      postRedisplay (&the_display_context);
       break;
     case 1:
       /* Make a move */
@@ -364,7 +364,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	  animate_rotation (&pending_movement);
 	}
 
-      postRedisplay ();
+      postRedisplay (&the_display_context);
 
       break;
     }
@@ -409,7 +409,7 @@ animate (gpointer data)
   animation.animation_angle -= increment;
 
   /* and redraw it */
-  postRedisplay ();
+  postRedisplay (&the_display_context);
 
   if (fabs (animation.animation_angle) < 90.0 * md->turns && !abort_requested)
     {
@@ -533,5 +533,5 @@ selection_func (void)
 
   inverted_rotation = 0;
 
-  postRedisplay ();
+  postRedisplay (&the_display_context);
 }
