@@ -40,6 +40,7 @@
 
 static const char help_string[];
 
+struct cube *the_cube = NULL;
 
 static void app_opts (int *argc, char **argv);
 
@@ -137,7 +138,7 @@ c_main (void *closure, int argc, char *argv[])
 
 
   /* create the cube */
-  create_the_cube (opts.initial_cube_size[0],
+  the_cube = new_cube (opts.initial_cube_size[0],
 		   opts.initial_cube_size[1],
 		   opts.initial_cube_size[2]);
   

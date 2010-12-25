@@ -148,10 +148,5 @@ SCM make_scm_cube (const struct cube *cube);
 ***/
 extern struct cube *the_cube;
 
-int create_the_cube (int, int, int);
-
-void destroy_the_cube (void);
-
-
 
 #endif /* CUBE_H */

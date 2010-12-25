@@ -30,26 +30,6 @@
 
 
 
-/* Get this nonesense out of the way first! */
-struct cube *the_cube = NULL;
-
-int
-create_the_cube (int dim0, int dim1, int dim2)
-{
-  the_cube = new_cube (dim0, dim1, dim2);
-  if (the_cube == NULL)
-    exit (1);
-  return the_cube->number_blocks;
-}
-
-void
-destroy_the_cube (void)
-{
-  if (the_cube)
-    free_cube (the_cube);
-}
-
-
 
 /* Cube co-ordinates have their origin at the centre of the cube,  and their
    units are equivalent to one half of the length of one edge of a block. */
