@@ -24,8 +24,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-extern int frameQty;
-
 /* A structure containing information about a movement taking place. */
 struct move_data
 {
@@ -39,8 +37,13 @@ struct animation
 {
   /* picture rate in ms. 40ms = 25 frames per sec */
   int picture_rate ;
+
+  /* The current angle through which an animation has turned */
   GLfloat animation_angle ;
+
   gboolean animation_in_progress ;
+
+  /* the number of frames drawn when a slice of the cube rotates 90 degrees */
   int frameQty ;
 };
 

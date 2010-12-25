@@ -44,9 +44,6 @@ struct cube *the_cube = NULL;
 
 static void app_opts (int *argc, char **argv);
 
-/* this is the number of frames drawn when a slice of the cube rotates
-   90 degrees */
-
 struct application_options
 {
   bool solved ;
