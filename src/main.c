@@ -71,22 +71,15 @@ on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
   return TRUE;
 }
 
-static gboolean
-enable_selection  (GtkWidget *widget, GdkEventExpose *event, gpointer data)
+static void
+enable_selection_if_focused (GtkWidget *widget, gpointer data)
 {
-  int x, y;
-  gtk_widget_get_pointer (widget, &x, &y);
-
   struct cublet_selection *cs = data;
-  GdkRectangle area = event->area;
 
-
-  if ( x < area.x || y < area.y || x >= area.x + area.width || y >= area.y + area.height )
-    select_disable (cs);
-  else
+  if ( GTK_WIDGET_HAS_FOCUS (widget))
     select_enable (cs);
-
-  return TRUE;
+  else
+    select_disable (cs);
 }
 
 
@@ -168,9 +161,10 @@ c_main (void *closure, int argc, char *argv[])
   g_signal_connect (glxarea, "scroll-event",
 		    G_CALLBACK (z_rotate), 0);
 
-  g_signal_connect (glxarea, "expose-event",
-		    G_CALLBACK (enable_selection), the_cublet_selection);
-
+ 
+  g_signal_connect (glxarea, "realize",
+		    G_CALLBACK (enable_selection_if_focused), the_cublet_selection);
+ 
   g_signal_connect (glxarea, "leave-notify-event",
 		    G_CALLBACK (on_crossing), the_cublet_selection);
 
