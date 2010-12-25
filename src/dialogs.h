@@ -28,4 +28,7 @@ void preferences_dialog (GtkWidget *w, GtkWindow *);
 
 void about_dialog (GtkWidget *w, GtkWindow *);
 
+void new_game_dialog (GtkWidget *w, GtkWindow *toplevel);
+
+
 #endif

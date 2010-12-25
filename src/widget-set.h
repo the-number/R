@@ -46,5 +46,7 @@ void declare_win (const struct cube *);
 /* Popup an error dialog box */
 void error_dialog (GtkWidget *parent, const char *format, ...);
 
+void start_new_game (int size0, int size1, int size2);
+
 
 #endif

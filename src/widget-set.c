@@ -23,6 +23,7 @@
 #include "dialogs.h"
 #include "guile-hooks.h"
 #include "colour-sel.h"
+#include "glarea.h"
 #include "drwBlock.h"
 
 #include <gtk/gtk.h>
@@ -32,7 +33,6 @@
 #define N_(String) (String)
 
 
-static GtkWidget *statusbar;
 
 #define MSGLEN 100
 void
@@ -230,7 +230,6 @@ create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
   return play_toolbar;
 }
 
-#endif
 
 /* Toggle the visibility of a widget */
 static void
@@ -242,6 +241,7 @@ toggle_visibility (GtkToggleAction *ta, gpointer user_data)
 		"visible", gtk_toggle_action_get_active (ta),
 		NULL);
 }
+#endif
 
 
 
@@ -277,15 +277,46 @@ static const GtkActionEntry action_entries[] =
 };
 
 
-#if 0
+static void
+restart_game ()
+{
+  int size[3];
+  size[0] = cube_get_size(the_cube, 0);
+  size[1] = cube_get_size(the_cube, 1);
+  size[2] = cube_get_size(the_cube, 2);
+
+  free_cube (the_cube);
+  the_cube = new_cube (size[0], size[1], size[2]);
+  cube_scramble (the_cube);
+  scene_init ();
+}
+
+void
+start_new_game (int size0, int size1, int size2)
+{
+  free_cube (the_cube);
+
+  the_cube = new_cube (size0, size1, size2);
+
+  cube_scramble (the_cube);
+  scene_init ();
+}
+
+
 static const GtkActionEntry game_action_entries[] =
   {
     {
-   "new-game-action", NULL, N_("_New Game"),
-   "<control>N", "new-game", G_CALLBACK (request_new_game)
+   "restart-game-action", NULL, N_("_Restart Game"),
+   NULL, "restart-game", G_CALLBACK (restart_game)
+    },
+
+    {
+   "new-game-action", GTK_STOCK_NEW, N_("_New Game"),
+   "<control>N", "new-game", G_CALLBACK (new_game_dialog)
     }
   };
 
+#if 0
 
 static const GtkToggleActionEntry statusbar_action_entries[] =
   {
@@ -310,11 +341,9 @@ static const GtkToggleActionEntry toolbar_action_entries[] =
 static const char menu_tree[] = "<ui>\
   <menubar name=\"MainMenu\">\
     <menu name=\"game-menu\" action=\"game-menu-action\">\
-"
-/*
+     <menuitem name=\"restart-game\" action=\"restart-game-action\"/> \
      <menuitem name=\"new-game\" action=\"new-game-action\"/> \
-*/
-"     <menuitem name=\"quit\" action=\"quit-action\"/>\
+     <menuitem name=\"quit\" action=\"quit-action\"/>\
     </menu>"
   /*
     <menu name=\"settings-menu\" action=\"settings-menu-action\">\
@@ -355,11 +384,12 @@ create_menubar (GtkWidget *toplevel)
 				sizeof (action_entries) /
 				sizeof (action_entries[0]), toplevel);
 
-#if 0
+
   gtk_action_group_add_actions (game_action_group, game_action_entries,
 				sizeof (game_action_entries) /
-				sizeof (game_action_entries[0]), NULL);
+				sizeof (game_action_entries[0]), toplevel);
 
+#if 0
   gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
 				sizeof (toolbar_action_entries) /
 				sizeof (toolbar_action_entries[0]), &play_toolbar);

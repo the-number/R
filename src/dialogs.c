@@ -35,6 +35,8 @@
 #define _(String) gettext (String)
 #define N_(String) (String)
 
+#define BOX_PADDING 10
+
 #if WIDGETS_NOT_DISABLED
 
 extern int frameQty;
@@ -60,6 +62,8 @@ set_lighting (GtkToggleButton * b, gpointer user_data)
 
 
 extern Move_Queue *move_queue;
+
+#endif
 
 struct preferences_state
 {
@@ -98,6 +102,7 @@ pref_state_destroy (struct preferences_state *ps)
   g_free (ps);
 }
 
+#if 0
 
 static gboolean
 new_game (gpointer p)
@@ -146,9 +151,8 @@ request_new_game (GtkAction *act, struct preferences_state *ps)
 }
 
 
-#define BOX_PADDING 10
 
-
+#endif
 
 /* Allows only cubic cubes if the togglebutton is active */
 static void
@@ -171,7 +175,6 @@ toggle_regular (GtkToggleButton *button, gpointer data)
 					GTK_ADJUSTMENT (ps->adj[i]));
     }
 }
-
 
 static struct preferences_state *
 create_dimension_widget (GtkContainer *parent)
@@ -212,6 +215,7 @@ create_dimension_widget (GtkContainer *parent)
 }
 
 
+#if 0
 
 
 static GtkWidget *
@@ -403,3 +407,57 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
 }
+
+
+
+
+
+
+void
+new_game_dialog (GtkWidget *w, GtkWindow *toplevel)
+{
+  gint response;
+
+  GtkWidget *dialog = gtk_dialog_new_with_buttons (_("New Game"),
+						   toplevel,
+						   GTK_DIALOG_MODAL |
+						   GTK_DIALOG_DESTROY_WITH_PARENT,
+						   GTK_STOCK_OK,
+						   GTK_RESPONSE_ACCEPT,
+						   GTK_STOCK_CANCEL,
+						   GTK_RESPONSE_CANCEL,
+						   NULL);
+
+  GtkWidget *vbox = GTK_DIALOG (dialog)->vbox;
+
+
+  GtkWidget *frame_dimensions = gtk_frame_new (_("Dimensions"));
+
+  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
+
+  struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions));
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame_dimensions, FALSE, 0, 0);
+
+  gtk_widget_show_all (vbox);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      start_new_game 
+	(
+	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
+	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
+	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2]))
+	);
+    }
+
+  pref_state_destroy (ps);
+  
+  gtk_widget_destroy (dialog);
+}
+
+
