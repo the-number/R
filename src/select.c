@@ -82,7 +82,7 @@ select_create (GtkWidget *rendering, int holdoff,
   cs->idle_threshold = holdoff;
   cs->granularity = precision;
 
-  g_signal_connect (rendering, "motion_notify_event",
+  g_signal_connect (rendering, "motion-notify-event",
 		    G_CALLBACK (detect_motion), cs);
 
   cs->action = do_this;

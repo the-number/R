@@ -194,7 +194,7 @@ create_gl_area (void)
 		     target, 2, GDK_ACTION_COPY);
 
 #if WIDGETS_NOT_DISABLED
-  g_signal_connect (glxarea, "drag_data_received",
+  g_signal_connect (glxarea, "drag-data-received",
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 #endif
 

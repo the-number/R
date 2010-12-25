@@ -146,8 +146,6 @@ c_main (void *closure, int argc, char *argv[])
   /* initialise the selection mechanism */
   the_cublet_selection = select_create (glxarea, 50, 1, selection_func);
 
-
-
   gtk_widget_add_events (GTK_WIDGET (glxarea),
 			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
 			 | GDK_BUTTON_RELEASE_MASK
@@ -156,24 +154,19 @@ c_main (void *closure, int argc, char *argv[])
 			 | GDK_VISIBILITY_NOTIFY_MASK
 			 | GDK_POINTER_MOTION_MASK);
 
-
   GTK_WIDGET_SET_FLAGS (glxarea, GTK_CAN_FOCUS);
 
-
-  g_signal_connect (glxarea, "key_press_event",
+  g_signal_connect (glxarea, "key-press-event",
 		    G_CALLBACK (cube_orientate_keys), 0);
 
-  g_signal_connect (glxarea, "motion_notify_event",
+  g_signal_connect (glxarea, "motion-notify-event",
 		    G_CALLBACK (cube_orientate_mouse), 0);
 
-  g_signal_connect (glxarea, "scroll_event",
+  g_signal_connect (glxarea, "scroll-event",
 		    G_CALLBACK (z_rotate), 0);
 
   g_signal_connect (glxarea, "expose-event",
 		    G_CALLBACK (enable_selection), the_cublet_selection);
-
-  g_signal_connect (glxarea, "enter-notify-event",
-		    G_CALLBACK (on_crossing), the_cublet_selection);
 
   g_signal_connect (glxarea, "leave-notify-event",
 		    G_CALLBACK (on_crossing), the_cublet_selection);
@@ -181,16 +174,15 @@ c_main (void *closure, int argc, char *argv[])
   g_signal_connect (glxarea, "enter-notify-event",
 		    G_CALLBACK (on_crossing), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button_press_event",
+  g_signal_connect (glxarea, "button-press-event",
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button_release_event",
+  g_signal_connect (glxarea, "button-release-event",
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button_press_event",
+  g_signal_connect (glxarea, "button-press-event",
 		    G_CALLBACK (on_mouse_button), 0);
   
-
   gtk_widget_show_all (window);
 
   gtk_main ();
