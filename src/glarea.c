@@ -1,6 +1,6 @@
 /*
   GNUbik -- A 3 dimensional magic cube game.
-  Copyright (C) 2003, 2004, 2009  John Darrington
+  Copyright (C) 2003, 2004, 2009, 2011  John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -41,10 +41,12 @@
 #include <gdk/gdkglconfig.h>
 
 
-typedef void display (GtkWidget *);
+struct display_context;
 
-static void display_anti_alias (GtkWidget * glxarea);
-static void display_raw (GtkWidget * glxarea);
+typedef void display (struct display_context *);
+
+static display display_anti_alias;
+static display display_raw;
 
 
 struct display_context 
@@ -348,7 +350,7 @@ static gboolean
 handleRedisplay (gpointer data)
 {
   struct display_context *disp_ctx = data;
-  disp_ctx->display_func (GTK_WIDGET (disp_ctx->glwidget));
+  disp_ctx->display_func (disp_ctx);
   g_source_remove (disp_ctx->idle_id);
   disp_ctx->idle_id = 0;
 
@@ -416,12 +418,12 @@ render_scene (GLint jitter)
 /* Reset the bit planes, and render the scene using the accumulation
    buffer for antialiasing*/
 static void
-display_anti_alias (GtkWidget * glxarea)
+display_anti_alias (struct display_context *dc)
 {
   int jitter;
 
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (glxarea);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glxarea);
+  GdkGLContext *glcontext = gtk_widget_get_gl_context (dc->glwidget);
+  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc->glwidget);
 
   if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
     {
@@ -433,7 +435,7 @@ display_anti_alias (GtkWidget * glxarea)
   modelViewInit ();
   ERR_CHECK ("Error in display");
 
-  set_mouse_cursor (glxarea);
+  set_mouse_cursor (dc->glwidget);
 
   glClear (GL_ACCUM_BUFFER_BIT);
   ERR_CHECK ("Error in display");
@@ -455,10 +457,10 @@ display_anti_alias (GtkWidget * glxarea)
    without anti-aliasing.
  */
 static void
-display_raw (GtkWidget * glxarea)
+display_raw (struct display_context *dc)
 {
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (glxarea);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (glxarea);
+  GdkGLContext *glcontext = gtk_widget_get_gl_context (dc->glwidget);
+  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc->glwidget);
 
   if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
     {
@@ -468,7 +470,7 @@ display_raw (GtkWidget * glxarea)
 
   ERR_CHECK ("Error in display");
 
-  set_mouse_cursor (glxarea);
+  set_mouse_cursor (dc->glwidget);
 
   render_scene (0);
 
