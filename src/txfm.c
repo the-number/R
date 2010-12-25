@@ -1,6 +1,6 @@
 /*
     A little library to do matrix arithmetic
-    Copyright (C) 1998  John Darrington
+    Copyright (C) 1998, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,11 +46,11 @@ transform_in_place (const Matrix M, pv x)
   /* Temporary point variable for result */
   pv q = { 0, 0, 0, 0 };
 
-  /* for each row */
-  for (i = 0; i < MATRIX_DIM; i++)
+  /* for each column */
+  for (j = 0; j < MATRIX_DIM; ++j)
     {
-      /* for each column */
-      for (j = 0; j < MATRIX_DIM; j++)
+      /* for each row */
+      for (i = 0; i < MATRIX_DIM; ++i)
 	q[i] += M[i + MATRIX_DIM * j] * x[j];
     }
 
@@ -67,11 +67,11 @@ transform (const Matrix M, const pv x, pv q)
 
   memset (q, 0, sizeof (*q) * MATRIX_DIM);
 
-  /* for each row */
-  for (i = 0; i < MATRIX_DIM; i++)
+  /* for each column */
+  for (j = 0; j < MATRIX_DIM; ++j)
     {
-      /* for each column */
-      for (j = 0; j < MATRIX_DIM; j++)
+      /* for each row */
+      for (i = 0; i < MATRIX_DIM; ++i)
 	q[i] += M[i + MATRIX_DIM * j] * x[j];
     }
 }
