@@ -421,10 +421,6 @@ display_anti_alias (struct display_context *dc)
       return;
     }
 
-  projection_init (0);
-  modelViewInit ();
-  ERR_CHECK ("Error in display");
-
   set_mouse_cursor (dc->glwidget);
 
   glClear (GL_ACCUM_BUFFER_BIT);
