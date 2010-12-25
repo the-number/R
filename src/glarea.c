@@ -66,7 +66,7 @@ static gboolean handleRedisplay (gpointer);
 
 /* Resize callback.  */
 void
-resize_viewport (GtkWidget *w, GtkAllocation * alloc, gpointer data)
+resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data)
 {
   GLint min_dim;
   gint height = alloc->height;
@@ -112,7 +112,7 @@ have_accumulation_buffer (void)
 
 
 static void
-initialize_gl_capability (GtkWidget * glxarea)
+initialize_gl_capability (GtkWidget *glxarea)
 {
   gint i;
 
@@ -344,7 +344,7 @@ handleRedisplay (gpointer data)
 
 
 static void
-set_mouse_cursor (GtkWidget * glxarea)
+set_mouse_cursor (GtkWidget *glxarea)
 {
   const unsigned char *mask_bits;
   const unsigned char *data_bits;
