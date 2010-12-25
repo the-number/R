@@ -26,7 +26,8 @@
 
 void error_check (const char *file, int line_no, const char *string);
 
-
+struct display_context;
+extern struct display_context the_display_context;
 
 GtkWidget *create_gl_area (void);
 

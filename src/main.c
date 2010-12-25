@@ -147,11 +147,11 @@ c_main (void *closure, int argc, char *argv[])
   the_cublet_selection = select_create (glxarea, 50, 1, selection_func);
 
 
-  g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), 0);
+  g_signal_connect (glxarea, "realize", G_CALLBACK (on_realize), &the_display_context);
 
   g_signal_connect (glxarea, "expose-event", G_CALLBACK (on_expose), 0);
 
-  g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize_viewport), 0);
+  g_signal_connect (glxarea, "size-allocate", G_CALLBACK (resize_viewport), &the_display_context);
 
 
   gtk_widget_add_events (GTK_WIDGET (glxarea),

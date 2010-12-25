@@ -54,28 +54,30 @@ struct display_context
   display *display_func;
   GtkWidget *glwidget;
   guint idle_id;
+
+  GdkGLContext *glcontext;
+  GdkGLDrawable *gldrawable;
 };
 
-static struct display_context the_display_context;
+struct display_context the_display_context;
 
 
 static gboolean handleRedisplay (gpointer);
 
 /* Resize callback.  */
 void
-resize_viewport (GtkWidget * w, GtkAllocation * alloc, gpointer data)
+resize_viewport (GtkWidget *w, GtkAllocation * alloc, gpointer data)
 {
   GLint min_dim;
   gint height = alloc->height;
   gint width = alloc->width;
 
+  struct display_context *dc = data;
+
   if (!GTK_WIDGET_REALIZED (w))
     return;
 
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (w);
-
-  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
+  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
     return;
 
   min_dim = (width < height) ? width : height;
@@ -165,6 +167,9 @@ create_gl_area (void)
 
   the_display_context.glwidget = glxarea;
 
+  the_display_context.glcontext = NULL;
+  the_display_context.gldrawable = NULL;
+
   return glxarea;
 }
 
@@ -174,10 +179,11 @@ extern float cursorAngle;
 void
 on_realize (GtkWidget *w, gpointer data)
 {
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (w);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (w);
+  struct display_context *dc = data;
+  dc->glcontext = gtk_widget_get_gl_context (w);
+  dc->gldrawable = gtk_widget_get_gl_drawable (w);
 
-  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
+  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
     {
       g_critical ("Cannot initialise gl drawable\n");
       return;
@@ -188,37 +194,20 @@ on_realize (GtkWidget *w, gpointer data)
   gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
 
   set_the_colours (w, "gnubik");
+
+  if (have_accumulation_buffer ())
+    dc->display_func = display_anti_alias;
+  else
+    dc->display_func = display_raw;
 }
-
-
-
-
 
 
 void
 postRedisplay (void)
 {
-  if (the_display_context.display_func == NULL)
-    {
-      GdkGLContext *glcontext = gtk_widget_get_gl_context (the_display_context.glwidget);
-      GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (the_display_context.glwidget);
-
-      if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
-	{
-	  g_critical ("Cannot set gl drawable current\n");
-	  return;
-	}
-
-      if (have_accumulation_buffer ())
-	the_display_context.display_func = display_anti_alias;
-      else
-	the_display_context.display_func = display_raw;
-    }
-
   if (0 == the_display_context.idle_id)
     the_display_context.idle_id = g_idle_add (handleRedisplay, &the_display_context);
 }
-
 
 
 /* Error string display.  This is always called by a macro
@@ -233,8 +222,6 @@ error_check (const char *file, int line_no, const char *string)
 }
 
 
-
-
 /* Expose callback.  Just redraw the scene */
 gboolean
 on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
@@ -242,8 +229,6 @@ on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
   postRedisplay ();
   return FALSE;
 }
-
-
 
 
 static gboolean button_down = FALSE;
@@ -422,10 +407,7 @@ display_anti_alias (struct display_context *dc)
 {
   int jitter;
 
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (dc->glwidget);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc->glwidget);
-
-  if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
+  if (!gdk_gl_drawable_make_current (dc->gldrawable, dc->glcontext))
     {
       g_critical ("Cannot set gl drawable current\n");
       return;
@@ -448,7 +430,7 @@ display_anti_alias (struct display_context *dc)
 
   glAccum (GL_RETURN, 1.0);
 
-  gdk_gl_drawable_swap_buffers (gldrawable);
+  gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }
 
 
@@ -459,10 +441,7 @@ display_anti_alias (struct display_context *dc)
 static void
 display_raw (struct display_context *dc)
 {
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (dc->glwidget);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc->glwidget);
-
-  if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
+  if (!gdk_gl_drawable_make_current (dc->gldrawable, dc->glcontext))
     {
       g_critical ("Cannot set gl drawable current\n");
       return;
@@ -474,5 +453,5 @@ display_raw (struct display_context *dc)
 
   render_scene (0);
 
-  gdk_gl_drawable_swap_buffers (gldrawable);
+  gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }
