@@ -256,16 +256,9 @@ gboolean
 on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
   struct cublet_selection *cs = data;
-  /* In GTK1-2,  buttons 4 and 5 mean mouse wheel scrolling */
-  if (event->button == 4)
-    rotate_cube (2, 1);
-
-  if (event->button == 5)
-    rotate_cube (2, 0);
 
   if (event->button != 1)
     return FALSE;
-
 
   if (event->type == GDK_BUTTON_PRESS)
     {
