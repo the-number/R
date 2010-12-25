@@ -64,30 +64,6 @@ struct display_context the_display_context;
 
 static gboolean handleRedisplay (gpointer);
 
-/* Resize callback.  */
-void
-resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data)
-{
-  GLint min_dim;
-  gint height = alloc->height;
-  gint width = alloc->width;
-
-  struct display_context *dc = data;
-
-  if (!GTK_WIDGET_REALIZED (w))
-    return;
-
-  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
-    return;
-
-  min_dim = (width < height) ? width : height;
-
-  /* Ensure that cube is always the same proportions */
-  glViewport ((width - min_dim) / 2, (height - min_dim) / 2, min_dim,
-	      min_dim);
-}
-
-
 /* Return true iff there is an accumulation buffer which is
    usable */
 static GLboolean
@@ -110,6 +86,64 @@ have_accumulation_buffer (void)
   return GL_TRUE;
 }
 
+/* Expose callback.  Just redraw the scene */
+static gboolean
+on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
+{
+  struct display_context *dc = data;
+  postRedisplay (dc);
+  return FALSE;
+}
+
+
+static void
+on_realize (GtkWidget *w, gpointer data)
+{
+  struct display_context *dc = data;
+  dc->glcontext = gtk_widget_get_gl_context (w);
+  dc->gldrawable = gtk_widget_get_gl_drawable (w);
+
+  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
+    {
+      g_critical ("Cannot initialise gl drawable\n");
+      return;
+    }
+
+  gtk_widget_set_size_request (w, 300, 300);
+
+  gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
+
+  set_the_colours (w, "gnubik");
+
+  if (have_accumulation_buffer ())
+    dc->display_func = display_anti_alias;
+  else
+    dc->display_func = display_raw;
+}
+
+
+/* Resize callback.  */
+static void
+resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data)
+{
+  GLint min_dim;
+  gint height = alloc->height;
+  gint width = alloc->width;
+
+  struct display_context *dc = data;
+
+  if (!GTK_WIDGET_REALIZED (w))
+    return;
+
+  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
+    return;
+
+  min_dim = (width < height) ? width : height;
+
+  /* Ensure that cube is always the same proportions */
+  glViewport ((width - min_dim) / 2, (height - min_dim) / 2, min_dim,
+	      min_dim);
+}
 
 static void
 initialize_gl_capability (GtkWidget *glxarea)
@@ -142,7 +176,6 @@ initialize_gl_capability (GtkWidget *glxarea)
 
   gtk_widget_set_gl_capability (glxarea, glconfig, 0, TRUE, GDK_GL_RGBA_TYPE);
 }
-
 
 
 GtkWidget *
@@ -181,33 +214,11 @@ create_gl_area (void)
 }
 
 
+
+
+
+
 extern float cursorAngle;
-
-void
-on_realize (GtkWidget *w, gpointer data)
-{
-  struct display_context *dc = data;
-  dc->glcontext = gtk_widget_get_gl_context (w);
-  dc->gldrawable = gtk_widget_get_gl_drawable (w);
-
-  if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
-    {
-      g_critical ("Cannot initialise gl drawable\n");
-      return;
-    }
-
-  gtk_widget_set_size_request (w, 300, 300);
-
-  gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
-
-  set_the_colours (w, "gnubik");
-
-  if (have_accumulation_buffer ())
-    dc->display_func = display_anti_alias;
-  else
-    dc->display_func = display_raw;
-}
-
 
 void
 postRedisplay (struct display_context *dc)
@@ -226,16 +237,6 @@ error_check (const char *file, int line_no, const char *string)
   if (GL_NO_ERROR != (err_state = glGetError ()))
     g_print ("%s:%d %s:  %s\n", file, line_no, string,
 	     gluErrorString (err_state));
-}
-
-
-/* Expose callback.  Just redraw the scene */
-gboolean
-on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
-{
-  struct display_context *dc = data;
-  postRedisplay (dc);
-  return FALSE;
 }
 
 
