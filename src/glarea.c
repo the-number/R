@@ -59,19 +59,6 @@ static struct display_context dc;
 
 static gboolean handleRedisplay (gpointer);
 
-void
-re_initialize_glarea (void)
-{
-  scene_init ();
-  lighting_init ();
-#if WIDGETS_NOT_DISABLED
-  texInit ();
-#endif
-  projection_init (0);
-  modelViewInit ();
-}
-
-
 /* Resize callback.  */
 void
 resize_viewport (GtkWidget * w, GtkAllocation * alloc, gpointer data)
@@ -357,7 +344,6 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
    avoiding unnecessary overhead.  For example when the window
    is covered by another one
 */
-
 static gboolean
 handleRedisplay (gpointer data)
 {
