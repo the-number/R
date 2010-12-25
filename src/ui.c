@@ -69,7 +69,7 @@ is_animating (void)
 void
 rotate_cube (int axis, int dir)
 {
-  /* how many degrees to turn the cube with each hit */
+  /* how emany degrees to turn the cube with each hit */
   GLdouble step = 2.0;
   Quarternion rot;
   vector v;
@@ -100,7 +100,7 @@ rotate_cube (int axis, int dir)
 
 /* orientate the whole cube with the arrow keys */
 void
-arrows (t_keysym keysym, int shifted)
+arrows (guint keysym, int shifted)
 {
   int axis;
   int dir;

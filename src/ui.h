@@ -35,8 +35,6 @@ struct move_data
   short turns; /* Normally 1 or 2 */
 };
 
-typedef guint t_keysym;
-
 struct animation
 {
   /* picture rate in ms. 40ms = 25 frames per sec */
@@ -50,7 +48,7 @@ void abort_animation (void);
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 void selection_func (void);
-void arrows (t_keysym keysym, int shifted);
+void arrows (guint, int shifted);
 int vector2axis (GLfloat *vector);
 void drawCube (GLboolean anc);
 
