@@ -26,6 +26,7 @@ src_gnubik_SOURCES = \
 	src/cube.c src/cube.h \
 	src/cube_i.h \
 	src/cursors.c src/cursors.h \
+	src/dialogs.c src/dialogs.h \
 	src/drwBlock.c src/drwBlock.h \
 	src/glarea-common.c \
 	src/glarea.c src/glarea.h \

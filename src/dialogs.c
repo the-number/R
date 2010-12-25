@@ -35,6 +35,8 @@
 #define _(String) gettext (String)
 #define N_(String) (String)
 
+#if WIDGETS_NOT_DISABLED
+
 extern int frameQty;
 
 static int new_frameQty;
@@ -363,6 +365,7 @@ value_changed (GtkAdjustment * adj, gpointer user_data)
   new_frameQty = adj->value;
 }
 
+#endif
 
 void
 about_dialog (GtkWidget * w, GtkWindow * toplevel)

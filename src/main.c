@@ -98,6 +98,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *form;
   GtkWidget *glxarea;
   GtkWidget *window;
+  GtkWidget *menubar;
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
@@ -125,6 +126,10 @@ c_main (void *closure, int argc, char *argv[])
   form = gtk_vbox_new (FALSE, 0);
 
   gtk_container_add (GTK_CONTAINER (window), form);
+
+  menubar = create_menubar (window);
+
+  gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
   glxarea = create_gl_area ();
 

@@ -160,8 +160,7 @@ create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
 
   GtkAction *mark = gtk_action_new ("mark",
 				    _("Mark"),
-				    _
-				    ("Mark the current place in the sequence of moves"),
+				    _("Mark the current place in the sequence of moves"),
 				    GTK_STOCK_MEDIA_STOP);
 
 
@@ -173,8 +172,7 @@ create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
 
   GtkAction *play = gtk_action_new ("forward",
 				    _("Play"),
-				    _
-				    ("Run forward through the sequence of moves"),
+				    _("Run forward through the sequence of moves"),
 				    GTK_STOCK_MEDIA_PLAY);
 
 
@@ -232,7 +230,7 @@ create_play_toolbar (GtkWidget * container, GtkWidget * toplevel)
   return play_toolbar;
 }
 
-
+#endif
 
 /* Toggle the visibility of a widget */
 static void
@@ -245,6 +243,8 @@ toggle_visibility (GtkToggleAction *ta, gpointer user_data)
 		NULL);
 }
 
+
+
 static const GtkActionEntry action_entries[] =
 {
   {"game-menu-action", NULL, N_("_Game")},
@@ -253,6 +253,7 @@ static const GtkActionEntry action_entries[] =
   {"show-hide-menu-action", NULL, N_("Sho_w/Hide")},
   {"scripts-menu-action", NULL, N_("_Scripts")},
 
+#if 0
   {
    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
    NULL, "preferences", G_CALLBACK (preferences_dialog)
@@ -262,6 +263,7 @@ static const GtkActionEntry action_entries[] =
    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
    NULL, "colours", G_CALLBACK (colour_select_menu)
   },
+#endif
 
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
@@ -275,6 +277,7 @@ static const GtkActionEntry action_entries[] =
 };
 
 
+#if 0
 static const GtkActionEntry game_action_entries[] =
   {
     {
@@ -302,13 +305,18 @@ static const GtkToggleActionEntry toolbar_action_entries[] =
   };
 
 
+#endif
 
 static const char menu_tree[] = "<ui>\
   <menubar name=\"MainMenu\">\
     <menu name=\"game-menu\" action=\"game-menu-action\">\
+"
+/*
      <menuitem name=\"new-game\" action=\"new-game-action\"/> \
-     <menuitem name=\"quit\" action=\"quit-action\"/>\
-    </menu>\
+*/
+"     <menuitem name=\"quit\" action=\"quit-action\"/>\
+    </menu>"
+  /*
     <menu name=\"settings-menu\" action=\"settings-menu-action\">\
      <menuitem name=\"preferences\" action=\"preferences-action\"/>\
      <menuitem name=\"colours\" action=\"colours-action\"/>\
@@ -319,14 +327,17 @@ static const char menu_tree[] = "<ui>\
     </menu>\
     <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
     </menu>\
+  */
+"\
     <menu name=\"help-menu\" action=\"help-menu-action\">\
      <menuitem name=\"about\" action=\"about-action\"/>\
     </menu>\
   </menubar>\
 </ui>";
 
+
 GtkWidget *
-create_menubar (GtkWidget * container, GtkWidget *toplevel)
+create_menubar (GtkWidget *toplevel)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
@@ -344,6 +355,7 @@ create_menubar (GtkWidget * container, GtkWidget *toplevel)
 				sizeof (action_entries) /
 				sizeof (action_entries[0]), toplevel);
 
+#if 0
   gtk_action_group_add_actions (game_action_group, game_action_entries,
 				sizeof (game_action_entries) /
 				sizeof (game_action_entries[0]), NULL);
@@ -355,31 +367,35 @@ create_menubar (GtkWidget * container, GtkWidget *toplevel)
   gtk_action_group_add_toggle_actions (statusbar_action_group, statusbar_action_entries,
 				sizeof (statusbar_action_entries) /
 				sizeof (statusbar_action_entries[0]), &statusbar);
+#endif
 
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, game_action_group, 0);
+
+#if 0
   gtk_ui_manager_insert_action_group (menu_manager, toolbar_action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, statusbar_action_group, 0);
+#endif
 
   if (0 ==
       gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree,
 					 strlen (menu_tree), NULL))
     g_return_val_if_reached (NULL);
 
+#if 0
   startup_guile_scripts (menu_manager);
+#endif
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
   gtk_window_add_accel_group (GTK_WINDOW (toplevel), gtk_ui_manager_get_accel_group (menu_manager));
-
-  gtk_box_pack_start (GTK_BOX (container), menubar, FALSE, TRUE, 0);
 
   gtk_widget_show (menubar);
 
   return menubar;
 }
 
-#endif
+
 
 /* Popup an error dialog box */
 void

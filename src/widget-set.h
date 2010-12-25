@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 #include "cube.h"
 
-GtkWidget *create_menubar (GtkWidget *container, GtkWidget *toplevel);
+GtkWidget *create_menubar (GtkWidget *toplevel);
 
 
 GtkWidget *create_play_toolbar (GtkWidget *container, GtkWidget *toplevel);
