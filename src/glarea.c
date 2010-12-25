@@ -54,7 +54,7 @@ struct display_context
   guint idle_id;
 };
 
-static struct display_context dc;
+static struct display_context the_display_context;
 
 
 static gboolean handleRedisplay (gpointer);
@@ -161,7 +161,7 @@ create_gl_area (void)
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 #endif
 
-  dc.glwidget = glxarea;
+  the_display_context.glwidget = glxarea;
 
   return glxarea;
 }
@@ -196,10 +196,10 @@ on_realize (GtkWidget *w, gpointer data)
 void
 postRedisplay (void)
 {
-  if (dc.display_func == NULL)
+  if (the_display_context.display_func == NULL)
     {
-      GdkGLContext *glcontext = gtk_widget_get_gl_context (dc.glwidget);
-      GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (dc.glwidget);
+      GdkGLContext *glcontext = gtk_widget_get_gl_context (the_display_context.glwidget);
+      GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (the_display_context.glwidget);
 
       if (!gdk_gl_drawable_make_current (gldrawable, glcontext))
 	{
@@ -208,13 +208,13 @@ postRedisplay (void)
 	}
 
       if (have_accumulation_buffer ())
-	dc.display_func = display_anti_alias;
+	the_display_context.display_func = display_anti_alias;
       else
-	dc.display_func = display_raw;
+	the_display_context.display_func = display_raw;
     }
 
-  if (0 == dc.idle_id)
-    dc.idle_id = g_idle_add (handleRedisplay, &dc);
+  if (0 == the_display_context.idle_id)
+    the_display_context.idle_id = g_idle_add (handleRedisplay, &the_display_context);
 }
 
 
