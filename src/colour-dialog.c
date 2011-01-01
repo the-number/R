@@ -308,7 +308,15 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
 	}
     }
 
+
+  
+
   gtk_widget_destroy (dialog);
+
+  for (i = 0; i < 6; ++i)
+    g_free (cds->swatches[i]);
+
+  g_free (cds);
 }
 /* end of colour_select_menu (..... */
 
