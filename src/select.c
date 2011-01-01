@@ -86,6 +86,7 @@ select_create (GtkWidget *rendering, int holdoff,
 		    G_CALLBACK (detect_motion), cs);
 
   cs->action = do_this;
+  cs->stop_detected = FALSE;
 
   cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 
