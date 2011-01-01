@@ -28,7 +28,7 @@
 #include "widget-set.h"
 #include "cursors.h"
 #include "textures.h"
-#include "colour-sel.h"
+#include "colour-dialog.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -181,19 +181,21 @@ initialize_gl_capability (GtkWidget *glxarea)
 GtkWidget *
 create_gl_area (void)
 {
+#if WIDGETS_NOT_DISABLED
   const GtkTargetEntry target[2] = {
     {"text/uri-list", 0, RDRAG_FILELIST},
     {"application/x-color", 0, RDRAG_COLOUR},
   };
+#endif
 
   GtkWidget *glxarea = gtk_drawing_area_new ();
 
   initialize_gl_capability (glxarea);
 
+#if WIDGETS_NOT_DISABLED
   gtk_drag_dest_set (glxarea, GTK_DEST_DEFAULT_ALL,
 		     target, 2, GDK_ACTION_COPY);
 
-#if WIDGETS_NOT_DISABLED
   g_signal_connect (glxarea, "drag-data-received",
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 #endif

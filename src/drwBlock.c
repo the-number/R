@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include "cube.h"
 #include "textures.h"
-#include "colour-sel.h"
+#include "colour-dialog.h"
 
 /* We use a little bit of glut in debug mode */
 #if DEBUG && HAVE_GL_GLUT_H

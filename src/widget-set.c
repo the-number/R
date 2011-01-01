@@ -22,7 +22,7 @@
 #include "ui.h"
 #include "dialogs.h"
 #include "guile-hooks.h"
-#include "colour-sel.h"
+#include "colour-dialog.h"
 #include "glarea.h"
 #include "drwBlock.h"
 
@@ -258,12 +258,12 @@ static const GtkActionEntry action_entries[] =
    "preferences-action", GTK_STOCK_PREFERENCES, NULL,
    NULL, "preferences", G_CALLBACK (preferences_dialog)
   },
+#endif
 
   {
    "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
    NULL, "colours", G_CALLBACK (colour_select_menu)
   },
-#endif
 
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
@@ -344,20 +344,24 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"restart-game\" action=\"restart-game-action\"/> \
      <menuitem name=\"new-game\" action=\"new-game-action\"/> \
      <menuitem name=\"quit\" action=\"quit-action\"/>\
-    </menu>"
+    </menu>\
+    <menu name=\"settings-menu\" action=\"settings-menu-action\">"
   /*
-    <menu name=\"settings-menu\" action=\"settings-menu-action\">\
      <menuitem name=\"preferences\" action=\"preferences-action\"/>\
+  */
+"\
      <menuitem name=\"colours\" action=\"colours-action\"/>\
+"\
+  /*
      <menu name=\"show-hide-menu\" action=\"show-hide-menu-action\">\
      <menuitem name=\"toggle-toolbar\" action=\"toolbar-action\"/>\
      <menuitem name=\"toggle-statusbar\" action=\"statusbar-action\"/>\
      </menu>\
     </menu>\
     <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
-    </menu>\
   */
 "\
+    </menu>\
     <menu name=\"help-menu\" action=\"help-menu-action\">\
      <menuitem name=\"about\" action=\"about-action\"/>\
     </menu>\

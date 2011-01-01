@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 1998, 2003--2004  John Darrington
+    Copyright (C) 1998, 2003, 2004, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

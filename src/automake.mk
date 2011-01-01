@@ -25,6 +25,7 @@ src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS) \
 src_gnubik_SOURCES = \
 	src/cube.c src/cube.h \
 	src/cube_i.h \
+	src/colour-dialog.c src/colour-dialog.h \
 	src/cursors.c src/cursors.h \
 	src/dialogs.c src/dialogs.h \
 	src/drwBlock.c src/drwBlock.h \
