@@ -433,7 +433,7 @@ create_menubar (GtkWidget *toplevel)
 
 /* Popup an error dialog box */
 void
-error_dialog (GtkWidget * parent, const gchar * format, ...)
+error_dialog (GtkWindow *parent, const gchar *format, ...)
 {
   va_list ap;
   GtkWidget *dialog;
@@ -445,7 +445,7 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 
   va_end (ap);
 
-  dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
+  dialog = gtk_message_dialog_new (parent,
 				   GTK_DIALOG_MODAL,
 				   GTK_MESSAGE_ERROR,
 				   GTK_BUTTONS_CLOSE, message);
@@ -453,7 +453,7 @@ error_dialog (GtkWidget * parent, const gchar * format, ...)
 
   gtk_window_set_title (GTK_WINDOW (dialog), _("Gnubik error"));
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
 
   gtk_dialog_run (GTK_DIALOG (dialog));
 
