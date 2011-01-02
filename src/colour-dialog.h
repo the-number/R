@@ -19,29 +19,9 @@
 #ifndef COLOUR_DIALOG_H
 #define COLOUR_DIALOG_H
 
-#include <GL/gl.h>
 #include <gtk/gtk.h>
 
 void colour_select_menu (GtkWidget *w, GtkWindow *window);
-
-enum distrib_type
-{
-  TILED, MOSAIC
-};
-
-enum rendering_type
-{
-  UNDEFINED = 0,
-  COLORED,
-  IMAGED
-};
-
-struct cube_rendering
-{
-  enum rendering_type type;
-  GLuint texName;
-  enum distrib_type distr;
-};
 
 
 #endif

@@ -304,12 +304,16 @@ set_the_colours (GtkWidget *w, const char *progname)
 	{
 	  /* convert colours to GLfloat values,  and set them */
 	  const unsigned short full = ~0;
+	  
+	  struct cube_rendering r;
 
-	  GLfloat red = (GLfloat) xcolour.red / full;
-	  GLfloat green = (GLfloat) xcolour.green / full;
-	  GLfloat blue = (GLfloat) xcolour.blue / full;
+          r.pixbuf = NULL;
+          r.texName = 0;
+	  r.red = (GLfloat) xcolour.red / full;
+	  r.green = (GLfloat) xcolour.green / full;
+	  r.blue = (GLfloat) xcolour.blue / full;
 
-	  setColour (i, red, green, blue);
+       	  setColour (i, &r);
 	}
     }
 #endif

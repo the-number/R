@@ -29,118 +29,16 @@
 #define _(String) gettext (String)
 #define N_(String) (String)
 
-static GLubyte Image[6][checkImageHeight][checkImageWidth][4];
-static unsigned char xbm[6][checkImageHeight * checkImageWidth / 8];
-
-struct pattern_parameters stock_pattern[6];
-
-static void
-texMakePatterns (void)
-{
-  int i, j, c;
-  int k = 0;
-  int x = 0;
-  int shift = 0;
-
-  /* Stripy pattern */
-  for (i = 0; i < checkImageHeight; i++)
-    {
-      for (j = 0; j < checkImageWidth; j++)
-	{
-	  c = ((i & 0x04) == 0) * 255;
-	  Image[k][i][j][0] = (GLubyte) c;
-	  Image[k][i][j][1] = (GLubyte) c;
-	  Image[k][i][j][2] = (GLubyte) c;
-	  Image[k][i][j][3] = (GLubyte) 255;
-	  xbm[k][x] |= (c & 0x01) << shift;
-	  shift++;
-	  if (shift >= 8)
-	    {
-	      shift = 0;
-	      x++;
-	    }
-	}
-    }
-
-  /* Diagonal Striped */
-  k = 1;
-  shift = 0;
-  x = 0;
-  for (i = 0; i < checkImageHeight; i++)
-    {
-      for (j = 0; j < checkImageWidth; j++)
-	{
-	  c = (((i + j) & 0x08) == 0) * 255;
-	  Image[k][i][j][0] = (GLubyte) c;
-	  Image[k][i][j][1] = (GLubyte) c;
-	  Image[k][i][j][2] = (GLubyte) c;
-	  Image[k][i][j][3] = (GLubyte) 255;
-	  xbm[k][x] |= (c & 0x01) << shift;
-	  shift++;
-	  if (shift >= 8)
-	    {
-	      shift = 0;
-	      x++;
-	    }
-	}
-    }
-
-  /* Checked patterns */
-  for (k = 2; k < 6; ++k)
-    {
-      unsigned int foo = 0x01 << k;
-      shift = 0;
-      x = 0;
-      for (i = 0; i < checkImageHeight; i++)
-	{
-	  for (j = 0; j < checkImageWidth; j++)
-	    {
-	      c = ((((i & foo) == 0) ^ ((j & foo) == 0))) * 255;
-	      Image[k][i][j][0] = (GLubyte) c;
-	      Image[k][i][j][1] = (GLubyte) c;
-	      Image[k][i][j][2] = (GLubyte) c;
-	      Image[k][i][j][3] = (GLubyte) 255;
-	      xbm[k][x] |= (c & 0x01) << shift;
-	      shift++;
-	      if (shift >= 8)
-		{
-		  shift = 0;
-		  x++;
-		}
-	    }
-	}
-    }
-}
-
-
 void
 texInit (void)
 {
-  int i;
   GLuint texName[6];
 
-  texMakePatterns ();
   glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
   glGenTextures (6, texName);
 
   glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  for (i = 0; i < 6; ++i)
-    {
-      stock_pattern[i].texName = texName[i];
-
-      glBindTexture (GL_TEXTURE_2D, texName[i]);
-      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-      glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth,
-		    checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, Image[i]);
-
-      stock_pattern[i].data = xbm[i];
-      stock_pattern[i].texFunc = GL_MODULATE;
-    }
 }
 
 /* Create a texture from a gdk_pixbuf.

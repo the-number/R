@@ -1,6 +1,6 @@
 /*
   The routines which actually draw the blocks of the cube.
-  Copyright (C) 1998, 2003, 2010 John Darrington
+  Copyright (C) 1998, 2003, 2011 John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -48,32 +48,27 @@ renderString (const char *string)
 #endif
 
 
-
-static struct cube_rendering current_face_rendering[6];
-
-static struct cube_rendering *rendering[6] = {
- &current_face_rendering[0],
- &current_face_rendering[1],
- &current_face_rendering[2],
- &current_face_rendering[3],
- &current_face_rendering[4],
- &current_face_rendering[5],
+static struct cube_rendering rendering[6] = {
+  {SURFACE_COLOURED, 0, NULL, 1.0, 0.0, 0.0},
+  {SURFACE_COLOURED, 0, NULL, 0.0, 1.0, 0.0},
+  {SURFACE_COLOURED, 0, NULL, 0.0, 0.0, 1.0},
+  {SURFACE_COLOURED, 0, NULL, 0.0, 1.0, 1.0},
+  {SURFACE_COLOURED, 0, NULL, 1.0, 0.0, 1.0},
+  {SURFACE_COLOURED, 0, NULL, 1.0, 1.0, 0.0}
 };
 
 typedef enum
 {
-  COL_RED = 0, COL_GREEN, COL_BLUE,
-  COL_CYAN, COL_MAGENTA, COL_YELLOW,
-  COL_BLACK, COL_WHITE
+  COL_BLACK,
+  COL_WHITE
 } colour_type;
 
-static GLfloat colors[][3] = {
-  {1.0, 0.0, 0.0},
-  {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0},
-  {0.0, 1.0, 1.0}, {1.0, 0.0, 1.0}, {1.0, 1.0, 0.0},
+static const GLfloat colors[][3] =
+{
   {0.0, 0.0, 0.0},		/*Black */
   {1.0, 1.0, 1.0}		/*White */
 };
+
 
 
 static void draw_face (GLint face, int block_id, GLboolean draw_names);
@@ -83,7 +78,9 @@ static void draw_face (GLint face, int block_id, GLboolean draw_names);
    appropriate place */
 #define SHIFT(i) ((i%2) * 2 -1)
 
-/*  render the block pointed to by attrib. */
+/*  Render the block pointed to by BLOCK_ID.
+    If ANCILLIARY is true, render the ancialliary components also.
+ */
 void
 draw_block (int block_id, GLboolean ancilliary)
 {
@@ -284,25 +281,25 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
     }
 
   /* Now do the colours  (ie the little sticky labels) */
-  glColor3fv (colors[face]);
+  glColor3f (rendering[face].red, rendering[face].green, rendering[face].blue);
   glTranslatef (0, 0, 0.01);
 
 
   glScalef (lratio, lratio, lratio);
 
-  if (-1 == rendering[face]->texName)
+  if (-1 == rendering[face].texName)
     {
       glDisable (GL_TEXTURE_2D);
     }
   else
     {
       glEnable (GL_TEXTURE_2D);
-      if (rendering[face]->type == IMAGED)
+      if (rendering[face].surface != SURFACE_COLOURED)
 	glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
       else
 	glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-      glBindTexture (GL_TEXTURE_2D, rendering[face]->texName);
+      glBindTexture (GL_TEXTURE_2D, rendering[face].texName);
     }
 
   glBegin (GL_POLYGON);
@@ -312,7 +309,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
     GLint xpos = 0;
     GLint ypos = 0;
 
-    if (rendering[face]->type == IMAGED && rendering[face]->distr == MOSAIC)
+    if (rendering[face].surface == SURFACE_MOSAIC)
       {
 	switch (face)
 	  {
@@ -421,18 +418,20 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
 }
 
 void
-setColour (int i, GLfloat red, GLfloat green, GLfloat blue)
+setColour (int i, const struct cube_rendering *cr)
 {
-  colors[i][0] = red;
-  colors[i][1] = green;
-  colors[i][2] = blue;
+  rendering[i] = *cr;
+
+  if (rendering[i].pixbuf)
+    g_object_ref (rendering[i].pixbuf);
+
+  if (cr->pixbuf)
+    g_object_unref (cr->pixbuf);
 }
 
 
 void
-getColour (int i, GLfloat *red, GLfloat *green, GLfloat *blue)
+getColour (int i, struct cube_rendering *cr)
 {
-  *red = colors[i][0];
-  *green = colors[i][1];
-  *blue = colors[i][2];
+  *cr = rendering[i];
 }

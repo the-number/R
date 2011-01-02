@@ -18,18 +18,34 @@
 #ifndef DRW_BLOCKS_H
 #define DRW_BLOCKS_H
 
-#include "cube.h"
 #include <GL/gl.h>
-#include "textures.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+enum surface
+{
+  SURFACE_COLOURED,
+  SURFACE_TILED,
+  SURFACE_MOSAIC
+};
+
+struct cube_rendering
+{
+  enum surface surface;
+  GLuint texName;
+  GdkPixbuf *pixbuf;
+
+  GLfloat red;
+  GLfloat green;
+  GLfloat blue;
+};
+
 
 /* The texture names for each face */
-extern struct pattern_parameters face_patterns[6];
-
 void draw_block (int block_id, GLboolean anc);
 
-void setColour (int i, GLfloat red, GLfloat green, GLfloat blue);
+void setColour (int i, const struct cube_rendering *cr);
 
-void getColour (int i, GLfloat *red, GLfloat *green, GLfloat *blue);
+void getColour (int i, struct cube_rendering *cr);
 
 
 #endif
