@@ -35,10 +35,6 @@ quarternion_set_to_unit (Quarternion * q)
 void
 quarternion_to_matrix (Matrix M, const Quarternion * q)
 {
-  int i;
-  for (i = 0; i < MATRIX_DIM * MATRIX_DIM; ++i)
-    M[i] = 99;
-
   /* Diagonals ... */
   set (M, 0, 0, q->w * q->w + q->x * q->x - q->y * q->y - q->z * q->z);
 
@@ -88,23 +84,13 @@ quarternion_to_matrix (Matrix M, const Quarternion * q)
 void
 quarternion_from_rotation (Quarternion * q, vector u, float theta)
 {
-  float radians = theta * M_PI / 180.0;
+  const float radians = theta * M_PI / 180.0;
 
-  float s = cos (radians / 2.0);
+  q->w = cos (radians / 2.0);
 
-  vector v;
-  int i;
-
-  for (i = 0; i < MATRIX_DIM; ++i)
-    {
-      v[i] = u[i] * sin (radians / 2.0);
-    }
-
-  q->w = s;
-  q->x = v[0];
-  q->y = v[1];
-  q->z = v[2];
-
+  q->x = u[0] * sin (radians / 2.0);
+  q->y = u[1] * sin (radians / 2.0);
+  q->z = u[2] * sin (radians / 2.0);
 }
 
 
