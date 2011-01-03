@@ -1,8 +1,4 @@
-* Extend it so that N x M x P sized cubes are supported.
-
 * See if you can get the animations any faster.
-
-* Add some more localisations.  Volunteers please.
 
 * Some insane individual might want a 4 dimensional version.  This
   could be  achieved by splitting the top level window into 8
