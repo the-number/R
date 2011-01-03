@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003, 2004, 2010  John Darrington
+    Copyright (C) 2003, 2004, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -401,7 +401,7 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 					   _("translator-credits"));
 
   gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
-				  "Copyright © 2011; John Darrington, Dale Mellor");
+				  "Copyright © 1998, 2003 John Darrington;\n 2004 John Darrington, Dale Mellor;\n2011 John Darrington");
 
   gtk_dialog_run (GTK_DIALOG (dialog));
 
