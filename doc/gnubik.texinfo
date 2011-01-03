@@ -13,6 +13,7 @@ program.
 
 Copyright @copyright{} 1998, 2003 John Darrington
               2004       John Darrington, Dale Mellor
+              2011       John Darrington
  
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -103,9 +104,10 @@ You can access some of these parameters from a menu whilst the program is
 running.
 
 @table @code
-@item -z @var{n}
+@item -z @var{n}[,@var{m}[,@var{p}]]
 @item --size=@var{n}   
-Draws a cube of dimension @var{n}, where @var{n} is positive.  The default value of @var{n} is 3.
+Draws a cube of dimension @var{n} by @var{m} by @var{p}, where @var{n}, @var{m} and @var{p} are positive.
+The size is 3 by 3 by 3.
 
 @item -a @var{m}
 @item --animation=@var{m}

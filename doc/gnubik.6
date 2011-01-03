@@ -15,13 +15,13 @@
 .\"    You should have received a copy of the GNU General Public License
 .\"    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 .\" $Id: gnubik.6,v 1.2 2008/01/16 10:35:09 jmd Exp $
-.TH gnubik  6 "16 June 2003" JMD  "GNU Utility Documentation"
+.TH gnubik  6 "01 January 2011" JMD  "GNU Utility Documentation"
 .SH NAME
 gnubik \-  an interactive, graphic Magic cube program.
 .SH SYNOPSIS
 .B
 gnubik 
-[window_system_options] [-hvs]  [-z n]  [-a m]
+[window_system_options] [-hvs]  [-z n[,m[,p]]]  [-a m]
 
 .SH DESCRIPTION
 This is a program which displays a 3 dimensional image of a magic cube, 
@@ -56,14 +56,14 @@ The mouse cursor will indicate the direction of rotation.
 .SH OPTIONS
 The following options may be specified on the command line at invocation.  
 .TP
-.B -z n
-Draws a cube of dimension \fBn\fP, where \fBn\fP is positive.  
-The default value of \fBn\fP is 3.
+.B -z n,m,p
+Draws a cube of size \fBn\fP x \fBm\fP x \fBp\fP, where \fBn\fP,\fBm\fP and \fBp\fP are positive.  
+The default size is 3 x 3 x 3.
 .TP
 .B -a m
 When rotating parts of the cube, show m intermediate positions.  The default for this
-value is 2.  Setting to a higher value, will give smoother animations, but will slow down
-the whole program.
+value is 2.  Setting to a higher value, will give smoother animations, but will result in 
+a slower program.
 .TP 
 .B -s
 Starts with the cube already solved.  By default, it starts in a random position.
@@ -75,17 +75,16 @@ Display a help message and exit.
 Display version number and then exit.
 
 .SH IMPLEMENTATION
-The code for gnubik was written in ANSI compliant C, using the Mesa graphics 
-library, and the Gtk+ library.  As such, it should be easy to generate 
-a version for any system complying with these standards.  The program was developed
-on a GNU/Linux platform running XFree86.
+The code for gnubik is written in C and Scheme. It uses the Mesa/OpenGL graphics 
+library, and the Gtk+ library and Guile.  As such, it should be easy to generate 
+a version for any system complying with these standards. 
 .SH BUGS
 .LP
-The rendering process is slow - especially over a network, since display lists aren't currently used.  The entire 
+The rendering process is slower than it could be, since display lists aren't currently used.  The entire 
 image is re-rendered, during each refresh, regardless of which components have changed their appearance.  
 .SH COPYRIGHT
 .LP
-Copyright (C) 1998 John Darrington.
+Copyright (C) 1998, 2011 John Darrington.
 .LP
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
