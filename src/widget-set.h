@@ -24,8 +24,8 @@
 
 GtkWidget *create_menubar (GtkWidget *toplevel);
 
+GtkWidget *create_play_toolbar (GtkWidget *toplevel);
 
-GtkWidget *create_play_toolbar (GtkWidget *container, GtkWidget *toplevel);
 enum
 {
   PLAY_TOOLBAR_BACK = 0x0b << 0,
