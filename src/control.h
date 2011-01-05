@@ -1,6 +1,6 @@
 /*
-    routines which actually draw the blocks of the cube.
-    Copyright (C) 1998  John Darrington
+    Control functions for the GNUbik Cube
+    Copyright (C) 1998, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,39 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef DRW_BLOCKS_H
-#define DRW_BLOCKS_H
 
-#include <GL/gl.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
+#ifndef CONTROL_H
+#define CONTROL_H
 
-enum surface
-{
-  SURFACE_COLOURED,
-  SURFACE_TILED,
-  SURFACE_MOSAIC
-};
+#include <glib.h>
 
-struct cube_rendering
-{
-  enum surface surface;
-  GLuint texName;
-  GdkPixbuf *pixbuf;
+extern float cursorAngle;
 
-  GLfloat red;
-  GLfloat green;
-  GLfloat blue;
-};
-
-
-/* The texture names for each face */
-void draw_block (int block_id, GLboolean anc);
-
-void drawCube (GLboolean anc);
-
-void setColour (int i, const struct cube_rendering *cr);
-
-void getColour (int i, struct cube_rendering *cr);
+/* 
+   This func is called whenever a new set of polygons have been selected.
+ */
+void selection_func (gpointer data);
 
 
 #endif

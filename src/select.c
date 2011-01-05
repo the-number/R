@@ -34,12 +34,14 @@ in the cube (if any) the cursor is located upon.
 #include "select.h"
 #include <float.h>
 #include <stdio.h>
-#include "ui.h"
+
 
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
 #include <assert.h>
+
+#include "drwBlock.h"
 
 static gboolean detect_motion (GtkWidget * w,
 			       GdkEventMotion * event, gpointer user_data);

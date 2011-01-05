@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003  John Darrington
+    Copyright (C) 2003, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include "glarea.h"
 #include "cube.h"
 
+#include <gdk/gdkkeysyms.h>
+
 struct scene_view 
 {
   GLdouble fovy ;
@@ -34,7 +36,7 @@ struct scene_view
 static struct scene_view the_scene;
 
 /* Start with the unit quarternion */
-Quarternion cube_view = { 1, 0, 0, 0 };
+Quarternion the_cube_orientation = { 1, 0, 0, 0 };
 
 struct jitter_v
 {
@@ -72,7 +74,7 @@ modelViewInit (void)
 	     origin[0], origin[1], origin[2], 0.0, 1.0, 0.0);
 
 
-  quarternion_to_matrix (m, &cube_view);
+  quarternion_to_matrix (m, &the_cube_orientation);
   glMultMatrixf (m);
 
   /* skew the cube */
@@ -188,3 +190,90 @@ lighting_init (void)
   glEnable (GL_LIGHT0);
   glEnable (GL_LIGHT1);
 }
+
+
+
+/* Rotate cube about axis (screen relative) */
+void
+rotate_cube (int axis, int dir)
+{
+  /* how emany degrees to turn the cube with each hit */
+  GLdouble step = 2.0;
+  Quarternion rot;
+  vector v;
+
+  if (dir)
+    step = -step;
+
+  switch (axis)
+    {
+    case 0:
+      v[1] = v[2] = 0;
+      v[0] = 1;
+      break;
+    case 1:
+      v[0] = v[2] = 0;
+      v[1] = 1;
+      break;
+    case 2:
+      v[0] = v[1] = 0;
+      v[2] = 1;
+      break;
+    }
+
+  quarternion_from_rotation (&rot, v, step);
+  quarternion_pre_mult (&the_cube_orientation, &rot);
+  postRedisplay (&the_display_context);
+}
+
+
+
+/* orientate the whole cube with the arrow keys */
+void
+arrows (guint keysym, int shifted)
+{
+  int axis;
+  int dir;
+
+  switch (keysym)
+    {
+    case GDK_Right:
+      if (shifted)
+	{
+	  dir = 0;
+	  axis = 2;
+	}
+      else
+	{
+	  dir = 1;
+	  axis = 1;
+	}
+      break;
+    case GDK_Left:
+
+      if (shifted)
+	{
+	  dir = 1;
+	  axis = 2;
+	}
+      else
+	{
+	  dir = 0;
+	  axis = 1;
+	}
+      break;
+    case GDK_Up:
+      axis = 0;
+      dir = 0;
+      break;
+    case GDK_Down:
+      axis = 0;
+      dir = 1;
+      break;
+    default:
+      return;
+    }
+
+  rotate_cube (axis, dir);
+}
+

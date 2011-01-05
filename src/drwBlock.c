@@ -31,6 +31,8 @@
 #include "textures.h"
 #include "colour-dialog.h"
 
+#include "ui.h"
+
 /* We use a little bit of glut in debug mode */
 #if DEBUG && HAVE_GL_GLUT_H
 #include <GL/glut.h>
@@ -435,3 +437,125 @@ getColour (int i, struct cube_rendering *cr)
 {
   *cr = rendering[i];
 }
+
+
+
+/* render the cube */
+void
+drawCube (GLboolean ancilliary)
+{
+  int i;
+
+#if DEBUG
+  {
+    GLfloat offset = 1.6 * cube_get_size (the_cube, 0);
+
+    /* Show the directions of the axes */
+    glColor3f (1, 1, 1);
+
+    /* X axis */
+    glPushMatrix ();
+    glTranslatef (-offset, -offset, 0);
+    glBegin (GL_LINES);
+    glVertex3f (0, 0, 0);
+    glVertex3f (2 * cube_get_size (the_cube, 0), 0, 0);
+    glEnd ();
+
+
+    glRasterPos3d (offset * 1.1, 0, 0);
+    glutBitmapCharacter (GLUT_BITMAP_9_BY_15, '0');
+
+    glPopMatrix ();
+
+    /* Y axis */
+    glPushMatrix ();
+    glTranslatef (-offset, -offset, 0);
+    glBegin (GL_LINES);
+    glVertex3f (0, 0, 0);
+    glVertex3f (0, 2 * cube_get_size (the_cube, 1), 0);
+    glEnd ();
+
+    glRasterPos3d (0.1 * offset, offset, 0);
+    glutBitmapCharacter (GLUT_BITMAP_9_BY_15, '1');
+
+    glPopMatrix ();
+
+    /* Z axis */
+    glPushMatrix ();
+    glTranslatef (-offset, -offset, 0);
+
+    glBegin (GL_LINES);
+    glVertex3f (0, 0, 0);
+    glVertex3f (0, 0, 2 * cube_get_size (the_cube, 2));
+    glEnd ();
+
+    glRasterPos3d (0.1 * offset, 0, offset);
+    glutBitmapCharacter (GLUT_BITMAP_9_BY_15, '2');
+
+    glPopMatrix ();
+
+  }
+#endif
+
+  for (i = 0; i < cube_get_number_of_blocks (the_cube); i++)
+    {
+      int j = 0;
+
+      /* Find out if this block is one of those currently being
+         turned.  If so,  j will be < turning_block_qty */
+      if (animation.current_move && animation.current_move->blocks_in_motion)
+	for (j = 0; j < animation.current_move->blocks_in_motion->number_blocks; j++)
+	  {
+	    if (animation.current_move->blocks_in_motion->blocks[j] == i)
+	      break;
+	  }
+
+      glPushMatrix ();
+      if (animation.current_move &&
+	  animation.current_move->blocks_in_motion &&
+	  j != animation.current_move->blocks_in_motion->number_blocks)
+	{
+	  /* Blocks which are in motion,  need to be animated.
+	     so we rotate them according to however much the
+	     animation angle is */
+	  GLdouble angle = animation.animation_angle;
+
+	  int unity = 1;
+	  if (!animation.current_move->dir)
+	    unity = -1;
+
+	  switch (animation.current_move->axis)
+	    {
+	    case 0:
+	    case 3:
+	      glRotatef (angle, unity, 0, 0);
+	      break;
+	    case 1:
+	    case 4:
+	      glRotatef (angle, 0, unity, 0);
+	      break;
+	    case 2:
+	    case 5:
+	      glRotatef (angle, 0, 0, unity);
+	      break;
+	    }
+	}
+      {
+	Matrix M;
+
+	/* place the block in its current position and
+	   orientation */
+	get_block_transform (the_cube, i, M);
+	glPushMatrix ();
+	glMultMatrixf (M);
+
+	/* and draw the block */
+	draw_block (i, ancilliary);
+	glPopMatrix ();
+
+      }
+
+      glPopMatrix ();
+    }
+}
+

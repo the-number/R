@@ -46,6 +46,9 @@ gboolean cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer dat
 gboolean on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data);
 gboolean cube_controls (GtkWidget *w, GdkEventButton *event, gpointer data);
 
+/* Rotate the cube about the axis (screen relative) in direction dir */
+void rotate_cube (int axis, int dir);
+void arrows (guint, int shifted);
 
 extern struct cublet_selection *the_cublet_selection;
 

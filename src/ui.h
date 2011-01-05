@@ -1,6 +1,6 @@
 /*
     User Interface functions for the GNUbik Cube
-    Copyright (C) 1998  John Darrington
+    Copyright (C) 1998, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 
 #include <gtk/gtk.h>
 #include <GL/gl.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "cube.h"
 
@@ -39,30 +38,13 @@ struct animation
   int frameQty ;
 };
 
-void abort_animation (void);
+extern struct animation animation;
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 void selection_func (gpointer data);
-void arrows (guint, int shifted);
-int vector2axis (GLfloat *vector);
-void drawCube (GLboolean anc);
 
-/* 
-void request_stop (void);
-void request_play (void);
-void request_forward (void);
-void request_back (void);
-void request_truncate_move_queue (void);
-void request_delayed_rotation (struct move_data *data);
-void request_mark_move_queue (void);
-void request_queue_rewind (void);
-void request_fast_forward (void);
 
-void request_rotation (struct move_data *data);
-*/
 
-/* Rotate the cube about the axis (screen relative) in direction dir */
-void rotate_cube (int axis, int dir);
 
 int is_animating (void);
 

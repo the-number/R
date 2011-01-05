@@ -52,8 +52,6 @@ struct application_options
 
 static struct application_options opts = { false, {3,3,3}};
 
-extern struct animation animation;
-
 /* The move that will take place when the mouse is clicked */
 static struct move_data the_pending_movement = { -1, -1, -1, 0 };
 
