@@ -92,6 +92,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *glxarea;
   GtkWidget *window;
   GtkWidget *menubar;
+  GtkWidget *playbar;
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
@@ -117,15 +118,15 @@ c_main (void *closure, int argc, char *argv[])
 
   /* create a vbox to hold the drawing area and the menubar */
   form = gtk_vbox_new (FALSE, 0);
-
   gtk_container_add (GTK_CONTAINER (window), form);
 
   menubar = create_menubar (window);
-
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
-  glxarea = create_gl_area ();
+  playbar = create_play_toolbar (window);
+  gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
+  glxarea = create_gl_area ();
   gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
 
 
