@@ -230,7 +230,7 @@ sin_quadrant (int quarters)
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
 int
-rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice)
+rotate_slice (struct cube *cube, int turns, short dir, short axis, const Slice_Blocks *slice)
 {
   /* Iterator for array of blocks in the current slice. */
   const int *i;
@@ -251,16 +251,16 @@ rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice
 
   /* ... and then assigning values to the active elements. */
 
-  rotation[(slice->axis + 1) % 3 + 4 * ((slice->axis + 1) % 3)]
+  rotation[(axis + 1) % 3 + 4 * ((axis + 1) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(slice->axis + 2) % 3 + 4 * ((slice->axis + 2) % 3)]
+  rotation[(axis + 2) % 3 + 4 * ((axis + 2) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(slice->axis + 1) % 3 + 4 * ((slice->axis + 2) % 3)]
+  rotation[(axis + 1) % 3 + 4 * ((axis + 2) % 3)]
     = sin_quadrant (turns);
 
-  rotation[(slice->axis + 2) % 3 + 4 * ((slice->axis + 1) % 3)]
+  rotation[(axis + 2) % 3 + 4 * ((axis + 1) % 3)]
     = -sin_quadrant (turns);
 
   /* Apply the rotation matrix to all the blocks in this slice. We iterate
@@ -314,11 +314,6 @@ identify_blocks_2 (const struct cube * cube,
       free (ret);
       return NULL;
     }
-
-
-  /* We need to pass the axis on to the rotate routine. */
-
-  ret->axis = axis;
 
 
   /* Iterate over all the blocks in the cube. When we find one whose
@@ -556,7 +551,7 @@ cube_scramble (struct cube *cube)
       if ( !cube_square_axis (cube, axis))
 	turns = 2;
 
-      rotate_slice (cube, turns, 0, slice);
+      rotate_slice (cube, turns, 0, axis, slice);
 
       free_slice_blocks (slice);
     }

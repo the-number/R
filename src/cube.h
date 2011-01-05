@@ -65,7 +65,6 @@ typedef struct _Slice_Blocks
 {
   int *blocks;
   int number_blocks;
-  int axis;
 
 } Slice_Blocks;
 
@@ -87,7 +86,7 @@ Slice_Blocks *identify_blocks_2 (const struct cube *cube,
     identify_blocks. The return value is zero on success,  one otherwise. The
     slice_blocks object must have been previously created with one of the
     identify_blocks functions. */
-int rotate_slice (struct cube *cube, int turns, short dir, const Slice_Blocks *slice_blocks);
+int rotate_slice (struct cube *cube, int turns, short dir, short axis, const Slice_Blocks *slice_blocks);
 
 
 /* Get a copy of the tranformation of the specified block. The return value is

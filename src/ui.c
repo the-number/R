@@ -422,7 +422,7 @@ animate (gpointer data)
       animation.animation_angle = 0.0;
 
       /* and tell the blocks.c library that a move has taken place */
-      rotate_slice (the_cube, md->turns, md->dir, blocks_in_motion);
+      rotate_slice (the_cube, md->turns, md->dir, md->axis, blocks_in_motion);
 
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;
