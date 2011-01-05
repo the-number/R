@@ -68,6 +68,16 @@ typedef struct _Slice_Blocks
 
 } Slice_Blocks;
 
+/* A structure containing information about a movement taking place. */
+struct move_data
+{
+  int slice;
+  short dir;   /* 0 = cw, 1 = ccw */
+  short axis;  /* [0,2] */
+  short turns; /* Normally 1 or 2 */
+
+  Slice_Blocks *blocks_in_motion;
+};
 
 /* Free the resources associated with an instance of the above structure. */
 void free_slice_blocks (Slice_Blocks *slice_blocks);
@@ -82,12 +92,8 @@ Slice_Blocks *identify_blocks (const struct cube *cube,
 Slice_Blocks *identify_blocks_2 (const struct cube *cube,
 				 GLfloat slice, int axis);
 
-/*  Rotate a complete slice,  as identified by a prior call to
-    identify_blocks. The return value is zero on success,  one otherwise. The
-    slice_blocks object must have been previously created with one of the
-    identify_blocks functions. */
-int rotate_slice (struct cube *cube, int turns, short dir, short axis, const Slice_Blocks *slice_blocks);
-
+/*  Rotate a complete slice. */
+void rotate_slice (struct cube *, const struct move_data *);
 
 /* Get a copy of the tranformation of the specified block. The return value is
    zero on success,  one otherwise. */

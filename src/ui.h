@@ -25,17 +25,6 @@
 
 #include "cube.h"
 
-/* A structure containing information about a movement taking place. */
-struct move_data
-{
-  int slice;
-  short dir;   /* 0 = cw, 1 = ccw */
-  short axis;  /* [0,2] */
-  short turns; /* Normally 1 or 2 */
-
-  Slice_Blocks *blocks_in_motion;
-};
-
 struct animation
 {
   /* picture rate in ms. 40ms = 25 frames per sec */

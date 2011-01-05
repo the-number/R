@@ -229,9 +229,11 @@ sin_quadrant (int quarters)
 /* Rotate the slice identified by a prior call to identify_blocks,  about the
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
-int
-rotate_slice (struct cube *cube, int turns, short dir, short axis, const Slice_Blocks *slice)
+void
+rotate_slice (struct cube *cube, const struct move_data *md)
 {
+  int turns = md->turns;
+
   /* Iterator for array of blocks in the current slice. */
   const int *i;
 
@@ -243,33 +245,31 @@ rotate_slice (struct cube *cube, int turns, short dir, short axis, const Slice_B
     0, 0, 1, 0,
     0, 0, 0, 1
   };
-
  
   /* Rotating backward 90 deg is the same as forward by 270 deg */
-  if (dir == 0 && turns == 1)
+  if (md->dir == 0 && md->turns == 1)
     turns = 3;
 
   /* ... and then assigning values to the active elements. */
 
-  rotation[(axis + 1) % 3 + 4 * ((axis + 1) % 3)]
+  rotation[(md->axis + 1) % 3 + 4 * ((md->axis + 1) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(axis + 2) % 3 + 4 * ((axis + 2) % 3)]
+  rotation[(md->axis + 2) % 3 + 4 * ((md->axis + 2) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(axis + 1) % 3 + 4 * ((axis + 2) % 3)]
+  rotation[(md->axis + 1) % 3 + 4 * ((md->axis + 2) % 3)]
     = sin_quadrant (turns);
 
-  rotation[(axis + 2) % 3 + 4 * ((axis + 1) % 3)]
+  rotation[(md->axis + 2) % 3 + 4 * ((md->axis + 1) % 3)]
     = -sin_quadrant (turns);
 
   /* Apply the rotation matrix to all the blocks in this slice. We iterate
      backwards to avoid recalculating the end of the loop with every
      iteration. */
-  for (i = slice->blocks + slice->number_blocks - 1; i >= slice->blocks; --i)
+  for (i = md->blocks_in_motion->blocks + md->blocks_in_motion->number_blocks - 1;
+       i >= md->blocks_in_motion->blocks; --i)
     pre_mult (rotation, cube->blocks[*i].transformation);
-
-  return 0;
 }
 /* End of function rotate_slice (). */
 
@@ -551,7 +551,7 @@ cube_scramble (struct cube *cube)
       if ( !cube_square_axis (cube, axis))
 	turns = 2;
 
-      rotate_slice (cube, turns, 0, axis, slice);
+      //      rotate_slice (cube, turns, 0, axis, slice);
 
       free_slice_blocks (slice);
     }
