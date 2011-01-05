@@ -49,6 +49,9 @@ struct animation
 
 void abort_animation (void);
 
+/* The move that will take place when the mouse is clicked */
+extern struct move_data the_pending_movement;
+
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 void selection_func (gpointer data);
 void arrows (guint, int shifted);

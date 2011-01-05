@@ -52,7 +52,7 @@ static void animate_rotation (struct move_data * data);
 
 
 /* The move that will take place when the mouse is clicked */
-static struct move_data pending_movement = { -1, -1, -1, 0 };
+struct move_data the_pending_movement = { -1, -1, -1, 0 };
 
 
 extern Quarternion cube_view;
@@ -290,10 +290,10 @@ drawCube (GLboolean ancilliary)
 	  GLdouble angle = animation.animation_angle;
 
 	  int unity = 1;
-	  if (!pending_movement.dir)
+	  if (!the_pending_movement.dir)
 	    unity = -1;
 
-	  switch (pending_movement.axis)
+	  switch (the_pending_movement.axis)
 	    {
 	    case 0:
 	    case 3:
@@ -348,7 +348,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
          turn direction could get out of sync */
 
       inverted_rotation = 1;
-      pending_movement.dir = !pending_movement.dir;
+      the_pending_movement.dir = !the_pending_movement.dir;
 
       postRedisplay (&the_display_context);
       break;
@@ -358,10 +358,10 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	{
 
 	  /* Insist upon 180 degree turns if the section is non-square */
-	  if ( !cube_square_axis (the_cube, pending_movement.axis))
-	    pending_movement.turns = 2;
+	  if ( !cube_square_axis (the_cube, the_pending_movement.axis))
+	    the_pending_movement.turns = 2;
 
-	  animate_rotation (&pending_movement);
+	  animate_rotation (&the_pending_movement);
 	}
 
       postRedisplay (&the_display_context);
@@ -478,6 +478,7 @@ float cursorAngle;
 void
 selection_func (gpointer data)
 {
+  struct move_data *pending_movement = data;
   const struct facet_selection *selection = 0;
 
   if (animation.animation_in_progress)
@@ -489,29 +490,28 @@ selection_func (gpointer data)
       vector v;
 
       getTurnAxis (selection, turn_axis);
-      pending_movement.axis = vector2axis (turn_axis);
+      pending_movement->axis = vector2axis (turn_axis);
 
 
-      pending_movement.dir = turnDir (turn_axis);
+      pending_movement->dir = turnDir (turn_axis);
       if (inverted_rotation)
-	pending_movement.dir = !pending_movement.dir;
+	pending_movement->dir = !pending_movement->dir;
 
 
       /* !!!!!! We are accessing private cube data. */
-      pending_movement.slice
+      pending_movement->slice
 	=
 	the_cube->blocks[selection->block].transformation[12 +
-							  pending_movement.axis];
+							  pending_movement->axis];
       
       /* Default to a turn of 90 degrees */
-      pending_movement.turns = 1;
+      pending_movement->turns = 1;
 
 
       /* Here we take the orientation of the selected quadrant and multiply it
          by the projection matrix.  The result gives us the angle (on the screen)
 	 at which the mouse cursor needs to be drawn. */
       {
-
 	Matrix proj;
 
 	glGetFloatv (GL_PROJECTION_MATRIX, proj);
@@ -523,12 +523,11 @@ selection_func (gpointer data)
 
 	cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }
-
     }
   else
     {
-      pending_movement.dir = -1;
-      pending_movement.axis = -1;
+      pending_movement->dir = -1;
+      pending_movement->axis = -1;
     }
 
   inverted_rotation = 0;
