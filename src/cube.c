@@ -28,9 +28,6 @@
 
 #include "cube.h"
 
-
-
-
 /* Cube co-ordinates have their origin at the centre of the cube,  and their
    units are equivalent to one half of the length of one edge of a block. */
 /* This func initialises the positions of the blocks which comprise the cube.
@@ -49,9 +46,6 @@
    |   0 |   1 |   2 |   3 |
 */
 
-
-
-
 
 
 /* Utility function to fetch a particular face of the cube. */
@@ -540,20 +534,24 @@ cube_scramble (struct cube *cube)
 {
   int i;
 
+  struct move_data move;
+
   for (i = 0; i < 2 * cube_get_number_of_blocks (cube); i++)
     {
-      int turns = rand () % 2 + 1;
-      const int axis = rand () % 3;
-      Slice_Blocks *slice =
-	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), axis);
+      move.slice = rand () % 2 + 1;
+      move.axis = rand () % 3;
+      move.dir = 0;
+      move.turns = 1;
+      move.blocks_in_motion =
+	identify_blocks (cube, rand () % cube_get_number_of_blocks (cube), move.axis);
 
       /* Insist upon 180 degree turns if the section is non-square */
-      if ( !cube_square_axis (cube, axis))
-	turns = 2;
+      if ( !cube_square_axis (cube, move.axis))
+	move.turns = 2;
 
-      //      rotate_slice (cube, turns, 0, axis, slice);
+      rotate_slice (cube, &move);
 
-      free_slice_blocks (slice);
+      free_slice_blocks (move.blocks_in_motion);
     }
 }
 
