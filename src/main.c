@@ -179,7 +179,7 @@ c_main (void *closure, int argc, char *argv[])
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
   g_signal_connect (glxarea, "button-press-event",
-		    G_CALLBACK (on_mouse_button), 0);
+		    G_CALLBACK (on_mouse_button), &the_pending_movement);
   
   gtk_widget_show_all (window);
 

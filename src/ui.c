@@ -333,6 +333,7 @@ drawCube (GLboolean ancilliary)
 gboolean
 on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
+  struct move_data *pending_movement = data;
   if (event->type != GDK_BUTTON_PRESS)
     return TRUE;
 
@@ -348,7 +349,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
          turn direction could get out of sync */
 
       inverted_rotation = 1;
-      the_pending_movement.dir = !the_pending_movement.dir;
+      pending_movement->dir = !pending_movement->dir;
 
       postRedisplay (&the_display_context);
       break;
@@ -358,10 +359,10 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	{
 
 	  /* Insist upon 180 degree turns if the section is non-square */
-	  if ( !cube_square_axis (the_cube, the_pending_movement.axis))
-	    the_pending_movement.turns = 2;
+	  if ( !cube_square_axis (the_cube, pending_movement->axis))
+	    pending_movement->turns = 2;
 
-	  animate_rotation (&the_pending_movement);
+	  animate_rotation (pending_movement);
 	}
 
       postRedisplay (&the_display_context);
