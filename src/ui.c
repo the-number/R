@@ -51,17 +51,14 @@ static int inverted_rotation = 0;
 static void animate_rotation (struct move_data * data);
 
 
-/* The move that will take place when the mouse is clicked */
-struct move_data the_pending_movement = { -1, -1, -1, 0 };
-
 
 extern Quarternion cube_view;
 
 
-int
+gboolean
 is_animating (void)
 {
-  return animation.animation_in_progress;
+  return (animation.current_move != NULL);
 }
 
 
@@ -290,10 +287,10 @@ drawCube (GLboolean ancilliary)
 	  GLdouble angle = animation.animation_angle;
 
 	  int unity = 1;
-	  if (!the_pending_movement.dir)
+	  if (!animation.current_move->dir)
 	    unity = -1;
 
-	  switch (the_pending_movement.axis)
+	  switch (animation.current_move->axis)
 	    {
 	    case 0:
 	    case 3:
@@ -339,7 +336,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
-  if (animation.animation_in_progress)
+  if (is_animating ())
     return TRUE;
 
   switch (event->button)
@@ -382,7 +379,7 @@ animate_rotation (struct move_data *data)
 
   assert (blocks_in_motion);
 
-  animation.animation_in_progress = 1;
+  animation.current_move = data;
 
   set_toolbar_state (PLAY_TOOLBAR_STOP);
 
@@ -430,7 +427,7 @@ animate (gpointer data)
       free_slice_blocks (blocks_in_motion);
       blocks_in_motion = NULL;
 
-      animation.animation_in_progress = 0;
+      animation.current_move = NULL;
 
 #if 0
       set_toolbar_state ((move_queue_progress (move_queue).current == 0
@@ -482,7 +479,7 @@ selection_func (gpointer data)
   struct move_data *pending_movement = data;
   const struct facet_selection *selection = 0;
 
-  if (animation.animation_in_progress)
+  if (is_animating ())
     return;
 
   if (0 != (selection = select_get (the_cublet_selection)))

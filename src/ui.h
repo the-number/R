@@ -41,16 +41,13 @@ struct animation
   /* The current angle through which an animation has turned */
   GLfloat animation_angle ;
 
-  gboolean animation_in_progress ;
+  struct move_data *current_move;
 
   /* the number of frames drawn when a slice of the cube rotates 90 degrees */
   int frameQty ;
 };
 
 void abort_animation (void);
-
-/* The move that will take place when the mouse is clicked */
-extern struct move_data the_pending_movement;
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 void selection_func (gpointer data);
