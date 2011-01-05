@@ -140,7 +140,7 @@ c_main (void *closure, int argc, char *argv[])
   scene_init ();
 
   /* initialise the selection mechanism */
-  the_cublet_selection = select_create (glxarea, 50, 1, selection_func);
+  the_cublet_selection = select_create (glxarea, 50, 1, selection_func, NULL);
 
   gtk_widget_add_events (GTK_WIDGET (glxarea),
 			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK

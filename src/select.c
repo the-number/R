@@ -47,10 +47,12 @@ static gboolean detect_motion (GtkWidget * w,
 
 static gboolean UnsetMotion (gpointer data);
 
+
 struct cublet_selection 
 {
   guint timer;
-  void (*action) (void);
+  select_func *action;
+  gpointer data;
   gint idle_threshold;
   double granularity;
   GtkWidget *glwidget;
@@ -71,11 +73,11 @@ static struct facet_selection *pickPolygons (struct cublet_selection *);
 
 /* Initialise the selection mechanism.  Holdoff is the time for which
 the mouse must stay still,  for anything to happen. Precision is the
-minimum distance it must have moved. Do_this is a pointer to a function
-to be called when a new block is selected. */
+minimum distance it must have moved. DO_THIS is a pointer to a function
+to be called when a new block is selected. DATA is a data to be passed to DO_THIS*/
 struct cublet_selection *
 select_create (GtkWidget *rendering, int holdoff,
-	       double precision, void (*do_this) (void))
+	       double precision, select_func *do_this, gpointer data)
 {
   struct cublet_selection *cs = malloc (sizeof *cs);
 
@@ -86,6 +88,7 @@ select_create (GtkWidget *rendering, int holdoff,
 		    G_CALLBACK (detect_motion), cs);
 
   cs->action = do_this;
+  cs->data = data;
   cs->stop_detected = FALSE;
   cs->motion = FALSE;
 
@@ -320,7 +323,7 @@ select_update (struct cublet_selection *cs)
   cs->current_selection = pickPolygons (cs);
 
   if (cs->action)
-    cs->action ();
+    cs->action (cs->data);
 }
 
 gboolean

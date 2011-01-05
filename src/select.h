@@ -31,10 +31,13 @@ struct facet_selection
 
 struct cublet_selection ;
 
+typedef void select_func (gpointer data);
 
 /* Initialise the selection library */
-struct cublet_selection * select_create (GtkWidget *glxarea, int holdoff,
-		    GLdouble precision, void (*do_this) (void));
+struct cublet_selection *
+select_create (GtkWidget *rendering, int holdoff,
+	       double precision, select_func *do_this, gpointer data);
+
 
 /* Temporarily enable/disable selection */
 void select_disable (struct cublet_selection *);

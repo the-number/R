@@ -476,7 +476,7 @@ float cursorAngle;
    This func is called whenever a new set of polygons have been selected.
  */
 void
-selection_func (void)
+selection_func (gpointer data)
 {
   const struct facet_selection *selection = 0;
 

@@ -50,7 +50,7 @@ struct animation
 void abort_animation (void);
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
-void selection_func (void);
+void selection_func (gpointer data);
 void arrows (guint, int shifted);
 int vector2axis (GLfloat *vector);
 void drawCube (GLboolean anc);
