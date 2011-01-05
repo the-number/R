@@ -38,7 +38,7 @@
 #endif
 
 static short abort_requested = 0;
-static Slice_Blocks *blocks_in_motion;
+//static Slice_Blocks *blocks_in_motion;
 
 static gboolean animate (gpointer data);
 
@@ -271,15 +271,17 @@ drawCube (GLboolean ancilliary)
 
       /* Find out if this block is one of those currently being
          turned.  If so,  j will be < turning_block_qty */
-      if (blocks_in_motion)
-	for (j = 0; j < blocks_in_motion->number_blocks; j++)
+      if (animation.current_move && animation.current_move->blocks_in_motion)
+	for (j = 0; j < animation.current_move->blocks_in_motion->number_blocks; j++)
 	  {
-	    if (blocks_in_motion->blocks[j] == i)
+	    if (animation.current_move->blocks_in_motion->blocks[j] == i)
 	      break;
 	  }
 
       glPushMatrix ();
-      if (blocks_in_motion && j != blocks_in_motion->number_blocks)
+      if (animation.current_move &&
+	  animation.current_move->blocks_in_motion &&
+	  j != animation.current_move->blocks_in_motion->number_blocks)
 	{
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
@@ -375,9 +377,9 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 static void
 animate_rotation (struct move_data *data)
 {
-  blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
+  data->blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
-  assert (blocks_in_motion);
+  assert (data->blocks_in_motion);
 
   animation.current_move = data;
 
@@ -422,10 +424,10 @@ animate (gpointer data)
       animation.animation_angle = 0.0;
 
       /* and tell the blocks.c library that a move has taken place */
-      rotate_slice (the_cube, md->turns, md->dir, md->axis, blocks_in_motion);
+      rotate_slice (the_cube, md->turns, md->dir, md->axis, md->blocks_in_motion);
 
-      free_slice_blocks (blocks_in_motion);
-      blocks_in_motion = NULL;
+      free_slice_blocks (md->blocks_in_motion);
+      md->blocks_in_motion = NULL;
 
       animation.current_move = NULL;
 

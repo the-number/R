@@ -23,6 +23,7 @@
 #include <GL/gl.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "cube.h"
 
 /* A structure containing information about a movement taking place. */
 struct move_data
@@ -31,6 +32,8 @@ struct move_data
   short dir;   /* 0 = cw, 1 = ccw */
   short axis;  /* [0,2] */
   short turns; /* Normally 1 or 2 */
+
+  Slice_Blocks *blocks_in_motion;
 };
 
 struct animation
