@@ -59,7 +59,7 @@ struct display_context
   GdkGLDrawable *gldrawable;
 };
 
-struct display_context *the_display_context;
+static struct display_context *the_display_context;
 
 
 static gboolean handleRedisplay (gpointer);
@@ -252,7 +252,7 @@ gboolean
 z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
   rotate_cube (2, !event->direction);
-  postRedisplay (the_display_context);
+  // postRedisplay (the_display_context);
 
   return FALSE;
 }
@@ -316,7 +316,7 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   if (xmotion < 0)
     rotate_cube (1, 0);
 
-  postRedisplay (the_display_context);
+  // postRedisplay (the_display_context);
 
   return FALSE;
 }

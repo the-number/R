@@ -27,7 +27,7 @@
 void error_check (const char *file, int line_no, const char *string);
 
 struct display_context;
-extern struct display_context *the_display_context;
+//extern struct display_context *the_display_context;
 
 GtkWidget *display_context_get_widget (struct display_context *);
 struct display_context *display_context_create (void);

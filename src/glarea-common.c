@@ -274,6 +274,6 @@ arrows (guint keysym, int shifted)
     }
 
   rotate_cube (axis, dir);
-  postRedisplay (the_display_context);
+  // postRedisplay (the_display_context);
 }
 

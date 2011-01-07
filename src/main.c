@@ -103,7 +103,7 @@ c_main (void *closure, int argc, char *argv[])
 #endif
 
   struct display_context *dc = display_context_create ();
-  the_display_context = dc;
+  //the_display_context = dc;
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
