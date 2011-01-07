@@ -73,7 +73,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       inverted_rotation = TRUE;
       pending_movement->dir = !pending_movement->dir;
 
-      postRedisplay (&the_display_context);
+      postRedisplay (the_display_context);
       break;
     case 1:
       /* Make a move */
@@ -87,7 +87,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	  animate_rotation (pending_movement);
 	}
 
-      postRedisplay (&the_display_context);
+      postRedisplay (the_display_context);
 
       break;
     }
@@ -125,7 +125,7 @@ animate (gpointer data)
   animation.animation_angle -= increment;
 
   /* and redraw it */
-  postRedisplay (&the_display_context);
+  postRedisplay (the_display_context);
 
   if (fabs (animation.animation_angle) < 90.0 * md->turns )
     {

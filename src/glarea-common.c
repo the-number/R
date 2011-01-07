@@ -223,7 +223,7 @@ rotate_cube (int axis, int dir)
 
   quarternion_from_rotation (&rot, v, step);
   quarternion_pre_mult (&the_cube_orientation, &rot);
-  postRedisplay (&the_display_context);
+  postRedisplay (the_display_context);
 }
 
 

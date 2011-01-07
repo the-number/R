@@ -144,5 +144,5 @@ selection_func (gpointer data)
       pending_movement->axis = -1;
     }
 
-  postRedisplay (&the_display_context);
+  postRedisplay (the_display_context);
 }

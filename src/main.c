@@ -102,6 +102,9 @@ c_main (void *closure, int argc, char *argv[])
   glutInit ();
 #endif
 
+  struct display_context *dc = display_context_create ();
+  the_display_context = dc;
+
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -124,9 +127,10 @@ c_main (void *closure, int argc, char *argv[])
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
-  glxarea = create_gl_area ();
-  gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
+  glxarea = display_context_get_widget (dc);
 
+    
+  gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
 
   /* create the cube */
   the_cube = new_cube (opts.initial_cube_size[0],

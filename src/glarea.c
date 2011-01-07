@@ -59,7 +59,7 @@ struct display_context
   GdkGLDrawable *gldrawable;
 };
 
-struct display_context the_display_context;
+struct display_context *the_display_context;
 
 
 static gboolean handleRedisplay (gpointer);
@@ -177,10 +177,17 @@ initialize_gl_capability (GtkWidget *glxarea)
   gtk_widget_set_gl_capability (glxarea, glconfig, 0, TRUE, GDK_GL_RGBA_TYPE);
 }
 
-
 GtkWidget *
-create_gl_area (void)
+display_context_get_widget (struct display_context *dc)
 {
+  return dc->glwidget;
+}
+
+struct display_context *
+display_context_create (void)
+{
+  struct display_context *dc = malloc (sizeof  *dc);
+
 #if WIDGETS_NOT_DISABLED
   const GtkTargetEntry target[2] = {
     {"text/uri-list", 0, RDRAG_FILELIST},
@@ -188,9 +195,9 @@ create_gl_area (void)
   };
 #endif
 
-  GtkWidget *glxarea = gtk_drawing_area_new ();
+  dc->glwidget = gtk_drawing_area_new ();
 
-  initialize_gl_capability (glxarea);
+  initialize_gl_capability (dc->glwidget);
 
 #if WIDGETS_NOT_DISABLED
   gtk_drag_dest_set (glxarea, GTK_DEST_DEFAULT_ALL,
@@ -200,19 +207,15 @@ create_gl_area (void)
 		    G_CALLBACK (drag_data_received), (gpointer) - 1);
 #endif
 
-  the_display_context.glwidget = glxarea;
+  dc->glcontext = NULL;
+  dc->gldrawable = NULL;
+  dc->idle_id = 0;
 
-  the_display_context.glcontext = NULL;
-  the_display_context.gldrawable = NULL;
+  g_signal_connect (dc->glwidget, "realize", G_CALLBACK (on_realize), dc);
+  g_signal_connect (dc->glwidget, "expose-event", G_CALLBACK (on_expose), dc);
+  g_signal_connect (dc->glwidget, "size-allocate", G_CALLBACK (resize_viewport), dc);
 
-  g_signal_connect (glxarea, "realize",
-		    G_CALLBACK (on_realize), &the_display_context);
-  g_signal_connect (glxarea, "expose-event",
-		    G_CALLBACK (on_expose), &the_display_context);
-  g_signal_connect (glxarea, "size-allocate",
-		    G_CALLBACK (resize_viewport), &the_display_context);
-
-  return glxarea;
+  return dc;
 }
 
 
