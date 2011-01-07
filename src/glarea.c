@@ -252,6 +252,7 @@ gboolean
 z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
   rotate_cube (2, !event->direction);
+  postRedisplay (the_display_context);
 
   return FALSE;
 }
@@ -314,6 +315,8 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
     rotate_cube (1, 1);
   if (xmotion < 0)
     rotate_cube (1, 0);
+
+  postRedisplay (the_display_context);
 
   return FALSE;
 }
