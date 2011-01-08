@@ -186,6 +186,16 @@ display_context_get_widget (struct display_context *dc)
   return dc->glwidget;
 }
 
+
+static gboolean            
+grab_focus  (GtkWidget *widget,
+		GdkEventCrossing *event,
+		gpointer data) 
+{
+  gtk_widget_grab_focus (widget);
+  return FALSE;
+}
+
 struct display_context *
 display_context_create (void)
 {
@@ -230,8 +240,7 @@ display_context_create (void)
 
   /* Grab the keyboard focus wheneve the mouse enters the widget */
   g_signal_connect (dc->glwidget, "enter-notify-event",
-		    G_CALLBACK (gtk_widget_grab_focus), 0);
-
+		    G_CALLBACK (grab_focus), 0);
 
   return dc;
 }
