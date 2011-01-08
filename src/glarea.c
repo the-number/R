@@ -30,12 +30,15 @@
 #include "textures.h"
 #include "colour-dialog.h"
 
+#include <gdk/gdk.h>
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 
 #include <gtk/gtk.h>
 #include <gtk/gtkwidget.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdktypes.h>
 
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
@@ -111,8 +114,6 @@ on_realize (GtkWidget *w, gpointer data)
 
   gtk_widget_set_size_request (w, 300, 300);
 
-  gtk_window_set_focus (GTK_WINDOW (gtk_widget_get_toplevel (w)), w);
-
   set_the_colours (w, "gnubik");
 
   if (have_accumulation_buffer ())
@@ -158,21 +159,23 @@ initialize_gl_capability (GtkWidget *glxarea)
 
   GdkScreen *screen = gtk_widget_get_screen (glxarea);
 
-  GdkGLConfig *glconfig = NULL;
+  static GdkGLConfig *glconfig = NULL;
 
-  for (i = 0; i < sizeof (mode) / sizeof (mode[0]); ++i)
+  if ( glconfig == NULL )
     {
-      glconfig = gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
+      for (i = 0; i < sizeof (mode) / sizeof (mode[0]); ++i)
+	{
+	  glconfig = gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
 
-      if (glconfig != NULL)
-	break;
-      else
-	g_warning ("Cannot get visual for mode 0x%0x", mode[i]);
+	  if (glconfig != NULL)
+	    break;
+	  else
+	    g_warning ("Cannot get visual for mode 0x%0x", mode[i]);
+	}
+
+      if (!glconfig)
+	g_error ("No suitable visual found.");
     }
-
-
-  if (!glconfig)
-    g_error ("No suitable visual found.");
 
   gtk_widget_set_gl_capability (glxarea, glconfig, 0, TRUE, GDK_GL_RGBA_TYPE);
 }
@@ -211,9 +214,24 @@ display_context_create (void)
   dc->gldrawable = NULL;
   dc->idle_id = 0;
 
+  gtk_widget_add_events (GTK_WIDGET (dc->glwidget),
+			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
+			 | GDK_BUTTON_RELEASE_MASK
+			 /* | GDK_BUTTON_MOTION_MASK */
+			 | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
+			 | GDK_VISIBILITY_NOTIFY_MASK
+			 | GDK_POINTER_MOTION_MASK);
+
+  GTK_WIDGET_SET_FLAGS (dc->glwidget, GTK_CAN_FOCUS);
+
   g_signal_connect (dc->glwidget, "realize", G_CALLBACK (on_realize), dc);
   g_signal_connect (dc->glwidget, "expose-event", G_CALLBACK (on_expose), dc);
   g_signal_connect (dc->glwidget, "size-allocate", G_CALLBACK (resize_viewport), dc);
+
+  /* Grab the keyboard focus wheneve the mouse enters the widget */
+  g_signal_connect (dc->glwidget, "enter-notify-event",
+		    G_CALLBACK (gtk_widget_grab_focus), 0);
+
 
   return dc;
 }
@@ -245,14 +263,15 @@ error_check (const char *file, int line_no, const char *string)
 }
 
 
-static gboolean button_down = FALSE;
-
 /* Rotate the cube about the z axis (relative to the viewer ) */
 gboolean
 z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
+  struct display_context *dc = data;
+
   rotate_cube (2, !event->direction);
-  // postRedisplay (the_display_context);
+
+  postRedisplay (dc);
 
   return FALSE;
 }
@@ -268,13 +287,11 @@ on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data)
 
   if (event->type == GDK_BUTTON_PRESS)
     {
-      button_down = TRUE;
       select_disable (cs);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
       select_enable (cs);
-      button_down = FALSE;
     }
 
   return FALSE;
@@ -290,7 +307,15 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   gint xmotion = 0;
   gint ymotion = 0;
 
-  if (!button_down)
+  struct display_context *dc = data;
+
+  GdkWindow *window = gtk_widget_get_window (w);
+
+  //  GdkModifierType mm;
+  GdkModifierType mm;
+  gdk_window_get_pointer (window, NULL, NULL, &mm);
+
+  if (! (GDK_BUTTON1_MASK & mm))
     return FALSE;
 
   if (select_is_selected (the_cublet_selection))
@@ -302,7 +327,6 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   if (last_mouse_y >= 0)
     ymotion = event->y - last_mouse_y;
 
-
   last_mouse_x = event->x;
   last_mouse_y = event->y;
 
@@ -310,31 +334,77 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
     rotate_cube (0, 1);
   if (ymotion < 0)
     rotate_cube (0, 0);
+  postRedisplay (dc);
 
   if (xmotion > 0)
     rotate_cube (1, 1);
   if (xmotion < 0)
     rotate_cube (1, 0);
 
-  // postRedisplay (the_display_context);
+  postRedisplay (dc);
 
   return FALSE;
 }
 
+
+/* orientate the whole cube with the arrow keys */
 gboolean
 cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
-  int shifted = 0;
+  struct display_context *dc = data;
 
-  if (event->state & GDK_SHIFT_MASK)
-    shifted = 1;
+  const int shifted = event->state & GDK_SHIFT_MASK;
+  
+  int axis;
+  int dir;
 
-  arrows (event->keyval, shifted);
+  switch (event->keyval)
+    {
+    case GDK_Right:
+      if (shifted)
+	{
+	  dir = 0;
+	  axis = 2;
+	}
+      else
+	{
+	  dir = 1;
+	  axis = 1;
+	}
+      break;
+    case GDK_Left:
 
+      if (shifted)
+	{
+	  dir = 1;
+	  axis = 2;
+	}
+      else
+	{
+	  dir = 0;
+	  axis = 1;
+	}
+      break;
+    case GDK_Up:
+      axis = 0;
+      dir = 0;
+      break;
+    case GDK_Down:
+      axis = 0;
+      dir = 1;
+      break;
+    default:
+      return FALSE;
+    }
+
+  rotate_cube (axis, dir);
+  postRedisplay (dc);
+
+  /* We return TRUE here (disabling other event handlers)
+     otherwise other widgets can steal the keyboard focus from our
+     glwidget */
   return TRUE;
 }
-
-
 
 /* Pair of mutually co-operating funcs to handle redisplays,
    avoiding unnecessary overhead.  For example when the window

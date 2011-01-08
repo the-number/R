@@ -87,7 +87,8 @@ static void
 c_main (void *closure, int argc, char *argv[])
 {
   GtkWidget *form;
-  GtkWidget *glxarea;
+  GtkWidget *glwidget1;
+  GtkWidget *glwidget2;
   GtkWidget *window;
   GtkWidget *menubar;
   GtkWidget *playbar;
@@ -102,8 +103,8 @@ c_main (void *closure, int argc, char *argv[])
   glutInit ();
 #endif
 
-  struct display_context *dc = display_context_create ();
-  //the_display_context = dc;
+  struct display_context *dc1 = display_context_create ();
+  struct display_context *dc2 = display_context_create ();
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
@@ -112,7 +113,6 @@ c_main (void *closure, int argc, char *argv[])
   g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), 0);
 
   gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
-
 
   /* process arguments specific to this program */
   app_opts (&argc, argv);
@@ -127,10 +127,11 @@ c_main (void *closure, int argc, char *argv[])
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
-  glxarea = display_context_get_widget (dc);
+  glwidget1 = display_context_get_widget (dc1);
+  gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
 
-    
-  gtk_box_pack_start (GTK_BOX (form), glxarea, TRUE, TRUE, 0);
+  glwidget2 = display_context_get_widget (dc2);
+  gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
 
   /* create the cube */
   the_cube = new_cube (opts.initial_cube_size[0],
@@ -145,46 +146,51 @@ c_main (void *closure, int argc, char *argv[])
   scene_init ();
 
   /* initialise the selection mechanism */
-  the_cublet_selection = select_create (glxarea, 50, 1,
+  the_cublet_selection = select_create (glwidget1, 50, 1,
 					selection_func, &the_pending_movement );
 
-  gtk_widget_add_events (GTK_WIDGET (glxarea),
-			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
-			 | GDK_BUTTON_RELEASE_MASK
-			 /* | GDK_BUTTON_MOTION_MASK */
-			 | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK
-			 | GDK_VISIBILITY_NOTIFY_MASK
-			 | GDK_POINTER_MOTION_MASK);
+  g_print ("1: %p %p\n", glwidget1, dc1);
+  g_print ("2: %p %p\n", glwidget2, dc2);
 
-  GTK_WIDGET_SET_FLAGS (glxarea, GTK_CAN_FOCUS);
+  g_signal_connect (glwidget1, "key-press-event",
+		    G_CALLBACK (cube_orientate_keys), dc1);
 
-  g_signal_connect (glxarea, "key-press-event",
-		    G_CALLBACK (cube_orientate_keys), 0);
+  g_signal_connect (glwidget2, "key-press-event",
+		    G_CALLBACK (cube_orientate_keys), dc2);
 
-  g_signal_connect (glxarea, "motion-notify-event",
-		    G_CALLBACK (cube_orientate_mouse), 0);
 
-  g_signal_connect (glxarea, "scroll-event",
-		    G_CALLBACK (z_rotate), 0);
+  g_signal_connect (glwidget1, "motion-notify-event",
+		    G_CALLBACK (cube_orientate_mouse), dc1);
 
- 
-  g_signal_connect (glxarea, "realize",
+  g_signal_connect (glwidget2, "motion-notify-event",
+		    G_CALLBACK (cube_orientate_mouse), dc2);
+
+  g_signal_connect (glwidget1, "scroll-event",
+		    G_CALLBACK (z_rotate), dc1);
+
+  g_signal_connect (glwidget2, "scroll-event",
+		    G_CALLBACK (z_rotate), dc2);
+
+
+#if 0
+  g_signal_connect (glwidget1, "realize",
 		    G_CALLBACK (enable_selection_if_focused), the_cublet_selection);
  
-  g_signal_connect (glxarea, "leave-notify-event",
+  g_signal_connect (glwidget1, "leave-notify-event",
 		    G_CALLBACK (on_crossing), the_cublet_selection);
 
-  g_signal_connect (glxarea, "enter-notify-event",
+  g_signal_connect (glwidget1, "enter-notify-event",
 		    G_CALLBACK (on_crossing), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button-press-event",
+  g_signal_connect (glwidget1, "button-press-event",
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button-release-event",
+  g_signal_connect (glwidget1, "button-release-event",
 		    G_CALLBACK (on_button_press_release), the_cublet_selection);
 
-  g_signal_connect (glxarea, "button-press-event",
+  g_signal_connect (glwidget1, "button-press-event",
 		    G_CALLBACK (on_mouse_button), &the_pending_movement);
+#endif
   
   gtk_widget_show_all (window);
 
