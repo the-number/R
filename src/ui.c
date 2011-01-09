@@ -41,7 +41,7 @@ struct animation animation = {40, 0, false, 2};
 
 static gboolean inverted_rotation;
 
-static void animate_rotation (struct move_data * data);
+static void animate_rotation (struct display_context *);
 
 
 gboolean
@@ -87,7 +87,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	  if ( !cube_square_axis (the_cube, pending_movement->axis))
 	    pending_movement->turns = 2;
 
-	  animate_rotation (pending_movement);
+	  animate_rotation (cublet_selection_get_display_context (cs));
 	}
 
       break;
@@ -99,8 +99,9 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
 /* Does exactly what it says on the tin :-) */
 static void
-animate_rotation (struct move_data *data)
+animate_rotation (struct display_context *dc)
 {
+  struct move_data *data = &the_pending_movement;
   data->blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
   assert (data->blocks_in_motion);
@@ -109,7 +110,7 @@ animate_rotation (struct move_data *data)
 
   //  set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  g_timeout_add (animation.picture_rate, animate, data);
+  g_timeout_add (animation.picture_rate, animate, dc);
 }
 
 
@@ -117,7 +118,8 @@ animate_rotation (struct move_data *data)
 static gboolean 
 animate (gpointer data)
 {
-  struct move_data *md = data;
+  struct move_data *md = &the_pending_movement;
+  struct display_context *dc = data;
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (animation.frameQty + 1);
@@ -126,7 +128,7 @@ animate (gpointer data)
   animation.animation_angle -= increment;
 
   /* and redraw it */
-  // postRedisplay (the_display_context);
+  postRedisplay (dc);
 
   if (fabs (animation.animation_angle) < 90.0 * md->turns )
     {
