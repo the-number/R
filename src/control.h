@@ -21,12 +21,12 @@
 
 #include <glib.h>
 
-extern float cursorAngle;
-
+struct display_context;
+struct cublet_selection;
 /* 
    This func is called whenever a new set of polygons have been selected.
  */
-void selection_func (gpointer data);
+void selection_func (struct cublet_selection *, gpointer data);
 
 
 #endif

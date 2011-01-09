@@ -51,7 +51,4 @@ gboolean cube_controls (GtkWidget *w, GdkEventButton *event, gpointer data);
 void rotate_cube (int axis, int dir);
 void arrows (guint, int shifted);
 
-extern struct cublet_selection *the_cublet_selection;
-
-
 #endif

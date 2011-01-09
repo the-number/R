@@ -24,6 +24,7 @@
 #include "control.h"
 #include "select.h"
 
+#include "cursors.h"
 #include "glarea.h"
 #include "ui.h"
 
@@ -86,13 +87,54 @@ getTurnAxis (const struct facet_selection *items, GLfloat * vector)
   transform (t, axes[items->face][items->quadrant], vector);
 }
 
-float cursorAngle;
+static float cursorAngle;
+
+static void
+set_mouse_cursor (GtkWidget *glxarea, const struct cublet_selection *cs)
+{
+  const unsigned char *mask_bits;
+  const unsigned char *data_bits;
+  int hot_x, hot_y;
+  int width, height;
+
+
+  GdkCursor *cursor;
+  GdkPixmap *source, *mask;
+  GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
+  GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
+
+  if (select_is_selected (cs))
+    {
+      get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
+		  &hot_x, &hot_y);
+
+
+      source = gdk_bitmap_create_from_data (NULL, (const gchar *) data_bits,
+					    width, height);
+      mask = gdk_bitmap_create_from_data (NULL, (const gchar *) mask_bits,
+					  width, height);
+
+      cursor =
+	gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, hot_x, hot_y);
+      g_object_unref (source);
+      g_object_unref (mask);
+    }
+  else
+    {
+      GdkDisplay *display = gtk_widget_get_display (glxarea);
+      cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+    }
+
+  gdk_window_set_cursor (glxarea->window, cursor);
+  gdk_cursor_unref (cursor);
+}
+
 
 /* 
    This func is called whenever a new set of polygons have been selected.
  */
 void
-selection_func (gpointer data)
+selection_func (struct cublet_selection *cs, gpointer data)
 {
   struct move_data *pending_movement = data;
   const struct facet_selection *selection = 0;
@@ -100,7 +142,7 @@ selection_func (gpointer data)
   if (is_animating ())
     return;
 
-  if (0 != (selection = select_get (the_cublet_selection)))
+  if (0 != (selection = select_get (cs)))
     {
       GLfloat turn_axis[4];
       vector v;
@@ -144,5 +186,7 @@ selection_func (gpointer data)
       pending_movement->axis = -1;
     }
 
-  // postRedisplay (the_display_context);
+  struct display_context *dc = cublet_selection_get_display_context (cs);
+  set_mouse_cursor (display_context_get_widget (dc), cs);
+  postRedisplay (dc);
 }

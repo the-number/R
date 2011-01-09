@@ -62,9 +62,6 @@ struct display_context
   GdkGLDrawable *gldrawable;
 };
 
-static struct display_context *the_display_context;
-
-
 static gboolean handleRedisplay (gpointer);
 
 /* Return true iff there is an accumulation buffer which is
@@ -248,10 +245,6 @@ display_context_create (void)
 
 
 
-
-
-extern float cursorAngle;
-
 void
 postRedisplay (struct display_context *dc)
 {
@@ -316,18 +309,15 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   gint xmotion = 0;
   gint ymotion = 0;
 
+
   struct display_context *dc = data;
 
   GdkWindow *window = gtk_widget_get_window (w);
 
-  //  GdkModifierType mm;
   GdkModifierType mm;
   gdk_window_get_pointer (window, NULL, NULL, &mm);
 
   if (! (GDK_BUTTON1_MASK & mm))
-    return FALSE;
-
-  if (select_is_selected (the_cublet_selection))
     return FALSE;
 
   if (last_mouse_x >= 0)
@@ -431,47 +421,6 @@ handleRedisplay (gpointer data)
 }
 
 
-static void
-set_mouse_cursor (GtkWidget *glxarea)
-{
-  const unsigned char *mask_bits;
-  const unsigned char *data_bits;
-  int hot_x, hot_y;
-  int width, height;
-
-
-  GdkCursor *cursor;
-  GdkPixmap *source, *mask;
-  GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
-  GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
-
-  if (select_is_selected (the_cublet_selection))
-    {
-      get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
-		  &hot_x, &hot_y);
-
-
-      source = gdk_bitmap_create_from_data (NULL, (const gchar *) data_bits,
-					    width, height);
-      mask = gdk_bitmap_create_from_data (NULL, (const gchar *) mask_bits,
-					  width, height);
-
-      cursor =
-	gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, hot_x, hot_y);
-      g_object_unref (source);
-      g_object_unref (mask);
-    }
-  else
-    {
-      GdkDisplay *display = gtk_widget_get_display (glxarea);
-      cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
-    }
-
-  gdk_window_set_cursor (glxarea->window, cursor);
-  gdk_cursor_unref (cursor);
-
-}
-
 
 
 static void
@@ -500,8 +449,6 @@ display_anti_alias (struct display_context *dc)
       g_critical ("Cannot set gl drawable current\n");
       return;
     }
-
-  set_mouse_cursor (dc->glwidget);
 
   glClear (GL_ACCUM_BUFFER_BIT);
   ERR_CHECK ("Error in display");
@@ -532,8 +479,6 @@ display_raw (struct display_context *dc)
     }
 
   ERR_CHECK ("Error in display");
-
-  set_mouse_cursor (dc->glwidget);
 
   render_scene (0);
 

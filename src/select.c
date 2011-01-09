@@ -35,7 +35,7 @@ in the cube (if any) the cursor is located upon.
 #include <float.h>
 #include <stdio.h>
 
-
+#include "glarea.h"
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
@@ -57,7 +57,7 @@ struct cublet_selection
   gpointer data;
   gint idle_threshold;
   double granularity;
-  GtkWidget *glwidget;
+  struct display_context *dc;
 
   gboolean motion;
   gboolean stop_detected;
@@ -78,7 +78,7 @@ the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. DO_THIS is a pointer to a function
 to be called when a new block is selected. DATA is a data to be passed to DO_THIS*/
 struct cublet_selection *
-select_create (GtkWidget *rendering, int holdoff,
+select_create (struct display_context *rendering, int holdoff,
 	       double precision, select_func *do_this, gpointer data)
 {
   struct cublet_selection *cs = malloc (sizeof *cs);
@@ -86,7 +86,8 @@ select_create (GtkWidget *rendering, int holdoff,
   cs->idle_threshold = holdoff;
   cs->granularity = precision;
 
-  g_signal_connect (rendering, "motion-notify-event",
+  g_signal_connect (display_context_get_widget (rendering),
+		    "motion-notify-event",
 		    G_CALLBACK (detect_motion), cs);
 
   cs->action = do_this;
@@ -96,7 +97,7 @@ select_create (GtkWidget *rendering, int holdoff,
 
   cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 
-  cs->glwidget = rendering;
+  cs->dc = rendering;
 
   return cs;
 }
@@ -210,7 +211,7 @@ pickPolygons (struct cublet_selection *cs)
 
   assert (cs->granularity > 0);
 
-  height = get_widget_height (cs->glwidget);
+  height = get_widget_height (display_context_get_widget (cs->dc));
 
   glSelectBuffer (BUFSIZE, selectBuf);
 
@@ -325,11 +326,18 @@ select_update (struct cublet_selection *cs)
   cs->current_selection = pickPolygons (cs);
 
   if (cs->action)
-    cs->action (cs->data);
+    cs->action (cs, cs->data);
 }
 
 gboolean
-select_is_selected (struct cublet_selection *cs)
+select_is_selected (const struct cublet_selection *cs)
 {
   return (NULL != cs->current_selection);
+}
+
+
+struct display_context *
+cublet_selection_get_display_context (struct cublet_selection *cs)
+{
+  return cs->dc;
 }

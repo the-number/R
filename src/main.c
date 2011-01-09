@@ -31,6 +31,7 @@
 #include "widget-set.h"
 #include "select.h"
 #include "cube.h"
+#include "control.h"
 
 #include <gtk/gtkgl.h>
 #include <assert.h>
@@ -53,9 +54,9 @@ struct application_options
 static struct application_options opts = { false, {3,3,3}};
 
 /* The move that will take place when the mouse is clicked */
-static struct move_data the_pending_movement = { -1, -1, -1, 0 };
+struct move_data the_pending_movement = { -1, -1, -1, 0 };
 
-struct cublet_selection *the_cublet_selection;
+
 
 static gboolean
 on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
@@ -71,27 +72,23 @@ on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
   return TRUE;
 }
 
-static void
-enable_selection_if_focused (GtkWidget *widget, gpointer data)
-{
-  struct cublet_selection *cs = data;
-
-  if ( GTK_WIDGET_HAS_FOCUS (widget))
-    select_enable (cs);
-  else
-    select_disable (cs);
-}
-
 
 static void
 c_main (void *closure, int argc, char *argv[])
 {
   GtkWidget *form;
-  GtkWidget *glwidget1;
-  GtkWidget *glwidget2;
   GtkWidget *window;
   GtkWidget *menubar;
   GtkWidget *playbar;
+  GtkWidget *glwidget1;
+  GtkWidget *glwidget2;
+
+  struct display_context *dc1;
+  struct display_context *dc2;
+
+  struct cublet_selection *cs1;
+  struct cublet_selection *cs2;
+
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
@@ -103,8 +100,6 @@ c_main (void *closure, int argc, char *argv[])
   glutInit ();
 #endif
 
-  struct display_context *dc1 = display_context_create ();
-  struct display_context *dc2 = display_context_create ();
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
@@ -127,9 +122,11 @@ c_main (void *closure, int argc, char *argv[])
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
+  dc1 = display_context_create ();
   glwidget1 = display_context_get_widget (dc1);
   gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
 
+  dc2 = display_context_create ();
   glwidget2 = display_context_get_widget (dc2);
   gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
 
@@ -146,8 +143,8 @@ c_main (void *closure, int argc, char *argv[])
   scene_init ();
 
   /* initialise the selection mechanism */
-  the_cublet_selection = select_create (glwidget1, 50, 1,
-					selection_func, &the_pending_movement );
+  cs1 = select_create (dc1, 50, 1, selection_func, &the_pending_movement );
+  cs2 = select_create (dc2, 50, 1, selection_func, &the_pending_movement );
 
   g_print ("1: %p %p\n", glwidget1, dc1);
   g_print ("2: %p %p\n", glwidget2, dc2);
@@ -172,24 +169,38 @@ c_main (void *closure, int argc, char *argv[])
 		    G_CALLBACK (z_rotate), dc2);
 
 
-#if 0
-  g_signal_connect (glwidget1, "realize",
-		    G_CALLBACK (enable_selection_if_focused), the_cublet_selection);
- 
+#if 1
   g_signal_connect (glwidget1, "leave-notify-event",
-		    G_CALLBACK (on_crossing), the_cublet_selection);
+		    G_CALLBACK (on_crossing), cs1);
 
   g_signal_connect (glwidget1, "enter-notify-event",
-		    G_CALLBACK (on_crossing), the_cublet_selection);
+		    G_CALLBACK (on_crossing), cs1);
 
   g_signal_connect (glwidget1, "button-press-event",
-		    G_CALLBACK (on_button_press_release), the_cublet_selection);
+		    G_CALLBACK (on_button_press_release), cs1);
 
   g_signal_connect (glwidget1, "button-release-event",
-		    G_CALLBACK (on_button_press_release), the_cublet_selection);
+		    G_CALLBACK (on_button_press_release), cs1);
 
   g_signal_connect (glwidget1, "button-press-event",
-		    G_CALLBACK (on_mouse_button), &the_pending_movement);
+		    G_CALLBACK (on_mouse_button), cs1);
+
+
+  g_signal_connect (glwidget2, "leave-notify-event",
+		    G_CALLBACK (on_crossing), cs2);
+
+  g_signal_connect (glwidget2, "enter-notify-event",
+		    G_CALLBACK (on_crossing), cs2);
+
+  g_signal_connect (glwidget2, "button-press-event",
+		    G_CALLBACK (on_button_press_release), cs2);
+
+  g_signal_connect (glwidget2, "button-release-event",
+		    G_CALLBACK (on_button_press_release), cs2);
+
+  g_signal_connect (glwidget2, "button-press-event",
+		    G_CALLBACK (on_mouse_button), cs2);
+
 #endif
   
   gtk_widget_show_all (window);

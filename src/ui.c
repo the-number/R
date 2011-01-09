@@ -50,12 +50,15 @@ is_animating (void)
   return (animation.current_move != NULL);
 }
 
+extern struct move_data the_pending_movement;
 
 /* handle mouse clicks */
 gboolean
 on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
-  struct move_data *pending_movement = data;
+  struct move_data *pending_movement = &the_pending_movement;
+
+  struct cublet_selection *cs = data;
   if (event->type != GDK_BUTTON_PRESS)
     return TRUE;
 
@@ -77,7 +80,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       break;
     case 1:
       /* Make a move */
-      if (select_is_selected (the_cublet_selection))
+      if (select_is_selected (cs))
 	{
 
 	  /* Insist upon 180 degree turns if the section is non-square */

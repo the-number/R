@@ -30,12 +30,13 @@ struct facet_selection
 };
 
 struct cublet_selection ;
+struct display_context;
 
-typedef void select_func (gpointer data);
+typedef void select_func (struct cublet_selection *, gpointer data);
 
 /* Initialise the selection library */
 struct cublet_selection *
-select_create (GtkWidget *rendering, int holdoff,
+select_create (struct display_context *r, int holdoff,
 	       double precision, select_func *do_this, gpointer data);
 
 
@@ -50,7 +51,9 @@ const struct facet_selection *select_get (const struct cublet_selection *cs);
 void select_update (struct cublet_selection *);
 
 /* returns true if a block has been selected */
-gboolean select_is_selected (struct cublet_selection *cs);
+gboolean select_is_selected (const struct cublet_selection *cs);
 
+
+struct display_context *cublet_selection_get_display_context (struct cublet_selection *);
 
 #endif

@@ -41,9 +41,6 @@ struct animation
 extern struct animation animation;
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
-void selection_func (gpointer data);
-
-
 
 
 int is_animating (void);
