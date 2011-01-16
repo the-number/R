@@ -37,7 +37,7 @@ void set_toolbar_state (unsigned state);
 GtkWidget *create_statusbar (GtkWidget *container);
 void update_statusbar (void);
 
-void set_the_colours (GtkWidget *w, const char *progname);
+
 void setCubeColours (char *progname);
 
 /* Declare that the cube has been solved */

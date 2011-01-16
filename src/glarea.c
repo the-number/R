@@ -43,6 +43,7 @@
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
 
+static void set_the_colours (GtkWidget *w, const char *progname);
 
 struct display_context;
 
@@ -483,4 +484,53 @@ display_raw (struct display_context *dc)
   render_scene (0);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
+}
+
+
+
+#if !X_DISPLAY_MISSING
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
+#endif
+
+static void
+set_the_colours (GtkWidget *w, const char *progname)
+{
+#if !X_DISPLAY_MISSING
+  int i;
+
+  Display *dpy = GDK_WINDOW_XDISPLAY (gtk_widget_get_parent_window (w));
+
+  for (i = 0; i < 6; ++i)
+    {
+      char *colour = 0;
+      char resname[20];
+      GdkColor xcolour;
+      g_snprintf (resname, 20, "color%d", i);
+      colour = XGetDefault (dpy, progname, resname);
+
+      if (!colour)
+	continue;
+
+      if (!gdk_color_parse (colour, &xcolour))
+	{
+	  g_warning ("colour %s not in database\n", colour);
+	}
+      else
+	{
+	  /* convert colours to GLfloat values,  and set them */
+	  const unsigned short full = ~0;
+	  
+	  struct cube_rendering r;
+
+          r.pixbuf = NULL;
+          r.texName = 0;
+	  r.red = (GLfloat) xcolour.red / full;
+	  r.green = (GLfloat) xcolour.green / full;
+	  r.blue = (GLfloat) xcolour.blue / full;
+
+       	  setColour (i, &r);
+	}
+    }
+#endif
 }
