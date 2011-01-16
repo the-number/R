@@ -29,6 +29,7 @@
 #include "cursors.h"
 #include "textures.h"
 #include "colour-dialog.h"
+#include "control.h"
 
 #include <gdk/gdk.h>
 
@@ -44,6 +45,9 @@
 #include <gdk/gdkglconfig.h>
 
 static void set_the_colours (GtkWidget *w, const char *progname);
+
+/* The move that will take place when the mouse is clicked */
+struct move_data the_pending_movement = { -1, -1, -1, 0 };
 
 struct display_context;
 
@@ -194,10 +198,28 @@ grab_focus  (GtkWidget *widget,
   return FALSE;
 }
 
+
+static gboolean
+on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+  struct cublet_selection *cs = data;
+
+  if (event->type == GDK_ENTER_NOTIFY)
+    select_enable (cs);
+
+  if (event->type == GDK_LEAVE_NOTIFY)
+    select_disable (cs);
+
+  return TRUE;
+}
+
 struct display_context *
 display_context_create (void)
 {
   struct display_context *dc = malloc (sizeof  *dc);
+
+  struct cublet_selection *cs = NULL;
+
 
 #if WIDGETS_NOT_DISABLED
   const GtkTargetEntry target[2] = {
@@ -232,6 +254,8 @@ display_context_create (void)
 
   GTK_WIDGET_SET_FLAGS (dc->glwidget, GTK_CAN_FOCUS);
 
+  cs = select_create (dc, 50, 1, selection_func, &the_pending_movement );
+
   g_signal_connect (dc->glwidget, "realize", G_CALLBACK (on_realize), dc);
   g_signal_connect (dc->glwidget, "expose-event", G_CALLBACK (on_expose), dc);
   g_signal_connect (dc->glwidget, "size-allocate", G_CALLBACK (resize_viewport), dc);
@@ -239,6 +263,31 @@ display_context_create (void)
   /* Grab the keyboard focus wheneve the mouse enters the widget */
   g_signal_connect (dc->glwidget, "enter-notify-event",
 		    G_CALLBACK (grab_focus), 0);
+
+  g_signal_connect (dc->glwidget, "key-press-event",
+		    G_CALLBACK (cube_orientate_keys), dc);
+
+  g_signal_connect (dc->glwidget, "motion-notify-event",
+		    G_CALLBACK (cube_orientate_mouse), dc);
+
+  g_signal_connect (dc->glwidget, "scroll-event",
+		    G_CALLBACK (z_rotate), dc);
+
+
+  g_signal_connect (dc->glwidget, "leave-notify-event",
+		    G_CALLBACK (on_crossing), cs);
+
+  g_signal_connect (dc->glwidget, "enter-notify-event",
+		    G_CALLBACK (on_crossing), cs);
+
+  g_signal_connect (dc->glwidget, "button-press-event",
+		    G_CALLBACK (on_button_press_release), cs);
+
+  g_signal_connect (dc->glwidget, "button-release-event",
+		    G_CALLBACK (on_button_press_release), cs);
+
+  g_signal_connect (dc->glwidget, "button-press-event",
+		    G_CALLBACK (on_mouse_button), cs);
 
   return dc;
 }

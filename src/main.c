@@ -16,28 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <time.h>
-#include <getopt.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <locale.h>
 #include <config.h>
-#include "cube.h"
-#include "drwBlock.h"
-#include "version.h"
-#include "ui.h"
-#include "glarea.h"
-#include "widget-set.h"
-#include "select.h"
-#include "cube.h"
-#include "control.h"
-
-#include <gtk/gtkgl.h>
-#include <assert.h>
-
-#include <libintl.h>
 #include <stdbool.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkgl.h>
+#include <libintl.h>
+#include <getopt.h>
+
+#include "widget-set.h"
+#include "glarea.h"
+#include "ui.h"
+#include "version.h"
 
 static const char help_string[];
 
@@ -53,25 +42,6 @@ struct application_options
 
 static struct application_options opts = { false, {3,3,3}};
 
-/* The move that will take place when the mouse is clicked */
-struct move_data the_pending_movement = { -1, -1, -1, 0 };
-
-
-
-static gboolean
-on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
-{
-  struct cublet_selection *cs = data;
-
-  if (event->type == GDK_ENTER_NOTIFY)
-    select_enable (cs);
-
-  if (event->type == GDK_LEAVE_NOTIFY)
-    select_disable (cs);
-
-  return TRUE;
-}
-
 
 static void
 c_main (void *closure, int argc, char *argv[])
@@ -85,9 +55,6 @@ c_main (void *closure, int argc, char *argv[])
 
   struct display_context *dc1;
   struct display_context *dc2;
-
-  struct cublet_selection *cs1;
-  struct cublet_selection *cs2;
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -142,67 +109,6 @@ c_main (void *closure, int argc, char *argv[])
 
   scene_init ();
 
-  /* initialise the selection mechanism */
-  cs1 = select_create (dc1, 50, 1, selection_func, &the_pending_movement );
-  cs2 = select_create (dc2, 50, 1, selection_func, &the_pending_movement );
-
-  g_print ("1: %p %p\n", glwidget1, dc1);
-  g_print ("2: %p %p\n", glwidget2, dc2);
-
-  g_signal_connect (glwidget1, "key-press-event",
-		    G_CALLBACK (cube_orientate_keys), dc1);
-
-  g_signal_connect (glwidget2, "key-press-event",
-		    G_CALLBACK (cube_orientate_keys), dc2);
-
-
-  g_signal_connect (glwidget1, "motion-notify-event",
-		    G_CALLBACK (cube_orientate_mouse), dc1);
-
-  g_signal_connect (glwidget2, "motion-notify-event",
-		    G_CALLBACK (cube_orientate_mouse), dc2);
-
-  g_signal_connect (glwidget1, "scroll-event",
-		    G_CALLBACK (z_rotate), dc1);
-
-  g_signal_connect (glwidget2, "scroll-event",
-		    G_CALLBACK (z_rotate), dc2);
-
-
-#if 1
-  g_signal_connect (glwidget1, "leave-notify-event",
-		    G_CALLBACK (on_crossing), cs1);
-
-  g_signal_connect (glwidget1, "enter-notify-event",
-		    G_CALLBACK (on_crossing), cs1);
-
-  g_signal_connect (glwidget1, "button-press-event",
-		    G_CALLBACK (on_button_press_release), cs1);
-
-  g_signal_connect (glwidget1, "button-release-event",
-		    G_CALLBACK (on_button_press_release), cs1);
-
-  g_signal_connect (glwidget1, "button-press-event",
-		    G_CALLBACK (on_mouse_button), cs1);
-
-
-  g_signal_connect (glwidget2, "leave-notify-event",
-		    G_CALLBACK (on_crossing), cs2);
-
-  g_signal_connect (glwidget2, "enter-notify-event",
-		    G_CALLBACK (on_crossing), cs2);
-
-  g_signal_connect (glwidget2, "button-press-event",
-		    G_CALLBACK (on_button_press_release), cs2);
-
-  g_signal_connect (glwidget2, "button-release-event",
-		    G_CALLBACK (on_button_press_release), cs2);
-
-  g_signal_connect (glwidget2, "button-press-event",
-		    G_CALLBACK (on_mouse_button), cs2);
-
-#endif
-  
   gtk_widget_show_all (window);
 
   gtk_main ();
