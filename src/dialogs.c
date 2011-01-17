@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #include "cube.h"
-#include "glarea.h"
 #include "version.h"
 #include "ui.h"
 #include "drwBlock.h"

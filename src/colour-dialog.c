@@ -20,7 +20,6 @@
 #include <gtk/gtk.h>
 #include <GL/gl.h>
 #include <string.h>
-#include "glarea.h"
 #include "colour-dialog.h"
 #include "drwBlock.h"
 #include "textures.h"

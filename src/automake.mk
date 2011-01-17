@@ -25,13 +25,14 @@ src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS) \
 src_gnubik_SOURCES = \
 	src/cube.c src/cube.h \
 	src/cube_i.h \
+	src/cubeview.c src/cubeview.h \
 	src/colour-dialog.c src/colour-dialog.h \
 	src/control.h src/control.c \
 	src/cursors.c src/cursors.h \
 	src/dialogs.c src/dialogs.h \
 	src/drwBlock.c src/drwBlock.h \
 	src/glarea-common.c \
-	src/glarea.c src/glarea.h \
+	src/glarea.h \
 	src/main.c \
 	src/quarternion.c src/quarternion.h \
 	src/select.c src/select.h \

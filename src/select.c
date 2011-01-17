@@ -35,13 +35,14 @@ in the cube (if any) the cursor is located upon.
 #include <float.h>
 #include <stdio.h>
 
-#include "glarea.h"
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
 #include <assert.h>
 
 #include "drwBlock.h"
+#include "cubeview.h"
+#include "glarea.h"
 
 static gboolean detect_motion (GtkWidget * w,
 			       GdkEventMotion * event, gpointer user_data);
@@ -57,7 +58,7 @@ struct cublet_selection
   gpointer data;
   gint idle_threshold;
   double granularity;
-  struct display_context *dc;
+  GtkWidget *w;
 
   gboolean motion;
   gboolean stop_detected;
@@ -78,7 +79,7 @@ the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. DO_THIS is a pointer to a function
 to be called when a new block is selected. DATA is a data to be passed to DO_THIS*/
 struct cublet_selection *
-select_create (struct display_context *rendering, int holdoff,
+Xselect_create (GtkWidget *w, int holdoff,
 	       double precision, select_func *do_this, gpointer data)
 {
   struct cublet_selection *cs = malloc (sizeof *cs);
@@ -86,7 +87,7 @@ select_create (struct display_context *rendering, int holdoff,
   cs->idle_threshold = holdoff;
   cs->granularity = precision;
 
-  g_signal_connect (display_context_get_widget (rendering),
+  g_signal_connect (w,
 		    "motion-notify-event",
 		    G_CALLBACK (detect_motion), cs);
 
@@ -97,10 +98,11 @@ select_create (struct display_context *rendering, int holdoff,
 
   cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 
-  cs->dc = rendering;
+  cs->w = w;
 
   return cs;
 }
+
 
 
 void
@@ -180,7 +182,6 @@ get_widget_height (GtkWidget * w)
 #include <float.h>
 #include <stdio.h>
 #include "ui.h"
-#include "glarea.h"
 
 #include <assert.h>
 #include <string.h>
@@ -209,9 +210,12 @@ pickPolygons (struct cublet_selection *cs)
   GLuint selectBuf[BUFSIZE];
   GLint hits;
 
-  assert (cs->granularity > 0);
+  GtkWidget *w;
 
-  height = get_widget_height (display_context_get_widget (cs->dc));
+  assert (cs->granularity > 0);
+  w = cs->w;
+
+  height = get_widget_height (w);
 
   glSelectBuffer (BUFSIZE, selectBuf);
 
@@ -336,8 +340,8 @@ select_is_selected (const struct cublet_selection *cs)
 }
 
 
-struct display_context *
-cublet_selection_get_display_context (struct cublet_selection *cs)
+GtkWidget *
+cublet_selection_get_widget (const struct cublet_selection *cs)
 {
-  return cs->dc;
+  return cs->w;
 }

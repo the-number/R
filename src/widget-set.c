@@ -23,8 +23,8 @@
 #include "dialogs.h"
 #include "guile-hooks.h"
 #include "colour-dialog.h"
-#include "glarea.h"
 #include "drwBlock.h"
+#include "glarea.h"
 
 #include <gtk/gtk.h>
 

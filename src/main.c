@@ -24,9 +24,11 @@
 #include <getopt.h>
 
 #include "widget-set.h"
+#include "cubeview.h"
 #include "glarea.h"
 #include "ui.h"
 #include "version.h"
+
 
 static const char help_string[];
 
@@ -52,9 +54,6 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *playbar;
   GtkWidget *glwidget1;
   GtkWidget *glwidget2;
-
-  struct display_context *dc1;
-  struct display_context *dc2;
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -89,13 +88,12 @@ c_main (void *closure, int argc, char *argv[])
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
-  dc1 = display_context_create ();
-  glwidget1 = display_context_get_widget (dc1);
+  glwidget1 = gbk_cubeview_new ();
   gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
 
-  dc2 = display_context_create ();
-  glwidget2 = display_context_get_widget (dc2);
+  glwidget2 = gbk_cubeview_new (); 
   gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
+
 
   /* create the cube */
   the_cube = new_cube (opts.initial_cube_size[0],

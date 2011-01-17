@@ -19,36 +19,14 @@
 #ifndef GLAREA_H
 #define GLAREA_H
 
-#include <gtk/gtk.h>
-
-
-#define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
-
-void error_check (const char *file, int line_no, const char *string);
-
-struct display_context;
-//extern struct display_context *the_display_context;
-
-GtkWidget *display_context_get_widget (struct display_context *);
-struct display_context *display_context_create (void);
-
-void scene_init (void);
 void perspectiveSet (void);
 void modelViewInit (void);
-void postRedisplay (struct display_context *);
-void lighting_init (void);
+void scene_init (void);
 void projection_init (int jitter);
-
-/* Callbacks for signals on the glarea widget */
-gboolean cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data);
-void graphics_area_init (GtkWidget *w, gpointer data);
-gboolean z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data);
-gboolean cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data);
-gboolean on_button_press_release (GtkWidget *w, GdkEventButton *event, gpointer data);
-gboolean cube_controls (GtkWidget *w, GdkEventButton *event, gpointer data);
-
-/* Rotate the cube about the axis (screen relative) in direction dir */
+void lighting_init (void);
 void rotate_cube (int axis, int dir);
-void arrows (guint, int shifted);
+
+
+
 
 #endif

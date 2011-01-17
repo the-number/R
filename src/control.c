@@ -25,7 +25,7 @@
 #include "select.h"
 
 #include "cursors.h"
-#include "glarea.h"
+#include "cubeview.h"
 #include "ui.h"
 
 #include <math.h>
@@ -186,7 +186,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
       pending_movement->axis = -1;
     }
 
-  struct display_context *dc = cublet_selection_get_display_context (cs);
-  set_mouse_cursor (display_context_get_widget (dc), cs);
-  postRedisplay (dc);
+  GtkWidget *w = cublet_selection_get_widget (cs);
+  set_mouse_cursor (w, cs);
+  gbk_redisplay (GBK_CUBEVIEW (w));
 }

@@ -23,7 +23,7 @@
 #include "ui.h"
 #include "select.h"
 #include "drwBlock.h"
-#include "glarea.h"
+#include "cubeview.h"
 #include <assert.h>
 #include <math.h>
 #include "widget-set.h"
@@ -41,7 +41,7 @@ struct animation animation = {40, 0, false, 2};
 
 static gboolean inverted_rotation;
 
-static void animate_rotation (struct display_context *);
+static void animate_rotation (GbkCubeview *);
 
 
 gboolean
@@ -76,18 +76,17 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       inverted_rotation = TRUE;
       pending_movement->dir = !pending_movement->dir;
 
-      //postRedisplay (the_display_context);
       break;
     case 1:
       /* Make a move */
       if (select_is_selected (cs))
 	{
-
 	  /* Insist upon 180 degree turns if the section is non-square */
 	  if ( !cube_square_axis (the_cube, pending_movement->axis))
 	    pending_movement->turns = 2;
 
-	  animate_rotation (cublet_selection_get_display_context (cs));
+	  GtkWidget *w = cublet_selection_get_widget (cs);
+	  animate_rotation (GBK_CUBEVIEW (w));
 	}
 
       break;
@@ -99,7 +98,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
 /* Does exactly what it says on the tin :-) */
 static void
-animate_rotation (struct display_context *dc)
+animate_rotation (GbkCubeview *dc)
 {
   struct move_data *data = &the_pending_movement;
   data->blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
@@ -119,7 +118,7 @@ static gboolean
 animate (gpointer data)
 {
   struct move_data *md = &the_pending_movement;
-  struct display_context *dc = data;
+  GbkCubeview *dc = data;
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (animation.frameQty + 1);
@@ -128,7 +127,7 @@ animate (gpointer data)
   animation.animation_angle -= increment;
 
   /* and redraw it */
-  postRedisplay (dc);
+  gbk_redisplay (dc);
 
   if (fabs (animation.animation_angle) < 90.0 * md->turns )
     {
