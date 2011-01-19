@@ -50,13 +50,11 @@ is_animating (void)
   return (animation.current_move != NULL);
 }
 
-extern struct move_data the_pending_movement;
-
 /* handle mouse clicks */
 gboolean
 on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
-  struct move_data *pending_movement = &the_pending_movement;
+  GbkCubeview *cv = GBK_CUBEVIEW (w);
 
   struct cublet_selection *cs = data;
   if (event->type != GDK_BUTTON_PRESS)
@@ -74,7 +72,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
          turn direction could get out of sync */
 
       inverted_rotation = TRUE;
-      pending_movement->dir = !pending_movement->dir;
+      cv->pending_movement.dir = !cv->pending_movement.dir;
 
       break;
     case 1:
@@ -82,11 +80,10 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       if (select_is_selected (cs))
 	{
 	  /* Insist upon 180 degree turns if the section is non-square */
-	  if ( !cube_square_axis (the_cube, pending_movement->axis))
-	    pending_movement->turns = 2;
+	  if ( !cube_square_axis (the_cube, cv->pending_movement.axis))
+	    cv->pending_movement.turns = 2;
 
-	  GtkWidget *w = cublet_selection_get_widget (cs);
-	  animate_rotation (GBK_CUBEVIEW (w));
+	  animate_rotation (cv);
 	}
 
       break;
@@ -100,7 +97,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 static void
 animate_rotation (GbkCubeview *dc)
 {
-  struct move_data *data = &the_pending_movement;
+  struct move_data *data = &dc->pending_movement;
   data->blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
 
   assert (data->blocks_in_motion);
@@ -117,8 +114,9 @@ animate_rotation (GbkCubeview *dc)
 static gboolean 
 animate (gpointer data)
 {
-  struct move_data *md = &the_pending_movement;
   GbkCubeview *dc = data;
+
+  struct move_data *md = &dc->pending_movement;
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (animation.frameQty + 1);

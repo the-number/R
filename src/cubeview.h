@@ -25,6 +25,7 @@
 
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
+#include "cube.h"
 
 /*
  * Type macros.
@@ -52,6 +53,9 @@ struct _GbkCubeview
 
   GdkGLContext *glcontext;
   GdkGLDrawable *gldrawable;
+
+  /* The move that will take place when the mouse is clicked */
+  struct move_data pending_movement;
 };
 
 struct _GbkCubeviewClass

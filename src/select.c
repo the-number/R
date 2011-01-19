@@ -79,7 +79,7 @@ the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. DO_THIS is a pointer to a function
 to be called when a new block is selected. DATA is a data to be passed to DO_THIS*/
 struct cublet_selection *
-Xselect_create (GtkWidget *w, int holdoff,
+select_create (GtkWidget *w, int holdoff,
 	       double precision, select_func *do_this, gpointer data)
 {
   struct cublet_selection *cs = malloc (sizeof *cs);

@@ -35,7 +35,7 @@ typedef void select_func (struct cublet_selection *, gpointer data);
 
 /* Initialise the selection library */
 struct cublet_selection *
-Xselect_create (GtkWidget *w, int holdoff,
+select_create (GtkWidget *w, int holdoff,
 		double precision, select_func *do_this, gpointer data);
 
 /* Temporarily enable/disable selection */

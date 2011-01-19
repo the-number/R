@@ -34,9 +34,6 @@ static void set_the_colours (GtkWidget *w, const char *progname);
 static GLboolean have_accumulation_buffer (void);
 
 
-/* The move that will take place when the mouse is clicked */
-struct move_data the_pending_movement = { -1, -1, -1, 0 };
-
 
 /* Error string display.  This is always called by a macro
    wrapper,  to set the file and line_no opts parameters */
@@ -259,6 +256,12 @@ gbk_cubeview_init (GbkCubeview *dc)
 {
   struct cublet_selection *cs = NULL;
 
+  dc->pending_movement.slice = -1;
+  dc->pending_movement.dir = -1;
+  dc->pending_movement.axis = -1;
+  dc->pending_movement.turns = 0;
+  dc->pending_movement.blocks_in_motion = NULL;
+
   initialize_gl_capability (GTK_WIDGET (dc));
 
   dc->glcontext = NULL;
@@ -275,7 +278,8 @@ gbk_cubeview_init (GbkCubeview *dc)
 
   GTK_WIDGET_SET_FLAGS (dc, GTK_CAN_FOCUS);
 
-  cs = Xselect_create (GTK_WIDGET (dc), 50, 1, selection_func, &the_pending_movement );
+  cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
+		      &dc->pending_movement );
 
   g_signal_connect (dc, "realize", G_CALLBACK (on_realize), NULL);
   g_signal_connect (dc, "expose-event", G_CALLBACK (on_expose), NULL);
