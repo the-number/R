@@ -99,9 +99,6 @@ grab_focus  (GtkWidget *widget,
 static gboolean
 cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
 {
-  static gdouble last_mouse_x = -1;
-  static gdouble last_mouse_y = -1;
-
   gint xmotion = 0;
   gint ymotion = 0;
 
@@ -115,14 +112,14 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   if (! (GDK_BUTTON1_MASK & mm))
     return FALSE;
 
-  if (last_mouse_x >= 0)
-    xmotion = event->x - last_mouse_x;
+  if (dc->last_mouse_x >= 0)
+    xmotion = event->x - dc->last_mouse_x;
 
-  if (last_mouse_y >= 0)
-    ymotion = event->y - last_mouse_y;
+  if (dc->last_mouse_y >= 0)
+    ymotion = event->y - dc->last_mouse_y;
 
-  last_mouse_x = event->x;
-  last_mouse_y = event->y;
+  dc->last_mouse_x = event->x;
+  dc->last_mouse_y = event->y;
 
   if (ymotion > 0)
     rotate_cube (0, 1);
@@ -405,6 +402,9 @@ on_realize (GtkWidget *w, gpointer data)
     dc->display_func = display_anti_alias;
   else
     dc->display_func = display_raw;
+
+  dc->last_mouse_x = -1;
+  dc->last_mouse_y = -1;
 }
 
 

@@ -56,6 +56,10 @@ struct _GbkCubeview
 
   /* The move that will take place when the mouse is clicked */
   struct move_data pending_movement;
+
+  /* Position of the mouse cursor */
+  gdouble last_mouse_x ;
+  gdouble last_mouse_y ;
 };
 
 struct _GbkCubeviewClass
