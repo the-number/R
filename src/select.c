@@ -64,14 +64,14 @@ struct cublet_selection
   gboolean stop_detected;
 
   /* A copy of the last selection taken */
-  struct facet_selection *current_selection;
+  struct facet_selection current_selection;
 
   gint mouse_x;
   gint mouse_y;
 };
 
 /* Identify the block at screen co-ordinates x,  y */
-static struct facet_selection *pickPolygons (struct cublet_selection *);
+static void pickPolygons (struct cublet_selection *, struct facet_selection *);
 
 
 /* Initialise the selection mechanism.  Holdoff is the time for which
@@ -99,6 +99,10 @@ select_create (GtkWidget *w, int holdoff,
   cs->timer = g_timeout_add (cs->idle_threshold, UnsetMotion, cs);
 
   cs->w = w;
+
+  cs->current_selection.block = -1;
+  cs->current_selection.face = -1;
+  cs->current_selection.quadrant = -1;
 
   return cs;
 }
@@ -193,7 +197,7 @@ get_widget_height (GtkWidget * w)
 
 
 
-struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
+static void choose_items (GLint hits, GLuint buffer[], struct facet_selection *);
 
 
 
@@ -201,8 +205,8 @@ struct facet_selection *choose_items (GLint hits, GLuint buffer[]);
    candidate blocks.  That is,  all blocks which orthogonally project to x,  y.  It
    then calls choose_items,  to determine which of them is closest to the screen.
 */
-static struct facet_selection *
-pickPolygons (struct cublet_selection *cs)
+static void
+pickPolygons (struct cublet_selection *cs, struct facet_selection *sel)
 {
   GLint height;
 
@@ -233,7 +237,6 @@ pickPolygons (struct cublet_selection *cs)
   gluPickMatrix ((GLdouble) cs->mouse_x, (GLdouble) (height - cs->mouse_y),
 		 cs->granularity, cs->granularity, viewport);
 
-
   perspectiveSet ();
   modelViewInit ();
   drawCube (TRUE);
@@ -242,13 +245,8 @@ pickPolygons (struct cublet_selection *cs)
 
   ERR_CHECK ("");
   hits = glRenderMode (GL_RENDER);
-  if (hits == 0)
-    {
-      ERR_CHECK ("Error Selecting");
-      return (NULL);
-    }
 
-  return choose_items (hits, selectBuf);
+  choose_items (hits, selectBuf, sel);
 }
 
 
@@ -257,10 +255,9 @@ pickPolygons (struct cublet_selection *cs)
 
 /* Find out which of all the objects in buffer is the one with the
    lowest Z value.  ie. closer in the depth buffer  */
-struct facet_selection *
-choose_items (GLint hits, GLuint buffer[])
+static void
+choose_items (GLint hits, GLuint buffer[], struct facet_selection *selection)
 {
-  static struct facet_selection selection;
   unsigned int i, j;
   GLuint names, *ptr;
 
@@ -298,26 +295,22 @@ choose_items (GLint hits, GLuint buffer[])
 	}
     }
 
-  if (closest[SEL_QUAD] == -1)
-    return NULL;
-
-  selection.block = closest[SEL_BLOCK];
-  selection.face = closest[SEL_FACE];
-  selection.quadrant = closest[SEL_QUAD];
+  selection->block = closest[SEL_BLOCK];
+  selection->face = closest[SEL_FACE];
+  selection->quadrant = closest[SEL_QUAD];
 
 #if DEBUG
   fprintf (stderr, "Selected block %d,  face %d,  quadrant %d\n",
-	   selection.block, selection.face, selection.quadrant);
+	   selection->block, selection->face, selection->quadrant);
 #endif
 
-  return &selection;
 }
 
 /* an accessor func to get the value of the currently selected items */
 const struct facet_selection *
 select_get (const struct cublet_selection *cs)
 {
-  return cs->current_selection;
+  return &cs->current_selection;
 }
 
 
@@ -327,7 +320,7 @@ select_get (const struct cublet_selection *cs)
 void
 select_update (struct cublet_selection *cs)
 {
-  cs->current_selection = pickPolygons (cs);
+  pickPolygons (cs, &cs->current_selection);
 
   if (cs->action)
     cs->action (cs, cs->data);
@@ -336,7 +329,7 @@ select_update (struct cublet_selection *cs)
 gboolean
 select_is_selected (const struct cublet_selection *cs)
 {
-  return (NULL != cs->current_selection);
+  return cs->current_selection.quadrant != -1;
 }
 
 

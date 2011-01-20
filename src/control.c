@@ -137,13 +137,14 @@ void
 selection_func (struct cublet_selection *cs, gpointer data)
 {
   struct move_data *pending_movement = data;
-  const struct facet_selection *selection = 0;
+
 
   if (is_animating ())
     return;
 
-  if (0 != (selection = select_get (cs)))
+  if ( select_is_selected (cs))
     {
+      const struct facet_selection *selection = select_get (cs);
       GLfloat turn_axis[4];
       vector v;
 
