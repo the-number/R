@@ -36,7 +36,7 @@ struct scene_view
 static struct scene_view the_scene;
 
 /* Start with the unit quarternion */
-Quarternion the_cube_orientation = { 1, 0, 0, 0 };
+static Quarternion the_cube_orientation = { 1, 0, 0, 0 };
 
 struct jitter_v
 {
