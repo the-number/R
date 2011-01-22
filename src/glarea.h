@@ -19,12 +19,12 @@
 #ifndef GLAREA_H
 #define GLAREA_H
 
-#include "cube.h"
+#include "cubeview.h"
 
-void perspectiveSet (void);
-void modelViewInit (void);
-void scene_init (GbkCube *);
-void projection_init (int jitter);
+void perspectiveSet (struct scene_view *);
+void modelViewInit (struct scene_view *);
+void scene_init (GbkCubeview *);
+void projection_init (struct scene_view *, int jitter);
 void lighting_init (void);
 void rotate_cube (int axis, int dir);
 

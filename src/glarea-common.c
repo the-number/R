@@ -25,15 +25,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-struct scene_view 
-{
-  GLdouble fovy ;
-  GLdouble cp_near ;
-  GLdouble cp_far ;
-  GLdouble bounding_sphere_radius ;
-};
-
-static struct scene_view the_scene;
 
 /* Start with the unit quarternion */
 static Quarternion the_cube_orientation = { 1, 0, 0, 0 };
@@ -51,14 +42,14 @@ static const struct jitter_v j8[8] =
 };
 
 void
-perspectiveSet (void)
+perspectiveSet (struct scene_view *scene)
 {
-  gluPerspective (the_scene.fovy, 1, the_scene.cp_near, the_scene.cp_far);
+  gluPerspective (scene->fovy, 1, scene->cp_near, scene->cp_far);
 }
 
 /* Wrapper to set the modelview matrix */
 void
-modelViewInit (void)
+modelViewInit (struct scene_view *scene)
 {
   /* start with the cube slightly skew,  so we can see all its aspects */
   GLdouble cube_orientation[2] = { 15.0, 15.0 };
@@ -70,7 +61,7 @@ modelViewInit (void)
 
   glMatrixMode (GL_MODELVIEW);
   glLoadIdentity ();
-  gluLookAt (0, 0, the_scene.bounding_sphere_radius + the_scene.cp_near,
+  gluLookAt (0, 0, scene->bounding_sphere_radius + scene->cp_near,
 	     origin[0], origin[1], origin[2], 0.0, 1.0, 0.0);
 
 
@@ -137,20 +128,21 @@ accPerspective (const struct scene_view *sv,
 
 
 void
-scene_init (GbkCube *cube)
+scene_init (GbkCubeview *cv)
 {
-  the_scene.bounding_sphere_radius = gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 0);
-  the_scene.bounding_sphere_radius += gbk_cube_get_size (cube, 1) * gbk_cube_get_size (cube, 1);
-  the_scene.bounding_sphere_radius += gbk_cube_get_size (cube, 2) * gbk_cube_get_size (cube, 2);
-  the_scene.bounding_sphere_radius = sqrt (the_scene.bounding_sphere_radius);
+  GbkCube *cube = cv->cube;
+  cv->scene.bounding_sphere_radius = gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 0);
+  cv->scene.bounding_sphere_radius += gbk_cube_get_size (cube, 1) * gbk_cube_get_size (cube, 1);
+  cv->scene.bounding_sphere_radius += gbk_cube_get_size (cube, 2) * gbk_cube_get_size (cube, 2);
+  cv->scene.bounding_sphere_radius = sqrt (cv->scene.bounding_sphere_radius);
 
-  the_scene.fovy = 33.0;
-  the_scene.cp_near = the_scene.bounding_sphere_radius / (tan (the_scene.fovy * M_PI / 360.0));
-  the_scene.cp_far = the_scene.cp_near + 2 * the_scene.bounding_sphere_radius;
+  cv->scene.fovy = 33.0;
+  cv->scene.cp_near = cv->scene.bounding_sphere_radius / (tan (cv->scene.fovy * M_PI / 360.0));
+  cv->scene.cp_far = cv->scene.cp_near + 2 * cv->scene.bounding_sphere_radius;
 }
 
 void
-projection_init (int jitter)
+projection_init (struct scene_view *scene, int jitter)
 {
   glEnable (GL_DEPTH_TEST);
   glClearColor (0, 0, 0, 0);
@@ -158,7 +150,7 @@ projection_init (int jitter)
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
 
-  accPerspective (&the_scene, 1, 
+  accPerspective (scene, 1, 
 		  j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
 }
 

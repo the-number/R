@@ -64,6 +64,9 @@ cubeview_set_property (GObject     *object,
     case PROP_CUBE:
       {
 	cubeview->cube = g_value_get_object (value);
+	scene_init (cubeview);
+	g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
+				  G_CALLBACK (scene_init), cubeview);
       }
       break;
     default:
@@ -509,15 +512,15 @@ void error_check (const char *file, int line_no, const char *string);
  
 
 static void
-render_scene (GbkCube *cube, GLint jitter, const struct animation *a)
+render_scene (GbkCubeview *cv, GLint jitter, const struct animation *a)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
-  projection_init (jitter);
-  modelViewInit ();
+  projection_init (&cv->scene, jitter);
+  modelViewInit (&cv->scene);
   ERR_CHECK ("Error in display");
 
-  drawCube (cube, FALSE, a);
+  drawCube (cv->cube, FALSE, a);
   ERR_CHECK ("Error in display");
 }
 
@@ -540,7 +543,7 @@ display_anti_alias (GbkCubeview *dc)
 
   for (jitter = 0; jitter < 8; ++jitter)
     {
-      render_scene (dc->cube, jitter, &dc->animation);
+      render_scene (dc, jitter, &dc->animation);
       glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
@@ -565,7 +568,7 @@ display_raw (GbkCubeview *dc)
 
   ERR_CHECK ("Error in display");
 
-  render_scene (dc->cube, 0, &dc->animation);
+  render_scene (dc, 0, &dc->animation);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }

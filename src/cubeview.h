@@ -28,6 +28,14 @@
 #include "cube.h"
 #include "ui.h"
 
+struct scene_view 
+{
+  GLdouble fovy ;
+  GLdouble cp_near ;
+  GLdouble cp_far ;
+  GLdouble bounding_sphere_radius ;
+};
+
 /*
  * Type macros.
  */
@@ -49,6 +57,8 @@ struct _GbkCubeview
   GtkDrawingArea parent_instance;
 
   GbkCube *cube;
+
+  struct scene_view scene;
 
   /* instance members */
   display *display_func;

@@ -108,14 +108,14 @@ c_main (void *closure, int argc, char *argv[])
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
 
-
+  //  scene_init (GBK_CUBEVIEW (glwidget1));
+  //  scene_init (GBK_CUBEVIEW (glwidget2));
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
   if (!opts.solved)
     gbk_cube_scramble (cube);
 
-  scene_init (cube);
 
   gtk_widget_show_all (window);
 
