@@ -239,7 +239,7 @@ pickPolygons (struct cublet_selection *cs, struct facet_selection *sel)
 
   perspectiveSet ();
   modelViewInit ();
-  drawCube (TRUE);
+  drawCube (TRUE, NULL);
   glMatrixMode (GL_PROJECTION);
   glPopMatrix ();
 

@@ -442,7 +442,7 @@ getColour (int i, struct cube_rendering *cr)
 
 /* render the cube */
 void
-drawCube (GLboolean ancilliary)
+drawCube (GLboolean ancilliary, const struct animation *animation)
 {
   int i;
 
@@ -503,28 +503,28 @@ drawCube (GLboolean ancilliary)
 
       /* Find out if this block is one of those currently being
          turned.  If so,  j will be < turning_block_qty */
-      if (animation.current_move && animation.current_move->blocks_in_motion)
-	for (j = 0; j < animation.current_move->blocks_in_motion->number_blocks; j++)
+      if (animation && animation->current_move && animation->current_move->blocks_in_motion)
+	for (j = 0; j < animation->current_move->blocks_in_motion->number_blocks; j++)
 	  {
-	    if (animation.current_move->blocks_in_motion->blocks[j] == i)
+	    if (animation->current_move->blocks_in_motion->blocks[j] == i)
 	      break;
 	  }
 
       glPushMatrix ();
-      if (animation.current_move &&
-	  animation.current_move->blocks_in_motion &&
-	  j != animation.current_move->blocks_in_motion->number_blocks)
+      if (animation && animation->current_move &&
+	  animation->current_move->blocks_in_motion &&
+	  j != animation->current_move->blocks_in_motion->number_blocks)
 	{
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
 	     animation angle is */
-	  GLdouble angle = animation.animation_angle;
+	  GLdouble angle = animation->animation_angle;
 
 	  int unity = 1;
-	  if (!animation.current_move->dir)
+	  if (!animation->current_move->dir)
 	    unity = -1;
 
-	  switch (animation.current_move->axis)
+	  switch (animation->current_move->axis)
 	    {
 	    case 0:
 	    case 3:

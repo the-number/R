@@ -43,6 +43,10 @@ static gboolean inverted_rotation;
 
 static void animate_rotation (GbkCubeview *);
 
+void set_frame_qty (int frames)
+{
+  animation.frameQty = frames;
+}
 
 gboolean
 is_animating (void)

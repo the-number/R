@@ -38,12 +38,11 @@ struct animation
   int frameQty ;
 };
 
-extern struct animation animation;
-
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 
+gboolean is_animating (void);
 
-int is_animating (void);
+void set_frame_qty (int frames);
 
 
 #endif

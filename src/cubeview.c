@@ -25,6 +25,8 @@
 #include "glarea.h"
 #include <gdk/gdkkeysyms.h>
 
+extern struct animation animation;
+
 
 static void on_realize (GtkWidget *w, gpointer data);
 static void resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data);
@@ -440,7 +442,7 @@ void error_check (const char *file, int line_no, const char *string);
 
 
 static void
-render_scene (GLint jitter)
+render_scene (GLint jitter, const struct animation *a)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
@@ -448,7 +450,7 @@ render_scene (GLint jitter)
   modelViewInit ();
   ERR_CHECK ("Error in display");
 
-  drawCube (FALSE);
+  drawCube (FALSE, a);
   ERR_CHECK ("Error in display");
 }
 
@@ -471,7 +473,7 @@ display_anti_alias (GbkCubeview *dc)
 
   for (jitter = 0; jitter < 8; ++jitter)
     {
-      render_scene (jitter);
+      render_scene (jitter, &animation);
       glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
@@ -496,7 +498,7 @@ display_raw (GbkCubeview *dc)
 
   ERR_CHECK ("Error in display");
 
-  render_scene (0);
+  render_scene (0, &animation);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }

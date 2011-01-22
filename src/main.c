@@ -156,7 +156,11 @@ app_opts (int *argc, char **argv)
       switch (c)
 	{
 	case 'a':
-	  sscanf (optarg, "%d", &animation.frameQty);
+	  {
+	    int fq = 2;
+	    sscanf (optarg, "%d", &fq);
+	    set_frame_qty (fq);
+	  }
 	  break;
 	case 's':
 	  opts.solved = 1;
