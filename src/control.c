@@ -87,16 +87,14 @@ getTurnAxis (const struct facet_selection *items, GLfloat * vector)
   transform (t, axes[items->face][items->quadrant], vector);
 }
 
-static float cursorAngle;
-
 static void
-set_mouse_cursor (GtkWidget *glxarea, const struct cublet_selection *cs)
+set_mouse_cursor (GtkWidget *w, const struct cublet_selection *cs)
 {
   const unsigned char *mask_bits;
   const unsigned char *data_bits;
   int hot_x, hot_y;
   int width, height;
-
+  GbkCubeview *cv = GBK_CUBEVIEW (w);
 
   GdkCursor *cursor;
   GdkPixmap *source, *mask;
@@ -105,7 +103,7 @@ set_mouse_cursor (GtkWidget *glxarea, const struct cublet_selection *cs)
 
   if (select_is_selected (cs))
     {
-      get_cursor (cursorAngle, &data_bits, &mask_bits, &height, &width,
+      get_cursor (cv->cursorAngle, &data_bits, &mask_bits, &height, &width,
 		  &hot_x, &hot_y);
 
 
@@ -121,11 +119,11 @@ set_mouse_cursor (GtkWidget *glxarea, const struct cublet_selection *cs)
     }
   else
     {
-      GdkDisplay *display = gtk_widget_get_display (glxarea);
+      GdkDisplay *display = gtk_widget_get_display (w);
       cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
     }
 
-  gdk_window_set_cursor (glxarea->window, cursor);
+  gdk_window_set_cursor (w->window, cursor);
   gdk_cursor_unref (cursor);
 }
 
@@ -178,7 +176,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
 	transform_in_place (proj, v);
 
-	cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
+	cv->cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }
     }
   else

@@ -62,6 +62,8 @@ struct _GbkCubeview
   gdouble last_mouse_x ;
   gdouble last_mouse_y ;
 
+  /* Angle of the mouse cursor */
+  float cursorAngle;
 
   /* Animation parameters */
   struct animation animation;
