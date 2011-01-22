@@ -172,7 +172,19 @@ gbk_cube_init (GbkCube *ret)
 }
 
 void
-gbk_cube_set_size (GbkCube *ret, int s0, int s1, int s2)
+gbk_cube_set_size (GbkCube *cube, int s0, int s1, int s2)
+{
+  gint s[3];
+
+  s[0] = s0;
+  s[1] = s1;
+  s[2] = s2;
+
+  g_object_set (cube, "dimensions", s, NULL);
+}
+
+static void
+cube_set_size (GbkCube *ret, int s0, int s1, int s2)
 {
   int i;
   ret->size[0] = s0;
@@ -235,14 +247,79 @@ gbk_cube_set_size (GbkCube *ret, int s0, int s1, int s2)
       set_face_centre (block, 4, -1, 0, 0, 0);
       set_face_centre (block, 5, 1, 0, 0, 0);
 
-    }				/* End of loop over blocks. */
+    } /* End of loop over blocks. */
+}
+
+
+enum
+  {
+    PROP_0 = 0,
+    PROP_DIMENSIONS
+  };
+
+static void
+cube_set_property (GObject         *object,
+		   guint            prop_id,
+		   const GValue    *value,
+		   GParamSpec      *pspec)
+{
+  GbkCube *cube  = GBK_CUBE (object);
+
+  switch (prop_id)
+    {
+    case PROP_DIMENSIONS:
+      {
+	gint *s = g_value_get_pointer (value);
+
+	cube_set_size (cube, s[0], s[1], s[2]);
+      }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    };
+}
+
+
+static void
+cube_get_property (GObject         *object,
+		   guint            prop_id,
+		   GValue          *value,
+		   GParamSpec      *pspec)
+{
+  GbkCube *cube  = GBK_CUBE (object);
+
+  switch (prop_id)
+    {
+    case PROP_DIMENSIONS:
+      g_value_set_pointer (value, cube->size);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    };
 }
 
 
 static void
 gbk_cube_class_init (GbkCubeClass *klass)
 {
-  //  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  GParamSpec *gbk_param_spec;
+
+  gobject_class->set_property = cube_set_property;
+  gobject_class->get_property = cube_get_property;
+
+  gbk_param_spec = g_param_spec_pointer ("dimensions",
+					 "Dimensions",
+					 "An array of 3 ints specifying how many cubelets along each side of the cube",
+					 G_PARAM_READWRITE);
+
+  g_object_class_install_property (gobject_class,
+                                   PROP_DIMENSIONS,
+                                   gbk_param_spec);
+
 }
 
 
@@ -310,11 +387,13 @@ gbk_cube_get_block_transform (const GbkCube *cube,
 GObject*
 gbk_cube_new (int x, int y, int z)
 {
-  GObject *c = g_object_new (gbk_cube_get_type (), NULL);
+  gint s[3] ;
 
-  gbk_cube_set_size (GBK_CUBE (c), x, y, z);
-
-  return c;
+  s[0] = x;
+  s[1] = y;
+  s[2] = z;
+  
+  return  g_object_new (gbk_cube_get_type (), "dimensions", s, NULL);
 }
 
 
