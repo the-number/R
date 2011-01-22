@@ -113,7 +113,7 @@ c_main (void *closure, int argc, char *argv[])
   if (!opts.solved)
     gbk_cube_scramble (cube);
 
-  scene_init ();
+  scene_init (cube);
 
   gtk_widget_show_all (window);
 

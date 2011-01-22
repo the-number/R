@@ -101,57 +101,6 @@ pref_state_destroy (struct preferences_state *ps)
   g_free (ps);
 }
 
-#if 0
-
-static gboolean
-new_game (gpointer p)
-{
-  struct preferences_state *ps = p;
-
-  if (is_animating ())
-    return TRUE;
-
-  re_initialize_glarea ();
-
-  destroy_the_cube ();
-  /* create the cube */
-  create_the_cube (gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
-		   gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
-		   gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2])));
-
-  cube_scramble (the_cube);
-
-  postRedisplay ();
-
-  if (move_queue != NULL)
-    free_move_queue (move_queue);
-  move_queue = new_move_queue ();
-
-  set_toolbar_state (0);
-  update_statusbar ();
-
-  pref_state_destroy (ps);
-
-  return FALSE;
-}
-
-
-/* Request that the game be restarted
-   If data is non zero,  then all it's data will be reallocated
-*/
-
-void
-request_new_game (GtkAction *act, struct preferences_state *ps)
-{
-  request_stop ();
-  if (is_animating ())
-    abort_animation ();
-  g_idle_add (new_game, ps);
-}
-
-
-
-#endif
 
 /* Allows only cubic cubes if the togglebutton is active */
 static void
@@ -279,7 +228,7 @@ confirm_preferences (GtkWindow *window)
 }
 
 void
-preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
+preferences_dialog (GtkWidget *w, GtkWindow *toplevel)
 {
   gint response;
 
