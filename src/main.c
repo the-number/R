@@ -34,8 +34,6 @@ static const char help_string[];
 
 struct cube *the_cube = NULL;
 
-static void app_opts (int *argc, char **argv);
-
 struct application_options
 {
   bool solved ;
@@ -43,7 +41,8 @@ struct application_options
   int frameQty;
 };
 
-static struct application_options opts = { false, {3,3,3}};
+
+static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
 
 
 static void
@@ -55,6 +54,8 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *playbar;
   GtkWidget *glwidget1;
   GtkWidget *glwidget2;
+
+  struct application_options opts = { false, {3,3,3}, 2};
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -77,7 +78,7 @@ c_main (void *closure, int argc, char *argv[])
   gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
 
   /* process arguments specific to this program */
-  app_opts (&argc, argv);
+  parse_app_opts (&argc, argv, &opts);
 
   /* create a vbox to hold the drawing area and the menubar */
   form = gtk_vbox_new (FALSE, 0);
@@ -129,7 +130,7 @@ main (int argc, char **argv)
 /* process the options we're interested in.  X resource overrides should
 have already been extracted */
 static void
-app_opts (int *argc, char **argv)
+parse_app_opts (int *argc, char **argv, struct application_options *opts)
 {
 #ifdef HAVE_GETOPT_LONG
 #define GETOPT(A,  B,  C,  D,  E) getopt_long (A,  B,  C,  D,  E)
@@ -159,24 +160,24 @@ app_opts (int *argc, char **argv)
 	{
 	case 'a':
 	  {
-	    sscanf (optarg, "%d", &opts.frameQty);
+	    sscanf (optarg, "%d", &opts->frameQty);
 	  }
 	  break;
 	case 's':
-	  opts.solved = 1;
+	  opts->solved = 1;
 	  break;
 	case 'z':
-	    opts.initial_cube_size[0] = atoi (strtok (optarg, ","));
-	    if ( opts.initial_cube_size[0] <= 0)
-	      opts.initial_cube_size[0] = 3;
+	    opts->initial_cube_size[0] = atoi (strtok (optarg, ","));
+	    if ( opts->initial_cube_size[0] <= 0)
+	      opts->initial_cube_size[0] = 3;
 	    
 	    for (i = 1; i < 3; ++i)
 	      {
 		char *x = strtok (NULL, ",");
-		opts.initial_cube_size[i] = x ? atoi (x) : -1;
+		opts->initial_cube_size[i] = x ? atoi (x) : -1;
 
-		if ( opts.initial_cube_size[i] <= 0)
-		  opts.initial_cube_size[i] = opts.initial_cube_size[i-1];
+		if ( opts->initial_cube_size[i] <= 0)
+		  opts->initial_cube_size[i] = opts->initial_cube_size[i-1];
 	      }
 	  break;
 	case 'h':
