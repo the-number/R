@@ -26,6 +26,7 @@
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
 #include "cube.h"
+#include "ui.h"
 
 /*
  * Type macros.
@@ -60,6 +61,10 @@ struct _GbkCubeview
   /* Position of the mouse cursor */
   gdouble last_mouse_x ;
   gdouble last_mouse_y ;
+
+
+  /* Animation parameters */
+  struct animation animation;
 };
 
 struct _GbkCubeviewClass
@@ -85,5 +90,11 @@ void gbk_redisplay (GbkCubeview *dc);
 
 void error_check (const char *file, int line_no, const char *string);
 #define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
+
+void gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames);
+
+gboolean gbk_cubeview_is_animating (GbkCubeview *dc);
+
+
 
 #endif /* __GBK_CUBEVIEW_H__ */

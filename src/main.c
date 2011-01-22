@@ -40,6 +40,7 @@ struct application_options
 {
   bool solved ;
   int initial_cube_size[3] ;
+  int frameQty;
 };
 
 static struct application_options opts = { false, {3,3,3}};
@@ -89,9 +90,11 @@ c_main (void *closure, int argc, char *argv[])
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
   glwidget1 = gbk_cubeview_new ();
+  gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
 
   glwidget2 = gbk_cubeview_new (); 
+  gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
 
 
@@ -122,7 +125,6 @@ main (int argc, char **argv)
   scm_boot_guile (argc, argv, c_main, 0);
   return 0;
 }
-
 
 /* process the options we're interested in.  X resource overrides should
 have already been extracted */
@@ -157,9 +159,7 @@ app_opts (int *argc, char **argv)
 	{
 	case 'a':
 	  {
-	    int fq = 2;
-	    sscanf (optarg, "%d", &fq);
-	    set_frame_qty (fq);
+	    sscanf (optarg, "%d", &opts.frameQty);
 	  }
 	  break;
 	case 's':

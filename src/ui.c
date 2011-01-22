@@ -36,23 +36,10 @@
 static gboolean animate (gpointer data);
 
 
-struct animation animation = {40, 0, false, 2};
-
-
 static gboolean inverted_rotation;
 
 static void animate_rotation (GbkCubeview *);
 
-void set_frame_qty (int frames)
-{
-  animation.frameQty = frames;
-}
-
-gboolean
-is_animating (void)
-{
-  return (animation.current_move != NULL);
-}
 
 /* handle mouse clicks */
 gboolean
@@ -66,7 +53,7 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
-  if (is_animating ())
+  if (gbk_cubeview_is_animating (cv))
     return TRUE;
 
   switch (event->button)
@@ -106,11 +93,11 @@ animate_rotation (GbkCubeview *dc)
 
   assert (data->blocks_in_motion);
 
-  animation.current_move = data;
+  dc->animation.current_move = data;
 
   //  set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  g_timeout_add (animation.picture_rate, animate, dc);
+  g_timeout_add (dc->animation.picture_rate, animate, dc);
 }
 
 
@@ -123,25 +110,25 @@ animate (gpointer data)
   struct move_data *md = &dc->pending_movement;
 
   /* how many degrees motion per frame */
-  GLfloat increment = 90.0 / (animation.frameQty + 1);
+  GLfloat increment = 90.0 / (dc->animation.frameQty + 1);
 
   /*  decrement the current angle */
-  animation.animation_angle -= increment;
+  dc->animation.animation_angle -= increment;
 
   /* and redraw it */
   gbk_redisplay (dc);
 
-  if (fabs (animation.animation_angle) < 90.0 * md->turns )
+  if (fabs (dc->animation.animation_angle) < 90.0 * md->turns )
     {
       /* call this timeout again */
-      g_timeout_add (animation.picture_rate, animate, data);
+      g_timeout_add (dc->animation.picture_rate, animate, data);
     }
   else
     {
       /* we have finished the animation sequence now */
       enum Cube_Status status;
 
-      animation.animation_angle = 0.0;
+      dc->animation.animation_angle = 0.0;
 
       /* and tell the blocks.c library that a move has taken place */
       rotate_slice (the_cube, md);
@@ -149,7 +136,7 @@ animate (gpointer data)
       free_slice_blocks (md->blocks_in_motion);
       md->blocks_in_motion = NULL;
 
-      animation.current_move = NULL;
+      dc->animation.current_move = NULL;
 
 #if 0
       set_toolbar_state ((move_queue_progress (move_queue).current == 0

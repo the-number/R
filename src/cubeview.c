@@ -271,6 +271,11 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->gldrawable = NULL;
   dc->idle_id = 0;
 
+  dc->animation.picture_rate = 40;
+  dc->animation.animation_angle = 0;
+  dc->animation.current_move = NULL;
+  dc->animation.frameQty = 2;
+
   gtk_widget_add_events (GTK_WIDGET (dc),
 			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
 			 | GDK_BUTTON_RELEASE_MASK
@@ -282,7 +287,7 @@ gbk_cubeview_init (GbkCubeview *dc)
   GTK_WIDGET_SET_FLAGS (dc, GTK_CAN_FOCUS);
 
   cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
-		      &dc->pending_movement );
+		      dc );
 
   g_signal_connect (dc, "realize", G_CALLBACK (on_realize), NULL);
   g_signal_connect (dc, "expose-event", G_CALLBACK (on_expose), NULL);
@@ -473,7 +478,7 @@ display_anti_alias (GbkCubeview *dc)
 
   for (jitter = 0; jitter < 8; ++jitter)
     {
-      render_scene (jitter, &animation);
+      render_scene (jitter, &dc->animation);
       glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
@@ -498,7 +503,7 @@ display_raw (GbkCubeview *dc)
 
   ERR_CHECK ("Error in display");
 
-  render_scene (0, &animation);
+  render_scene (0, &dc->animation);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }
@@ -551,3 +556,17 @@ set_the_colours (GtkWidget *w, const char *progname)
     }
 #endif
 }
+
+
+void
+gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames)
+{
+  dc->animation.frameQty = frames;
+}
+
+gboolean
+gbk_cubeview_is_animating (GbkCubeview *dc)
+{
+  return (dc->animation.current_move != NULL);
+}
+

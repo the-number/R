@@ -136,10 +136,10 @@ set_mouse_cursor (GtkWidget *glxarea, const struct cublet_selection *cs)
 void
 selection_func (struct cublet_selection *cs, gpointer data)
 {
-  struct move_data *pending_movement = data;
+  GbkCubeview *cv = GBK_CUBEVIEW (data);
+  struct move_data *pending_movement = &cv->pending_movement;
 
-
-  if (is_animating ())
+  if (gbk_cubeview_is_animating (cv))
     return;
 
   if ( select_is_selected (cs))
