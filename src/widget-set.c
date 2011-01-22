@@ -220,7 +220,7 @@ static const GtkActionEntry game_action_entries[] =
     }
   };
 
-#if 0
+#if COMPLETE_MENUS
 
 static const GtkToggleActionEntry statusbar_action_entries[] =
   {
@@ -280,13 +280,17 @@ create_menubar (GtkWidget *toplevel)
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
   GtkActionGroup *action_group = gtk_action_group_new ("dialog-actions");
   GtkActionGroup *game_action_group = gtk_action_group_new ("game-actions");
+#if COMPLETE_MENUS
   GtkActionGroup *toolbar_action_group = gtk_action_group_new ("toolbar-actions");
   GtkActionGroup *statusbar_action_group = gtk_action_group_new ("statusbar-actions");
+#endif
 
   gtk_action_group_set_translation_domain (action_group, PACKAGE);
   gtk_action_group_set_translation_domain (game_action_group, PACKAGE);
+#if COMPLETE_MENUS
   gtk_action_group_set_translation_domain (toolbar_action_group, PACKAGE);
   gtk_action_group_set_translation_domain (statusbar_action_group, PACKAGE);
+#endif
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
@@ -297,7 +301,7 @@ create_menubar (GtkWidget *toplevel)
 				sizeof (game_action_entries) /
 				sizeof (game_action_entries[0]), toplevel);
 
-#if 0
+#if COMPLETE_MENUS
   gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
 				sizeof (toolbar_action_entries) /
 				sizeof (toolbar_action_entries[0]), &play_toolbar);
@@ -310,7 +314,7 @@ create_menubar (GtkWidget *toplevel)
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, game_action_group, 0);
 
-#if 0
+#if COMPLETE_MENUS
   gtk_ui_manager_insert_action_group (menu_manager, toolbar_action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, statusbar_action_group, 0);
 #endif
