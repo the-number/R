@@ -17,45 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CUBE_H
-#define CUBE_H
 
-#include <stdbool.h>
-
-#include "cube_i.h"
-
-
-/* Cube co-ordinates have their origin at the centre of the cube,  and their
-   units are equivalent to one half of the length of one edge of a block. */
-
-
-
-/* Unique identifiers for the faces,  which can be used to populate a
-   bit-field. */
-enum
-{
-  FACE_0 = 0x01 << 0,
-  FACE_1 = 0x01 << 1,
-  FACE_2 = 0x01 << 2,
-  FACE_3 = 0x01 << 3,
-  FACE_4 = 0x01 << 4,
-  FACE_5 = 0x01 << 5
-};
-
-
-/* Create a new cube object with the given number of faces per side. */
-struct cube *new_cube (int, int, int);
-
-
-/* Free up memory used by the cube. */
-void free_cube (struct cube *cube);
-
-
-/* Is the cube solved? */
-enum Cube_Status
-{ NOT_SOLVED = 0, SOLVED, HALF_SOLVED };
-
-enum Cube_Status cube_get_status (const struct cube *cube);
+#ifndef __GBK_CUBE_H__
+#define __GBK_CUBE_H__
 
 
 /* Structure used to communicate which blocks of the cube lie in a certain
@@ -79,79 +43,114 @@ struct move_data
   Slice_Blocks *blocks_in_motion;
 };
 
-/* Free the resources associated with an instance of the above structure. */
-void free_slice_blocks (Slice_Blocks *slice_blocks);
+/* Is the cube solved? */
+enum Cube_Status
+{
+  NOT_SOLVED = 0,
+  SOLVED,
+  HALF_SOLVED
+ };
 
+/* Unique identifiers for the faces,  which can be used to populate a
+   bit-field. */
+enum
+{
+  FACE_0 = 0x01 << 0,
+  FACE_1 = 0x01 << 1,
+  FACE_2 = 0x01 << 2,
+  FACE_3 = 0x01 << 3,
+  FACE_4 = 0x01 << 4,
+  FACE_5 = 0x01 << 5
+};
 
-/* Return the identity of all the blocks in a particular slice (or the one
-   containing the block with block_id). The return object must be freed with
-   free_slice_blocks. Axis is in the interval [0,  3). */
-Slice_Blocks *identify_blocks (const struct cube *cube,
-			       int block_id, int axis);
+#include <glib-object.h>
+#include "cube_i.h"
 
-Slice_Blocks *identify_blocks_2 (const struct cube *cube,
-				 GLfloat slice, int axis);
+#define GBK_TYPE_CUBE                  (gbk_cube_get_type ())
+#define GBK_CUBE(obj)                  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GBK_TYPE_CUBE, GbkCube))
+#define GBK_IS_CUBE(obj)               (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GBK_TYPE_CUBE))
+#define GBK_CUBE_CLASS(klass)          (G_TYPE_CHECK_CLASS_CAST ((klass), GBK_TYPE_CUBE, GbkCubeClass))
+#define GBK_IS_CUBE_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GBK_TYPE_CUBE))
+#define GBK_CUBE_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GBK_TYPE_CUBE, GbkCubeClass))
 
-/*  Rotate a complete slice. */
-void rotate_slice (struct cube *, const struct move_data *);
+typedef struct _GbkCube        GbkCube;
+typedef struct _GbkCubeClass   GbkCubeClass;
+
+struct _GbkCube
+{
+  GObject parent_instance;
+
+  /* instance members */
+
+  /* The number of blocks on each side of the cube */
+  int size[3];
+
+  /* cube_size ** 3 */
+  int number_blocks;
+
+  /* A set of attributes for every block (including internal ones!) */
+  Block *blocks;
+};
+
+struct _GbkCubeClass
+{
+  GObjectClass parent_class;
+
+  /* class members */
+};
+
+/* used by GBK_TYPE_CUBE */
+GType gbk_cube_get_type (void);
+
+/*
+ * Method definitions.
+ */
 
 /* Get a copy of the tranformation of the specified block. The return value is
    zero on success,  one otherwise. */
-int get_block_transform (const struct cube *cube,
-			 int block, Matrix transform);
+int gbk_cube_get_block_transform (const GbkCube *cube, int block, Matrix transform);
+
+int gbk_cube_get_size (const GbkCube *cube, int dim);
+
+void gbk_cube_scramble (GbkCube *cube);
+int gbk_cube_get_number_of_blocks (const GbkCube *cube);
+void gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md);
+
+gboolean gbk_cube_square_axis (const GbkCube *cube, int axis);
 
 
-/* Return an int identifying all the visible faces in this block. */
-static inline unsigned int
-get_visible_faces (const struct cube *cube, int block_id)
-{
-  return cube->blocks[block_id].visible_faces;
-}
+/* Create a new cube object with the given number of faces per side. */
+GObject *gbk_cube_new (int, int, int);
+
+void
+gbk_cube_set_quadrant_vector (GbkCube *cube,
+		     int block,
+			      int face, int quadrant, const vector v);
+
+void gbk_cube_get_quadrant_vector (const GbkCube *cube,
+				   int block,
+				   int face, int quadrant, vector v);
+
+Slice_Blocks *
+gbk_cube_identify_blocks_2 (const GbkCube * cube,
+			    GLfloat slice_depth, int axis);
+
+Slice_Blocks *
+gbk_cube_identify_blocks (const GbkCube *cube, int block_id, int axis);
 
 
-
-/* Get a copy of the centre point of the face into p. */
-void get_face_centre (const struct cube *cube,
-		      int block, int face, point p);
+enum Cube_Status gbk_cube_get_status (const GbkCube *cube);
 
 
-/* Set the normal vector for block/face to v. This value gets transformed by
-   the MODELVIEW CTM before saving. */
-void set_normal_vector (struct cube *cube,
-			int block, int face, const vector v);
+extern GbkCube *the_cube;
+
+/* Free the resources associated with an instance of the above structure. */
+void free_slice_blocks (Slice_Blocks *slice_blocks);
+
+unsigned int gbk_cube_get_visible_faces (const GbkCube *cube, int block_id);
+
+void gbk_cube_set_normal_vector (GbkCube *cube,
+				 int block, int face, const vector v);
 
 
-/* Set the vector for block/face/quadrant to v. This value gets transformed by
-   the MODELVIEW CTM before saving. */
-void set_quadrant_vector (struct cube *cube,
-			  int block,
-			  int face, int quadrant, const vector v);
-
-
-/* Get a copy of the direction vector for the block/face/quadrant. */
-void get_quadrant_vector (const struct cube *cube,
-			  int block,
-			  int face, int quadrant, vector v);
-
-
-int cube_get_number_of_blocks (const struct cube *cube);
-int cube_get_size (const struct cube *cube, int dim);
-
-void cube_scramble (struct cube *cube);
-
-bool cube_square_axis (const struct cube *cube, int axis);
-
-#include <libguile.h>
-
-/* Create a scheme object which represents the current state of the given
-   cube. */
-SCM make_scm_cube (const struct cube *cube);
-
-
-/***
-    Concession to the non-object-oriented universe (this will go eventually).
-***/
-extern struct cube *the_cube;
-
-
-#endif /* CUBE_H */
+#endif /* __CUBE_H__ */

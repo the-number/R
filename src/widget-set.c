@@ -17,7 +17,9 @@
 */
 
 #include <config.h>
+#include <string.h>
 
+#include "cube.h"
 #include "widget-set.h"
 #include "ui.h"
 #include "dialogs.h"
@@ -63,8 +65,9 @@ update_statusbar (void)
 #endif
 }
 
+/* Declare that the cube has been solved */
 void
-declare_win (const struct cube *cube)
+declare_win (GbkCube *cube)
 {
 #if WIDGETS_NOT_DISABLED
   static int context = 0;
@@ -185,24 +188,24 @@ static void
 restart_game ()
 {
   int size[3];
-  size[0] = cube_get_size(the_cube, 0);
-  size[1] = cube_get_size(the_cube, 1);
-  size[2] = cube_get_size(the_cube, 2);
+  size[0] = gbk_cube_get_size(the_cube, 0);
+  size[1] = gbk_cube_get_size(the_cube, 1);
+  size[2] = gbk_cube_get_size(the_cube, 2);
 
-  free_cube (the_cube);
-  the_cube = new_cube (size[0], size[1], size[2]);
-  cube_scramble (the_cube);
+  g_object_unref (the_cube);
+  the_cube = GBK_CUBE (gbk_cube_new (size[0], size[1], size[2]));
+  gbk_cube_scramble (the_cube);
   scene_init ();
 }
 
 void
 start_new_game (int size0, int size1, int size2)
 {
-  free_cube (the_cube);
+  g_object_unref (the_cube);
 
-  the_cube = new_cube (size0, size1, size2);
+  the_cube = GBK_CUBE (gbk_cube_new (size0, size1, size2));
 
-  cube_scramble (the_cube);
+  gbk_cube_scramble (the_cube);
   scene_init ();
 }
 

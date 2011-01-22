@@ -41,7 +41,7 @@ void update_statusbar (void);
 void setCubeColours (char *progname);
 
 /* Declare that the cube has been solved */
-void declare_win (const struct cube *);
+void declare_win (GbkCube *cube);
 
 /* Popup an error dialog box */
 void error_dialog (GtkWindow *parent, const char *format, ...);

@@ -29,10 +29,9 @@
 #include "ui.h"
 #include "version.h"
 
-
 static const char help_string[];
 
-struct cube *the_cube = NULL;
+GbkCube *the_cube = NULL;
 
 struct application_options
 {
@@ -40,7 +39,6 @@ struct application_options
   int initial_cube_size[3] ;
   int frameQty;
 };
-
 
 static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
 
@@ -100,14 +98,14 @@ c_main (void *closure, int argc, char *argv[])
 
 
   /* create the cube */
-  the_cube = new_cube (opts.initial_cube_size[0],
+  the_cube = GBK_CUBE (gbk_cube_new (opts.initial_cube_size[0],
 		   opts.initial_cube_size[1],
-		   opts.initial_cube_size[2]);
+				     opts.initial_cube_size[2]));
   
   /* If a solved cube has not been requested,  then do some random
      moves on it */
   if (!opts.solved)
-    cube_scramble (the_cube);
+    gbk_cube_scramble (the_cube);
 
   scene_init ();
 

@@ -21,7 +21,7 @@
 #define CUBE_I_H
 
 
-#ifndef CUBE_H
+#ifndef __GBK_CUBE_H__
 #    error This is a private header file and should not be included directly in any user source code.
 #endif
 
@@ -73,7 +73,7 @@ typedef struct _Block
 #define BLOCK_ERROR_MESSAGE_BUFFER_LEN 255
 
 
-
+#if 0
 struct cube
 {
   /* The number of blocks on each side of the cube */
@@ -85,7 +85,7 @@ struct cube
   /* A set of attributes for every block (including internal ones!) */
   Block *blocks;
 };
-
+#endif
 
 
 #endif /* Defined CUBE_I_H. */

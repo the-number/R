@@ -139,9 +139,9 @@ accPerspective (const struct scene_view *sv,
 void
 scene_init (void)
 {
-  the_scene.bounding_sphere_radius = cube_get_size (the_cube, 0) * cube_get_size (the_cube, 0);
-  the_scene.bounding_sphere_radius += cube_get_size (the_cube, 1) * cube_get_size (the_cube, 1);
-  the_scene.bounding_sphere_radius += cube_get_size (the_cube, 2) * cube_get_size (the_cube, 2);
+  the_scene.bounding_sphere_radius = gbk_cube_get_size (the_cube, 0) * gbk_cube_get_size (the_cube, 0);
+  the_scene.bounding_sphere_radius += gbk_cube_get_size (the_cube, 1) * gbk_cube_get_size (the_cube, 1);
+  the_scene.bounding_sphere_radius += gbk_cube_get_size (the_cube, 2) * gbk_cube_get_size (the_cube, 2);
   the_scene.bounding_sphere_radius = sqrt (the_scene.bounding_sphere_radius);
 
   the_scene.fovy = 33.0;

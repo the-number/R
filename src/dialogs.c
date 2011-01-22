@@ -78,7 +78,7 @@ pref_state_create (GtkBox *parent)
 
   for (i = 0; i < 3 ; ++i)
     {
-      ps->adj[i] = gtk_adjustment_new (cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
+      ps->adj[i] = gtk_adjustment_new (gbk_cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
       g_object_ref (ps->adj[i]);
       ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
       g_object_ref (ps->entry[i]);
@@ -204,7 +204,7 @@ create_dimension_widget (GtkContainer *parent)
 
   for (i = 0; i < 3; ++i)
     gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps->entry[i]),
-			       cube_get_size (the_cube, i)),
+			       gbk_cube_get_size (the_cube, i)),
 
   gtk_widget_show_all (hbox);
 
@@ -341,7 +341,7 @@ preferences_dialog (GtkWidget * w, GtkWindow *toplevel)
       
       for (i = 0; i < 3; ++i)
 	{
-	  if ( cube_get_size (the_cube, i) != 
+	  if ( gbk_cube_get_size (the_cube, i) != 
 	       gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[i])))
 	    {
 	      new_size = TRUE;

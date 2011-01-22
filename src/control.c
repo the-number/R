@@ -27,6 +27,7 @@
 #include "cursors.h"
 #include "cubeview.h"
 #include "ui.h"
+#include "txfm.h"
 
 #include <math.h>
 
@@ -60,7 +61,7 @@ vector2axis (GLfloat * vector)
 /* Determine the axis about which to rotate the slice,  from the objects
 selected by the cursor position */
 static void
-getTurnAxis (const struct facet_selection *items, GLfloat * vector)
+getTurnAxis (const struct facet_selection *items, GLfloat *vector)
 {
   Matrix t;
 
@@ -76,10 +77,9 @@ getTurnAxis (const struct facet_selection *items, GLfloat * vector)
 
   /* Fetch the selected block's transformation from its original
      orientation */
-  if (get_block_transform (the_cube, items->block, t) != 0)
+  if (gbk_cube_get_block_transform (the_cube, items->block, t) != 0)
     {
-      fprintf (stderr, "Attempt to fetch non-existant block transform\n");
-      exit (1);
+      g_error ("Attempt to fetch non-existant block transform");
     }
 
   /* Select the untransformed vector for the selected edge
@@ -171,7 +171,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
 	glGetFloatv (GL_PROJECTION_MATRIX, proj);
 
-	get_quadrant_vector (the_cube, selection->block,
+	gbk_cube_get_quadrant_vector (the_cube, selection->block,
 			     selection->face, selection->quadrant, v);
 
 	transform_in_place (proj, v);
