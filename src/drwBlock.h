@@ -20,6 +20,7 @@
 
 #include <GL/gl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include "cube.h"
 
 enum surface
 {
@@ -41,10 +42,10 @@ struct cube_rendering
 
 
 /* The texture names for each face */
-void draw_block (int block_id, GLboolean anc);
+void draw_block (GbkCube *cube, int block_id, GLboolean anc);
 
 struct animation;
-void drawCube (GLboolean anc, const struct animation *animation);
+void drawCube (GbkCube *cube, GLboolean anc, const struct animation *animation);
 
 
 void setColour (int i, const struct cube_rendering *cr);

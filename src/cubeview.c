@@ -445,10 +445,10 @@ have_accumulation_buffer (void)
 
 
 void error_check (const char *file, int line_no, const char *string);
-
+ 
 
 static void
-render_scene (GLint jitter, const struct animation *a)
+render_scene (GbkCube *cube, GLint jitter, const struct animation *a)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
@@ -456,7 +456,7 @@ render_scene (GLint jitter, const struct animation *a)
   modelViewInit ();
   ERR_CHECK ("Error in display");
 
-  drawCube (FALSE, a);
+  drawCube (cube, FALSE, a);
   ERR_CHECK ("Error in display");
 }
 
@@ -479,7 +479,7 @@ display_anti_alias (GbkCubeview *dc)
 
   for (jitter = 0; jitter < 8; ++jitter)
     {
-      render_scene (jitter, &dc->animation);
+      render_scene (dc->cube, jitter, &dc->animation);
       glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
@@ -504,7 +504,7 @@ display_raw (GbkCubeview *dc)
 
   ERR_CHECK ("Error in display");
 
-  render_scene (0, &dc->animation);
+  render_scene (dc->cube, 0, &dc->animation);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }

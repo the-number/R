@@ -73,7 +73,7 @@ static const GLfloat colors[][3] =
 
 
 
-static void draw_face (GLint face, int block_id, GLboolean draw_names);
+static void draw_face (GbkCube *, GLint face, int block_id, GLboolean draw_names);
 
 /* this macro produces +1 if i is even. -1 if i is odd */
 /* We use it to transform the faces of the block from zero,  to the
@@ -84,7 +84,7 @@ static void draw_face (GLint face, int block_id, GLboolean draw_names);
     If ANCILLIARY is true, render the ancialliary components also.
  */
 void
-draw_block (int block_id, GLboolean ancilliary)
+draw_block (GbkCube *cube, int block_id, GLboolean ancilliary)
 {
   int i;
 
@@ -126,10 +126,10 @@ draw_block (int block_id, GLboolean ancilliary)
 
       /* draw the face,  iff it is visible */
       mask = 0x01 << i;
-      if (gbk_cube_get_visible_faces (the_cube, block_id) & mask)
+      if (gbk_cube_get_visible_faces (cube, block_id) & mask)
 	{
 	  glLoadName (i);
-	  draw_face (i, block_id, ancilliary);
+	  draw_face (cube, i, block_id, ancilliary);
 	}
 
       glPopMatrix ();
@@ -143,7 +143,7 @@ draw_block (int block_id, GLboolean ancilliary)
    If DRAW_NAMES is true, the render the ancillary polygons used for selection.
  */
 static void
-draw_face (GLint face, int block_id, GLboolean draw_names)
+draw_face (GbkCube *cube, GLint face, int block_id, GLboolean draw_names)
 {
   point p1;
   point p2;
@@ -195,7 +195,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
       p2[3] = 1;
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_normal_vector (the_cube, block_id, face, v);
+      gbk_cube_set_normal_vector (cube, block_id, face, v);
 
       glPushName (0);
 
@@ -215,7 +215,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
       glEnd ();
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_quadrant_vector (the_cube, block_id, face, 0, v);
+      gbk_cube_set_quadrant_vector (cube, block_id, face, 0, v);
 
       glLoadName (1);
 
@@ -233,7 +233,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
       glEnd ();
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_quadrant_vector (the_cube, block_id, face, 1, v);
+      gbk_cube_set_quadrant_vector (cube, block_id, face, 1, v);
 
       glLoadName (2);
 
@@ -251,7 +251,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
       glEnd ();
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_quadrant_vector (the_cube, block_id, face, 2, v);
+      gbk_cube_set_quadrant_vector (cube, block_id, face, 2, v);
 
       glLoadName (3);
 
@@ -274,7 +274,7 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
       glPopName ();
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_quadrant_vector (the_cube, block_id, face, 3, v);
+      gbk_cube_set_quadrant_vector (cube, block_id, face, 3, v);
     }
 
   if (!(face % 2))
@@ -317,33 +317,33 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
 	  {
 	  case 0:
 	  case 1:
-	    iss_x = 1.0 / gbk_cube_get_size (the_cube, 0);
-	    iss_y = 1.0 / gbk_cube_get_size (the_cube, 1);
-	    xpos = block_id % gbk_cube_get_size (the_cube, 0);
+	    iss_x = 1.0 / gbk_cube_get_size (cube, 0);
+	    iss_y = 1.0 / gbk_cube_get_size (cube, 1);
+	    xpos = block_id % gbk_cube_get_size (cube, 0);
 	    ypos =
-	      (block_id % (gbk_cube_get_size (the_cube, 0)
-			   * gbk_cube_get_size (the_cube, 1)))
-			   / gbk_cube_get_size (the_cube, 0);
+	      (block_id % (gbk_cube_get_size (cube, 0)
+			   * gbk_cube_get_size (cube, 1)))
+			   / gbk_cube_get_size (cube, 0);
 	    break;
 	  case 2:
 	  case 3:
-	    iss_x = 1.0 / gbk_cube_get_size (the_cube, 0);
-	    iss_y = 1.0 / gbk_cube_get_size (the_cube, 2);
-	    xpos = block_id % ( gbk_cube_get_size (the_cube, 0) 
-				* gbk_cube_get_size (the_cube, 1))
-	                        % gbk_cube_get_size (the_cube, 0);
+	    iss_x = 1.0 / gbk_cube_get_size (cube, 0);
+	    iss_y = 1.0 / gbk_cube_get_size (cube, 2);
+	    xpos = block_id % ( gbk_cube_get_size (cube, 0) 
+				* gbk_cube_get_size (cube, 1))
+	                        % gbk_cube_get_size (cube, 0);
 	    ypos =
-	      block_id / (gbk_cube_get_size (the_cube, 0) * gbk_cube_get_size (the_cube, 1));
+	      block_id / (gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 1));
 	    break;
 	  case 4:
 	  case 5:
-	    iss_x = 1.0 / gbk_cube_get_size (the_cube, 2);
-	    iss_y = 1.0 / gbk_cube_get_size (the_cube, 1);
+	    iss_x = 1.0 / gbk_cube_get_size (cube, 2);
+	    iss_y = 1.0 / gbk_cube_get_size (cube, 1);
 	    xpos =
-	      block_id / (gbk_cube_get_size (the_cube, 0) * gbk_cube_get_size (the_cube, 1));
+	      block_id / (gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 1));
 	    ypos =
-	      block_id % (gbk_cube_get_size (the_cube, 0) * gbk_cube_get_size (the_cube, 1))
-	         / gbk_cube_get_size (the_cube, 0);
+	      block_id % (gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 1))
+	         / gbk_cube_get_size (cube, 0);
 	    break;
 	  }
 
@@ -351,19 +351,19 @@ draw_face (GLint face, int block_id, GLboolean draw_names)
 	switch (face)
 	  {
 	  case 0:
-	    xpos = gbk_cube_get_size (the_cube, 0) - xpos - 1;
+	    xpos = gbk_cube_get_size (cube, 0) - xpos - 1;
 	    /* fallthrough */
 	  case 1:
-	    ypos = gbk_cube_get_size (the_cube, 1) - ypos - 1;
+	    ypos = gbk_cube_get_size (cube, 1) - ypos - 1;
 	    break;
 	  case 5:
-	    xpos = gbk_cube_get_size (the_cube, 2) - xpos - 1;
+	    xpos = gbk_cube_get_size (cube, 2) - xpos - 1;
 	    /* fallthrough */
 	  case 4:
-	    ypos = gbk_cube_get_size (the_cube, 1) - ypos - 1;
+	    ypos = gbk_cube_get_size (cube, 1) - ypos - 1;
 	    break;
 	  case 2:
-	    xpos = gbk_cube_get_size (the_cube, 0) - xpos - 1;
+	    xpos = gbk_cube_get_size (cube, 0) - xpos - 1;
 	    break;
 	  }
       }
@@ -442,13 +442,13 @@ getColour (int i, struct cube_rendering *cr)
 
 /* render the cube */
 void
-drawCube (GLboolean ancilliary, const struct animation *animation)
+drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation)
 {
   int i;
 
 #if DEBUG
   {
-    GLfloat offset = 1.6 * gbk_cube_get_size (the_cube, 0);
+    GLfloat offset = 1.6 * gbk_cube_get_size (cube, 0);
 
     /* Show the directions of the axes */
     glColor3f (1, 1, 1);
@@ -458,7 +458,7 @@ drawCube (GLboolean ancilliary, const struct animation *animation)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (2 * gbk_cube_get_size (the_cube, 0), 0, 0);
+    glVertex3f (2 * gbk_cube_get_size (cube, 0), 0, 0);
     glEnd ();
 
 
@@ -472,7 +472,7 @@ drawCube (GLboolean ancilliary, const struct animation *animation)
     glTranslatef (-offset, -offset, 0);
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 2 * gbk_cube_get_size (the_cube, 1), 0);
+    glVertex3f (0, 2 * gbk_cube_get_size (cube, 1), 0);
     glEnd ();
 
     glRasterPos3d (0.1 * offset, offset, 0);
@@ -486,7 +486,7 @@ drawCube (GLboolean ancilliary, const struct animation *animation)
 
     glBegin (GL_LINES);
     glVertex3f (0, 0, 0);
-    glVertex3f (0, 0, 2 * gbk_cube_get_size (the_cube, 2));
+    glVertex3f (0, 0, 2 * gbk_cube_get_size (cube, 2));
     glEnd ();
 
     glRasterPos3d (0.1 * offset, 0, offset);
@@ -497,7 +497,7 @@ drawCube (GLboolean ancilliary, const struct animation *animation)
   }
 #endif
 
-  for (i = 0; i < gbk_cube_get_number_of_blocks (the_cube); i++)
+  for (i = 0; i < gbk_cube_get_number_of_blocks (cube); i++)
     {
       int j = 0;
 
@@ -545,12 +545,12 @@ drawCube (GLboolean ancilliary, const struct animation *animation)
 
 	/* place the block in its current position and
 	   orientation */
-	gbk_cube_get_block_transform (the_cube, i, M);
+	gbk_cube_get_block_transform (cube, i, M);
 	glPushMatrix ();
 	glMultMatrixf (M);
 
 	/* and draw the block */
-	draw_block (i, ancilliary);
+	draw_block (cube, i, ancilliary);
 	glPopMatrix ();
 
       }
