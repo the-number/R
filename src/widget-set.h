@@ -21,10 +21,12 @@
 
 #include <gtk/gtk.h>
 #include "cube.h"
+#include "dialogs.h"
 
-GtkWidget *create_menubar (GtkWidget *toplevel);
+GtkWidget *create_menubar (struct game *);
 
 GtkWidget *create_play_toolbar (GtkWidget *toplevel);
+
 
 enum
 {
@@ -46,7 +48,7 @@ void declare_win (GbkCube *cube);
 /* Popup an error dialog box */
 void error_dialog (GtkWindow *parent, const char *format, ...);
 
-void start_new_game (int size0, int size1, int size2);
+void start_new_game (GbkCube *, int size0, int size1, int size2);
 
 
 #endif

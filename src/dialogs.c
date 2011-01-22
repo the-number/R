@@ -125,7 +125,7 @@ toggle_regular (GtkToggleButton *button, gpointer data)
 }
 
 static struct preferences_state *
-create_dimension_widget (GtkContainer *parent)
+create_dimension_widget (GtkContainer *parent, const struct game *game)
 {
   gint i;
   GtkWidget *label = gtk_label_new (_("Size of cube:"));
@@ -153,7 +153,7 @@ create_dimension_widget (GtkContainer *parent)
 
   for (i = 0; i < 3; ++i)
     gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps->entry[i]),
-			       gbk_cube_get_size (the_cube, i)),
+			       gbk_cube_get_size (game->cube, i)),
 
   gtk_widget_show_all (hbox);
 
@@ -227,8 +227,9 @@ confirm_preferences (GtkWindow *window)
   return (GTK_RESPONSE_YES == resp);
 }
 
+#if 0
 void
-preferences_dialog (GtkWidget *w, GtkWindow *toplevel)
+preferences_dialog (GtkWidget *w, const struct game *game)
 {
   gint response;
 
@@ -290,7 +291,7 @@ preferences_dialog (GtkWidget *w, GtkWindow *toplevel)
       
       for (i = 0; i < 3; ++i)
 	{
-	  if ( gbk_cube_get_size (the_cube, i) != 
+	  if ( gbk_cube_get_size (game->cube, i) != 
 	       gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[i])))
 	    {
 	      new_size = TRUE;
@@ -307,7 +308,7 @@ preferences_dialog (GtkWidget *w, GtkWindow *toplevel)
   gtk_widget_destroy (dialog);
 }
 
-
+#endif
 
 
 static void
@@ -362,12 +363,12 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 
 
 void
-new_game_dialog (GtkWidget *w, GtkWindow *toplevel)
+new_game_dialog (GtkWidget *w, struct game *game)
 {
   gint response;
 
   GtkWidget *dialog = gtk_dialog_new_with_buttons (_("New Game"),
-						   toplevel,
+						   game->toplevel,
 						   GTK_DIALOG_MODAL |
 						   GTK_DIALOG_DESTROY_WITH_PARENT,
 						   GTK_STOCK_OK,
@@ -383,9 +384,9 @@ new_game_dialog (GtkWidget *w, GtkWindow *toplevel)
 
   gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), game->toplevel);
 
-  struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions));
+  struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions), game);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame_dimensions, FALSE, 0, 0);
 
@@ -396,7 +397,7 @@ new_game_dialog (GtkWidget *w, GtkWindow *toplevel)
   if (response == GTK_RESPONSE_ACCEPT)
     {
       start_new_game 
-	(
+	(game->cube,
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2]))

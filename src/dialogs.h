@@ -19,16 +19,21 @@
 #define DIALOGS_H
 
 #include <gtk/gtk.h>
+#include "cube.h"
+
+struct game
+{
+  GtkWindow *toplevel;
+  GbkCube *cube;
+};
 
 struct preferences_state;
 
 void request_new_game (GtkAction *act, struct preferences_state *ps);
 
-void preferences_dialog (GtkWidget *w, GtkWindow *);
-
 void about_dialog (GtkWidget *w, GtkWindow *);
 
-void new_game_dialog (GtkWidget *w, GtkWindow *toplevel);
+void new_game_dialog (GtkWidget *w, struct game *game);
 
 
 #endif

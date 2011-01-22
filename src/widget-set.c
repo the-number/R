@@ -185,20 +185,18 @@ static const GtkActionEntry action_entries[] =
 
 
 static void
-restart_game (void)
+restart_game (GtkWidget *w, struct game *game)
 {
-  gbk_cube_scramble (the_cube);
+  gbk_cube_scramble (game->cube);
 }
 
 void
-start_new_game (int size0, int size1, int size2)
+start_new_game (GbkCube *cube, int size0, int size1, int size2)
 {
-  g_object_unref (the_cube);
+  gbk_cube_set_size (cube, size0, size1, size2);
 
-  the_cube = GBK_CUBE (gbk_cube_new (size0, size1, size2));
-
-  gbk_cube_scramble (the_cube);
-  scene_init (the_cube);
+  gbk_cube_scramble (cube);
+  scene_init (cube);
 }
 
 
@@ -269,7 +267,7 @@ static const char menu_tree[] = "<ui>\
 
 
 GtkWidget *
-create_menubar (GtkWidget *toplevel)
+create_menubar (struct game *game)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
@@ -289,12 +287,12 @@ create_menubar (GtkWidget *toplevel)
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
-				sizeof (action_entries[0]), toplevel);
+				sizeof (action_entries[0]), game->toplevel);
 
 
   gtk_action_group_add_actions (game_action_group, game_action_entries,
 				sizeof (game_action_entries) /
-				sizeof (game_action_entries[0]), toplevel);
+				sizeof (game_action_entries[0]), game);
 
 #if COMPLETE_MENUS
   gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
@@ -325,7 +323,7 @@ create_menubar (GtkWidget *toplevel)
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
-  gtk_window_add_accel_group (GTK_WINDOW (toplevel), gtk_ui_manager_get_accel_group (menu_manager));
+  gtk_window_add_accel_group (GTK_WINDOW (game->toplevel), gtk_ui_manager_get_accel_group (menu_manager));
 
   gtk_widget_show (menubar);
 

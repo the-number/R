@@ -28,6 +28,7 @@
 #include "glarea.h"
 #include "ui.h"
 #include "version.h"
+#include "dialogs.h"
 
 static const char help_string[];
 
@@ -69,6 +70,7 @@ c_main (void *closure, int argc, char *argv[])
   glutInit ();
 #endif
 
+  struct game game;
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
@@ -91,7 +93,10 @@ c_main (void *closure, int argc, char *argv[])
 				     opts.initial_cube_size[2]));
   the_cube = cube;
 
-  menubar = create_menubar (window);
+  game.toplevel = GTK_WINDOW (window);
+  game.cube = cube;
+
+  menubar = create_menubar (&game);
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
   playbar = create_play_toolbar (window);
