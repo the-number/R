@@ -71,14 +71,14 @@ struct preferences_state
 };
 
 static struct preferences_state *
-pref_state_create (GtkBox *parent)
+pref_state_create (GtkBox *parent, const struct game *game)
 {
   gint i;
   struct preferences_state *ps = g_malloc (sizeof (*ps));
 
   for (i = 0; i < 3 ; ++i)
     {
-      ps->adj[i] = gtk_adjustment_new (gbk_cube_get_size (the_cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
+      ps->adj[i] = gtk_adjustment_new (gbk_cube_get_size (game->cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
       g_object_ref (ps->adj[i]);
       ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
       g_object_ref (ps->entry[i]);
@@ -135,7 +135,7 @@ create_dimension_widget (GtkContainer *parent, const struct game *game)
   GtkWidget *checkbox = gtk_check_button_new_with_label (_("Regular cube"));
   GtkWidget *vbox2 = gtk_vbox_new (TRUE, BOX_PADDING);
 
-  struct preferences_state *ps  = pref_state_create (GTK_BOX (vbox));
+  struct preferences_state *ps  = pref_state_create (GTK_BOX (vbox), game);
 
   gtk_widget_set_tooltip_text (vbox,
 			       _("Sets the number of blocks in each side"));

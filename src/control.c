@@ -61,7 +61,7 @@ vector2axis (GLfloat * vector)
 /* Determine the axis about which to rotate the slice,  from the objects
 selected by the cursor position */
 static void
-getTurnAxis (const struct facet_selection *items, GLfloat *vector)
+getTurnAxis (GbkCube *cube, const struct facet_selection *items, GLfloat *vector)
 {
   Matrix t;
 
@@ -77,7 +77,7 @@ getTurnAxis (const struct facet_selection *items, GLfloat *vector)
 
   /* Fetch the selected block's transformation from its original
      orientation */
-  if (gbk_cube_get_block_transform (the_cube, items->block, t) != 0)
+  if (gbk_cube_get_block_transform (cube, items->block, t) != 0)
     {
       g_error ("Attempt to fetch non-existant block transform");
     }
@@ -146,7 +146,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
       GLfloat turn_axis[4];
       vector v;
 
-      getTurnAxis (selection, turn_axis);
+      getTurnAxis (cv->cube, selection, turn_axis);
       pending_movement->axis = vector2axis (turn_axis);
 
 
@@ -156,7 +156,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
       /* !!!!!! We are accessing private cube data. */
       pending_movement->slice
 	=
-	the_cube->blocks[selection->block].transformation[12 +
+	cv->cube->blocks[selection->block].transformation[12 +
 							  pending_movement->axis];
       
       /* Default to a turn of 90 degrees */
@@ -171,7 +171,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
 	glGetFloatv (GL_PROJECTION_MATRIX, proj);
 
-	gbk_cube_get_quadrant_vector (the_cube, selection->block,
+	gbk_cube_get_quadrant_vector (cv->cube, selection->block,
 			     selection->face, selection->quadrant, v);
 
 	transform_in_place (proj, v);
