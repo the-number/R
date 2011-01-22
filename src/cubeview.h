@@ -67,6 +67,8 @@ struct _GbkCubeviewClass
   GtkDrawingAreaClass parent_class;
 
   /* class members */
+  GdkGLContext *master_ctx;
+  GdkGLConfig *glconfig;
 };
 
 /* used by GBK_TYPE_CUBEVIEW */

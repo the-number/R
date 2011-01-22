@@ -50,41 +50,45 @@ error_check (const char *file, int line_no, const char *string)
 static void
 gbk_cubeview_class_init (GbkCubeviewClass *klass)
 {
+  GdkScreen *screen = gdk_screen_get_default ();
+  GdkWindow *root = gdk_screen_get_root_window (screen);
+  gint i;
 
+  const GdkGLConfigMode mode[] =
+    {
+      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM | GDK_GL_MODE_DEPTH,
+
+      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH,
+    };
+
+  for (i = 0; i < sizeof (mode) / sizeof (mode[0]); ++i)
+    {
+      klass->glconfig = gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
+
+      if (klass->glconfig != NULL)
+	break;
+      else
+	g_warning ("Cannot get visual for mode 0x%0x", mode[i]);
+    }
+
+  if (!klass->glconfig)
+    g_error ("No suitable visual found.");
+
+
+  GdkGLWindow *rootglwin = gdk_gl_window_new (klass->glconfig, root, 0);
+  klass->master_ctx = gdk_gl_context_new (GDK_GL_DRAWABLE (rootglwin), 0, TRUE, GDK_GL_RGBA_TYPE);
+  gdk_gl_window_destroy (rootglwin);
 }
 
 static void
 initialize_gl_capability (GtkWidget *glxarea)
 {
-  gint i;
+  GbkCubeviewClass *klass = GBK_CUBEVIEW_CLASS (G_OBJECT_GET_CLASS (glxarea));
 
-  const GdkGLConfigMode mode[] = {
-    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM | GDK_GL_MODE_DEPTH,
-
-    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH,
-  };
-
-  GdkScreen *screen = gtk_widget_get_screen (glxarea);
-
-  static GdkGLConfig *glconfig = NULL;
-
-  if ( glconfig == NULL )
-    {
-      for (i = 0; i < sizeof (mode) / sizeof (mode[0]); ++i)
-	{
-	  glconfig = gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
-
-	  if (glconfig != NULL)
-	    break;
-	  else
-	    g_warning ("Cannot get visual for mode 0x%0x", mode[i]);
-	}
-
-      if (!glconfig)
-	g_error ("No suitable visual found.");
-    }
-
-  gtk_widget_set_gl_capability (glxarea, glconfig, 0, TRUE, GDK_GL_RGBA_TYPE);
+  gtk_widget_set_gl_capability (glxarea,
+				klass->glconfig,
+				klass->master_ctx,
+				TRUE, GDK_GL_RGBA_TYPE);
 }
 
 static gboolean            
