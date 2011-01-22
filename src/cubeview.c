@@ -51,6 +51,7 @@ enum
     PROP_CUBE
   };
 
+
 static void
 cubeview_set_property (GObject     *object,
 		   guint            prop_id,
@@ -67,6 +68,8 @@ cubeview_set_property (GObject     *object,
 	scene_init (cubeview);
 	g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
 				  G_CALLBACK (scene_init), cubeview);
+
+	g_signal_connect_swapped (cubeview->cube, "move", G_CALLBACK (gbk_redisplay), cubeview);
       }
       break;
     default:

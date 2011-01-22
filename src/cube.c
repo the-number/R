@@ -301,6 +301,13 @@ cube_get_property (GObject         *object,
 }
 
 
+enum  {
+  MOVE, 
+  n_SIGNALS};
+
+static guint signals [n_SIGNALS];
+
+
 static void
 gbk_cube_class_init (GbkCubeClass *klass)
 {
@@ -320,6 +327,16 @@ gbk_cube_class_init (GbkCubeClass *klass)
                                    PROP_DIMENSIONS,
                                    gbk_param_spec);
 
+
+  signals [MOVE] =
+    g_signal_new ("move",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  0,
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE,
+		  0);
 }
 
 
@@ -446,7 +463,6 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
     turns = 3;
 
   /* ... and then assigning values to the active elements. */
-
   rotation[(md->axis + 1) % 3 + 4 * ((md->axis + 1) % 3)]
     = cos_quadrant (turns);
 
@@ -465,6 +481,8 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
   for (i = md->blocks_in_motion->blocks + md->blocks_in_motion->number_blocks - 1;
        i >= md->blocks_in_motion->blocks; --i)
     pre_mult (rotation, cube->blocks[*i].transformation);
+
+  g_signal_emit (cube, signals [MOVE], 0);
 }
 /* End of function rotate_slice (). */
 
