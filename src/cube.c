@@ -168,13 +168,20 @@ block_index_to_coords (const GbkCube *cube, int i, int dim)
 static void
 gbk_cube_init (GbkCube *ret)
 {
+  ret->blocks = NULL;
+}
+
+void
+gbk_cube_set_size (GbkCube *ret, int s0, int s1, int s2)
+{
   int i;
-  ret->size[0] = 3;
-  ret->size[1] = 3;
-  ret->size[2] = 3;
+  ret->size[0] = s0;
+  ret->size[1] = s1;
+  ret->size[2] = s2;
 
   ret->number_blocks = ret->size[0] * ret->size[1] * ret->size[2];
 
+  g_free (ret->blocks);
   if (NULL == (ret->blocks = calloc (ret->number_blocks, sizeof (Block))))
     {
       g_error ("Error allocating blocks");
@@ -221,7 +228,6 @@ gbk_cube_init (GbkCube *ret)
 
 
       /* Set all the face centres. */
-
       set_face_centre (block, 0, 0, 0, -1, 0);
       set_face_centre (block, 1, 0, 0, 1, 0);
       set_face_centre (block, 2, 0, -1, 0, 0);
@@ -305,6 +311,8 @@ GObject*
 gbk_cube_new (int x, int y, int z)
 {
   GObject *c = g_object_new (gbk_cube_get_type (), NULL);
+
+  gbk_cube_set_size (GBK_CUBE (c), x, y, z);
 
   return c;
 }

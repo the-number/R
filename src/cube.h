@@ -153,4 +153,7 @@ void gbk_cube_set_normal_vector (GbkCube *cube,
 				 int block, int face, const vector v);
 
 
+void gbk_cube_set_size (GbkCube *ret, int s0, int s1, int s2);
+
+
 #endif /* __CUBE_H__ */
