@@ -33,7 +33,7 @@
 #include <GL/glut.h>
 #endif
 
-static gboolean animate (gpointer data);
+static gboolean animate_callback (gpointer data);
 
 
 static gboolean inverted_rotation;
@@ -74,6 +74,13 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	  if ( !cube_square_axis (the_cube, cv->pending_movement.axis))
 	    cv->pending_movement.turns = 2;
 
+	  cv->pending_movement.blocks_in_motion = identify_blocks_2 (the_cube, cv->pending_movement.slice, cv->pending_movement.axis);
+
+	  assert (cv->pending_movement.blocks_in_motion);
+
+	  /* and tell the blocks.c library that a move has taken place */
+	  rotate_slice (the_cube, &cv->pending_movement);
+
 	  animate_rotation (cv);
 	}
 
@@ -89,21 +96,20 @@ static void
 animate_rotation (GbkCubeview *dc)
 {
   struct move_data *data = &dc->pending_movement;
-  data->blocks_in_motion = identify_blocks_2 (the_cube, data->slice, data->axis);
-
-  assert (data->blocks_in_motion);
 
   dc->animation.current_move = data;
 
   //  set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  g_timeout_add (dc->animation.picture_rate, animate, dc);
+  dc->animation.animation_angle = 90.0 * dc->animation.current_move->turns;
+
+  g_timeout_add (dc->animation.picture_rate, animate_callback, dc);
 }
 
 
 /* a timeout  calls this func,  to animate the cube */
 static gboolean 
-animate (gpointer data)
+animate_callback (gpointer data)
 {
   GbkCubeview *dc = data;
 
@@ -118,10 +124,10 @@ animate (gpointer data)
   /* and redraw it */
   gbk_redisplay (dc);
 
-  if (fabs (dc->animation.animation_angle) < 90.0 * md->turns )
+  if (dc->animation.animation_angle > 0)
     {
       /* call this timeout again */
-      g_timeout_add (dc->animation.picture_rate, animate, data);
+      g_timeout_add (dc->animation.picture_rate, animate_callback, data);
     }
   else
     {
@@ -129,9 +135,6 @@ animate (gpointer data)
       enum Cube_Status status;
 
       dc->animation.animation_angle = 0.0;
-
-      /* and tell the blocks.c library that a move has taken place */
-      rotate_slice (the_cube, md);
 
       free_slice_blocks (md->blocks_in_motion);
       md->blocks_in_motion = NULL;

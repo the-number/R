@@ -25,9 +25,6 @@
 #include "glarea.h"
 #include <gdk/gdkkeysyms.h>
 
-extern struct animation animation;
-
-
 static void on_realize (GtkWidget *w, gpointer data);
 static void resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data);
 static gboolean on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data);
