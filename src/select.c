@@ -70,9 +70,7 @@ struct cublet_selection
   gint mouse_y;
 };
 
-/* Identify the block at screen co-ordinates x,  y */
-static void pickPolygons (struct cublet_selection *, struct facet_selection *);
-
+static void pickPolygons (GbkCube *cube, struct cublet_selection *cs, struct facet_selection *sel);
 
 /* Initialise the selection mechanism.  Holdoff is the time for which
 the mouse must stay still,  for anything to happen. Precision is the
@@ -143,6 +141,7 @@ detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer data)
 }
 
 
+static void select_update (GbkCube *cube, struct cublet_selection *cs);
 
 
 
@@ -156,6 +155,8 @@ UnsetMotion (gpointer data)
 {
   struct cublet_selection *cs = data;
 
+  GbkCubeview *cv = GBK_CUBEVIEW (cs->data);
+
   if (cs->motion == FALSE)
     {				/* if not moved since last time */
 
@@ -163,7 +164,7 @@ UnsetMotion (gpointer data)
 	{
 	  /* in here,  things happen upon the mouse stopping */
 	  cs->stop_detected = TRUE;
-	  select_update (cs);
+	  select_update (cv->cube, cs);
 	}
     }
 
@@ -206,7 +207,7 @@ static void choose_items (GLint hits, GLuint buffer[], struct facet_selection *)
    then calls choose_items,  to determine which of them is closest to the screen.
 */
 static void
-pickPolygons (struct cublet_selection *cs, struct facet_selection *sel)
+pickPolygons (GbkCube *cube, struct cublet_selection *cs, struct facet_selection *sel)
 {
   GLint height;
 
@@ -239,7 +240,7 @@ pickPolygons (struct cublet_selection *cs, struct facet_selection *sel)
 
   perspectiveSet ();
   modelViewInit ();
-  drawCube (the_cube, TRUE, NULL);
+  drawCube (cube, TRUE, NULL);
   glMatrixMode (GL_PROJECTION);
   glPopMatrix ();
 
@@ -317,10 +318,10 @@ select_get (const struct cublet_selection *cs)
 
 /* This func,  determines which block the mouse is pointing at,  and if it
    has changed,  calls the function ptr "cs->action" */
-void
-select_update (struct cublet_selection *cs)
+static void
+select_update (GbkCube *cube, struct cublet_selection *cs)
 {
-  pickPolygons (cs, &cs->current_selection);
+  pickPolygons (cube, cs, &cs->current_selection);
 
   if (cs->action)
     cs->action (cs, cs->data);

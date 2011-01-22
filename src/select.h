@@ -45,9 +45,6 @@ void select_enable (struct cublet_selection *);
 /* Return  a pointer to a structre containing the selected items */
 const struct facet_selection *select_get (const struct cublet_selection *cs);
 
-/* Force an update of the selected block */
-void select_update (struct cublet_selection *);
-
 /* returns true if a block has been selected */
 gboolean select_is_selected (const struct cublet_selection *cs);
 

@@ -43,8 +43,6 @@ struct application_options
 
 static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
 
-GbkCube *the_cube = NULL;
-
 static void
 c_main (void *closure, int argc, char *argv[])
 {
@@ -91,7 +89,6 @@ c_main (void *closure, int argc, char *argv[])
   cube = GBK_CUBE (gbk_cube_new (opts.initial_cube_size[0],
 				     opts.initial_cube_size[1],
 				     opts.initial_cube_size[2]));
-  the_cube = cube;
 
   game.toplevel = GTK_WINDOW (window);
   game.cube = cube;
