@@ -45,10 +45,75 @@ error_check (const char *file, int line_no, const char *string)
 	     gluErrorString (err_state));
 }
 
+enum
+  {
+    PROP_0 = 0,
+    PROP_CUBE
+  };
+
+static void
+cubeview_set_property (GObject     *object,
+		   guint            prop_id,
+		   const GValue    *value,
+		   GParamSpec      *pspec)
+{
+  GbkCubeview *cubeview  = GBK_CUBEVIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_CUBE:
+      {
+	cubeview->cube = g_value_get_object (value);
+      }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    };
+}
+
+
+static void
+cubeview_get_property (GObject         *object,
+		   guint            prop_id,
+		   GValue          *value,
+		   GParamSpec      *pspec)
+{
+  GbkCubeview *cubeview  = GBK_CUBEVIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_CUBE:
+      g_value_set_object (value, cubeview->cube);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    };
+}
+
 
 static void
 gbk_cubeview_class_init (GbkCubeviewClass *klass)
 {
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  GParamSpec *gbk_param_spec;
+
+  gobject_class->set_property = cubeview_set_property;
+  gobject_class->get_property = cubeview_get_property;
+
+  gbk_param_spec = g_param_spec_object ("cube",
+					 "Cube",
+					"The cube which this widget views",
+					GBK_TYPE_CUBE,
+					 G_PARAM_READWRITE);
+
+  g_object_class_install_property (gobject_class,
+                                   PROP_CUBE,
+                                   gbk_param_spec);
+
+
   GdkScreen *screen = gdk_screen_get_default ();
   GdkWindow *root = gdk_screen_get_root_window (screen);
   gint i;
@@ -328,11 +393,7 @@ G_DEFINE_TYPE (GbkCubeview, gbk_cubeview, GTK_TYPE_DRAWING_AREA);
 GtkWidget*
 gbk_cubeview_new (GbkCube *cube)
 {
-  GbkCubeview *cv =  GBK_CUBEVIEW (g_object_new (gbk_cubeview_get_type (), NULL));
-
-  cv->cube = cube;
-
-  return GTK_WIDGET (cv);
+  return GTK_WIDGET (g_object_new (gbk_cubeview_get_type (), "cube", cube, NULL));
 }
 
 
