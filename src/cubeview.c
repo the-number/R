@@ -326,9 +326,13 @@ G_DEFINE_TYPE (GbkCubeview, gbk_cubeview, GTK_TYPE_DRAWING_AREA);
 
 
 GtkWidget*
-gbk_cubeview_new (void)
+gbk_cubeview_new (GbkCube *cube)
 {
-  return GTK_WIDGET (g_object_new (gbk_cubeview_get_type (), NULL));
+  GbkCubeview *cv =  GBK_CUBEVIEW (g_object_new (gbk_cubeview_get_type (), NULL));
+
+  cv->cube = cube;
+
+  return GTK_WIDGET (cv);
 }
 
 

@@ -31,7 +31,7 @@
 
 static const char help_string[];
 
-GbkCube *the_cube = NULL;
+
 
 struct application_options
 {
@@ -42,10 +42,13 @@ struct application_options
 
 static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
 
+GbkCube *the_cube = NULL;
 
 static void
 c_main (void *closure, int argc, char *argv[])
 {
+  GbkCube *cube = NULL;
+
   GtkWidget *form;
   GtkWidget *window;
   GtkWidget *menubar;
@@ -82,30 +85,33 @@ c_main (void *closure, int argc, char *argv[])
   form = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), form);
 
+  /* create the cube */
+  cube = GBK_CUBE (gbk_cube_new (opts.initial_cube_size[0],
+				     opts.initial_cube_size[1],
+				     opts.initial_cube_size[2]));
+  the_cube = cube;
+
   menubar = create_menubar (window);
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
-  glwidget1 = gbk_cubeview_new ();
+  
+  glwidget1 = gbk_cubeview_new (cube);
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
 
-  glwidget2 = gbk_cubeview_new (); 
+  glwidget2 = gbk_cubeview_new (cube); 
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
 
 
-  /* create the cube */
-  the_cube = GBK_CUBE (gbk_cube_new (opts.initial_cube_size[0],
-		   opts.initial_cube_size[1],
-				     opts.initial_cube_size[2]));
-  
+
   /* If a solved cube has not been requested,  then do some random
      moves on it */
   if (!opts.solved)
-    gbk_cube_scramble (the_cube);
+    gbk_cube_scramble (cube);
 
   scene_init ();
 

@@ -71,15 +71,15 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
       if (select_is_selected (cs))
 	{
 	  /* Insist upon 180 degree turns if the section is non-square */
-	  if ( !gbk_cube_square_axis (the_cube, cv->pending_movement.axis))
+	  if ( !gbk_cube_square_axis (cv->cube, cv->pending_movement.axis))
 	    cv->pending_movement.turns = 2;
 
-	  cv->pending_movement.blocks_in_motion = gbk_cube_identify_blocks_2 (the_cube, cv->pending_movement.slice, cv->pending_movement.axis);
+	  cv->pending_movement.blocks_in_motion = gbk_cube_identify_blocks_2 (cv->cube, cv->pending_movement.slice, cv->pending_movement.axis);
 
 	  assert (cv->pending_movement.blocks_in_motion);
 
 	  /* and tell the blocks.c library that a move has taken place */
-	  gbk_cube_rotate_slice (the_cube, &cv->pending_movement);
+	  gbk_cube_rotate_slice (cv->cube, &cv->pending_movement);
 
 	  animate_rotation (cv);
 	}
@@ -151,8 +151,8 @@ animate_callback (gpointer data)
 
       update_statusbar ();
 
-      if (NOT_SOLVED != (status = gbk_cube_get_status (the_cube)))
-	declare_win (the_cube);
+      if (NOT_SOLVED != (status = gbk_cube_get_status (dc->cube)))
+	declare_win (dc->cube);
     }
 
   return FALSE;

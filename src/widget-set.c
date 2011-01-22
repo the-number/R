@@ -185,16 +185,16 @@ static const GtkActionEntry action_entries[] =
 
 
 static void
-restart_game ()
+restart_game (GbkCube *cube)
 {
   int size[3];
-  size[0] = gbk_cube_get_size(the_cube, 0);
-  size[1] = gbk_cube_get_size(the_cube, 1);
-  size[2] = gbk_cube_get_size(the_cube, 2);
+  size[0] = gbk_cube_get_size (cube, 0);
+  size[1] = gbk_cube_get_size (cube, 1);
+  size[2] = gbk_cube_get_size (cube, 2);
 
-  g_object_unref (the_cube);
-  the_cube = GBK_CUBE (gbk_cube_new (size[0], size[1], size[2]));
-  gbk_cube_scramble (the_cube);
+  g_object_unref (cube);
+  cube = GBK_CUBE (gbk_cube_new (size[0], size[1], size[2]));
+  gbk_cube_scramble (cube);
   scene_init ();
 }
 

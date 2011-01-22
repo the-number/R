@@ -48,6 +48,8 @@ struct _GbkCubeview
 {
   GtkDrawingArea parent_instance;
 
+  GbkCube *cube;
+
   /* instance members */
   display *display_func;
   guint idle_id;
@@ -84,7 +86,7 @@ GType gbk_cubeview_get_type (void);
 /*
  * Method definitions.
  */
-GtkWidget* gbk_cubeview_new (void);
+GtkWidget* gbk_cubeview_new (GbkCube *c);
 
 
 /* Rotate the cube about the axis (screen relative) in direction dir */
