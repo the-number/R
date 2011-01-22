@@ -196,7 +196,6 @@ start_new_game (GbkCube *cube, int size0, int size1, int size2)
   gbk_cube_set_size (cube, size0, size1, size2);
 
   gbk_cube_scramble (cube);
-  scene_init (cube);
 }
 
 
