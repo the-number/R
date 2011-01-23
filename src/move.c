@@ -52,7 +52,12 @@ struct move_data * move_create (int slice, short axis, short dir)
   return m;
 }
 
-
+void
+move_dump (const struct move_data *m)
+{
+  g_print ("Slice: %d; Axis: %d; Dir: %d; Turns: %d\n",
+	   m->slice, m->axis, m->dir, m->turns);
+}
 
 /*
  Release the resources associated with the Slice_Block.

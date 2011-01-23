@@ -28,6 +28,8 @@
 #include "cube.h"
 #include "ui.h"
 
+struct animation;
+
 struct scene_view 
 {
   GLdouble fovy ;

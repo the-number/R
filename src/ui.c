@@ -38,7 +38,8 @@ static gboolean animate_callback (gpointer data);
 
 static gboolean inverted_rotation;
 
-static void animate_rotation (GbkCubeview *);
+
+void animate_rotation (GbkCubeview *dc, struct move_data *move);
 
 
 /* handle mouse clicks */
@@ -72,8 +73,6 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 	{
 	  /* and tell the blocks.c library that a move has taken place */
 	  gbk_cube_rotate_slice (cv->cube, cv->pending_movement);
-
-	  animate_rotation (cv);
 	}
 
       break;
@@ -84,18 +83,16 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
 
 /* Does exactly what it says on the tin :-) */
-static void
-animate_rotation (GbkCubeview *dc)
+void
+animate_rotation (GbkCubeview *dc, struct move_data *move)
 {
-  struct move_data *data = dc->pending_movement;
-
-  dc->animation.current_move = data;
-
+  struct animation *an = &dc->animation;
+  an->current_move = move_copy (move);
   //  set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  dc->animation.animation_angle = 90.0 * move_turns (dc->animation.current_move);
+  an->animation_angle = 90.0 * move_turns (an->current_move);
 
-  g_timeout_add (dc->animation.picture_rate, animate_callback, dc);
+  g_timeout_add (an->picture_rate, animate_callback, dc);
 }
 
 
@@ -103,29 +100,30 @@ animate_rotation (GbkCubeview *dc)
 static gboolean 
 animate_callback (gpointer data)
 {
-  GbkCubeview *dc = data;
+  GbkCubeview *cv = data;
+  struct animation *an  = &cv->animation;
 
   /* how many degrees motion per frame */
-  GLfloat increment = 90.0 / (dc->animation.frameQty + 1);
+  GLfloat increment = 90.0 / (an->frameQty + 1);
 
   /*  decrement the current angle */
-  dc->animation.animation_angle -= increment;
+  an->animation_angle -= increment;
 
   /* and redraw it */
-  gbk_redisplay (dc);
+  gbk_redisplay (cv);
 
-  if (dc->animation.animation_angle > 0)
+  if (an->animation_angle > 0)
     {
       /* call this timeout again */
-      g_timeout_add (dc->animation.picture_rate, animate_callback, data);
+      g_timeout_add (an->picture_rate, animate_callback, data);
     }
   else
     {
       /* we have finished the animation sequence now */
-      enum Cube_Status status;
 
-      dc->animation.animation_angle = 0.0;
-      dc->animation.current_move = NULL;
+      an->animation_angle = 0.0;
+      move_free (an->current_move);
+      an->current_move = NULL;
 
 #if 0
       set_toolbar_state ((move_queue_progress (move_queue).current == 0
@@ -133,12 +131,13 @@ animate_callback (gpointer data)
 			 |
 			 (move_queue_current (move_queue)
 			  ? PLAY_TOOLBAR_PLAY : 0));
-#endif
 
       update_statusbar ();
 
       if (NOT_SOLVED != (status = gbk_cube_get_status (dc->cube)))
 	declare_win (dc->cube);
+#endif
+
     }
 
   return FALSE;

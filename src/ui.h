@@ -42,4 +42,6 @@ struct animation
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 
+//void animate_rotation (GbkCubeview *dc, struct move_data *move);
+
 #endif

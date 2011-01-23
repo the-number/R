@@ -33,6 +33,8 @@ static void set_the_colours (GtkWidget *w, const char *progname);
 static GLboolean have_accumulation_buffer (void);
 
 
+void animate_rotation (GbkCubeview *dc, struct move_data *move);
+
 
 /* Error string display.  This is always called by a macro
    wrapper,  to set the file and line_no opts parameters */
@@ -51,6 +53,11 @@ enum
     PROP_CUBE
   };
 
+static void
+on_move (GbkCube *cube, struct move_data *move, GbkCubeview *cv)
+{
+  animate_rotation (cv, move);
+}
 
 static void
 cubeview_set_property (GObject     *object,
@@ -69,7 +76,7 @@ cubeview_set_property (GObject     *object,
 	g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
 				  G_CALLBACK (scene_init), cubeview);
 
-	g_signal_connect_swapped (cubeview->cube, "move", G_CALLBACK (gbk_redisplay), cubeview);
+	g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
       }
       break;
     default:
