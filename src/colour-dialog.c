@@ -147,6 +147,20 @@ set_swatch_colour (GtkColorSelection *cs, gpointer data)
 
 static gboolean draw_swatch (GtkWidget *widget, GdkEventExpose *event, gpointer data);
 
+static void
+radiobuttons_update_sensitivity (struct colour_dialog_state *cds)
+{
+  /* Set the sensitivity of the radio buttons */
+
+  GSList *l = cds->button_group;
+  while (l)
+    {
+      gtk_widget_set_sensitive (l->data,
+				(cds->swatches[cds->selected_swatch]->rendering.surface != SURFACE_COLOURED));
+      l = l->next;
+    }
+}
+
 /* 
    Called when a swatch button is clicked.
  */
@@ -184,15 +198,7 @@ select_swatch (GtkToggleButton *w, gpointer data)
   gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (cds->colour_selector), 
 			       &colour);
 
-  /* Set the sensitivity of the radio buttons */
-
-  GSList *l = cds->button_group;
-  while (l)
-    {
-      gtk_widget_set_sensitive (l->data,
-				(cds->swatches[cds->selected_swatch]->rendering.surface != SURFACE_COLOURED));
-      l = l->next;
-    }
+  radiobuttons_update_sensitivity (cds);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_plain), 
 				(cds->swatches[cds->selected_swatch]->rendering.surface == SURFACE_COLOURED));
@@ -202,7 +208,6 @@ select_swatch (GtkToggleButton *w, gpointer data)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_mosaic), 
 				(cds->swatches[cds->selected_swatch]->rendering.surface == SURFACE_MOSAIC));
-  
 }
 
 
@@ -299,6 +304,11 @@ set_swatch_image (const gchar *filename, struct colour_dialog_state *cds)
       return FALSE;
     }
   sw->rendering.surface = SURFACE_TILED;
+
+  if ( gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cds->button_plain)))
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_tile), TRUE);
+
+  radiobuttons_update_sensitivity (cds);
 
   gtk_widget_queue_draw (sw->da);
 
@@ -412,6 +422,7 @@ set_plain (GtkToggleButton *b, gpointer data)
 
   sw->rendering.texName = 0;
 
+  radiobuttons_update_sensitivity (cds);
   gtk_widget_queue_draw (sw->button);
 }
 

@@ -462,5 +462,3 @@ error_dialog (GtkWindow *parent, const gchar *format, ...)
 
   gtk_widget_destroy (dialog);
 }
-
-
