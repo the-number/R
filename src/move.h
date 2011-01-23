@@ -18,6 +18,8 @@
 #ifndef MOVE_H
 #define MOVE_H
 
+#include <glib.h>
+#include <glib-object.h>
 
 /* Structure used to communicate which blocks of the cube lie in a certain
    slice. These objects should only be constructed by one of the identify_blocks
@@ -26,6 +28,7 @@ typedef struct _Slice_Blocks
 {
   int *blocks;
   int number_blocks;
+  int ref;
 
 } Slice_Blocks;
 
@@ -47,6 +50,8 @@ struct move_data
   Slice_Blocks *blocks_in_motion;
 };
 #endif
+
+GType move_get_type (void);
 
 
 struct move_data * move_create (int slice, short axis, short dir);

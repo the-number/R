@@ -60,9 +60,10 @@ struct move_data * move_create (int slice, short axis, short dir)
 static void
 free_slice_blocks (Slice_Blocks * slice)
 {
-  if (slice)
+  if (slice && --slice->ref == 0)
     {
-      g_free (slice->blocks);
+      if (slice->blocks)
+	g_free (slice->blocks);
       g_free (slice);
     }
 }
@@ -83,13 +84,30 @@ struct move_data * move_copy (const struct move_data *n)
 
   struct move_data *m = g_slice_alloc0 (sizeof (*m));
 
-  m->blocks_in_motion = n->blocks_in_motion; //FIXME: Deep copy needed ???
+  m->blocks_in_motion = n->blocks_in_motion;
+  m->blocks_in_motion->ref++;
   m->turns = n->turns;
   m->slice = n->slice;
   m->dir = n->dir;
   m->axis = n->axis;
 
   return m;
+}
+
+
+GType
+move_get_type (void)
+{
+  static GType t = 0;
+
+  if (t == 0 )
+    {
+      t = g_boxed_type_register_static  ("gnubik-move",
+					 (GBoxedCopyFunc) move_copy,
+					 (GBoxedFreeFunc) move_free);
+    }
+
+  return t;
 }
 
 
@@ -110,3 +128,6 @@ move_axis (const struct move_data *m)
 {
   return m->axis;
 }
+
+
+

@@ -334,9 +334,10 @@ gbk_cube_class_init (GbkCubeClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  0,
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  g_cclosure_marshal_VOID__BOXED,
 		  G_TYPE_NONE,
-		  0);
+		  1,
+		  move_get_type ());
 }
 
 
@@ -497,7 +498,7 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
        i >= md->blocks_in_motion->blocks; --i)
     pre_mult (rotation, cube->blocks[*i].transformation);
 
-  g_signal_emit (cube, signals [MOVE], 0);
+  g_signal_emit (cube, signals [MOVE], 0, md);
 }
 /* End of function rotate_slice (). */
 
@@ -578,9 +579,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
 
   Slice_Blocks *ret = malloc (sizeof *ret);
 
-  if (!ret)
-    return NULL;
-
+  ret->ref = 1;
   ret->number_blocks = 1;
   for (dim = 0; dim < 3; ++dim)
     {
