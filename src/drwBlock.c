@@ -500,20 +500,22 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
   for (i = 0; i < gbk_cube_get_number_of_blocks (cube); i++)
     {
       int j = 0;
+      Slice_Blocks *moving_blocks = NULL;
+
+      if (animation && animation->current_move && animation->current_move->blocks_in_motion)
+	moving_blocks = animation->current_move->blocks_in_motion;
 
       /* Find out if this block is one of those currently being
          turned.  If so,  j will be < turning_block_qty */
-      if (animation && animation->current_move && animation->current_move->blocks_in_motion)
-	for (j = 0; j < animation->current_move->blocks_in_motion->number_blocks; j++)
+      if (moving_blocks)
+	for (j = 0; j < moving_blocks->number_blocks; j++)
 	  {
-	    if (animation->current_move->blocks_in_motion->blocks[j] == i)
+	    if (moving_blocks->blocks[j] == i)
 	      break;
 	  }
 
       glPushMatrix ();
-      if (animation && animation->current_move &&
-	  animation->current_move->blocks_in_motion &&
-	  j != animation->current_move->blocks_in_motion->number_blocks)
+      if (moving_blocks && j != moving_blocks->number_blocks)
 	{
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
@@ -521,10 +523,10 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
 	  GLdouble angle = animation->animation_angle;
 
 	  int unity = 1;
-	  if (!animation->current_move->dir)
+	  if (! move_dir (animation->current_move))
 	    unity = -1;
 
-	  switch (animation->current_move->axis)
+	  switch (move_axis (animation->current_move))
 	    {
 	    case 0:
 	    case 3:
@@ -552,7 +554,6 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
 	/* and draw the block */
 	draw_block (cube, i, ancilliary);
 	glPopMatrix ();
-
       }
 
       glPopMatrix ();

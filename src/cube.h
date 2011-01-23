@@ -21,27 +21,7 @@
 #ifndef __GBK_CUBE_H__
 #define __GBK_CUBE_H__
 
-
-/* Structure used to communicate which blocks of the cube lie in a certain
-   slice. These objects should only be constructed by one of the identify_blocks
-   functions,  and must be destroyed with the free_slice_blocks function. */
-typedef struct _Slice_Blocks
-{
-  int *blocks;
-  int number_blocks;
-
-} Slice_Blocks;
-
-/* A structure containing information about a movement taking place. */
-struct move_data
-{
-  int slice;
-  short dir;   /* 0 = cw, 1 = ccw */
-  short axis;  /* [0,2] */
-  short turns; /* Normally 1 or 2 */
-
-  Slice_Blocks *blocks_in_motion;
-};
+#include "move.h"
 
 /* Is the cube solved? */
 enum Cube_Status
@@ -130,14 +110,6 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
 void gbk_cube_get_quadrant_vector (const GbkCube *cube,
 				   int block,
 				   int face, int quadrant, vector v);
-
-Slice_Blocks *
-gbk_cube_identify_blocks_2 (const GbkCube * cube,
-			    GLfloat slice_depth, int axis);
-
-Slice_Blocks *
-gbk_cube_identify_blocks (const GbkCube *cube, int block_id, int axis);
-
 
 enum Cube_Status gbk_cube_get_status (const GbkCube *cube);
 

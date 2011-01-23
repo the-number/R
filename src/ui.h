@@ -29,13 +29,15 @@ struct animation
   /* picture rate in ms. 40ms = 25 frames per sec */
   int picture_rate ;
 
+  /* the number of frames drawn when a slice of the cube rotates 90 degrees */
+  int frameQty ;
+
+
   /* The current angle through which an animation has turned */
   GLfloat animation_angle ;
 
+  /* The movement currently animating */
   struct move_data *current_move;
-
-  /* the number of frames drawn when a slice of the cube rotates 90 degrees */
-  int frameQty ;
 };
 
 gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);

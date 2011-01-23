@@ -80,7 +80,7 @@ cubeview_set_property (GObject     *object,
 
 
 static void
-cubeview_get_property (GObject         *object,
+cubeview_get_property (GObject     *object,
 		   guint            prop_id,
 		   GValue          *value,
 		   GParamSpec      *pspec)
@@ -327,11 +327,7 @@ gbk_cubeview_init (GbkCubeview *dc)
 {
   struct cublet_selection *cs = NULL;
 
-  dc->pending_movement.slice = -1;
-  dc->pending_movement.dir = -1;
-  dc->pending_movement.axis = -1;
-  dc->pending_movement.turns = 0;
-  dc->pending_movement.blocks_in_motion = NULL;
+  dc->pending_movement = NULL;
 
   initialize_gl_capability (GTK_WIDGET (dc));
 
@@ -374,14 +370,11 @@ gbk_cubeview_init (GbkCubeview *dc)
   g_signal_connect (dc, "scroll-event",
 		    G_CALLBACK (z_rotate), NULL);
 
-
-
   g_signal_connect (dc, "leave-notify-event",
 		    G_CALLBACK (on_crossing), cs);
 
   g_signal_connect (dc, "enter-notify-event",
 		    G_CALLBACK (on_crossing), cs);
-
 
   g_signal_connect (dc, "button-press-event",
 		    G_CALLBACK (enable_disable_selection), cs);
@@ -401,7 +394,6 @@ gbk_cubeview_new (GbkCube *cube)
 {
   return GTK_WIDGET (g_object_new (gbk_cubeview_get_type (), "cube", cube, NULL));
 }
-
 
 
 

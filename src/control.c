@@ -130,12 +130,12 @@ set_mouse_cursor (GtkWidget *w, const struct cublet_selection *cs)
 
 /* 
    This func is called whenever a new set of polygons have been selected.
- */
+*/
 void
 selection_func (struct cublet_selection *cs, gpointer data)
 {
   GbkCubeview *cv = GBK_CUBEVIEW (data);
-  struct move_data *pending_movement = &cv->pending_movement;
+
 
   if (gbk_cubeview_is_animating (cv))
     return;
@@ -145,24 +145,24 @@ selection_func (struct cublet_selection *cs, gpointer data)
       const struct facet_selection *selection = select_get (cs);
       GLfloat turn_axis[4];
       vector v;
+      short axis;
+      short dir;
+      int slice;
 
       getTurnAxis (cv->cube, selection, turn_axis);
-      pending_movement->axis = vector2axis (turn_axis);
+      axis = vector2axis (turn_axis);
 
-
-      pending_movement->dir = turnDir (turn_axis);
-
+      dir = turnDir (turn_axis);
 
       /* !!!!!! We are accessing private cube data. */
-      pending_movement->slice
-	=
-	cv->cube->blocks[selection->block].transformation[12 +
-							  pending_movement->axis];
+      slice = cv->cube->blocks[selection->block].transformation[12 + axis];
+
+
+      /* Delete the old move and create a new one */
+
+      move_free (cv->pending_movement);
+      cv->pending_movement = move_create (slice, axis, dir);
       
-      /* Default to a turn of 90 degrees */
-      pending_movement->turns = 1;
-
-
       /* Here we take the orientation of the selected quadrant and multiply it
          by the projection matrix.  The result gives us the angle (on the screen)
 	 at which the mouse cursor needs to be drawn. */
@@ -178,11 +178,6 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
 	cv->cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }
-    }
-  else
-    {
-      pending_movement->dir = -1;
-      pending_movement->axis = -1;
     }
 
   GtkWidget *w = cublet_selection_get_widget (cs);

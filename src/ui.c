@@ -63,23 +63,15 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
          turn direction could get out of sync */
 
       inverted_rotation = TRUE;
-      cv->pending_movement.dir = !cv->pending_movement.dir;
+      //      cv->pending_movement->dir = !cv->pending_movement->dir;
 
       break;
     case 1:
       /* Make a move */
       if (select_is_selected (cs))
 	{
-	  /* Insist upon 180 degree turns if the section is non-square */
-	  if ( !gbk_cube_square_axis (cv->cube, cv->pending_movement.axis))
-	    cv->pending_movement.turns = 2;
-
-	  cv->pending_movement.blocks_in_motion = gbk_cube_identify_blocks_2 (cv->cube, cv->pending_movement.slice, cv->pending_movement.axis);
-
-	  assert (cv->pending_movement.blocks_in_motion);
-
 	  /* and tell the blocks.c library that a move has taken place */
-	  gbk_cube_rotate_slice (cv->cube, &cv->pending_movement);
+	  gbk_cube_rotate_slice (cv->cube, cv->pending_movement);
 
 	  animate_rotation (cv);
 	}
@@ -95,13 +87,13 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 static void
 animate_rotation (GbkCubeview *dc)
 {
-  struct move_data *data = &dc->pending_movement;
+  struct move_data *data = dc->pending_movement;
 
   dc->animation.current_move = data;
 
   //  set_toolbar_state (PLAY_TOOLBAR_STOP);
 
-  dc->animation.animation_angle = 90.0 * dc->animation.current_move->turns;
+  dc->animation.animation_angle = 90.0 * move_turns (dc->animation.current_move);
 
   g_timeout_add (dc->animation.picture_rate, animate_callback, dc);
 }
@@ -112,8 +104,6 @@ static gboolean
 animate_callback (gpointer data)
 {
   GbkCubeview *dc = data;
-
-  struct move_data *md = &dc->pending_movement;
 
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (dc->animation.frameQty + 1);
@@ -135,10 +125,6 @@ animate_callback (gpointer data)
       enum Cube_Status status;
 
       dc->animation.animation_angle = 0.0;
-
-      free_slice_blocks (md->blocks_in_motion);
-      md->blocks_in_motion = NULL;
-
       dc->animation.current_move = NULL;
 
 #if 0

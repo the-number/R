@@ -34,6 +34,7 @@ src_gnubik_SOURCES = \
 	src/glarea-common.c \
 	src/glarea.h \
 	src/main.c \
+	src/move.c src/move.h \
 	src/quarternion.c src/quarternion.h \
 	src/select.c src/select.h \
 	src/txfm.c src/txfm.h \

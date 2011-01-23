@@ -68,7 +68,7 @@ struct _GbkCubeview
   GdkGLDrawable *gldrawable;
 
   /* The move that will take place when the mouse is clicked */
-  struct move_data pending_movement;
+  struct move_data *pending_movement;
 
   /* Position of the mouse cursor */
   gdouble last_mouse_x ;

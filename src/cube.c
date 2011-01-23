@@ -358,24 +358,22 @@ gbk_cube_scramble (GbkCube *cube)
 {
   int i;
 
-  struct move_data move;
-
   for (i = 0; i < 2 * gbk_cube_get_number_of_blocks (cube); i++)
     {
-      move.slice = rand () % 2 + 1;
-      move.axis = rand () % 3;
-      move.dir = 0;
-      move.turns = 1;
-      move.blocks_in_motion =
-	gbk_cube_identify_blocks (cube, rand () % gbk_cube_get_number_of_blocks (cube), move.axis);
+      struct move_data *move;
+      const short axis = rand () % 3;
+      int slice;
+      const int size = gbk_cube_get_size (cube, axis);
 
-      /* Insist upon 180 degree turns if the section is non-square */
-      if ( !gbk_cube_square_axis (cube, move.axis))
-	move.turns = 2;
+      slice = rand () % size;
+      slice *= 2;
+      slice -= size - 1;
 
-      gbk_cube_rotate_slice (cube, &move);
+      move = move_create (slice, axis, 0);
 
-      free_slice_blocks (move.blocks_in_motion);
+      gbk_cube_rotate_slice (cube, move);
+
+      move_free (move);
     }
 }
 
@@ -437,6 +435,10 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
   transform (view, v, *dest);
 }
 
+static Slice_Blocks *
+cube_identify_blocks_2 (const GbkCube * cube,
+			    GLfloat slice_depth, int axis);
+
 
 /* Rotate the slice identified by a prior call to identify_blocks,  about the
    axis,  through an angle specified by turns,  which is in quarters of complete
@@ -444,7 +446,7 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
 void
 gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
 {
-  int turns = md->turns;
+  int turns = move_turns (md);
 
   /* Iterator for array of blocks in the current slice. */
   const int *i;
@@ -457,23 +459,36 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
     0, 0, 1, 0,
     0, 0, 0, 1
   };
+
+
+  /* If rotating about a non-square axis, then only 180 deg turns are
+     permitted */
+  if ( !gbk_cube_square_axis (cube, move_axis (md)))
+    turns = 2;
  
   /* Rotating backward 90 deg is the same as forward by 270 deg */
-  if (md->dir == 0 && md->turns == 1)
+  if (move_dir (md) == 0 && turns == 1)
     turns = 3;
 
   /* ... and then assigning values to the active elements. */
-  rotation[(md->axis + 1) % 3 + 4 * ((md->axis + 1) % 3)]
+  rotation[(move_axis (md) + 1) % 3 + 4 * ((move_axis (md) + 1) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(md->axis + 2) % 3 + 4 * ((md->axis + 2) % 3)]
+  rotation[(move_axis (md) + 2) % 3 + 4 * ((move_axis (md) + 2) % 3)]
     = cos_quadrant (turns);
 
-  rotation[(md->axis + 1) % 3 + 4 * ((md->axis + 2) % 3)]
+  rotation[(move_axis (md) + 1) % 3 + 4 * ((move_axis (md) + 2) % 3)]
     = sin_quadrant (turns);
 
-  rotation[(md->axis + 2) % 3 + 4 * ((md->axis + 1) % 3)]
+  rotation[(move_axis (md) + 2) % 3 + 4 * ((move_axis (md) + 1) % 3)]
     = -sin_quadrant (turns);
+
+
+  if ( NULL == md->blocks_in_motion )
+    ((struct move_data *) md)->blocks_in_motion = cube_identify_blocks_2 (cube, md->slice, move_axis (md));
+
+  g_assert (md->blocks_in_motion);
+
 
   /* Apply the rotation matrix to all the blocks in this slice. We iterate
      backwards to avoid recalculating the end of the loop with every
@@ -543,25 +558,6 @@ sin_quadrant (int quarters)
   return cos_quadrant (quarters - 1);
 }
 
-
-
-/*
- Release the resources associated with the Slice_Block.
-*/
-void
-free_slice_blocks (Slice_Blocks * slice)
-{
-  if (slice)
-    {
-      free (slice->blocks);
-
-      free (slice);
-    }
-}
-
-
-
-
 /*
   Return a pointer to an array of block numbers which are in the slice
   identified by slice_depth (two publicly-exposed wrappers defined below allow
@@ -570,8 +566,8 @@ free_slice_blocks (Slice_Blocks * slice)
   free_slice_blocks ().
 */
 
-Slice_Blocks *
-gbk_cube_identify_blocks_2 (const GbkCube * cube,
+static Slice_Blocks *
+cube_identify_blocks_2 (const GbkCube * cube,
 		   GLfloat slice_depth, int axis)
 {
   /* Looping variables. */
@@ -580,11 +576,10 @@ gbk_cube_identify_blocks_2 (const GbkCube * cube,
 
   /* Allocate memory for the return object. */
 
-  Slice_Blocks *ret = malloc (sizeof (Slice_Blocks));
+  Slice_Blocks *ret = malloc (sizeof *ret);
 
   if (!ret)
     return NULL;
-
 
   ret->number_blocks = 1;
   for (dim = 0; dim < 3; ++dim)
@@ -601,30 +596,21 @@ gbk_cube_identify_blocks_2 (const GbkCube * cube,
       return NULL;
     }
 
-
   /* Iterate over all the blocks in the cube. When we find one whose
      axis-component of the location part of its transformation matrix
      corresponds to the requested slice depth,  then we make a note of its
      offset in the return->blocks array. */
-
+  
   for (i = cube->blocks + cube->number_blocks - 1; i >= cube->blocks; --i)
-    if (fabs (i->transformation[12 + axis] - slice_depth) < 0.1)
-      ret->blocks[j++] = i - cube->blocks;
+    {
+      if (fabs (i->transformation[12 + axis] - slice_depth) < 0.1)
+	{
+	  ret->blocks[j++] = i - cube->blocks;
+	}
+    }
 
   return ret;
 }
-
-
-/* Get the blocks in the same slice as the block with block_id. */
-
-Slice_Blocks *
-gbk_cube_identify_blocks (const GbkCube *cube, int block_id, int axis)
-{
-  return gbk_cube_identify_blocks_2
-    (cube, cube->blocks[block_id].transformation[12 + axis], axis);
-}
-
-
 
 
 /*
