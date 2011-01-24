@@ -78,6 +78,7 @@ cubeview_set_property (GObject     *object,
 				  G_CALLBACK (scene_init), cubeview);
 
 	g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
+	g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (gbk_redisplay), cubeview);
       }
       break;
     case PROP_ASPECT:
@@ -236,8 +237,6 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   if (xmotion < 0)
     gbk_cubeview_rotate_cube (dc, 1, 0);
 
-  gbk_redisplay (dc);
-
   return FALSE;
 }
 
@@ -293,7 +292,6 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
     }
 
   gbk_cubeview_rotate_cube (dc, axis, dir);
-  gbk_redisplay (dc);
 
   /* We return TRUE here (disabling other event handlers)
      otherwise other widgets can steal the keyboard focus from our
@@ -715,9 +713,9 @@ void
 gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
 {
   GbkCube *cube = cv->cube;
-  /* how emany degrees to turn the cube with each hit */
+  /* how many degrees to turn the cube with each hit */
   GLdouble step = 2.0;
-  Quarternion rot;
+
   vector v = { 0, 0, 0, 0};
 
   if (dir)
@@ -733,6 +731,5 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
   quarternion_to_matrix (m, &cv->qView);
   transform_in_place (m, v);
 
-  quarternion_from_rotation (&rot, v, step);
-  quarternion_pre_mult (&cube->orientation, &rot);
+  gbk_cube_rotate (cube, v, step);
 }

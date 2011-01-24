@@ -303,7 +303,8 @@ cube_get_property (GObject         *object,
 
 
 enum  {
-  MOVE, 
+  MOVED, 
+  ROTATED,
   n_SIGNALS};
 
 static guint signals [n_SIGNALS];
@@ -329,7 +330,7 @@ gbk_cube_class_init (GbkCubeClass *klass)
                                    gbk_param_spec);
 
 
-  signals [MOVE] =
+  signals [MOVED] =
     g_signal_new ("move",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -339,6 +340,16 @@ gbk_cube_class_init (GbkCubeClass *klass)
 		  G_TYPE_NONE,
 		  1,
 		  move_get_type ());
+
+  signals [ROTATED] =
+    g_signal_new ("rotate",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  0,
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE,
+		  0);
 }
 
 
@@ -499,7 +510,7 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
        i >= md->blocks_in_motion->blocks; --i)
     pre_mult (rotation, cube->blocks[*i].transformation);
 
-  g_signal_emit (cube, signals [MOVE], 0, md);
+  g_signal_emit (cube, signals [MOVED], 0, md);
 }
 /* End of function rotate_slice (). */
 
@@ -727,4 +738,15 @@ gbk_cube_set_normal_vector (GbkCube *cube,
   glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
   transform (view, v, *dest);
+}
+
+
+void
+gbk_cube_rotate (GbkCube *cube, const vector v, gfloat step)
+{
+  Quarternion rot;
+  quarternion_from_rotation (&rot, v, step);
+  quarternion_pre_mult (&cube->orientation, &rot);
+
+  g_signal_emit (cube, signals [ROTATED], 0);
 }

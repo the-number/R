@@ -130,5 +130,6 @@ void gbk_cube_set_normal_vector (GbkCube *cube,
 
 void gbk_cube_set_size (GbkCube *ret, int s0, int s1, int s2);
 
+void gbk_cube_rotate (GbkCube *cube, const vector v, gfloat step);
 
 #endif /* __CUBE_H__ */
