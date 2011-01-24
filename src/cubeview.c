@@ -707,26 +707,15 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
   /* how emany degrees to turn the cube with each hit */
   GLdouble step = 2.0;
   Quarternion rot;
-  vector v;
+  vector v = { 0, 0, 0, 0};
 
   if (dir)
     step = -step;
 
-  switch (axis)
-    {
-    case 0:
-      v[1] = v[2] = 0;
-      v[0] = 1;
-      break;
-    case 1:
-      v[0] = v[2] = 0;
-      v[1] = 1;
-      break;
-    case 2:
-      v[0] = v[1] = 0;
-      v[2] = 1;
-      break;
-    }
+  g_assert (axis >= 0);
+  g_assert (axis < 3);
+
+  v[axis] = 1;
 
   /* We need to Transform v by the aspect of cv */
   Matrix m;
