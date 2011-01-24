@@ -22,6 +22,7 @@
 #define __GBK_CUBE_H__
 
 #include "move.h"
+#include "quarternion.h"
 
 /* Is the cube solved? */
 enum Cube_Status
@@ -70,6 +71,8 @@ struct _GbkCube
 
   /* A set of attributes for every block (including internal ones!) */
   Block *blocks;
+
+  Quarternion orientation;
 };
 
 struct _GbkCubeClass

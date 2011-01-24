@@ -22,13 +22,8 @@
 #include "cubeview.h"
 
 void perspectiveSet (struct scene_view *);
-void modelViewInit (struct scene_view *);
 void scene_init (GbkCubeview *);
 void projection_init (struct scene_view *, int jitter);
 void lighting_init (void);
-void rotate_cube (int axis, int dir);
-
-
-
 
 #endif

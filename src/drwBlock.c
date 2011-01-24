@@ -559,4 +559,3 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
       glPopMatrix ();
     }
 }
-

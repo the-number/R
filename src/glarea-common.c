@@ -26,8 +26,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-/* Start with the unit quarternion */
-static Quarternion the_cube_orientation = { 1, 0, 0, 0 };
 
 struct jitter_v
 {
@@ -47,40 +45,6 @@ perspectiveSet (struct scene_view *scene)
   gluPerspective (scene->fovy, 1, scene->cp_near, scene->cp_far);
 }
 
-/* Wrapper to set the modelview matrix */
-void
-modelViewInit (struct scene_view *scene)
-{
-  /* start with the cube slightly skew,  so we can see all its aspects */
-  GLdouble cube_orientation[2] = { 15.0, 15.0 };
-
-  const GLint origin[] = { 0, 0, 0 };
-  Matrix m;
-
-  /* Update viewer position in modelview matrix */
-
-  glMatrixMode (GL_MODELVIEW);
-  glLoadIdentity ();
-  gluLookAt (0, 0, scene->bounding_sphere_radius + scene->cp_near,
-	     origin[0], origin[1], origin[2], 0.0, 1.0, 0.0);
-
-
-  quarternion_to_matrix (m, &the_cube_orientation);
-  glMultMatrixf (m);
-
-  /* skew the cube */
-  glRotatef (cube_orientation[1], 1, 0, 0);	/* horizontally */
-  glRotatef (cube_orientation[0], 0, 1, 0);	/* vertically */
-
-  /*
-   * DM 3-Jan-2004
-   *
-   * Add a couple of 90 degree turns to get the top and right faces in their
-   * logical positions when the program starts up.
-   */
-  glRotatef (90.0, 1, 0, 0);
-  glRotatef (-90.0, 0, 0, 1);
-}
 
 
 /* accFrustum and accPerspective are taken from p397 of the Red Book */
@@ -184,35 +148,3 @@ lighting_init (void)
 }
 
 
-
-/* Rotate cube about axis (screen relative) */
-void
-rotate_cube (int axis, int dir)
-{
-  /* how emany degrees to turn the cube with each hit */
-  GLdouble step = 2.0;
-  Quarternion rot;
-  vector v;
-
-  if (dir)
-    step = -step;
-
-  switch (axis)
-    {
-    case 0:
-      v[1] = v[2] = 0;
-      v[0] = 1;
-      break;
-    case 1:
-      v[0] = v[2] = 0;
-      v[1] = 1;
-      break;
-    case 2:
-      v[0] = v[1] = 0;
-      v[2] = 1;
-      break;
-    }
-
-  quarternion_from_rotation (&rot, v, step);
-  quarternion_pre_mult (&the_cube_orientation, &rot);
-}

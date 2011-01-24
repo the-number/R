@@ -81,6 +81,8 @@ struct _GbkCubeview
 
   /* Animation parameters */
   struct animation animation;
+
+  Quarternion qView;
 };
 
 struct _GbkCubeviewClass
@@ -110,6 +112,10 @@ void error_check (const char *file, int line_no, const char *string);
 void gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames);
 
 gboolean gbk_cubeview_is_animating (GbkCubeview *dc);
+
+void gbk_cubeview_model_view_init (GbkCubeview *cv);
+
+void gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir);
 
 
 

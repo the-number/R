@@ -239,7 +239,7 @@ pickPolygons (GbkCubeview *cv, struct cublet_selection *cs, struct facet_selecti
 		 cs->granularity, cs->granularity, viewport);
 
   perspectiveSet (&cv->scene);
-  modelViewInit (&cv->scene);
+  gbk_cubeview_model_view_init (cv);
   drawCube (cv->cube, TRUE, NULL);
   glMatrixMode (GL_PROJECTION);
   glPopMatrix ();

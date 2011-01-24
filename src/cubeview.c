@@ -203,15 +203,14 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   dc->last_mouse_y = event->y;
 
   if (ymotion > 0)
-    rotate_cube (0, 1);
+    gbk_cubeview_rotate_cube (dc, 0, 1);
   if (ymotion < 0)
-    rotate_cube (0, 0);
-  gbk_redisplay (dc);
+    gbk_cubeview_rotate_cube (dc, 0, 0);
 
   if (xmotion > 0)
-    rotate_cube (1, 1);
+    gbk_cubeview_rotate_cube (dc, 1, 1);
   if (xmotion < 0)
-    rotate_cube (1, 0);
+    gbk_cubeview_rotate_cube (dc, 1, 0);
 
   gbk_redisplay (dc);
 
@@ -269,7 +268,7 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
       return FALSE;
     }
 
-  rotate_cube (axis, dir);
+  gbk_cubeview_rotate_cube (dc, axis, dir);
   gbk_redisplay (dc);
 
   /* We return TRUE here (disabling other event handlers)
@@ -285,7 +284,7 @@ z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
-  rotate_cube (2, !event->direction);
+  gbk_cubeview_rotate_cube (dc, 2, !event->direction);
 
   gbk_redisplay (dc);
 
@@ -335,6 +334,21 @@ gbk_cubeview_init (GbkCubeview *dc)
   struct cublet_selection *cs = NULL;
 
   dc->pending_movement = NULL;
+
+  GLfloat aspect[4];
+  GLfloat xx = 0;
+  aspect[0] = 0;
+  aspect[1] = 1;
+  aspect[2] = 0;
+  aspect[3] = 0;
+
+  static int kludge = 0;
+  if (kludge++)
+    {
+      xx = 180.0;
+    }
+
+  quarternion_from_rotation (&dc->qView, aspect, xx);
 
   initialize_gl_capability (GTK_WIDGET (dc));
 
@@ -519,7 +533,7 @@ render_scene (GbkCubeview *cv, GLint jitter, const struct animation *a)
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   projection_init (&cv->scene, jitter);
-  modelViewInit (&cv->scene);
+  gbk_cubeview_model_view_init (cv);
   ERR_CHECK ("Error in display");
 
   drawCube (cv->cube, FALSE, a);
@@ -637,3 +651,88 @@ gbk_cubeview_is_animating (GbkCubeview *dc)
   return (dc->animation.current_move != NULL);
 }
 
+
+/* Wrapper to set the modelview matrix */
+void
+gbk_cubeview_model_view_init (GbkCubeview *cv)
+{
+  struct scene_view *scene = &cv->scene;
+  GbkCube *cube = cv->cube;
+  /* start with the cube slightly skew,  so we can see all its aspects */
+  GLdouble cube_orientation[2] = {15.0, 15.0};
+
+  Matrix m;
+
+  /* Update viewer position in modelview matrix */
+
+  glMatrixMode (GL_MODELVIEW);
+  glLoadIdentity ();
+  GLdouble eye = scene->bounding_sphere_radius + scene->cp_near;
+
+  glTranslatef (0, 0, -eye);
+
+  Quarternion o;
+  quarternion_set_to_unit (&o);
+  quarternion_pre_mult (&o, &cube->orientation);
+  quarternion_pre_mult (&o, &cv->qView);
+
+  quarternion_to_matrix (m, &o);
+
+  glMultMatrixf (m);
+
+
+  /* skew the cube */
+  glRotatef (cube_orientation[1], 1, 0, 0);	/* horizontally */
+  glRotatef (cube_orientation[0], 0, 1, 0);	/* vertically */
+
+#if 0
+  /*
+   * DM 3-Jan-2004
+   *
+   * Add a couple of 90 degree turns to get the top and right faces in their
+   * logical positions when the program starts up.
+   */
+  glRotatef (90.0, 1, 0, 0);
+  glRotatef (-90.0, 0, 0, 1);
+#endif
+}
+
+
+
+/* Rotate cube about axis (screen relative) */
+void
+gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
+{
+  GbkCube *cube = cv->cube;
+  /* how emany degrees to turn the cube with each hit */
+  GLdouble step = 2.0;
+  Quarternion rot;
+  vector v;
+
+  if (dir)
+    step = -step;
+
+  switch (axis)
+    {
+    case 0:
+      v[1] = v[2] = 0;
+      v[0] = 1;
+      break;
+    case 1:
+      v[0] = v[2] = 0;
+      v[1] = 1;
+      break;
+    case 2:
+      v[0] = v[1] = 0;
+      v[2] = 1;
+      break;
+    }
+
+  /* We need to Transform v by the aspect of cv */
+  Matrix m;
+  quarternion_to_matrix (m, &cv->qView);
+  transform_in_place (m, v);
+
+  quarternion_from_rotation (&rot, v, step);
+  quarternion_pre_mult (&cube->orientation, &rot);
+}

@@ -169,6 +169,7 @@ static void
 gbk_cube_init (GbkCube *ret)
 {
   ret->blocks = NULL;
+  quarternion_set_to_unit (&ret->orientation);
 }
 
 void
