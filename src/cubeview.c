@@ -50,7 +50,8 @@ error_check (const char *file, int line_no, const char *string)
 enum
   {
     PROP_0 = 0,
-    PROP_CUBE
+    PROP_CUBE,
+    PROP_ASPECT
   };
 
 static void
@@ -77,6 +78,19 @@ cubeview_set_property (GObject     *object,
 				  G_CALLBACK (scene_init), cubeview);
 
 	g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
+      }
+      break;
+    case PROP_ASPECT:
+      {
+	gfloat *asp = g_value_get_pointer (value);
+	gfloat v[4];
+	gfloat angle = asp[0];
+	v[0] = asp[1];
+	v[1] = asp[2];
+	v[2] = asp[3];
+	v[3] = 0;
+
+	quarternion_from_rotation (&cubeview->qView, v, angle);
       }
       break;
     default:
@@ -111,12 +125,13 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  GParamSpec *gbk_param_spec;
+  GParamSpec *cube_param_spec;
+  GParamSpec *aspect_param_spec;
 
   gobject_class->set_property = cubeview_set_property;
   gobject_class->get_property = cubeview_get_property;
 
-  gbk_param_spec = g_param_spec_object ("cube",
+  cube_param_spec = g_param_spec_object ("cube",
 					 "Cube",
 					"The cube which this widget views",
 					GBK_TYPE_CUBE,
@@ -124,7 +139,16 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
   g_object_class_install_property (gobject_class,
                                    PROP_CUBE,
-                                   gbk_param_spec);
+                                   cube_param_spec);
+
+  aspect_param_spec = g_param_spec_pointer ("aspect",
+					 "Aspect",
+					"The aspect from which this view sees the cube",
+					 G_PARAM_WRITABLE);
+
+  g_object_class_install_property (gobject_class,
+                                   PROP_ASPECT,
+                                   aspect_param_spec);
 
 
   GdkScreen *screen = gdk_screen_get_default ();
@@ -335,20 +359,7 @@ gbk_cubeview_init (GbkCubeview *dc)
 
   dc->pending_movement = NULL;
 
-  GLfloat aspect[4];
-  GLfloat xx = 0;
-  aspect[0] = 0;
-  aspect[1] = 1;
-  aspect[2] = 0;
-  aspect[3] = 0;
-
-  static int kludge = 0;
-  if (kludge++)
-    {
-      xx = 180.0;
-    }
-
-  quarternion_from_rotation (&dc->qView, aspect, xx);
+  quarternion_set_to_unit (&dc->qView);
 
   initialize_gl_capability (GTK_WIDGET (dc));
 
