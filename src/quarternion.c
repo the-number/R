@@ -82,7 +82,7 @@ quarternion_to_matrix (Matrix M, const Quarternion * q)
 }
 
 void
-quarternion_from_rotation (Quarternion * q, vector u, float theta)
+quarternion_from_rotation (Quarternion * q, const vector u, float theta)
 {
   const float radians = theta * M_PI / 180.0;
 

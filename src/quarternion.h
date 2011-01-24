@@ -32,7 +32,7 @@ struct quarternion
 typedef struct quarternion Quarternion;
 
 
-void quarternion_from_rotation (Quarternion *q, vector u, float theta);
+void quarternion_from_rotation (Quarternion *q, const vector u, float theta);
 
 void quarternion_print (const Quarternion *q);
 
