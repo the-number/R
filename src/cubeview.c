@@ -179,7 +179,7 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
   GdkGLWindow *rootglwin = gdk_gl_window_new (klass->glconfig, root, 0);
   klass->master_ctx = gdk_gl_context_new (GDK_GL_DRAWABLE (rootglwin), 0, TRUE, GDK_GL_RGBA_TYPE);
-  gdk_gl_window_destroy (rootglwin);
+  g_object_unref (rootglwin);
 }
 
 static void
