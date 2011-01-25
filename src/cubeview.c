@@ -120,6 +120,13 @@ cubeview_get_property (GObject     *object,
     };
 }
 
+enum  {
+  ANIMATION_COMPLETE,
+  n_SIGNALS};
+
+static guint signals [n_SIGNALS];
+
+
 
 static void
 gbk_cubeview_class_init (GbkCubeviewClass *klass)
@@ -150,6 +157,18 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
   g_object_class_install_property (gobject_class,
                                    PROP_ASPECT,
                                    aspect_param_spec);
+
+
+
+  signals [ANIMATION_COMPLETE] =
+    g_signal_new ("animation-complete",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  0,
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE,
+		  0);
 
 
   GdkScreen *screen = gdk_screen_get_default ();
@@ -733,3 +752,128 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
 
   gbk_cube_rotate (cube, v, step);
 }
+
+
+
+
+/* Animation related stuff */
+
+/*
+    User Interface functions for the Cube
+    Copyright (C) 1998,  2003  John Darrington
+                  2004  John Darrington,  Dale Mellor
+		  2011  John Darrington
+*/
+
+static gboolean animate_callback (gpointer data);
+
+static gboolean inverted_rotation;
+
+
+void animate_rotation (GbkCubeview *dc, struct move_data *move);
+
+
+/* handle mouse clicks */
+gboolean
+on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
+{
+  GbkCubeview *cv = GBK_CUBEVIEW (w);
+
+  struct cublet_selection *cs = data;
+  if (event->type != GDK_BUTTON_PRESS)
+    return TRUE;
+
+  /* Don't let a user make a move,  whilst one is already in progress,
+     otherwise the cube falls to bits. */
+  if (gbk_cubeview_is_animating (cv))
+    return TRUE;
+
+  switch (event->button)
+    {
+    case 3:
+      /* this is inherently dangerous.  If an event is missed somehow,
+         turn direction could get out of sync */
+
+      inverted_rotation = TRUE;
+      //      cv->pending_movement->dir = !cv->pending_movement->dir;
+
+      break;
+    case 1:
+      /* Make a move */
+      if (select_is_selected (cs))
+	{
+	  /* and tell the blocks.c library that a move has taken place */
+	  gbk_cube_rotate_slice (cv->cube, cv->pending_movement);
+	}
+
+      break;
+    }
+
+  return TRUE;
+}
+
+
+/* Does exactly what it says on the tin :-) */
+void
+animate_rotation (GbkCubeview *dc, struct move_data *move)
+{
+  struct animation *an = &dc->animation;
+  an->current_move = move_copy (move);
+  //  set_toolbar_state (PLAY_TOOLBAR_STOP);
+
+  an->animation_angle = 90.0 * move_turns (an->current_move);
+
+  g_timeout_add (an->picture_rate, animate_callback, dc);
+}
+
+
+/* a timeout  calls this func,  to animate the cube */
+static gboolean 
+animate_callback (gpointer data)
+{
+  GbkCubeview *cv = data;
+  struct animation *an  = &cv->animation;
+
+  /* how many degrees motion per frame */
+  GLfloat increment = 90.0 / (an->frameQty + 1);
+
+  /*  decrement the current angle */
+  an->animation_angle -= increment;
+
+  /* and redraw it */
+  gbk_redisplay (cv);
+
+  if (an->animation_angle > 0)
+    {
+      /* call this timeout again */
+      g_timeout_add (an->picture_rate, animate_callback, data);
+    }
+  else
+    {
+      /* we have finished the animation sequence now */
+
+      an->animation_angle = 0.0;
+      move_free (an->current_move);
+      an->current_move = NULL;
+
+      g_signal_emit (cv, signals[ANIMATION_COMPLETE] , 0);
+
+#if 0
+      set_toolbar_state ((move_queue_progress (move_queue).current == 0
+			  ? 0 : PLAY_TOOLBAR_BACK)
+			 |
+			 (move_queue_current (move_queue)
+			  ? PLAY_TOOLBAR_PLAY : 0));
+
+      update_statusbar ();
+
+      if (NOT_SOLVED != (status = gbk_cube_get_status (dc->cube)))
+	declare_win (dc->cube);
+#endif
+
+    }
+
+  return FALSE;
+}				/* end animate () */
+
+

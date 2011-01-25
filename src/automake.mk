@@ -39,7 +39,7 @@ src_gnubik_SOURCES = \
 	src/select.c src/select.h \
 	src/txfm.c src/txfm.h \
 	src/textures.c src/textures.h \
-	src/ui.c src/ui.h \
+	src/ui.h \
 	src/version.c src/version.h \
 	src/widget-set.c src/widget-set.h 
 
