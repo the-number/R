@@ -25,9 +25,9 @@
 #include "glarea.h"
 #include <gdk/gdkkeysyms.h>
 
-static void on_realize (GtkWidget *w, gpointer data);
-static void resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data);
-static gboolean on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data);
+static void realize (GtkWidget *w);
+static void size_allocate (GtkWidget *w, GtkAllocation *alloc);
+static gboolean expose (GtkWidget *w, GdkEventExpose *event);
 
 static void set_the_colours (GtkWidget *w, const char *progname);
 static GLboolean have_accumulation_buffer (void);
@@ -127,14 +127,19 @@ enum  {
 static guint signals [n_SIGNALS];
 
 
+static GtkWidgetClass *parent_class = NULL;
 
 static void
 gbk_cubeview_class_init (GbkCubeviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   GParamSpec *cube_param_spec;
   GParamSpec *aspect_param_spec;
+
+  parent_class = g_type_class_peek_parent (klass);
+
 
   gobject_class->set_property = cubeview_set_property;
   gobject_class->get_property = cubeview_get_property;
@@ -150,9 +155,9 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
                                    cube_param_spec);
 
   aspect_param_spec = g_param_spec_pointer ("aspect",
-					 "Aspect",
-					"The aspect from which this view sees the cube",
-					 G_PARAM_WRITABLE);
+					    "Aspect",
+					    "The aspect from which this view sees the cube",
+					    G_PARAM_WRITABLE);
 
   g_object_class_install_property (gobject_class,
                                    PROP_ASPECT,
@@ -170,6 +175,9 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 		  G_TYPE_NONE,
 		  0);
 
+  widget_class->realize = realize;
+  widget_class->size_allocate = size_allocate;
+  widget_class->expose_event = expose;
 
   GdkScreen *screen = gdk_screen_get_default ();
   GdkWindow *root = gdk_screen_get_root_window (screen);
@@ -402,10 +410,6 @@ gbk_cubeview_init (GbkCubeview *dc)
   cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
 		      dc );
 
-  g_signal_connect (dc, "realize", G_CALLBACK (on_realize), NULL);
-  g_signal_connect (dc, "expose-event", G_CALLBACK (on_expose), NULL);
-  g_signal_connect (dc, "size-allocate", G_CALLBACK (resize_viewport), NULL);
-
   /* Grab the keyboard focus whenever the mouse enters the widget */
   g_signal_connect (dc, "enter-notify-event",
 		    G_CALLBACK (grab_focus), NULL);
@@ -451,7 +455,7 @@ static display display_raw;
 
 /* Resize callback.  */
 static void
-resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data)
+size_allocate (GtkWidget *w, GtkAllocation *alloc)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
@@ -462,6 +466,9 @@ resize_viewport (GtkWidget *w, GtkAllocation *alloc, gpointer data)
 
   if (!GTK_WIDGET_REALIZED (w))
     return;
+
+  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+    GTK_WIDGET_CLASS (parent_class)->size_allocate (w, alloc);
 
   if (!gdk_gl_drawable_gl_begin (dc->gldrawable, dc->glcontext))
     return;
@@ -492,9 +499,14 @@ gbk_redisplay (GbkCubeview *dc)
 
 /* Expose callback.  Just redraw the scene */
 static gboolean
-on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
+expose (GtkWidget *w, GdkEventExpose *event)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
+
+  if (GTK_WIDGET_CLASS (parent_class)->expose_event)
+    if ( GTK_WIDGET_CLASS (parent_class)->expose_event (w, event) )
+      return TRUE;
+
   gbk_redisplay (dc);
   return FALSE;
 }
@@ -502,9 +514,13 @@ on_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 
 
 static void
-on_realize (GtkWidget *w, gpointer data)
+realize (GtkWidget *w)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
+  
+  if (GTK_WIDGET_CLASS (parent_class)->realize)
+    GTK_WIDGET_CLASS (parent_class)->realize (w);
+
   dc->glcontext = gtk_widget_get_gl_context (w);
   dc->gldrawable = gtk_widget_get_gl_drawable (w);
 
@@ -525,6 +541,8 @@ on_realize (GtkWidget *w, gpointer data)
 
   dc->last_mouse_x = -1;
   dc->last_mouse_y = -1;
+
+  gdk_gl_drawable_gl_end (dc->gldrawable);
 }
 
 
@@ -558,9 +576,10 @@ void error_check (const char *file, int line_no, const char *string);
 static void
 render_scene (GbkCubeview *cv, GLint jitter, const struct animation *a)
 {
-  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
   projection_init (&cv->scene, jitter);
+
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
   gbk_cubeview_model_view_init (cv);
   ERR_CHECK ("Error in display");
 
