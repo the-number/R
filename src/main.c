@@ -49,6 +49,7 @@ c_main (void *closure, int argc, char *argv[])
   GbkCube *cube = NULL;
 
   GtkWidget *form;
+  GtkWidget *hbox;
   GtkWidget *window;
   GtkWidget *menubar;
   GtkWidget *playbar;
@@ -81,7 +82,7 @@ c_main (void *closure, int argc, char *argv[])
   /* process arguments specific to this program */
   parse_app_opts (&argc, argv, &opts);
 
-  /* create a vbox to hold the drawing area and the menubar */
+
   form = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), form);
 
@@ -99,14 +100,16 @@ c_main (void *closure, int argc, char *argv[])
   playbar = create_play_toolbar (window);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (form), hbox, TRUE, TRUE, 0);
   
   glwidget1 = gbk_cubeview_new (cube);
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
-  gtk_box_pack_start (GTK_BOX (form), glwidget1, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), glwidget1, TRUE, TRUE, 0);
 
   glwidget2 = gbk_cubeview_new (cube); 
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
-  gtk_box_pack_start (GTK_BOX (form), glwidget2, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), glwidget2, TRUE, TRUE, 0);
 
   /* widget2 is the back view */
   gfloat aspect[4] = {180, 0, 1, 0};
