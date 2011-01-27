@@ -329,14 +329,9 @@ enum {
 static void
 set_playbar_sensitivities (GbkGame *g, gpointer data)
 {
-  g_print ("%s\n", __FUNCTION__);
-  
   GtkAction **acts = data;
 
   gboolean play_state = (g->mode == MODE_PLAY);
-  g_print ("Play state %d\n", play_state);
-
-  g_print ("At start: %d\n", gbk_game_at_start (g));
 
   gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_end (g));
   gtk_action_set_sensitive (acts[ACT_PREV],   !play_state && !gbk_game_at_end (g));

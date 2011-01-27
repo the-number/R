@@ -175,8 +175,7 @@ gbk_game_rewind (GbkGame *game)
   while (!gbk_game_at_end (game))
     {
       game->iter = game->iter->next;
-      struct move_data *m = game->iter->data;
-      move_dump (m);
+      const struct move_data *m = game->iter->data;
 
       struct move_data *mm = move_copy (m);
       mm->dir = ! mm->dir;
@@ -197,8 +196,6 @@ next_move (GbkGame *game, gboolean backwards)
 
   term_pred * terminal = backwards ? 
     gbk_game_at_end : gbk_game_at_start ;
-
-  g_print ("%s\n", __FUNCTION__);
 
   if ( game->mode != MODE_PLAY ||
        terminal (game) )
