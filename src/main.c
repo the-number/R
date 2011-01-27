@@ -30,6 +30,8 @@
 #include "version.h"
 #include "dialogs.h"
 
+#include "game.h"
+
 static const char help_string[];
 
 
@@ -42,6 +44,8 @@ struct application_options
 };
 
 static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
+
+
 
 static void
 c_main (void *closure, int argc, char *argv[])
@@ -64,18 +68,18 @@ c_main (void *closure, int argc, char *argv[])
 
   gtk_init (&argc, &argv);
   gtk_gl_init (&argc, &argv);
-
+  
 #if DEBUG && HAVE_GL_GLUT_H
   glutInit ();
 #endif
 
-  struct game game;
+
 
   /* Create the top level widget --- that is,  the main window which everything
      goes in */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), 0);
+  g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), NULL);
 
   gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
 
@@ -91,13 +95,20 @@ c_main (void *closure, int argc, char *argv[])
 				     opts.initial_cube_size[1],
 				     opts.initial_cube_size[2]));
 
-  game.toplevel = GTK_WINDOW (window);
-  game.cube = cube;
 
-  menubar = create_menubar (&game);
+  /* If a solved cube has not been requested,  then do some random
+     moves on it */
+  if (!opts.solved)
+    gbk_cube_scramble (cube);
+
+
+  GbkGame *game = gbk_game_new (cube);
+  game->toplevel = window;
+
+  menubar = create_menubar (game);
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
-  playbar = create_play_toolbar (window);
+  playbar = create_play_toolbar (game);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
   hbox = gtk_hbox_new (TRUE, 0);
@@ -107,6 +118,8 @@ c_main (void *closure, int argc, char *argv[])
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (hbox), glwidget1, TRUE, TRUE, 0);
 
+  gbk_game_set_master_view (game, GBK_CUBEVIEW (glwidget1));
+
   glwidget2 = gbk_cubeview_new (cube); 
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (hbox), glwidget2, TRUE, TRUE, 0);
@@ -114,11 +127,6 @@ c_main (void *closure, int argc, char *argv[])
   /* widget2 is the back view */
   gfloat aspect[4] = {180, 0, 1, 0};
   g_object_set (glwidget2, "aspect", aspect, NULL);
-
-  /* If a solved cube has not been requested,  then do some random
-     moves on it */
-  if (!opts.solved)
-    gbk_cube_scramble (cube);
 
 
   gtk_widget_show_all (window);
@@ -133,7 +141,8 @@ c_main (void *closure, int argc, char *argv[])
 int
 main (int argc, char **argv)
 {
-  scm_boot_guile (argc, argv, c_main, 0);
+  //  scm_boot_guile (argc, argv, c_main, 0);
+  c_main (0, argc, argv);
   return 0;
 }
 

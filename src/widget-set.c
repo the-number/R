@@ -28,6 +28,8 @@
 #include "drwBlock.h"
 #include "glarea.h"
 
+#include "game.h"
+
 #include <gtk/gtk.h>
 
 #include <libintl.h>
@@ -117,24 +119,8 @@ create_statusbar (GtkWidget * container)
   return statusbar;
 }
 
-
-static GList *play_button_list;
-
 #endif
 
-void
-set_toolbar_state (unsigned flags)
-{
-#if WIDGETS_NOT_DISABLED
-  GList *list;
-
-  for (list = play_button_list; list != NULL; list = list->next)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (list->data), flags & 1);
-      flags >>= 1;
-    }
-#endif
-}
 
 #if WIDGETS_NOT_DISABLED
 
@@ -185,7 +171,7 @@ static const GtkActionEntry action_entries[] =
 
 
 static void
-restart_game (GtkWidget *w, struct game *game)
+restart_game (GtkWidget *w, GbkGame *game)
 {
   gbk_cube_scramble (game->cube);
 }
@@ -266,7 +252,7 @@ static const char menu_tree[] = "<ui>\
 
 
 GtkWidget *
-create_menubar (struct game *game)
+create_menubar (GbkGame *game)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
@@ -329,45 +315,80 @@ create_menubar (struct game *game)
   return menubar;
 }
 
+enum {
+  ACT_REWIND = 0,
+  ACT_PREV,
+  ACT_STOP,
+  ACT_MARK,
+  ACT_NEXT,
+  ACT_PLAY,
+  n_ACTS
+};
+
+
+static void
+set_playbar_sensitivities (GbkGame *g, gpointer data)
+{
+  g_print ("%s\n", __FUNCTION__);
+  
+  GtkAction **acts = data;
+
+  gboolean play_state = (g->mode == MODE_PLAY);
+  g_print ("Play state %d\n", play_state);
+
+  g_print ("At start: %d\n", gbk_game_at_start (g));
+
+  gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_end (g));
+  gtk_action_set_sensitive (acts[ACT_PREV],   !play_state && !gbk_game_at_end (g));
+
+  gtk_action_set_sensitive (acts[ACT_PLAY],   !play_state && !gbk_game_at_start (g));
+  gtk_action_set_sensitive (acts[ACT_NEXT],   !play_state && !gbk_game_at_start (g));
+
+  gtk_action_set_sensitive (acts[ACT_STOP], play_state);
+}
 
 GtkWidget *
-create_play_toolbar (GtkWidget *toplevel)
+create_play_toolbar (GbkGame *game)
 {
-  GtkAction *rewind =
+  int i;
+  static GtkAction *acts[n_ACTS];
+
+  acts[ACT_REWIND] =
     gtk_action_new ("rewind",
 		    _("Rewind"),
 		    _("Go to the previous mark (or the beginning) of the sequence of moves"),
 		    GTK_STOCK_MEDIA_REWIND);
 
-  GtkAction *previous =
+
+  acts[ACT_PREV] = 
     gtk_action_new ("previous",
 		    _("Back"),
 		    _("Make one step backwards"),
 		    GTK_STOCK_MEDIA_PREVIOUS);
 
 
-  GtkAction *stop =
+  acts[ACT_STOP] =
     gtk_action_new ("stop",
 		    _("Stop"),
 		    _("Stop running the sequence of moves"),
 		    GTK_STOCK_MEDIA_STOP);
 
 
-  GtkAction *mark =
+  acts[ACT_MARK] = 
     gtk_action_new ("mark",
 		    _("Mark"),
 		    _("Mark the current place in the sequence of moves"),
 		    GTK_STOCK_MEDIA_STOP);
 
 
-  GtkAction *next =
+  acts[ACT_NEXT] = 
     gtk_action_new ("next",
 		    _("Forward"),
 		    _("Make one step forwards"),
 		    GTK_STOCK_MEDIA_NEXT);
 
 
-  GtkAction *play =
+  acts [ACT_PLAY] = 
     gtk_action_new ("forward",
 		    _("Play"),
 		    _("Run forward through the sequence of moves"),
@@ -376,57 +397,39 @@ create_play_toolbar (GtkWidget *toplevel)
 
   GtkWidget *play_toolbar = gtk_toolbar_new ();
 
+  g_signal_connect (game, "queue-changed", G_CALLBACK (set_playbar_sensitivities), acts);
+
   gtk_toolbar_set_style (GTK_TOOLBAR (play_toolbar),  GTK_TOOLBAR_BOTH);
 
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (rewind)),
-		      -1);
+  for (i = 0; i < n_ACTS; ++i)
+    {
+      gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
+			  GTK_TOOL_ITEM (gtk_action_create_tool_item (acts[i])),
+			  -1);
+    }
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (previous)),
-		      -1);
+  g_signal_connect_swapped (acts[ACT_REWIND], "activate",
+			    G_CALLBACK (gbk_game_rewind), game);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (stop)),
-		      -1);
+  g_signal_connect_swapped (acts[ACT_STOP], "activate",
+			    G_CALLBACK (gbk_game_stop_replay), game);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (mark)),
-		      -1);
+  g_signal_connect_swapped (acts[ACT_NEXT], "activate",
+			    G_CALLBACK (gbk_game_next_move), game);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (next)),
-		      -1);
+  g_signal_connect_swapped (acts[ACT_PREV], "activate",
+			    G_CALLBACK (gbk_game_prev_move), game);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-		      GTK_TOOL_ITEM (gtk_action_create_tool_item (play)),
-		      -1);
 #if 0
-  g_signal_connect_swapped (rewind, "activate",
-			    G_CALLBACK (request_queue_rewind), container);
-
-  g_signal_connect_swapped (previous, "activate",
-			    G_CALLBACK (request_back), container);
-
-  g_signal_connect_swapped (stop, "activate",
-			    G_CALLBACK (request_stop), container);
-
   g_signal_connect_swapped (mark, "activate",
 			    G_CALLBACK (request_mark_move_queue), container);
 
-  g_signal_connect_swapped (next, "activate",
-			    G_CALLBACK (request_forward), container);
-
-  g_signal_connect_swapped (play, "activate",
-			    G_CALLBACK (request_play), container);
-
-  play_button_list
-    = gtk_container_get_children (GTK_CONTAINER (play_toolbar));
-
-  set_toolbar_state (0);
-
 #endif
+
+
+  g_signal_connect_swapped (acts[ACT_PLAY], "activate",
+			    G_CALLBACK (gbk_game_replay), game);
 
   gtk_widget_show_all (play_toolbar);
 

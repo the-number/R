@@ -31,6 +31,7 @@ src_gnubik_SOURCES = \
 	src/cursors.c src/cursors.h \
 	src/dialogs.c src/dialogs.h \
 	src/drwBlock.c src/drwBlock.h \
+	src/game.c src/game.h \
 	src/glarea-common.c \
 	src/glarea.h \
 	src/main.c \

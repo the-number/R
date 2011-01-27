@@ -53,7 +53,6 @@ struct move_data
 
 GType move_get_type (void);
 
-
 struct move_data * move_create (int slice, short axis, short dir);
 void move_free (struct move_data *);
 struct move_data * move_copy (const struct move_data *);

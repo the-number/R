@@ -27,6 +27,8 @@
 #include "drwBlock.h"
 #include "widget-set.h"
 
+#include "game.h"
+
 #include <glib.h>
 #include <assert.h>
 
@@ -71,7 +73,7 @@ struct preferences_state
 };
 
 static struct preferences_state *
-pref_state_create (GtkBox *parent, const struct game *game)
+pref_state_create (GtkBox *parent, const GbkGame *game)
 {
   gint i;
   struct preferences_state *ps = g_malloc (sizeof (*ps));
@@ -125,7 +127,7 @@ toggle_regular (GtkToggleButton *button, gpointer data)
 }
 
 static struct preferences_state *
-create_dimension_widget (GtkContainer *parent, const struct game *game)
+create_dimension_widget (GtkContainer *parent, const GbkGame *game)
 {
   gint i;
   GtkWidget *label = gtk_label_new (_("Size of cube:"));
@@ -363,7 +365,7 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 
 
 void
-new_game_dialog (GtkWidget *w, struct game *game)
+new_game_dialog (GtkWidget *w, GbkGame *game)
 {
   gint response;
 

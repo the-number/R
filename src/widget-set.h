@@ -23,9 +23,9 @@
 #include "cube.h"
 #include "dialogs.h"
 
-GtkWidget *create_menubar (struct game *);
+GtkWidget *create_menubar (GbkGame *);
 
-GtkWidget *create_play_toolbar (GtkWidget *toplevel);
+GtkWidget *create_play_toolbar (GbkGame *);
 
 
 enum
@@ -49,6 +49,5 @@ void declare_win (GbkCube *cube);
 void error_dialog (GtkWindow *parent, const char *format, ...);
 
 void start_new_game (GbkCube *, int size0, int size1, int size2);
-
 
 #endif
