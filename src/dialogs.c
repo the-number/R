@@ -62,8 +62,6 @@ set_lighting (GtkToggleButton * b, gpointer user_data)
 }
 
 
-extern Move_Queue *move_queue;
-
 #endif
 
 struct preferences_state

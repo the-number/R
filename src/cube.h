@@ -117,8 +117,6 @@ void gbk_cube_get_quadrant_vector (const GbkCube *cube,
 enum Cube_Status gbk_cube_get_status (const GbkCube *cube);
 
 
-extern GbkCube *the_cube;
-
 /* Free the resources associated with an instance of the above structure. */
 void free_slice_blocks (Slice_Blocks *slice_blocks);
 
