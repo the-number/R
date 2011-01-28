@@ -59,6 +59,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *playbar;
   GtkWidget *glwidget1;
   GtkWidget *glwidget2;
+  GtkWidget *statusbar;
 
   struct application_options opts = { false, {3,3,3}, 2};
 
@@ -128,6 +129,8 @@ c_main (void *closure, int argc, char *argv[])
   gfloat aspect[4] = {180, 0, 1, 0};
   g_object_set (glwidget2, "aspect", aspect, NULL);
 
+  statusbar = create_statusbar (game);
+  gtk_box_pack_start (GTK_BOX (form), statusbar, FALSE, FALSE, 0);
 
   gtk_widget_show_all (window);
 

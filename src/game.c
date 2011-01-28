@@ -38,8 +38,10 @@ gbk_game_init (GbkGame *game)
   game->head.next = NULL; 
   game->head.prev = NULL;
   game->head.data = NULL;
-
+  
   game->iter = &game->head;
+
+  game->posn = game->total = 0;
 }
 
 enum
@@ -162,6 +164,8 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
     d0->prev = n;
 
   game->iter = &game->head;
+  game->posn++;
+  game->total = game->posn;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
@@ -181,6 +185,7 @@ gbk_game_rewind (GbkGame *game)
       mm->dir = ! mm->dir;
       gbk_cube_rotate_slice (game->cube, mm);
     }
+  game->posn = 0;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 
@@ -221,6 +226,7 @@ next_move (GbkGame *game, gboolean backwards)
 
   if ( backwards )
     {
+      game->posn--;
       game->iter = game->iter->next;
       m = game->iter->data;
 
@@ -229,6 +235,7 @@ next_move (GbkGame *game, gboolean backwards)
     }
   else
     {
+      game->posn++;
       m = game->iter->data;
       game->iter = game->iter->prev;
     }

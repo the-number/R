@@ -36,8 +36,7 @@ enum
 };
 void set_toolbar_state (unsigned state);
 
-GtkWidget *create_statusbar (GtkWidget *container);
-void update_statusbar (void);
+GtkWidget *create_statusbar (GbkGame *);
 
 
 void setCubeColours (char *progname);

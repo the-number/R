@@ -37,13 +37,10 @@
 #define N_(String) (String)
 
 
-
 #define MSGLEN 100
 void
-update_statusbar (void)
+update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
 {
-#if WIDGETS_NOT_DISABLED
-
   static int context = 0;
 
   static guint mesg_id = 0;
@@ -51,21 +48,31 @@ update_statusbar (void)
   gchar mesg[MSGLEN];
 
   if (0 == context)
-    context = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar),
-					    "move-count");
+    context = gtk_statusbar_get_context_id (statusbar, "move-count");
 
   g_snprintf (mesg,
 	      MSGLEN,
 	      _("Moves: %d / %d"),
-	      move_queue_progress (move_queue).current,
-	      move_queue_progress (move_queue).total);
+	      game->posn,
+	      game->total);
 
   if (mesg_id != 0)
-    gtk_statusbar_remove (GTK_STATUSBAR (statusbar), context, mesg_id);
+    gtk_statusbar_remove (statusbar, context, mesg_id);
 
-  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
-#endif
+  mesg_id = gtk_statusbar_push (statusbar, context, mesg);
 }
+
+GtkWidget *
+create_statusbar (GbkGame *game)
+{
+  GtkWidget *statusbar = gtk_statusbar_new ();
+
+  g_signal_connect (game, "queue-changed", G_CALLBACK (update_statusbar), statusbar);
+
+  return statusbar;
+}
+
+
 
 /* Declare that the cube has been solved */
 void
@@ -105,21 +112,6 @@ declare_win (GbkCube *cube)
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 #endif
 }
-
-#if WIDGETS_NOT_DISABLED
-GtkWidget *
-create_statusbar (GtkWidget * container)
-{
-  statusbar = gtk_statusbar_new ();
-
-  gtk_box_pack_start (GTK_BOX (container), statusbar, FALSE, TRUE, 0);
-
-  gtk_widget_show (statusbar);
-
-  return statusbar;
-}
-
-#endif
 
 
 #if WIDGETS_NOT_DISABLED

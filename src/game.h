@@ -64,7 +64,8 @@ struct _GbkGame
   GList head;
   GList *iter;
 
-  //  struct deque queue;
+  int posn;
+  int total;
 
   /* Id of the animate complete signal */
   gulong animate_complete_id;
