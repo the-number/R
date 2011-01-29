@@ -321,10 +321,8 @@ enum {
 
 
 static void
-set_playbar_sensitivities (GbkGame *g, gpointer data)
+set_playbar_sensitivities (GbkGame *g, GtkAction **acts)
 {
-  GtkAction **acts = data;
-
   gboolean play_state = (g->mode == MODE_PLAY);
 
   gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_end (g));
@@ -385,6 +383,8 @@ create_play_toolbar (GbkGame *game)
 
 
   GtkWidget *play_toolbar = gtk_toolbar_new ();
+
+  set_playbar_sensitivities (game, acts);
 
   g_signal_connect (game, "queue-changed", G_CALLBACK (set_playbar_sensitivities), acts);
 
