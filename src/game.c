@@ -36,10 +36,39 @@ gbk_game_init (GbkGame *game)
   gbk_game_reset (game);
 }
 
-/* Delete all the elements in the queue, starting at N */
-static void
-delete_queue (GbkGame *game, struct GbkList *n)
+/*
+  Delete all the elements in the queue,
+  starting at START.  Returns a pointer to the head.
+*/
+static struct GbkList *
+delete_queue_from (GbkGame *game, struct GbkList *start)
 {
+  struct GbkList *sn = start->next;
+  struct GbkList *n = start;
+
+  while (n != &game->head)
+    {
+      struct GbkList *nn = n->prev;
+      if ( n->data)
+	move_unref (n->data);
+    
+      if ( n != &game->head)
+	g_slice_free (struct GbkList, n);
+
+      n = nn;
+    }
+
+  game->total = game->posn;
+
+  game->head.next = sn;
+  return &game->head;
+}
+
+static void
+delete_queue (GbkGame *game)
+{
+  struct GbkList *n = &game->head;
+
   while (n != NULL)
     {
       struct GbkList *nn = n->next;
@@ -51,12 +80,18 @@ delete_queue (GbkGame *game, struct GbkList *n)
 
       n = nn;
     }
+
+  game->head.next = NULL;
+  game->head.prev = NULL;
+
+  game->total = game->posn = 0;
 }
 
 void
 gbk_game_reset (GbkGame *game)
 {
-  delete_queue (game, &game->head);
+  game->posn = 0;
+  delete_queue (game);
 
   game->animate_complete_id = 0;
   game->mode = MODE_RECORD;
@@ -66,8 +101,6 @@ gbk_game_reset (GbkGame *game)
   game->head.data = NULL;
   
   game->iter = &game->head;
-
-  game->posn = game->total = 0;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
@@ -194,8 +227,12 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
   if ( game->animate_complete_id != 0)
     return;
 
+  if  (game->iter != &game->head)
+    {
+      game->iter = delete_queue_from (game, game->iter);
+    }
 
-  struct GbkList *d0 = game->head.next;
+  struct GbkList *d0 = game->iter->next;
   struct GbkList *n = g_slice_alloc0 (sizeof *n);
 
   n->next = d0;
@@ -204,7 +241,7 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
 
   game->head.next = n;
 
-  if ( d0)
+  if (d0)
     d0->prev = n;
 
   game->iter = &game->head;
