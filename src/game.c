@@ -47,6 +47,7 @@ gbk_game_init (GbkGame *game)
 enum
   {
     PROP_0 = 0,
+    PROP_CUBE
   };
 
 static void
@@ -55,10 +56,13 @@ game_set_property (GObject         *object,
 		   const GValue    *value,
 		   GParamSpec      *pspec)
 {
-  //  GbkGame *game = GBK_GAME (object);
+  GbkGame *game = GBK_GAME (object);
 
   switch (prop_id)
     {
+    case PROP_CUBE:
+      game->cube = GBK_CUBE (g_value_get_object (value));
+      g_signal_connect (game->cube, "move", G_CALLBACK (on_move), game);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -73,10 +77,13 @@ game_get_property (GObject         *object,
 		   GValue          *value,
 		   GParamSpec      *pspec)
 {
-  //  GbkGame *game  = GBK_GAME (object);
+  GbkGame *game  = GBK_GAME (object);
 
   switch (prop_id)
     {
+    case PROP_CUBE:
+      g_value_set_object (value, game->cube);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -92,6 +99,17 @@ gbk_game_class_init (GbkGameClass *klass)
   gobject_class->set_property = game_set_property;
   gobject_class->get_property = game_get_property;
 
+  GParamSpec * gbk_param_spec = g_param_spec_object ("cube",
+					"Set the cube",
+					"The cube for this game",
+					GBK_TYPE_CUBE,
+					G_PARAM_READWRITE);
+
+  g_object_class_install_property (gobject_class,
+                                   PROP_CUBE,
+                                   gbk_param_spec);
+
+
 
   signals [QUEUE_CHANGED] =
     g_signal_new ("queue-changed",
@@ -102,6 +120,7 @@ gbk_game_class_init (GbkGameClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE,
 		  0);
+
 }
 
 G_DEFINE_TYPE (GbkGame, gbk_game, G_TYPE_OBJECT);
@@ -109,13 +128,7 @@ G_DEFINE_TYPE (GbkGame, gbk_game, G_TYPE_OBJECT);
 GObject*
 gbk_game_new (GbkCube *cube)
 {
-  GObject *g = g_object_new (gbk_game_get_type (),  NULL);
-
-  GBK_GAME (g)->cube = cube;
-
-  g_signal_connect (cube, "move", G_CALLBACK (on_move), g);
-
-  return g;
+  return g_object_new (gbk_game_get_type (),  "cube", cube, NULL);
 }
 
 void
