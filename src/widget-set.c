@@ -165,14 +165,17 @@ static void
 restart_game (GtkWidget *w, GbkGame *game)
 {
   gbk_cube_scramble (game->cube);
+  gbk_game_reset (game);
 }
 
 void
-start_new_game (GbkCube *cube, int size0, int size1, int size2)
+start_new_game (GbkGame *game, int size0, int size1, int size2)
 {
-  gbk_cube_set_size (cube, size0, size1, size2);
+  gbk_cube_set_size (game->cube, size0, size1, size2);
 
-  gbk_cube_scramble (cube);
+  gbk_cube_scramble (game->cube);
+
+  gbk_game_reset (game);
 }
 
 

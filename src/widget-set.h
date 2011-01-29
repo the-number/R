@@ -47,6 +47,6 @@ void declare_win (GbkCube *cube);
 /* Popup an error dialog box */
 void error_dialog (GtkWindow *parent, const char *format, ...);
 
-void start_new_game (GbkCube *, int size0, int size1, int size2);
+void start_new_game (GbkGame *, int size0, int size1, int size2);
 
 #endif

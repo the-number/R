@@ -396,7 +396,7 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
   if (response == GTK_RESPONSE_ACCEPT)
     {
       start_new_game 
-	(game->cube,
+	(game,
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2]))

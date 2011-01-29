@@ -32,8 +32,34 @@ static guint signals [n_SIGNALS];
 static void
 gbk_game_init (GbkGame *game)
 {
-  game->mode = MODE_RECORD;
+
+  gbk_game_reset (game);
+}
+
+/* Delete all the elements in the queue, starting at N */
+static void
+delete_queue (GbkGame *game, struct GbkList *n)
+{
+  while (n != NULL)
+    {
+      struct GbkList *nn = n->next;
+      if ( n->data)
+	move_unref (n->data);
+    
+      if ( n != &game->head)
+	g_slice_free (struct GbkList, n);
+
+      n = nn;
+    }
+}
+
+void
+gbk_game_reset (GbkGame *game)
+{
+  delete_queue (game, &game->head);
+
   game->animate_complete_id = 0;
+  game->mode = MODE_RECORD;
 
   game->head.next = NULL; 
   game->head.prev = NULL;
@@ -42,7 +68,11 @@ gbk_game_init (GbkGame *game)
   game->iter = &game->head;
 
   game->posn = game->total = 0;
+
+  g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
+
+
 
 enum
   {
@@ -149,6 +179,7 @@ gbk_game_at_end (GbkGame *game)
 {
   return (game->iter->next == NULL); 
 }
+
 
 
 

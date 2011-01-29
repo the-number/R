@@ -106,4 +106,7 @@ void gbk_game_prev_move (GbkGame *game);
 gboolean gbk_game_at_start (GbkGame *game);
 gboolean gbk_game_at_end (GbkGame *game);
 
+void gbk_game_reset (GbkGame *game);
+
+
 #endif /* __GAME_H__ */
