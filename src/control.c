@@ -26,7 +26,6 @@
 
 #include "cursors.h"
 #include "cubeview.h"
-#include "ui.h"
 #include "txfm.h"
 
 #include <math.h>
@@ -136,7 +135,6 @@ selection_func (struct cublet_selection *cs, gpointer data)
 {
   GbkCubeview *cv = GBK_CUBEVIEW (data);
 
-
   if (gbk_cubeview_is_animating (cv))
     return;
 
@@ -157,10 +155,8 @@ selection_func (struct cublet_selection *cs, gpointer data)
       /* !!!!!! We are accessing private cube data. */
       slice = cv->cube->blocks[selection->block].transformation[12 + axis];
 
-
       /* Delete the old move and create a new one */
-
-      move_free (cv->pending_movement);
+      move_unref (cv->pending_movement);
       cv->pending_movement = move_create (slice, axis, dir);
       
       /* Here we take the orientation of the selected quadrant and multiply it

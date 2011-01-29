@@ -386,7 +386,7 @@ gbk_cube_scramble (GbkCube *cube)
 
       gbk_cube_rotate_slice (cube, move);
 
-      move_free (move);
+      move_unref (move);
     }
 }
 

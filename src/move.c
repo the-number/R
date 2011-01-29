@@ -48,6 +48,7 @@ struct move_data * move_create (int slice, short axis, short dir)
   m->slice = slice;
   m->dir = dir;
   m->axis = axis;
+  m->ref = 1;
 
   return m;
 }
@@ -55,8 +56,8 @@ struct move_data * move_create (int slice, short axis, short dir)
 void
 move_dump (const struct move_data *m)
 {
-  g_print ("Slice: %d; Axis: %d; Dir: %d; Turns: %d\n",
-	   m->slice, m->axis, m->dir, m->turns);
+  g_print ("Slice: %d; Axis: %d; Dir: %d; Turns: %d; bm(%p)\n",
+	   m->slice, m->axis, m->dir, m->turns, m->blocks_in_motion);
 }
 
 /*
@@ -73,16 +74,73 @@ free_slice_blocks (Slice_Blocks * slice)
     }
 }
 
-void move_free (struct move_data *m)
-{
-  if ( NULL == m)
-    return;
 
+static void 
+move_free (struct move_data *m)
+{
   free_slice_blocks (m->blocks_in_motion);
   g_slice_free (struct move_data, m);
 }
 
-struct move_data * move_copy (const struct move_data *n)
+#define NOREFCOUNTING 0
+
+#if NOREFCOUNTING
+static struct move_data *
+x_move_unref (struct move_data *m)
+{
+  if (m == NULL)
+    return NULL;
+  move_free (m);
+  return NULL;
+}
+#else
+static struct move_data *
+x_move_unref (struct move_data *m)
+{
+  if ( NULL == m)
+    return NULL;
+
+  if (0 == --m->ref)
+    {
+      move_free (m);
+      return NULL;
+    }
+
+  return m;
+}
+#endif
+
+
+
+void
+move_unref (const struct move_data *m_)
+{
+  struct move_data *m = (struct move_data *)m_;
+
+  x_move_unref (m);
+}
+
+
+#if NOREFCOUNTING
+const struct move_data *
+move_ref (const struct move_data *m)
+{
+  return move_copy (m);
+}
+#else
+const struct move_data *
+move_ref (const struct move_data *m)
+{
+  g_assert (m);
+
+  ((struct move_data *) m)->ref++;
+
+  return m;
+}
+#endif
+
+struct move_data * 
+move_copy (const struct move_data *n)
 {
   if ( n == NULL)
     return NULL;
@@ -90,11 +148,13 @@ struct move_data * move_copy (const struct move_data *n)
   struct move_data *m = g_slice_alloc0 (sizeof (*m));
 
   m->blocks_in_motion = n->blocks_in_motion;
-  m->blocks_in_motion->ref++;
+  if (m->blocks_in_motion)
+    m->blocks_in_motion->ref++;
   m->turns = n->turns;
   m->slice = n->slice;
   m->dir = n->dir;
   m->axis = n->axis;
+  m->ref = 1;
 
   return m;
 }
@@ -109,7 +169,7 @@ move_get_type (void)
     {
       t = g_boxed_type_register_static  ("gnubik-move",
 					 (GBoxedCopyFunc) move_copy,
-					 (GBoxedFreeFunc) move_free);
+					 (GBoxedFreeFunc) x_move_unref);
     }
 
   return t;

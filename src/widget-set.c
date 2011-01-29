@@ -21,7 +21,6 @@
 
 #include "cube.h"
 #include "widget-set.h"
-#include "ui.h"
 #include "dialogs.h"
 #include "guile-hooks.h"
 #include "colour-dialog.h"
@@ -38,7 +37,7 @@
 
 
 #define MSGLEN 100
-void
+static void
 update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
 {
   static int context = 0;

@@ -43,6 +43,13 @@ enum mode
     MODE_REWIND,
   };
 
+struct GbkList
+{
+  struct GbkList *next;
+  struct GbkList *prev;
+  const struct move_data *data;
+};
+
 
 struct _GbkGame
 {
@@ -61,8 +68,8 @@ struct _GbkGame
 
   enum mode mode;
 
-  GList head;
-  GList *iter;
+  struct GbkList head;
+  struct GbkList *iter;
 
   int posn;
   int total;

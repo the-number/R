@@ -23,7 +23,6 @@
 
 #include "cube.h"
 #include "version.h"
-#include "ui.h"
 #include "drwBlock.h"
 #include "widget-set.h"
 

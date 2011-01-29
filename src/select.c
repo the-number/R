@@ -186,7 +186,6 @@ get_widget_height (GtkWidget * w)
 #include "select.h"
 #include <float.h>
 #include <stdio.h>
-#include "ui.h"
 
 #include <assert.h>
 #include <string.h>
@@ -240,7 +239,7 @@ pickPolygons (GbkCubeview *cv, struct cublet_selection *cs, struct facet_selecti
 
   perspectiveSet (&cv->scene);
   gbk_cubeview_model_view_init (cv);
-  drawCube (cv->cube, TRUE, NULL);
+  drawCube (cv->cube, TRUE, cv);
   glMatrixMode (GL_PROJECTION);
   glPopMatrix ();
 

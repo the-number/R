@@ -55,7 +55,7 @@ game_set_property (GObject         *object,
 		   const GValue    *value,
 		   GParamSpec      *pspec)
 {
-  GbkGame *game = GBK_GAME (object);
+  //  GbkGame *game = GBK_GAME (object);
 
   switch (prop_id)
     {
@@ -73,7 +73,7 @@ game_get_property (GObject         *object,
 		   GValue          *value,
 		   GParamSpec      *pspec)
 {
-  GbkGame *game  = GBK_GAME (object);
+  //  GbkGame *game  = GBK_GAME (object);
 
   switch (prop_id)
     {
@@ -151,12 +151,12 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
     return;
 
 
-  GList *d0 = game->head.next;
-  GList *n = g_slice_alloc0 (sizeof *n);
+  struct GbkList *d0 = game->head.next;
+  struct GbkList *n = g_slice_alloc0 (sizeof *n);
 
   n->next = d0;
   n->prev = &game->head;
-  n->data = move_copy (move);
+  n->data = move_ref (move);
 
   game->head.next = n;
 
@@ -184,6 +184,7 @@ gbk_game_rewind (GbkGame *game)
       struct move_data *mm = move_copy (m);
       mm->dir = ! mm->dir;
       gbk_cube_rotate_slice (game->cube, mm);
+      move_unref (mm);
     }
   game->posn = 0;
 
@@ -228,19 +229,21 @@ next_move (GbkGame *game, gboolean backwards)
     {
       game->posn--;
       game->iter = game->iter->next;
-      m = game->iter->data;
 
-      m = move_copy (m);
+      m = move_copy (game->iter->data);
       m->dir = ! m->dir;
     }
   else
     {
       game->posn++;
-      m = game->iter->data;
+
+      m = move_copy (game->iter->data);
       game->iter = game->iter->prev;
     }
 
-  gbk_cube_rotate_slice (game->cube, move_copy (m));
+  gbk_cube_rotate_slice (game->cube, m);
+
+  move_unref (m);
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }

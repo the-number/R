@@ -26,7 +26,6 @@
 #include "widget-set.h"
 #include "cubeview.h"
 #include "glarea.h"
-#include "ui.h"
 #include "version.h"
 #include "dialogs.h"
 
@@ -103,8 +102,8 @@ c_main (void *closure, int argc, char *argv[])
     gbk_cube_scramble (cube);
 
 
-  GbkGame *game = gbk_game_new (cube);
-  game->toplevel = window;
+  GbkGame *game = GBK_GAME (gbk_game_new (cube));
+  game->toplevel = GTK_WINDOW (window);
 
   menubar = create_menubar (game);
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);

@@ -26,7 +26,6 @@
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>
 #include "cube.h"
-#include "ui.h"
 
 struct animation;
 
@@ -79,8 +78,15 @@ struct _GbkCubeview
   /* Angle of the mouse cursor */
   float cursorAngle;
 
-  /* Animation parameters */
-  struct animation animation;
+  /* The current angle through which an animation has turned */
+  GLfloat animation_angle ;
+
+  /* the number of frames drawn when a slice of the cube rotates 90 degrees */
+  int frameQty ;
+  /* picture rate in ms. 40ms = 25 frames per sec */
+  int picture_rate ;
+
+  const struct move_data *current_move;
 
   Quarternion qView;
 };

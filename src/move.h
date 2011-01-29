@@ -48,13 +48,15 @@ struct move_data
   short turns; /* Normally 1 or 2 */
 
   Slice_Blocks *blocks_in_motion;
+  int ref;
 };
 #endif
 
 GType move_get_type (void);
 
 struct move_data * move_create (int slice, short axis, short dir);
-void move_free (struct move_data *);
+void move_unref (const struct move_data *);
+const struct move_data * move_ref (const struct move_data *) __attribute__((warn_unused_result));
 struct move_data * move_copy (const struct move_data *);
 
 short move_turns (const struct move_data *);

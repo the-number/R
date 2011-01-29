@@ -19,7 +19,6 @@
 #include "cubeview.h"
 #include "select.h"
 #include "control.h"
-#include "ui.h"
 #include "drwBlock.h"
 #include <GL/glu.h>
 #include "glarea.h"
@@ -32,8 +31,7 @@ static gboolean expose (GtkWidget *w, GdkEventExpose *event);
 static void set_the_colours (GtkWidget *w, const char *progname);
 static GLboolean have_accumulation_buffer (void);
 
-
-void animate_rotation (GbkCubeview *dc, struct move_data *move);
+static gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
 
 
 /* Error string display.  This is always called by a macro
@@ -54,10 +52,12 @@ enum
     PROP_ASPECT
   };
 
+static void animate_move (GbkCubeview *dc, const struct move_data *move);
+
 static void
 on_move (GbkCube *cube, struct move_data *move, GbkCubeview *cv)
 {
-  animate_rotation (cv, move);
+  animate_move (cv, move);
 }
 
 static void
@@ -392,10 +392,10 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->gldrawable = NULL;
   dc->idle_id = 0;
 
-  dc->animation.picture_rate = 40;
-  dc->animation.animation_angle = 0;
-  dc->animation.current_move = NULL;
-  dc->animation.frameQty = 2;
+
+  dc->picture_rate = 40;
+  dc->frameQty = 2;
+  dc->animation_angle = 0;
 
   gtk_widget_add_events (GTK_WIDGET (dc),
 			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
@@ -574,7 +574,7 @@ void error_check (const char *file, int line_no, const char *string);
  
 
 static void
-render_scene (GbkCubeview *cv, GLint jitter, const struct animation *a)
+render_scene (GbkCubeview *cv, GLint jitter)
 {
   projection_init (&cv->scene, jitter);
 
@@ -583,7 +583,7 @@ render_scene (GbkCubeview *cv, GLint jitter, const struct animation *a)
   gbk_cubeview_model_view_init (cv);
   ERR_CHECK ("Error in display");
 
-  drawCube (cv->cube, FALSE, a);
+  drawCube (cv->cube, FALSE, cv);
   ERR_CHECK ("Error in display");
 }
 
@@ -606,7 +606,7 @@ display_anti_alias (GbkCubeview *dc)
 
   for (jitter = 0; jitter < 8; ++jitter)
     {
-      render_scene (dc, jitter, &dc->animation);
+      render_scene (dc, jitter);
       glAccum (GL_ACCUM, 1.0 / 8.0);
     }
 
@@ -631,7 +631,7 @@ display_raw (GbkCubeview *dc)
 
   ERR_CHECK ("Error in display");
 
-  render_scene (dc, 0, &dc->animation);
+  render_scene (dc, 0);
 
   gdk_gl_drawable_swap_buffers (dc->gldrawable);
 }
@@ -689,13 +689,13 @@ set_the_colours (GtkWidget *w, const char *progname)
 void
 gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames)
 {
-  dc->animation.frameQty = frames;
+  dc->frameQty = frames;
 }
 
 gboolean
 gbk_cubeview_is_animating (GbkCubeview *dc)
 {
-  return (dc->animation.current_move != NULL);
+  return dc->current_move != NULL;
 }
 
 
@@ -789,11 +789,11 @@ static gboolean animate_callback (gpointer data);
 static gboolean inverted_rotation;
 
 
-void animate_rotation (GbkCubeview *dc, struct move_data *move);
+
 
 
 /* handle mouse clicks */
-gboolean
+static gboolean
 on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 {
   GbkCubeview *cv = GBK_CUBEVIEW (w);
@@ -814,7 +814,6 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
          turn direction could get out of sync */
 
       inverted_rotation = TRUE;
-      //      cv->pending_movement->dir = !cv->pending_movement->dir;
 
       break;
     case 1:
@@ -833,16 +832,18 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
 
 /* Does exactly what it says on the tin :-) */
-void
-animate_rotation (GbkCubeview *dc, struct move_data *move)
+static void
+animate_move (GbkCubeview *cv, const struct move_data *move)
 {
-  struct animation *an = &dc->animation;
-  an->current_move = move_copy (move);
-  //  set_toolbar_state (PLAY_TOOLBAR_STOP);
+  /* Abort any current animation */
+  if ( cv->current_move)
+    move_unref (cv->current_move);
 
-  an->animation_angle = 90.0 * move_turns (an->current_move);
+  cv->current_move = move_ref (move);
 
-  g_timeout_add (an->picture_rate, animate_callback, dc);
+  cv->animation_angle = 90.0 * move_turns (cv->current_move);
+
+  g_timeout_add (cv->picture_rate, animate_callback, cv);
 }
 
 
@@ -851,45 +852,28 @@ static gboolean
 animate_callback (gpointer data)
 {
   GbkCubeview *cv = data;
-  struct animation *an  = &cv->animation;
-
+  
   /* how many degrees motion per frame */
-  GLfloat increment = 90.0 / (an->frameQty + 1);
+  GLfloat increment = 90.0 / (cv->frameQty + 1);
 
   /*  decrement the current angle */
-  an->animation_angle -= increment;
+  cv->animation_angle -= increment;
 
   /* and redraw it */
   gbk_redisplay (cv);
 
-  if (an->animation_angle > 0)
+  if (cv->animation_angle > 0)
     {
       /* call this timeout again */
-      g_timeout_add (an->picture_rate, animate_callback, data);
+      g_timeout_add (cv->picture_rate, animate_callback, data);
     }
   else
     {
       /* we have finished the animation sequence now */
-
-      an->animation_angle = 0.0;
-      move_free (an->current_move);
-      an->current_move = NULL;
+      move_unref (cv->current_move);
+      cv->current_move = NULL;
 
       g_signal_emit (cv, signals[ANIMATION_COMPLETE] , 0);
-
-#if 0
-      set_toolbar_state ((move_queue_progress (move_queue).current == 0
-			  ? 0 : PLAY_TOOLBAR_BACK)
-			 |
-			 (move_queue_current (move_queue)
-			  ? PLAY_TOOLBAR_PLAY : 0));
-
-      update_statusbar ();
-
-      if (NOT_SOLVED != (status = gbk_cube_get_status (dc->cube)))
-	declare_win (dc->cube);
-#endif
-
     }
 
   return FALSE;

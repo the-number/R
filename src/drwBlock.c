@@ -31,8 +31,6 @@
 #include "textures.h"
 #include "colour-dialog.h"
 
-#include "ui.h"
-
 /* We use a little bit of glut in debug mode */
 #if DEBUG && HAVE_GL_GLUT_H
 #include <GL/glut.h>
@@ -442,7 +440,7 @@ getColour (int i, struct cube_rendering *cr)
 
 /* render the cube */
 void
-drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation)
+drawCube (GbkCube *cube, GLboolean ancilliary, GbkCubeview *cv)
 {
   int i;
 
@@ -502,8 +500,8 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
       int j = 0;
       Slice_Blocks *moving_blocks = NULL;
 
-      if (animation && animation->current_move && animation->current_move->blocks_in_motion)
-	moving_blocks = animation->current_move->blocks_in_motion;
+      if (cv->current_move && cv->current_move->blocks_in_motion)
+	moving_blocks = cv->current_move->blocks_in_motion;
 
       /* Find out if this block is one of those currently being
          turned.  If so,  j will be < turning_block_qty */
@@ -520,13 +518,13 @@ drawCube (GbkCube *cube, GLboolean ancilliary, const struct animation *animation
 	  /* Blocks which are in motion,  need to be animated.
 	     so we rotate them according to however much the
 	     animation angle is */
-	  GLdouble angle = animation->animation_angle;
+	  GLdouble angle = cv->animation_angle;
 
 	  int unity = 1;
-	  if (! move_dir (animation->current_move))
+	  if (! move_dir (cv->current_move))
 	    unity = -1;
 
-	  switch (move_axis (animation->current_move))
+	  switch (move_axis (cv->current_move))
 	    {
 	    case 0:
 	    case 3:
