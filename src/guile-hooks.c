@@ -24,8 +24,9 @@
 #include <stdio.h>
 
 #include "cube.h"
-#include "ui.h"
 #include "widget-set.h"
+
+#include <libguile.h>
 
 
 /* When a script runs,  the first cube movement that is requested by the script
@@ -42,13 +43,13 @@ static int moved;
    of a scheme procedure to execute. */
 
 static void
-run_scheme (GtkAction * act, SCM exp)
+run_scheme (GtkAction *act, SCM exp)
 {
   moved = 0;
 
   scm_eval (exp, scm_interaction_environment());
 
-  request_play ();
+  //  request_play ();
 }
 
 /* The menu manager */
@@ -142,7 +143,7 @@ gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
 static SCM
 gnubik_cube_state ()
 {
-  return make_scm_cube (the_cube);
+  return 0; //make_scm_cube (the_cube);
 }
 
 
@@ -159,8 +160,8 @@ start_moves_if_first ()
   if (!moved)
     {
       moved = 1;
-      request_truncate_move_queue ();
-      request_mark_move_queue ();
+      //request_truncate_move_queue ();
+      //      request_mark_move_queue ();
     }
 }
 
@@ -183,7 +184,7 @@ gnubik_rotate_animated (SCM list)
       move.slice = scm_to_int (SCM_CADAR (list));
       move.dir = scm_to_int (SCM_CADDAR (list));
       move.turns = 1;
-      request_delayed_rotation (&move);
+      //      request_delayed_rotation (&move);
     }
 
   return SCM_UNSPECIFIED;
@@ -197,7 +198,7 @@ gnubik_rotate_animated (SCM list)
 static SCM
 gnubik_run_moves ()
 {
-  request_fast_forward ();
+  //request_fast_forward ();
 
   return SCM_UNSPECIFIED;
 }
@@ -211,7 +212,7 @@ static SCM
 gnubik_error_dialog (SCM message)
 {
   char *msg = scm_to_locale_string (message);
-  error_dialog (main_application_window, msg);
+  //error_dialog (main_application_window, msg);
   free (msg);
 
   return SCM_UNSPECIFIED;

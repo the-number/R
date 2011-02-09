@@ -34,6 +34,7 @@ src_gnubik_SOURCES = \
 	src/game.c src/game.h \
 	src/glarea-common.c \
 	src/glarea.h \
+	src/guile-hooks.c src/guile-hooks.h \
 	src/main.c \
 	src/move.c src/move.h \
 	src/quarternion.c src/quarternion.h \
