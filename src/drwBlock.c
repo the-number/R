@@ -147,14 +147,10 @@ draw_face (GbkCube *cube, GLint face, int block_id, GLboolean draw_names)
   point p2;
   vector v;
 
-  point centre_point;
-
   /* lratio is the proportion of a face's linear dimension,  which is
      coloured. That is,  covered by a sticky label */
   const GLfloat lratio = 0.9;
 
-
-  centre_point[3] = 1.0;
 
   /* First Draw the surface of the cube,  that is the plastic material
      he thing is constructed from */
