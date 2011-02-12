@@ -360,9 +360,13 @@ G_DEFINE_TYPE (GbkCube, gbk_cube, G_TYPE_OBJECT);
 int
 gbk_cube_get_size (const GbkCube *cube, int dim)
 {
+  gint *s;
   g_assert (dim >= 0);
   g_assert (dim < 3);
-  return cube->size[dim];
+  
+  g_object_get ((GbkCube *)cube, "dimensions", &s, NULL);
+
+  return s[dim];
 }
 
 
