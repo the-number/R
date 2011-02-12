@@ -45,6 +45,7 @@ struct application_options
 static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
 
 
+GbkGame *the_game;
 
 static void
 c_main (void *closure, int argc, char *argv[])
@@ -95,20 +96,19 @@ c_main (void *closure, int argc, char *argv[])
 				     opts.initial_cube_size[1],
 				     opts.initial_cube_size[2]));
 
-
   /* If a solved cube has not been requested,  then do some random
      moves on it */
   if (!opts.solved)
     gbk_cube_scramble (cube);
 
 
-  GbkGame *game = GBK_GAME (gbk_game_new (cube));
-  game->toplevel = GTK_WINDOW (window);
+  the_game = GBK_GAME (gbk_game_new (cube));
+  the_game->toplevel = GTK_WINDOW (window);
 
-  menubar = create_menubar (game);
+  menubar = create_menubar (the_game);
   gtk_box_pack_start (GTK_BOX (form), menubar, FALSE, TRUE, 0);
 
-  playbar = create_play_toolbar (game);
+  playbar = create_play_toolbar (the_game);
   gtk_box_pack_start (GTK_BOX (form), playbar, FALSE, TRUE, 0);
 
   hbox = gtk_hbox_new (TRUE, 0);
@@ -118,7 +118,7 @@ c_main (void *closure, int argc, char *argv[])
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (hbox), glwidget1, TRUE, TRUE, 0);
 
-  gbk_game_set_master_view (game, GBK_CUBEVIEW (glwidget1));
+  gbk_game_set_master_view (the_game, GBK_CUBEVIEW (glwidget1));
 
   glwidget2 = gbk_cubeview_new (cube); 
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
@@ -128,7 +128,7 @@ c_main (void *closure, int argc, char *argv[])
   gfloat aspect[4] = {180, 0, 1, 0};
   g_object_set (glwidget2, "aspect", aspect, NULL);
 
-  statusbar = create_statusbar (game);
+  statusbar = create_statusbar (the_game);
   gtk_box_pack_start (GTK_BOX (form), statusbar, FALSE, FALSE, 0);
 
   gtk_widget_show_all (window);
@@ -143,8 +143,7 @@ c_main (void *closure, int argc, char *argv[])
 int
 main (int argc, char **argv)
 {
-  //  scm_boot_guile (argc, argv, c_main, 0);
-  c_main (0, argc, argv);
+  scm_boot_guile (argc, argv, c_main, 0);
   return 0;
 }
 

@@ -234,9 +234,10 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"toggle-statusbar\" action=\"statusbar-action\"/>\
      </menu>\
     </menu>\
-    <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
   */
 "\
+    </menu>\
+    <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
     </menu>\
     <menu name=\"help-menu\" action=\"help-menu-action\">\
      <menuitem name=\"about\" action=\"about-action\"/>\
@@ -296,9 +297,7 @@ create_menubar (GbkGame *game)
 					 strlen (menu_tree), NULL))
     g_return_val_if_reached (NULL);
 
-#if 0
   startup_guile_scripts (menu_manager);
-#endif
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 

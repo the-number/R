@@ -34,16 +34,19 @@ static inline int sin_quadrant (int quarters);
  cube_size) elements,  each one holding the colour of a patch of the surface of
  the cube (a number from [0, 5]).
 */
-SCM make_scm_cube (const GbkCube *cube);
+
 
 SCM
 make_scm_cube (const GbkCube *cube)
 {
-#if 0
-  SCM scm_face_vector;
   Block *block;
   int face;
-  char colours[6][cube->cube_size][cube->cube_size];
+
+  /* We can manufacture  our scheme object. */
+  SCM scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
+
+
+  //  char colours[6][cube->cube_size][cube->cube_size];
 
   /* Loop over all blocks and faces,  but only process if the face is on the
      outside of the cube. */
@@ -52,7 +55,7 @@ make_scm_cube (const GbkCube *cube)
        block >= cube->blocks; --block)
 
     for (face = 0; face < 6; ++face)
-
+      {
       if (block->visible_faces & (0x01 << face))
 	{
 	  /* Apply the rotation part of the block transformation to the
@@ -63,9 +66,9 @@ make_scm_cube (const GbkCube *cube)
 
 	  memcpy (face_direction, block->face[face].centre, sizeof (point));
 
-	  transform (block->transformation, face_direction);
+	  transform_in_place (block->transformation, face_direction);
 
-
+#if 0
 	  /* The face direction will have exactly one non-zero component;
 	     this is in the direction of the normal,  so we can infer which
 	     side of the cube we are on. Further,  if we look at the other
@@ -95,42 +98,57 @@ make_scm_cube (const GbkCube *cube)
 	       (cube, block->transformation[12])]
 	      [block_coords_to_index
 	       (cube, block->transformation[13])] = face;
-	}
+#endif
 
 
-  /* Now the colours array should be completely populated,  we can manufacture
-     our scheme object. */
-
-  scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
-
-  for (face = 0; face < 6; ++face)
     {
       int i, j;
+      int dimA, dimB;
+      switch (face)
+	{
+	case 0:
+	case 1:
+	  dimA = 0;
+	  dimB = 1;
+	  break;
+	case 2:
+	case 3:
+	  dimA = 0;
+	  dimB = 2;
+	  break;
+	case 4:
+	case 5:
+	  dimA = 1;
+	  dimB = 2;
+	  break;
+	}
 
       SCM scm_block_vector
-	= scm_c_make_vector (cube->cube_size * cube->cube_size,
+	= scm_c_make_vector (gbk_cube_get_size (cube, dimA) * 
+			     gbk_cube_get_size (cube, dimB),
 			     SCM_UNSPECIFIED);
 
-      for (i = 0; i < cube->cube_size; ++i)
-	for (j = 0; j < cube->cube_size; ++j)
+      for (i = 0; i < gbk_cube_get_size (cube, dimA); ++i)
+	for (j = 0; j < gbk_cube_get_size (cube, dimB); ++j)
 	  scm_vector_set_x (scm_block_vector,
-			    scm_from_int (i + cube->cube_size * j),
-			    scm_from_int (colours[face][i][j]));
+			    scm_from_int (i + gbk_cube_get_size (cube, dimA) * j),
+			    //	scm_from_int (colours[face][i][j])
+			    scm_from_int (0)
+					  );
 
       scm_vector_set_x (scm_face_vector,
 			scm_from_int (face), scm_block_vector);
     }
 
+	}
+      }
+
   return scm_cons (scm_list_5 (scm_from_int (1),
 			       scm_from_int (3),
-			       scm_from_int (cube->cube_size),
-			       scm_from_int (cube->cube_size),
-			       scm_from_int (cube->cube_size)),
+			       scm_from_int (gbk_cube_get_size (cube, 0)),
+			       scm_from_int (gbk_cube_get_size (cube, 1)),
+			       scm_from_int (gbk_cube_get_size (cube, 2))),
 		   scm_face_vector);
-
-#endif
-
-  return SCM_UNDEFINED;
 }
 
 

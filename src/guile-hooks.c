@@ -137,13 +137,15 @@ gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
 
 
 
+extern GbkGame *the_game;
+
 /* Function callable from scheme as gnubik-cube-state which returns a structure
    reflecting the current state of the cube. */
 
 static SCM
 gnubik_cube_state ()
 {
-  return 0; //make_scm_cube (the_cube);
+  return make_scm_cube (the_game->cube);
 }
 
 
@@ -178,13 +180,12 @@ gnubik_rotate_animated (SCM list)
 
   for (; !SCM_NULLP (list); list = SCM_CDR (list))
     {
-      struct move_data move;
+      struct move_data *move = move_create (scm_to_int (SCM_CADAR (list)),
+					    scm_to_int (SCM_CAAR (list)),
+					    scm_to_int (SCM_CADDAR (list)));
 
-      move.axis = scm_to_int (SCM_CAAR (list));
-      move.slice = scm_to_int (SCM_CADAR (list));
-      move.dir = scm_to_int (SCM_CADDAR (list));
-      move.turns = 1;
-      //      request_delayed_rotation (&move);
+      gbk_cube_rotate_slice (the_game->cube, move);
+      move_unref (move);
     }
 
   return SCM_UNSPECIFIED;
