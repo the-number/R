@@ -271,11 +271,6 @@ draw_face (GbkCube *cube, GLint face, int block_id, GLboolean draw_names)
       gbk_cube_set_quadrant_vector (cube, block_id, face, 3, v);
     }
 
-  if (!(face % 2))
-    {
-      glRotatef (180, 0, 0, 1);
-    }
-
   /* Now do the colours  (ie the little sticky labels) */
   glColor3f (rendering[face].red, rendering[face].green, rendering[face].blue);
   glTranslatef (0, 0, 0.01);
@@ -344,20 +339,17 @@ draw_face (GbkCube *cube, GLint face, int block_id, GLboolean draw_names)
 	/* Invert positions as necessary */
 	switch (face)
 	  {
-	  case 0:
-	    xpos = gbk_cube_get_size (cube, 0) - xpos - 1;
-	    /* fallthrough */
 	  case 1:
 	    ypos = gbk_cube_get_size (cube, 1) - ypos - 1;
 	    break;
 	  case 5:
-	    xpos = gbk_cube_get_size (cube, 2) - xpos - 1;
+	    ypos = gbk_cube_get_size (cube, 1) - ypos - 1;
 	    /* fallthrough */
 	  case 4:
-	    ypos = gbk_cube_get_size (cube, 1) - ypos - 1;
+	    xpos = gbk_cube_get_size (cube, 2) - xpos - 1;
 	    break;
 	  case 2:
-	    xpos = gbk_cube_get_size (cube, 0) - xpos - 1;
+	    ypos = gbk_cube_get_size (cube, 2) - ypos - 1;
 	    break;
 	  }
       }
