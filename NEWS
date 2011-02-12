@@ -1,4 +1,5 @@
 GNUbik 2.4-pre
+        * Animation is now significantly faster.
 
 	* Cubes no longer are restricted to cubic form.
 	  General right-angled parallelepipeds are now 
