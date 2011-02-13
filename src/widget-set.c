@@ -234,11 +234,12 @@ restart_game (GtkWidget *w, GbkGame *game)
 }
 
 void
-start_new_game (GbkGame *game, int size0, int size1, int size2)
+start_new_game (GbkGame *game, int size0, int size1, int size2, gboolean scramble)
 {
   gbk_cube_set_size (game->cube, size0, size1, size2);
 
-  gbk_cube_scramble (game->cube);
+  if (scramble)
+    gbk_cube_scramble (game->cube);
 
   gbk_game_reset (game);
 }

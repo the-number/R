@@ -132,7 +132,7 @@ create_dimension_widget (GtkContainer *parent, const GbkGame *game)
 
   GtkWidget *hbox = gtk_hbox_new (FALSE, BOX_PADDING);
   GtkWidget *vbox = gtk_vbox_new (TRUE, BOX_PADDING);
-  GtkWidget *checkbox = gtk_check_button_new_with_label (_("Regular cube"));
+  GtkWidget *checkbox = gtk_check_button_new_with_mnemonic (_("Re_gular cube"));
   GtkWidget *vbox2 = gtk_vbox_new (TRUE, BOX_PADDING);
 
   struct preferences_state *ps  = pref_state_create (GTK_BOX (vbox), game);
@@ -377,10 +377,11 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
 						   GTK_RESPONSE_CANCEL,
 						   NULL);
 
-  GtkWidget *vbox = GTK_DIALOG (dialog)->vbox;
-
+  GtkWidget *vbox = gtk_vbox_new (FALSE, 5);
 
   GtkWidget *frame_dimensions = gtk_frame_new (_("Dimensions"));
+
+  g_object_set (frame_dimensions, "shadow-type", GTK_SHADOW_NONE, NULL);
 
   gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
 
@@ -388,9 +389,26 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
 
   struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions), game);
 
+  GtkWidget *frame_pos = gtk_frame_new (_("Initial position"));
+  GtkWidget *bb = gtk_vbutton_box_new ();
+
+  GtkWidget *random_state = gtk_radio_button_new_with_mnemonic_from_widget (NULL, _("_Random"));
+  GtkWidget *solved_state = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (random_state),
+									 _("_Solved"));
+
+  g_object_set (frame_pos, "shadow-type", GTK_SHADOW_NONE, NULL);
+
+  gtk_container_add (GTK_CONTAINER (bb), random_state);
+  gtk_container_add (GTK_CONTAINER (bb), solved_state);
+
+  gtk_container_add (GTK_CONTAINER (frame_pos), bb);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame_pos, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame_dimensions, FALSE, 0, 0);
 
-  gtk_widget_show_all (vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+
+  gtk_widget_show_all (GTK_DIALOG (dialog)->vbox);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -400,7 +418,8 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
 	(game,
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
-	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2]))
+	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2])),
+	 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (random_state))
 	);
     }
 
