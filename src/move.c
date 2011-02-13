@@ -36,6 +36,12 @@ struct move_data
 };
 #endif
 
+void
+move_set_turns (struct move_data *m, int turns)
+{
+  m->turns = turns;
+}
+
 struct move_data * move_create (int slice, short axis, short dir)
 {
   struct move_data *m = g_slice_alloc (sizeof (*m));

@@ -63,6 +63,8 @@ short move_turns (const struct move_data *);
 short move_dir (const struct move_data *);
 short move_axis (const struct move_data *);
 
+void move_set_turns (struct move_data *, int);
+
 void move_dump (const struct move_data *m);
 
 

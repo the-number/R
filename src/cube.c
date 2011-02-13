@@ -479,9 +479,10 @@ cube_identify_blocks_2 (const GbkCube * cube,
    axis,  through an angle specified by turns,  which is in quarters of complete
    revolutions. */
 void
-gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
+gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
 {
-  int turns = move_turns (md);
+  struct move_data *md = move_copy (m);
+  int turns;
 
   /* Iterator for array of blocks in the current slice. */
   const int *i;
@@ -495,15 +496,19 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
     0, 0, 0, 1
   };
 
-
   /* If rotating about a non-square axis, then only 180 deg turns are
      permitted */
   if ( !gbk_cube_square_axis (cube, move_axis (md)))
-    turns = 2;
+    {
+      move_set_turns (md, 2);
+    }
  
   /* Rotating backward 90 deg is the same as forward by 270 deg */
-  if (move_dir (md) == 0 && turns == 1)
-    turns = 3;
+  turns = move_turns (md);
+  if (move_dir (md) == 0 && move_turns (md) == 1)
+    {
+      turns = 3;
+    }
 
   /* ... and then assigning values to the active elements. */
   rotation[(move_axis (md) + 1) % 3 + 4 * ((move_axis (md) + 1) % 3)]
@@ -533,6 +538,7 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *md)
     pre_mult (rotation, cube->blocks[*i].transformation);
 
   g_signal_emit (cube, signals [MOVED], 0, md);
+  move_unref (md);
 }
 /* End of function rotate_slice (). */
 
