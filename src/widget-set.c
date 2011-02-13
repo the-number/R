@@ -132,7 +132,7 @@ toggle_visibility (GtkToggleAction *ta, gpointer user_data)
 static const GtkActionEntry action_entries[] =
 {
   {"game-menu-action", NULL, N_("_Game")},
-  {"settings-menu-action", NULL, N_("_Settings")},
+  {"view-menu-action", NULL, N_("_View")},
   {"help-menu-action", NULL, N_("_Help")},
   {"show-hide-menu-action", NULL, N_("Sho_w/Hide")},
   {"scripts-menu-action", NULL, N_("_Scripts")},
@@ -221,7 +221,7 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"new-game\" action=\"new-game-action\"/> \
      <menuitem name=\"quit\" action=\"quit-action\"/>\
     </menu>\
-    <menu name=\"settings-menu\" action=\"settings-menu-action\">"
+    <menu name=\"view-menu\" action=\"view-menu-action\">"
   /*
      <menuitem name=\"preferences\" action=\"preferences-action\"/>\
   */
