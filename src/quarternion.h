@@ -32,6 +32,8 @@ struct quarternion
 typedef struct quarternion Quarternion;
 
 
+void quarternion_get_inverse (Quarternion *inv, const Quarternion *q);
+
 void quarternion_from_rotation (Quarternion *q, const vector u, float theta);
 
 void quarternion_print (const Quarternion *q);

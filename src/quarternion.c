@@ -101,6 +101,21 @@ quarternion_print (const Quarternion * q)
 }
 
 
+void
+quarternion_get_inverse (Quarternion *inv, const Quarternion *q)
+{
+  float ssq = 0.0;
+  ssq += q->w * q->w;
+  ssq += q->x * q->x;
+  ssq += q->y * q->y;
+  ssq += q->z * q->z;
+
+  inv->w = q->w / ssq;
+  inv->x = - q->x / ssq;
+  inv->y = - q->y / ssq;
+  inv->z = - q->z / ssq;
+}
+
 /* Pre multiply q1 by q2 */
 void
 quarternion_pre_mult (Quarternion * q1, const Quarternion * q2)
