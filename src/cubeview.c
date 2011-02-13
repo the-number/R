@@ -77,8 +77,12 @@ cubeview_set_property (GObject     *object,
 	g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
 				  G_CALLBACK (scene_init), cubeview);
 
-	g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
-	g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (gbk_redisplay), cubeview);
+	cubeview->move_id = 
+	  g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
+
+	cubeview->rotate_id =
+	  g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (gbk_redisplay),
+				    cubeview);
       }
       break;
     case PROP_ASPECT:
@@ -129,6 +133,8 @@ static guint signals [n_SIGNALS];
 
 static GtkWidgetClass *parent_class = NULL;
 
+static void gbk_cubeview_finalize (GObject *cv);
+
 static void
 gbk_cubeview_class_init (GbkCubeviewClass *klass)
 {
@@ -140,6 +146,7 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  gobject_class->finalize = gbk_cubeview_finalize;
 
   gobject_class->set_property = cubeview_set_property;
   gobject_class->get_property = cubeview_get_property;
@@ -376,12 +383,30 @@ enable_disable_selection (GtkWidget *w, GdkEventButton *event, gpointer data)
   return FALSE;
 }
 
+static void
+gbk_cubeview_finalize (GObject *o)
+{
+  GbkCubeview *cv = GBK_CUBEVIEW (o);
+  select_destroy (cv->cs);
+
+  if (cv->rotate_id)
+    g_signal_handler_disconnect (cv->cube, cv->rotate_id);
+  cv->rotate_id = 0;
+
+  if (cv->move_id)
+    g_signal_handler_disconnect (cv->cube, cv->move_id);
+  cv->move_id = 0;
+
+  if (cv->idle_id)
+    g_source_remove (cv->idle_id);
+  cv->idle_id = 0;
+
+}
 
 static void
 gbk_cubeview_init (GbkCubeview *dc)
 {
-  struct cublet_selection *cs = NULL;
-
+  dc->cs = NULL;
   dc->pending_movement = NULL;
 
   quarternion_set_to_unit (&dc->qView);
@@ -391,7 +416,8 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->glcontext = NULL;
   dc->gldrawable = NULL;
   dc->idle_id = 0;
-
+  dc->rotate_id = 0;
+  dc->move_id = 0;
 
   dc->picture_rate = 40;
   dc->frameQty = 2;
@@ -407,7 +433,7 @@ gbk_cubeview_init (GbkCubeview *dc)
 
   GTK_WIDGET_SET_FLAGS (dc, GTK_CAN_FOCUS);
 
-  cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
+  dc->cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
 		      dc );
 
   /* Grab the keyboard focus whenever the mouse enters the widget */
@@ -424,19 +450,19 @@ gbk_cubeview_init (GbkCubeview *dc)
 		    G_CALLBACK (z_rotate), NULL);
 
   g_signal_connect (dc, "leave-notify-event",
-		    G_CALLBACK (on_crossing), cs);
+		    G_CALLBACK (on_crossing), dc->cs);
 
   g_signal_connect (dc, "enter-notify-event",
-		    G_CALLBACK (on_crossing), cs);
+		    G_CALLBACK (on_crossing), dc->cs);
 
   g_signal_connect (dc, "button-press-event",
-		    G_CALLBACK (enable_disable_selection), cs);
+		    G_CALLBACK (enable_disable_selection), dc->cs);
 
   g_signal_connect (dc, "button-release-event",
-		    G_CALLBACK (enable_disable_selection), cs);
+		    G_CALLBACK (enable_disable_selection), dc->cs);
 
   g_signal_connect (dc, "button-press-event",
-		    G_CALLBACK (on_mouse_button), cs);
+		    G_CALLBACK (on_mouse_button), dc->cs);
 }
 
 G_DEFINE_TYPE (GbkCubeview, gbk_cubeview, GTK_TYPE_DRAWING_AREA);
@@ -482,10 +508,10 @@ size_allocate (GtkWidget *w, GtkAllocation *alloc)
 static gboolean
 handleRedisplay (gpointer data)
 {
-  GbkCubeview *disp_ctx = data;
-  disp_ctx->display_func (disp_ctx);
-  g_source_remove (disp_ctx->idle_id);
-  disp_ctx->idle_id = 0;
+  GbkCubeview *cv = data;
+  cv->display_func (cv);
+  g_source_remove (cv->idle_id);
+  cv->idle_id = 0;
 
   return TRUE;
 }

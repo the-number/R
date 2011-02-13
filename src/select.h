@@ -38,6 +38,8 @@ struct cublet_selection *
 select_create (GtkWidget *w, int holdoff,
 		double precision, select_func *do_this, gpointer data);
 
+void select_destroy (struct cublet_selection *);
+
 /* Temporarily enable/disable selection */
 void select_disable (struct cublet_selection *);
 void select_enable (struct cublet_selection *);

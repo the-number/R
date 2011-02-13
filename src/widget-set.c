@@ -36,6 +36,67 @@
 #define N_(String) (String)
 
 
+static void
+new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
+{
+  gchar *title;
+  GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  GtkWidget *view = gbk_cubeview_new (game->cube);
+
+  gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
+
+  title = g_strdup_printf ("%s %s", PACKAGE, description);
+
+  gtk_window_set_title (GTK_WINDOW (window), title);
+
+  g_free (title);
+
+  gtk_container_add (GTK_CONTAINER (window), view);
+
+  g_object_set (view, "aspect", aspect, NULL);
+
+  gtk_widget_show_all (window);
+}
+
+static void
+view_rear (GtkAction *act, GbkGame *game)
+{
+  gfloat aspect[4] = {180, 0, 1, 0};
+  new_view (game, _("Rear View"), aspect);
+}
+
+
+static void
+view_bottom (GtkAction *act, GbkGame *game)
+{
+  gfloat aspect[4] = {90, 1, 0, 0};
+  new_view (game, _("Bottom View"), aspect);
+}
+
+static void
+view_top (GtkAction *act, GbkGame *game)
+{
+  gfloat aspect[4] = {-90, 1, 0, 0};
+  new_view (game, _("Top View"), aspect);
+}
+
+
+static void
+view_left (GtkAction *act, GbkGame *game)
+{
+  gfloat aspect[4] = {-90, 0, 1, 0};
+  new_view (game, _("Left View"), aspect);
+}
+
+static void
+view_right (GtkAction *act, GbkGame *game)
+{
+  gfloat aspect[4] = {90, 0, 1, 0};
+  new_view (game, _("Right View"), aspect);
+}
+
+
+
 #define MSGLEN 100
 static void
 update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
@@ -133,6 +194,10 @@ static const GtkActionEntry action_entries[] =
 {
   {"game-menu-action", NULL, N_("_Game")},
   {"view-menu-action", NULL, N_("_View")},
+  {"add-view-menu-action", NULL, N_("_Add View"), 
+   NULL, N_("Add an auxiliary view of the cube")},
+
+
   {"help-menu-action", NULL, N_("_Help")},
   {"show-hide-menu-action", NULL, N_("Sho_w/Hide")},
   {"scripts-menu-action", NULL, N_("_Scripts")},
@@ -189,7 +254,14 @@ static const GtkActionEntry game_action_entries[] =
     {
    "new-game-action", GTK_STOCK_NEW, N_("_New Game"),
    "<control>N", "new-game", G_CALLBACK (new_game_dialog)
-    }
+    },
+
+
+    {"add-view-rear-action", NULL, N_("_Rear"), NULL, NULL, G_CALLBACK (view_rear)},
+    {"add-view-left-action", NULL, N_("_Left"), NULL, NULL, G_CALLBACK (view_left)},
+    {"add-view-right-action", NULL, N_("Ri_ght"), NULL, NULL, G_CALLBACK (view_right)},
+    {"add-view-top-action", NULL, N_("_Top"), NULL, NULL, G_CALLBACK (view_top)},
+    {"add-view-bottom-action", NULL, N_("_Bottom"), NULL, NULL, G_CALLBACK (view_bottom)},
   };
 
 #if COMPLETE_MENUS
@@ -226,7 +298,14 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"preferences\" action=\"preferences-action\"/>\
   */
 "\
-     <menuitem name=\"colours\" action=\"colours-action\"/>\
+     <menuitem name=\"colours\" action=\"colours-action\"/> \
+     <menu name=\"add view\"   action=\"add-view-menu-action\"> \
+      <menuitem name=\"rear\"  action=\"add-view-rear-action\"/> \
+      <menuitem name=\"left\"  action=\"add-view-left-action\"/> \
+      <menuitem name=\"right\" action=\"add-view-right-action\"/> \
+      <menuitem name=\"top\"   action=\"add-view-top-action\"/> \
+      <menuitem name=\"bottom\" action=\"add-view-bottom-action\"/> \
+     </menu>\
 "\
   /*
      <menu name=\"show-hide-menu\" action=\"show-hide-menu-action\">\
@@ -453,3 +532,4 @@ error_dialog (GtkWindow *parent, const gchar *format, ...)
 
   gtk_widget_destroy (dialog);
 }
+

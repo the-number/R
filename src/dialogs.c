@@ -1,3 +1,4 @@
+
 /*
     GNUbik -- A 3 dimensional magic cube game.
     Copyright (C) 2003, 2004, 2011  John Darrington

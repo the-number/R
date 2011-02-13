@@ -59,11 +59,15 @@ struct _GbkCubeview
 
   GbkCube *cube;
 
+  struct cublet_selection *cs ;
   struct scene_view scene;
 
   /* instance members */
   display *display_func;
   guint idle_id;
+
+  guint rotate_id;
+  guint move_id;
 
   GdkGLContext *glcontext;
   GdkGLDrawable *gldrawable;

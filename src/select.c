@@ -80,7 +80,7 @@ struct cublet_selection *
 select_create (GtkWidget *w, int holdoff,
 	       double precision, select_func *do_this, gpointer data)
 {
-  struct cublet_selection *cs = malloc (sizeof *cs);
+  struct cublet_selection *cs = g_malloc (sizeof *cs);
 
   cs->idle_threshold = holdoff;
   cs->granularity = precision;
@@ -103,6 +103,14 @@ select_create (GtkWidget *w, int holdoff,
   cs->current_selection.quadrant = -1;
 
   return cs;
+}
+
+
+void
+select_destroy (struct cublet_selection *cs)
+{
+  select_disable (cs);
+  g_free (cs);
 }
 
 

@@ -57,8 +57,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *window;
   GtkWidget *menubar;
   GtkWidget *playbar;
-  GtkWidget *glwidget1;
-  GtkWidget *glwidget2;
+  GtkWidget *cubeview;
   GtkWidget *statusbar;
 
   struct application_options opts = { false, {3,3,3}, 2};
@@ -73,7 +72,6 @@ c_main (void *closure, int argc, char *argv[])
 #if DEBUG && HAVE_GL_GLUT_H
   glutInit ();
 #endif
-
 
 
   /* Create the top level widget --- that is,  the main window which everything
@@ -114,19 +112,11 @@ c_main (void *closure, int argc, char *argv[])
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (form), hbox, TRUE, TRUE, 0);
   
-  glwidget1 = gbk_cubeview_new (cube);
-  gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget1), opts.frameQty);
-  gtk_box_pack_start (GTK_BOX (hbox), glwidget1, TRUE, TRUE, 0);
+  cubeview = gbk_cubeview_new (cube);
+  gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (cubeview), opts.frameQty);
+  gtk_box_pack_start (GTK_BOX (hbox), cubeview, TRUE, TRUE, 0);
 
-  gbk_game_set_master_view (the_game, GBK_CUBEVIEW (glwidget1));
-
-  glwidget2 = gbk_cubeview_new (cube); 
-  gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (glwidget2), opts.frameQty);
-  gtk_box_pack_start (GTK_BOX (hbox), glwidget2, TRUE, TRUE, 0);
-
-  /* widget2 is the back view */
-  gfloat aspect[4] = {180, 0, 1, 0};
-  g_object_set (glwidget2, "aspect", aspect, NULL);
+  gbk_game_set_master_view (the_game, GBK_CUBEVIEW (cubeview));
 
   statusbar = create_statusbar (the_game);
   gtk_box_pack_start (GTK_BOX (form), statusbar, FALSE, FALSE, 0);
