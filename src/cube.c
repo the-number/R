@@ -29,10 +29,22 @@ static inline int cos_quadrant (int quarters);
 static inline int sin_quadrant (int quarters);
 
 
+static int 
+block_coords_to_index (const GbkCube *cube, int x)
+{
+  if (x == 0) return 1;
+
+  if (x == 2) return 2;
+  if (x == -2) return 0;
+
+  g_assert (0);
+  return -1;
+}
+
 /*
- Manufacture a SCM object which is a vector of six vectors of (cube_size *
- cube_size) elements,  each one holding the colour of a patch of the surface of
- the cube (a number from [0, 5]).
+  Manufacture a SCM object which is a vector of six vectors of (cube_size *
+  cube_size) elements,  each one holding the colour of a patch of the surface of
+  the cube (a number from [0, 5]).
 */
 
 
@@ -40,24 +52,24 @@ SCM
 make_scm_cube (const GbkCube *cube)
 {
   Block *block;
-  int face;
+
 
   /* We can manufacture  our scheme object. */
   SCM scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
 
-
-  //  char colours[6][cube->cube_size][cube->cube_size];
-
+  int colours[6][3][3];
+  
   /* Loop over all blocks and faces,  but only process if the face is on the
      outside of the cube. */
-
   for (block = cube->blocks + cube->number_blocks - 1;
        block >= cube->blocks; --block)
-
-    for (face = 0; face < 6; ++face)
-      {
-      if (block->visible_faces & (0x01 << face))
+    {
+      int face;
+      for (face = 0; face < 6; ++face)
 	{
+	  if (! (block->visible_faces & (0x01 << face)))
+	    continue;
+
 	  /* Apply the rotation part of the block transformation to the
 	     offset of the face centre from the centre of the block. This
 	     will tell us the direction the face is now facing. */
@@ -68,7 +80,6 @@ make_scm_cube (const GbkCube *cube)
 
 	  transform_in_place (block->transformation, face_direction);
 
-#if 0
 	  /* The face direction will have exactly one non-zero component;
 	     this is in the direction of the normal,  so we can infer which
 	     side of the cube we are on. Further,  if we look at the other
@@ -98,31 +109,37 @@ make_scm_cube (const GbkCube *cube)
 	       (cube, block->transformation[12])]
 	      [block_coords_to_index
 	       (cube, block->transformation[13])] = face;
-#endif
-
-
-    {
-      int i, j;
-      int dimA, dimB;
-      switch (face)
-	{
-	case 0:
-	case 1:
-	  dimA = 0;
-	  dimB = 1;
-	  break;
-	case 2:
-	case 3:
-	  dimA = 0;
-	  dimB = 2;
-	  break;
-	case 4:
-	case 5:
-	  dimA = 1;
-	  dimB = 2;
-	  break;
 	}
+    }
 
+
+
+  int face;
+  for (face = 0; face < 6; ++face)
+    {
+      int dimA, dimB;
+      {
+	switch (face)
+	  {
+	  case 0:
+	  case 1:
+	    dimA = 0;
+	    dimB = 1;
+	    break;
+	  case 2:
+	  case 3:
+	    dimA = 0;
+	    dimB = 2;
+	    break;
+	  case 4:
+	  case 5:
+	    dimA = 1;
+	    dimB = 2;
+	    break;
+	  }
+      }
+
+      int i, j;
       SCM scm_block_vector
 	= scm_c_make_vector (gbk_cube_get_size (cube, dimA) * 
 			     gbk_cube_get_size (cube, dimB),
@@ -132,16 +149,12 @@ make_scm_cube (const GbkCube *cube)
 	for (j = 0; j < gbk_cube_get_size (cube, dimB); ++j)
 	  scm_vector_set_x (scm_block_vector,
 			    scm_from_int (i + gbk_cube_get_size (cube, dimA) * j),
-			    //	scm_from_int (colours[face][i][j])
-			    scm_from_int (0)
-					  );
-
+			    scm_from_int (colours[face][i][j]));
+	
       scm_vector_set_x (scm_face_vector,
 			scm_from_int (face), scm_block_vector);
-    }
 
-	}
-      }
+    }
 
   return scm_cons (scm_list_5 (scm_from_int (1),
 			       scm_from_int (3),
@@ -421,12 +434,12 @@ gbk_cube_get_number_of_blocks (const GbkCube *cube)
 
 
 /*
- Get the transformation of block number `block_id' from the origin,  and store
- it in transform. Return 0 on success,  1 on error.
+  Get the transformation of block number `block_id' from the origin,  and store
+  it in transform. Return 0 on success,  1 on error.
 */
 int
 gbk_cube_get_block_transform (const GbkCube *cube,
-		     int block_id, Matrix transform)
+			      int block_id, Matrix transform)
 {
   memcpy (transform, cube->blocks[block_id].transformation, sizeof (Matrix));
 
@@ -455,12 +468,12 @@ gbk_cube_get_face (GbkCube *cube, int block, int face)
 }
 
 /*
- Set the vector for block/face/quadrant to v.
+  Set the vector for block/face/quadrant to v.
 */
 void
 gbk_cube_set_quadrant_vector (GbkCube *cube,
-		     int block,
-		     int face, int quadrant, const vector v)
+			      int block,
+			      int face, int quadrant, const vector v)
 {
   Matrix view;
   vector *dest = gbk_cube_get_face (cube, block, face)->quadrants + quadrant;
@@ -472,7 +485,7 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
 
 static Slice_Blocks *
 cube_identify_blocks_2 (const GbkCube * cube,
-			    GLfloat slice_depth, int axis);
+			GLfloat slice_depth, int axis);
 
 
 /* Rotate the slice identified by a prior call to identify_blocks,  about the
@@ -571,7 +584,7 @@ gbk_cube_get_quadrant_vector (const GbkCube *cube,
 {
   memcpy (v,
 	  gbk_cube_get_face ((GbkCube *) cube, block,
-		    face)->quadrants + quadrant, sizeof (vector));
+			     face)->quadrants + quadrant, sizeof (vector));
 }
 
 
@@ -609,7 +622,7 @@ sin_quadrant (int quarters)
 
 static Slice_Blocks *
 cube_identify_blocks_2 (const GbkCube * cube,
-		   GLfloat slice_depth, int axis)
+			GLfloat slice_depth, int axis)
 {
   /* Looping variables. */
   int dim, j = 0;
@@ -653,10 +666,10 @@ cube_identify_blocks_2 (const GbkCube * cube,
 
 
 /*
- The cube is solved iff for all faces the quadrant vectors point in the same
- direction.  If however all the normals point in the same direction,  but the
- quadrants do not,  then the colours are all on the right faces,  but not
- correctly orientated.
+  The cube is solved iff for all faces the quadrant vectors point in the same
+  direction.  If however all the normals point in the same direction,  but the
+  quadrants do not,  then the colours are all on the right faces,  but not
+  correctly orientated.
 */
 enum Cube_Status
 gbk_cube_get_status (const GbkCube *cube)
@@ -754,11 +767,11 @@ gbk_cube_get_visible_faces (const GbkCube *cube, int block_id)
 
 
 /*
- Set the normal vector for block/face.
+  Set the normal vector for block/face.
 */
 void
 gbk_cube_set_normal_vector (GbkCube *cube,
-		   int block, int face, const vector v)
+			    int block, int face, const vector v)
 {
   Matrix view;
   vector *dest = &gbk_cube_get_face (cube, block, face)->normal;
