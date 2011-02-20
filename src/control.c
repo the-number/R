@@ -178,5 +178,5 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
   GtkWidget *w = cublet_selection_get_widget (cs);
   set_mouse_cursor (w, cs);
-  gbk_redisplay (GBK_CUBEVIEW (w));
+  gbk_cubeview_redisplay (GBK_CUBEVIEW (w));
 }

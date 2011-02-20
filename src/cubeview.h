@@ -29,6 +29,13 @@
 
 struct animation;
 
+enum surface
+{
+  SURFACE_COLOURED,
+  SURFACE_TILED,
+  SURFACE_MOSAIC
+};
+
 struct scene_view 
 {
   GLdouble fovy ;
@@ -93,6 +100,11 @@ struct _GbkCubeview
   const struct move_data *current_move;
 
   Quarternion qView;
+
+  GLfloat colour[6][3];
+  GdkPixbuf *pixbuf[6];
+  GLuint texName[6];
+  enum surface surface[6];
 };
 
 struct _GbkCubeviewClass
@@ -114,7 +126,7 @@ GtkWidget* gbk_cubeview_new (GbkCube *c);
 
 
 /* Rotate the cube about the axis (screen relative) in direction dir */
-void gbk_redisplay (GbkCubeview *dc);
+void gbk_cubeview_redisplay (GbkCubeview *dc);
 
 void error_check (const char *file, int line_no, const char *string);
 #define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
@@ -127,6 +139,11 @@ void gbk_cubeview_model_view_init (GbkCubeview *cv);
 
 void gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir);
 
+
+GType gbk_cubeview_surface_get_type (void);
+
+
+#define GBK_TYPE_SURFACE (gbk_cubeview_surface_get_type ())
 
 
 #endif /* __GBK_CUBEVIEW_H__ */

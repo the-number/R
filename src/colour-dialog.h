@@ -20,8 +20,11 @@
 #define COLOUR_DIALOG_H
 
 #include <gtk/gtk.h>
+#include "game.h"
 
-void colour_select_menu (GtkWidget *w, GtkWindow *window);
+void colour_select_menu (GtkWidget *, GbkGame *);
+
+GdkPixbuf *create_pixbuf_from_file (const gchar *filename, GError **gerr);
 
 
 #endif

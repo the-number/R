@@ -210,11 +210,6 @@ static const GtkActionEntry action_entries[] =
 #endif
 
   {
-   "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
-   NULL, "colours", G_CALLBACK (colour_select_menu)
-  },
-
-  {
    "about-action", GTK_STOCK_ABOUT, NULL,
    NULL, "about", G_CALLBACK (about_dialog)
   },
@@ -263,6 +258,13 @@ static const GtkActionEntry game_action_entries[] =
     {"add-view-right-action", NULL, N_("Ri_ght"), NULL, NULL, G_CALLBACK (view_right)},
     {"add-view-top-action", NULL, N_("_Top"), NULL, NULL, G_CALLBACK (view_top)},
     {"add-view-bottom-action", NULL, N_("_Bottom"), NULL, NULL, G_CALLBACK (view_bottom)},
+
+
+    {
+      "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
+      NULL, "colours", G_CALLBACK (colour_select_menu)
+    },
+
   };
 
 #if COMPLETE_MENUS

@@ -25,9 +25,11 @@
 #include "textures.h"
 #include "widget-set.h"
 #include "select.h"
+#include "cubeview.h"
+
+#include "swatch.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
 #define BOX_PADDING 5
 
 #include <libintl.h>
@@ -39,7 +41,7 @@
 #define SWATCH_HEIGHT 64
 
 
-static GdkPixbuf *
+GdkPixbuf *
 create_pixbuf_from_file (const gchar *filename, GError **gerr)
 {
   GdkPixbuf *pixbuf;
@@ -63,56 +65,11 @@ create_pixbuf_from_file (const gchar *filename, GError **gerr)
 }
 
 
-struct swatch 
-{
-  int id;
-  GtkWidget *da;
-  GtkWidget *button;
-  GdkGC *gc;
-
-  struct cube_rendering rendering;
-};
-
-
-/* This function sets the GC foreground colour from the
-   Mesa/OpenGL colour values provided */
-static void
-set_gc_foreground (struct swatch *sw)
-{
-  GdkColor fg;
-
-  g_assert (sw->gc);
-
-  fg.red = sw->rendering.red * 65535.0;
-  fg.green = sw->rendering.green * 65535.0;
-  fg.blue = sw->rendering.blue * 65535.0;
-
-  gdk_gc_set_rgb_fg_color (sw->gc, &fg);
-}
-
-/* Set the swatch colours from the Graphics Context */
-static void
-get_gc_foreground (struct swatch *sw)
-{
-  GdkColor colour;
-  g_assert (sw->gc);
-
-  GdkGCValues gcv;
-  gdk_gc_get_values (sw->gc, &gcv);
-
-  GdkColormap *cmap = gtk_widget_get_colormap (sw->da);
-  
-  gdk_colormap_query_color (cmap, gcv.foreground.pixel, &colour);
-
-  sw->rendering.red = colour.red / 65535.0;
-  sw->rendering.green = colour.green / 65535.0;
-  sw->rendering.blue = colour.blue / 65535.0;
-}
-
 struct colour_dialog_state
 {
-  int selected_swatch;
-  struct swatch *swatches[6];
+  GbkSwatch *selected_swatch;
+  GtkWidget *swatches[6];
+
   GtkWidget *colour_selector;
 
   GSList *button_group;
@@ -121,45 +78,20 @@ struct colour_dialog_state
   GtkWidget *button_mosaic;
 };
 
+static void update_radio_buttons (struct colour_dialog_state *cds);
+
 
 static void
 set_swatch_colour (GtkColorSelection *cs, gpointer data)
 {
-  GdkColor c;
-
   struct colour_dialog_state *cds = data;
-
-  struct swatch *sw = cds->swatches[cds->selected_swatch];
-
-  GdkColormap *cmap = gtk_widget_get_colormap (sw->da);
-
+  GdkColor c;
   gtk_color_selection_get_current_color (cs, &c);
 
-  gdk_rgb_find_color (cmap, &c);
-
-  gdk_gc_set_foreground  (sw->gc, &c);
-
-  get_gc_foreground (sw);
-
-  gtk_widget_queue_draw (sw->da);
+  g_object_set (cds->selected_swatch, "color", &c, NULL);
 }
 
 
-static gboolean draw_swatch (GtkWidget *widget, GdkEventExpose *event, gpointer data);
-
-static void
-radiobuttons_update_sensitivity (struct colour_dialog_state *cds)
-{
-  /* Set the sensitivity of the radio buttons */
-
-  GSList *l = cds->button_group;
-  while (l)
-    {
-      gtk_widget_set_sensitive (l->data,
-				(cds->swatches[cds->selected_swatch]->rendering.surface != SURFACE_COLOURED));
-      l = l->next;
-    }
-}
 
 /* 
    Called when a swatch button is clicked.
@@ -167,8 +99,7 @@ radiobuttons_update_sensitivity (struct colour_dialog_state *cds)
 static void
 select_swatch (GtkToggleButton *w, gpointer data)
 {
-  GdkGCValues gcv;
-  GdkColor colour;
+  GdkColor *colour;
 
   gboolean active = gtk_toggle_button_get_active (w);
   if ( ! active )
@@ -176,80 +107,41 @@ select_swatch (GtkToggleButton *w, gpointer data)
 
   int i;
   struct colour_dialog_state *cds = data;
+  
   for ( i = 0; i < 6 ; ++i)
     {
-      GtkToggleButton *b = GTK_TOGGLE_BUTTON (cds->swatches[i]->button);
+      GtkToggleButton *b = GTK_TOGGLE_BUTTON (cds->swatches[i]);
       if ( w == b)
-	{
-	  cds->selected_swatch = i;
-	}
+	cds->selected_swatch = GBK_SWATCH (w);
       else
-	{
-	  gtk_toggle_button_set_active (b, FALSE);
-	}
+	gtk_toggle_button_set_active (b, FALSE);
     }
 
-  GdkColormap *cmap = gtk_widget_get_colormap (cds->swatches[cds->selected_swatch]->da);
+  g_object_get (w, "color", &colour, NULL);
 
-  gdk_gc_get_values (cds->swatches[cds->selected_swatch]->gc, &gcv);
+  gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (cds->colour_selector), colour);
 
-  gdk_colormap_query_color (cmap, gcv.foreground.pixel, &colour);
-  
-  gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (cds->colour_selector), 
-			       &colour);
+  update_radio_buttons (cds);
+}
 
-  radiobuttons_update_sensitivity (cds);
+static void
+update_radio_buttons (struct colour_dialog_state *cds)
+{
+  GbkSwatch *ss = cds->selected_swatch;
+  gtk_widget_set_sensitive (cds->button_plain,  ss->stype != SURFACE_COLOURED);
+  gtk_widget_set_sensitive (cds->button_tile,   ss->stype != SURFACE_COLOURED);
+  gtk_widget_set_sensitive (cds->button_mosaic, ss->stype != SURFACE_COLOURED);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_plain), 
-				(cds->swatches[cds->selected_swatch]->rendering.surface == SURFACE_COLOURED));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_plain),
+				(ss->stype == SURFACE_COLOURED));
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_tile), 
-				(cds->swatches[cds->selected_swatch]->rendering.surface == SURFACE_TILED));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_tile),
+				(ss->stype == SURFACE_TILED));
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_mosaic), 
-				(cds->swatches[cds->selected_swatch]->rendering.surface == SURFACE_MOSAIC));
+				(ss->stype == SURFACE_MOSAIC));
 }
 
-
-static void 
-on_swatch_realise (GtkWidget *w, gpointer data)
-{
-  struct swatch *sw = data;
-
-  GdkWindow *pw = gtk_widget_get_parent_window (sw->da);
-  sw->gc = gdk_gc_new (pw);
-
-  getColour (sw->id, &sw->rendering);
-  if ( sw->rendering.pixbuf)
-    g_object_ref (sw->rendering.pixbuf);
-
-  set_gc_foreground (sw);
-
-  gtk_widget_set_size_request (sw->da, SWATCH_WIDTH, SWATCH_HEIGHT);
-}
-
-static struct swatch *
-swatch_create (int i)
-{
-  struct swatch *sw = g_malloc (sizeof (*sw));
-
-  sw->button = gtk_toggle_button_new ();
-
-  gtk_widget_set_tooltip_text (sw->button,
-				   _("A sample of the colour. You can click and select a new colour, or drag one to this space."));
-
-  sw->da = gtk_drawing_area_new ();
-  sw->id = i;
-  sw->gc = NULL;
-
-  gtk_container_add (GTK_CONTAINER (sw->button), sw->da);
-
-  g_signal_connect (sw->da, "realize", G_CALLBACK (on_swatch_realise), sw);
-
-  g_signal_connect (sw->da, "expose-event", G_CALLBACK (draw_swatch), sw);
-
-  return sw;
-}
 
 static void
 update_preview_cb (GtkFileChooser *fc, gpointer data)
@@ -273,47 +165,6 @@ update_preview_cb (GtkFileChooser *fc, gpointer data)
     g_object_unref (pixbuf);
 }
 
-
-/*
- Set the swatch image from a file.  Returns TRUE if successfull
-*/
-static gboolean
-set_swatch_image (const gchar *filename, struct colour_dialog_state *cds)
-{
-  GtkWindow *window = NULL;
-
-  GError *gerr = 0;
-
-  struct swatch *sw = cds->swatches[cds->selected_swatch];
-
-  sw->rendering.pixbuf = create_pixbuf_from_file (filename, &gerr);
-  if (gerr)
-    {
-      error_dialog (window, gerr->message);
-      g_clear_error (&gerr);
-      return FALSE;
-    }
-
-  sw->rendering.texName = create_pattern_from_pixbuf (sw->rendering.pixbuf, &gerr);
-
-  if (gerr)
-    {
-      error_dialog (window, _("Cannot create image from file %s: %s"), filename,
-		    gerr->message);
-      g_clear_error (&gerr);
-      return FALSE;
-    }
-  sw->rendering.surface = SURFACE_TILED;
-
-  if ( gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cds->button_plain)))
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->button_tile), TRUE);
-
-  radiobuttons_update_sensitivity (cds);
-
-  gtk_widget_queue_draw (sw->da);
-
-  return TRUE;
-}
 
 
 /* Display a dialog box to set the image */
@@ -372,62 +223,65 @@ choose_image (GtkWidget *w, gpointer data)
     }
 
   gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fc));
-  set_swatch_image (filename, cds);
+
+
+  GError *gerr = NULL;
+  GdkPixbuf *pixbuf = create_pixbuf_from_file (filename, &gerr);
   g_free (filename);
+  if (gerr)
+    {
+      g_print ("%s\n", gerr->message);
+      g_clear_error (&gerr);
+      goto end;
+    }
 
+  g_object_set (cds->selected_swatch, "texture", pixbuf, NULL);
+  update_radio_buttons (cds);
+
+ end:
   gtk_widget_destroy (fc);
-}
-
-static void
-set_mosaic (GtkToggleButton *b, gpointer data)
-{
-  struct colour_dialog_state *cds = data;
-  struct swatch *sw = cds->swatches[cds->selected_swatch];
-
-  if ( !gtk_toggle_button_get_active (b))
-    return;
-
-  sw->rendering.surface = SURFACE_MOSAIC;
-
-  gtk_widget_queue_draw (sw->button);
 }
 
 static void
 set_tiled (GtkToggleButton *b, gpointer data)
 {
   struct colour_dialog_state *cds = data;
-  struct swatch *sw = cds->swatches[cds->selected_swatch];
+
   if ( !gtk_toggle_button_get_active (b))
     return;
 
-  sw->rendering.surface = SURFACE_TILED;
-
-  gtk_widget_queue_draw (sw->button);
+  g_object_set (cds->selected_swatch, "surface", SURFACE_TILED, NULL);
 }
+
+
+static void
+set_mosaic (GtkToggleButton *b, gpointer data)
+{
+  struct colour_dialog_state *cds = data;
+
+  if ( !gtk_toggle_button_get_active (b))
+    return;
+
+
+  g_object_set (cds->selected_swatch, "surface", SURFACE_MOSAIC, NULL);
+}
+
 
 static void
 set_plain (GtkToggleButton *b, gpointer data)
 {
   struct colour_dialog_state *cds = data;
-  struct swatch *sw = cds->swatches[cds->selected_swatch];
 
   if ( !gtk_toggle_button_get_active (b))
     return;
 
-  sw->rendering.surface = SURFACE_COLOURED;
+  g_object_set (cds->selected_swatch, "surface", SURFACE_COLOURED, NULL);
 
-  if (sw->rendering.pixbuf)
-    g_object_unref (sw->rendering.pixbuf);
-  sw->rendering.pixbuf = NULL;
-
-  sw->rendering.texName = 0;
-
-  radiobuttons_update_sensitivity (cds);
-  gtk_widget_queue_draw (sw->button);
+  update_radio_buttons (cds);
 }
 
 void
-colour_select_menu (GtkWidget *w, GtkWindow *window)
+colour_select_menu (GtkWidget *w, GbkGame *game)
 {
   int i;
 
@@ -438,7 +292,7 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
   cds->colour_selector = gtk_color_selection_new ();
 
   GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Colour selector"),
-						   window,
+						   game->toplevel,
 						   GTK_DIALOG_MODAL
 						   | GTK_DIALOG_DESTROY_WITH_PARENT,
 						   GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
@@ -454,8 +308,6 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
   GtkWidget *frame = gtk_frame_new (_("Image"));
   GtkWidget *button_use_image = gtk_button_new_with_mnemonic (_("Se_lect"));
 
-  
-  cds->selected_swatch = 0;
 
   gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION (cds->colour_selector), FALSE);
 
@@ -513,9 +365,11 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
 
   table = gtk_table_new (2, 3, TRUE);
 
+  cds->selected_swatch = NULL;
+
   for (i = 0; i < 6; ++i)
     {
-      cds->swatches[i] = swatch_create (i);
+      cds->swatches[i] = gbk_swatch_new ();
 
 #if 0
       const GtkTargetEntry target[2] = {
@@ -524,14 +378,34 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
       };
 #endif
 
-      g_signal_connect (cds->swatches[i]->button, "toggled",
-			G_CALLBACK (select_swatch), cds);
+      GdkColor *col = NULL;
+      GdkPixbuf *pixbuf = NULL;
+      enum surface surface = 0;
 
-      gtk_table_attach (GTK_TABLE (table), cds->swatches[i]->button,
+      gchar prop[10];
+      snprintf (prop, 10, "color%d", i);
+
+      g_object_get (game->cubeview, prop, &col, NULL);
+      g_object_set (cds->swatches[i], "color", col, NULL);
+
+      snprintf (prop, 10, "image%d", i);
+
+      g_object_get (game->cubeview, prop, &pixbuf, NULL);
+      g_object_set (cds->swatches[i], "texture", pixbuf, NULL);      
+      snprintf (prop, 10, "surface%d", i);
+
+      g_object_get (game->cubeview, prop, &surface, NULL);
+      g_object_set (cds->swatches[i], "surface", surface, NULL);      
+
+      g_signal_connect (cds->swatches[i], "toggled", G_CALLBACK (select_swatch), cds);
+
+      gtk_table_attach (GTK_TABLE (table), cds->swatches[i],
 			i / 2, i / 2 + 1,
 			i % 2, i % 2 + 1,
 			GTK_EXPAND, GTK_EXPAND, 0, 0);
     }
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cds->swatches[0]), TRUE);
 
   g_signal_connect (cds->colour_selector, "color-changed",
 		    G_CALLBACK (set_swatch_colour), cds);
@@ -561,58 +435,31 @@ colour_select_menu (GtkWidget *w, GtkWindow *window)
     {
       for (i = 0; i < 6 ; ++i)
 	{
-	  struct swatch *s = cds->swatches[i];
-	  setColour (i, &s->rendering);
+	  gchar faceprop[10];
+	  GdkColor *c = NULL;
+	  GdkPixbuf *pixbuf = NULL;
+	  GbkSwatch *s = GBK_SWATCH (cds->swatches[i]);
+	  enum surface surface;
+
+	  g_object_get (s, "color", &c, NULL);
+
+	  snprintf (faceprop, 10, "color%d", i);
+	  g_object_set (game->cubeview, faceprop, c, NULL);
+
+	  g_object_get (s, "texture", &pixbuf, NULL);
+
+	  snprintf (faceprop, 10, "image%d", i);
+	  g_object_set (game->cubeview, faceprop, pixbuf, NULL);
+
+	  g_object_get (s, "surface", &surface, NULL);
+
+	  snprintf (faceprop, 10, "surface%d", i);
+	  g_object_set (game->cubeview, faceprop, surface, NULL);
 	}
-      gtk_widget_queue_draw (GTK_WIDGET (window));
+      gtk_widget_queue_draw (GTK_WIDGET (game->toplevel));
     }
 
   gtk_widget_destroy (dialog);
 
-  for (i = 0; i < 6; ++i)
-    {
-      g_free (cds->swatches[i]);
-    }
-
   g_free (cds);
-}
-/* end of colour_select_menu (..... */
-
-
-static gboolean
-draw_swatch (GtkWidget *widget, GdkEventExpose *event, gpointer data)
-{
-  struct swatch *sw = data;
-
-  if ( sw->rendering.pixbuf == NULL)
-    {
-      gdk_draw_rectangle (widget->window,
-			  sw->gc,
-			  TRUE, 0, 0,
-			  widget->allocation.width,
-			  widget->allocation.height);
-    }
-  else
-    {
-      GdkPixbuf *scaled_pixbuf = 0;
-      gint width, height;
-
-      gdk_drawable_get_size (widget->window, &width, &height);
-
-      scaled_pixbuf =
-	gdk_pixbuf_scale_simple (sw->rendering.pixbuf,
-				 width, height, GDK_INTERP_NEAREST);
-
-      g_assert (scaled_pixbuf);
-
-      gdk_draw_pixbuf (widget->window,
-		       sw->gc,
-		       scaled_pixbuf,
-		       0, 0,
-		       0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);
-
-      g_object_unref (scaled_pixbuf);
-    }
-
-  return FALSE;
 }

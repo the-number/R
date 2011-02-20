@@ -24,35 +24,9 @@
 #include "cubeview.h"
 
 
-enum surface
-{
-  SURFACE_COLOURED,
-  SURFACE_TILED,
-  SURFACE_MOSAIC
-};
-
-struct cube_rendering
-{
-  enum surface surface;
-  GLuint texName;
-  GdkPixbuf *pixbuf;
-
-  GLfloat red;
-  GLfloat green;
-  GLfloat blue;
-};
-
 
 /* The texture names for each face */
-void draw_block (GbkCube *cube, int block_id, GLboolean anc);
-
-
+void draw_block (GbkCubeview *cv, int block_id, GLboolean anc);
 void drawCube (GbkCube *cube, GLboolean ancilliary, GbkCubeview *cv);
-
-
-void setColour (int i, const struct cube_rendering *cr);
-
-void getColour (int i, struct cube_rendering *cr);
-
 
 #endif
