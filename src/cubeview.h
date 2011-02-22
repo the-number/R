@@ -70,7 +70,6 @@ struct _GbkCubeview
   struct scene_view scene;
 
   /* instance members */
-  display *display_func;
   guint idle_id;
 
   guint rotate_id;
@@ -105,6 +104,9 @@ struct _GbkCubeview
   GdkPixbuf *pixbuf[6];
   GLuint texName[6];
   enum surface surface[6];
+
+  gboolean is_rotating;
+  guint rot_timer;
 };
 
 struct _GbkCubeviewClass

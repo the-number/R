@@ -208,9 +208,11 @@ cubeview_get_property (GObject     *object,
     };
 }
 
-enum  {
+enum  
+{
   ANIMATION_COMPLETE,
-  n_SIGNALS};
+  n_SIGNALS
+};
 
 static guint signals [n_SIGNALS];
 
@@ -331,11 +333,9 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
   GdkScreen *screen = gdk_screen_get_default ();
   GdkWindow *root = gdk_screen_get_root_window (screen);
 
-
   const GdkGLConfigMode mode[] =
     {
-      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_ACCUM | GDK_GL_MODE_DEPTH,
-
+      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH | GDK_GL_MODE_ACCUM,
       GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH,
     };
 
@@ -628,7 +628,8 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->texName[4] = -1;
   dc->texName[5] = -1;
 
-
+  dc->is_rotating = FALSE;
+  dc->rot_timer = 0;
 }
 
 G_DEFINE_TYPE (GbkCubeview, gbk_cubeview, GTK_TYPE_DRAWING_AREA);
@@ -675,7 +676,12 @@ static gboolean
 handleRedisplay (gpointer data)
 {
   GbkCubeview *cv = data;
-  cv->display_func (cv);
+
+  if ( cv->is_rotating || !have_accumulation_buffer () )
+    display_raw (cv);
+  else
+    display_anti_alias (cv);
+
   g_source_remove (cv->idle_id);
   cv->idle_id = 0;
 
@@ -726,11 +732,6 @@ realize (GtkWidget *w)
     cubeview_generate_texname (dc, i);
 
   gtk_widget_set_size_request (w, 300, 300);
-
-  if (have_accumulation_buffer ())
-    dc->display_func = display_anti_alias;
-  else
-    dc->display_func = display_raw;
 
   dc->last_mouse_x = -1;
   dc->last_mouse_y = -1;
@@ -888,7 +889,16 @@ gbk_cubeview_model_view_init (GbkCubeview *cv)
 #endif
 }
 
+static gboolean
+unset_rotating_flag (gpointer data)
+{
+  GbkCubeview *cv = data;
 
+  cv->is_rotating = FALSE;
+
+  gbk_cubeview_redisplay (cv);
+  return FALSE;
+}
 
 /* Rotate cube about axis (screen relative) */
 void
@@ -907,6 +917,13 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
     v[axis] = -1;
   else
     v[axis] = 1;
+
+  if ( cv->rot_timer != 0)
+    g_source_remove (cv->rot_timer);
+
+  cv->is_rotating = TRUE;
+
+  cv->rot_timer =  g_timeout_add (cv->picture_rate * 4, unset_rotating_flag, cv);
 
   /* We need to Transform v by the aspect of cv */
   Matrix m;
