@@ -22,6 +22,8 @@
 #include <GL/gl.h>
 #include <gtk/gtk.h>
 
+#include "cubeview.h"
+
 struct facet_selection
 {
   int block;
@@ -43,6 +45,9 @@ void select_destroy (struct cublet_selection *);
 /* Temporarily enable/disable selection */
 void select_disable (struct cublet_selection *);
 void select_enable (struct cublet_selection *);
+
+
+void select_update (GbkCubeview *cv, struct cublet_selection *cs);
 
 /* Return  a pointer to a structre containing the selected items */
 const struct facet_selection *select_get (const struct cublet_selection *cs);

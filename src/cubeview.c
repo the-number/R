@@ -1023,6 +1023,7 @@ animate_callback (gpointer data)
       cv->current_move = NULL;
 
       g_signal_emit (cv, signals[ANIMATION_COMPLETE] , 0);
+      select_update (cv, cv->cs);
     }
 
   return FALSE;

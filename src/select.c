@@ -149,7 +149,7 @@ detect_motion (GtkWidget * w, GdkEventMotion * event, gpointer data)
 }
 
 
-static void select_update (GbkCubeview *cv, struct cublet_selection *cs);
+
 
 
 
@@ -224,6 +224,11 @@ pickPolygons (GbkCubeview *cv, struct cublet_selection *cs, struct facet_selecti
 
   GtkWidget *w;
 
+  if (!gdk_gl_drawable_make_current (cv->gldrawable, cv->glcontext))
+    {
+      g_critical ("Cannot set gl drawable current\n");
+      return;
+    }
   assert (cs->granularity > 0);
   w = cs->w;
 
@@ -325,9 +330,13 @@ select_get (const struct cublet_selection *cs)
 
 /* This func,  determines which block the mouse is pointing at,  and if it
    has changed,  calls the function ptr "cs->action" */
-static void
+void
 select_update (GbkCubeview *cv, struct cublet_selection *cs)
 {
+  /* Ignore if selection is disabled */
+  if (0 == cs->timer)
+    return;
+
   pickPolygons (cv, cs, &cs->current_selection);
 
   if (cs->action)
