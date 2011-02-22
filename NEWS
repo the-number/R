@@ -1,5 +1,7 @@
 GNUbik 2.4-pre
-        * Animation is now significantly faster.
+        * Animation is now significantly faster, makeing the
+          program a lot less frustrating on machines with
+          low-end graphics hardware.
 
 	* You now show several concurrent views of the 
 	  cube from different perspectives.
@@ -14,7 +16,7 @@ GNUbik 2.4-pre
 
 	* Added uk translation.
 
-	* We now depend on Gtk+ version 2.12 or later.
+	* We now depend on Gtk+ version 2.20 or later.
 
 GNUbik 2.3
 
