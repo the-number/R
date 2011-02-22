@@ -66,6 +66,31 @@ on_move (GbkCube *cube, struct move_data *move, GbkCubeview *cv)
   animate_move (cv, move);
 }
 
+static gboolean
+unset_rotating_flag (gpointer data)
+{
+  GbkCubeview *cv = data;
+
+  cv->is_rotating = FALSE;
+
+  gbk_cubeview_redisplay (cv);
+  return FALSE;
+}
+
+
+static void
+on_rotate (GbkCubeview *cv)
+{
+  if ( cv->rot_timer != 0)
+    g_source_remove (cv->rot_timer);
+
+  cv->is_rotating = TRUE;
+
+  cv->rot_timer =  g_timeout_add (cv->picture_rate * 4, unset_rotating_flag, cv);
+
+  gbk_cubeview_redisplay (cv);
+}
+
 static void
 cubeview_set_property (GObject     *object,
 		   guint            prop_id,
@@ -87,7 +112,7 @@ cubeview_set_property (GObject     *object,
 	  g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
 
 	cubeview->rotate_id =
-	  g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (gbk_cubeview_redisplay),
+	  g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (on_rotate),
 				    cubeview);
       }
       break;
@@ -889,17 +914,6 @@ gbk_cubeview_model_view_init (GbkCubeview *cv)
 #endif
 }
 
-static gboolean
-unset_rotating_flag (gpointer data)
-{
-  GbkCubeview *cv = data;
-
-  cv->is_rotating = FALSE;
-
-  gbk_cubeview_redisplay (cv);
-  return FALSE;
-}
-
 /* Rotate cube about axis (screen relative) */
 void
 gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
@@ -917,13 +931,6 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
     v[axis] = -1;
   else
     v[axis] = 1;
-
-  if ( cv->rot_timer != 0)
-    g_source_remove (cv->rot_timer);
-
-  cv->is_rotating = TRUE;
-
-  cv->rot_timer =  g_timeout_add (cv->picture_rate * 4, unset_rotating_flag, cv);
 
   /* We need to Transform v by the aspect of cv */
   Matrix m;
