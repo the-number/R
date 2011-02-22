@@ -558,16 +558,15 @@ gbk_cubeview_finalize (GObject *o)
 
   if (cv->rotate_id)
     g_signal_handler_disconnect (cv->cube, cv->rotate_id);
-  cv->rotate_id = 0;
 
   if (cv->move_id)
     g_signal_handler_disconnect (cv->cube, cv->move_id);
-  cv->move_id = 0;
 
   if (cv->idle_id)
     g_source_remove (cv->idle_id);
-  cv->idle_id = 0;
 
+  if (cv->animation_timeout)
+    g_source_remove (cv->animation_timeout);
 }
 
 
@@ -590,6 +589,8 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->picture_rate = 40;
   dc->frameQty = 2;
   dc->animation_angle = 0;
+  dc->animation_timeout = 0;
+
 
   gtk_widget_add_events (GTK_WIDGET (dc),
 			 GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK
@@ -1016,7 +1017,7 @@ animate_move (GbkCubeview *cv, const struct move_data *move)
 
   cv->animation_angle = 90.0 * move_turns (cv->current_move);
 
-  g_timeout_add (cv->picture_rate, animate_callback, cv);
+  cv->animation_timeout = g_timeout_add (cv->picture_rate, animate_callback, cv);
 }
 
 
@@ -1038,7 +1039,7 @@ animate_callback (gpointer data)
   if (cv->animation_angle > 0)
     {
       /* call this timeout again */
-      g_timeout_add (cv->picture_rate, animate_callback, data);
+      cv->animation_timeout = g_timeout_add (cv->picture_rate, animate_callback, data);
     }
   else
     {
@@ -1048,6 +1049,7 @@ animate_callback (gpointer data)
 
       g_signal_emit (cv, signals[ANIMATION_COMPLETE] , 0);
       select_update (cv, cv->cs);
+      cv->animation_timeout = 0;
     }
 
   return FALSE;
