@@ -181,6 +181,56 @@ on_da_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 #define SWATCH_WIDTH 64
 #define SWATCH_HEIGHT 64
 
+enum 
+  {
+    GBK_DRAG_FILELIST,
+    GBK_DRAG_COLOUR
+  };
+
+static const GtkTargetEntry targets[2] = {
+  {"text/uri-list", 0, GBK_DRAG_FILELIST},
+  {"application/x-color", 0, GBK_DRAG_COLOUR},
+};
+
+static void
+on_drag_data_rx (GtkWidget *widget,
+     GdkDragContext *drag_context,
+     gint            x,
+     gint            y,
+     GtkSelectionData *selection_data,
+     guint           time,
+     gpointer        user_data)
+{
+  guint16 *vals;
+  GdkColor colour;
+  gboolean success = TRUE;
+
+  if (selection_data->length < 0)
+    {
+      success = FALSE;
+      goto end;
+    }
+
+  if ((selection_data->format != 16) ||
+      (selection_data->length != 8))
+    {
+      success = FALSE;
+      g_warning ("Received invalid color data");
+      goto end;
+    }
+
+  vals = (guint16 *)selection_data->data;
+
+  colour.red =   vals[0];
+  colour.green = vals[1];
+  colour.blue =  vals[2];
+
+  g_object_set (widget, "color", &colour, NULL);
+
+ end:
+  gtk_drag_finish (drag_context, success, FALSE, time);
+}
+
 static void
 realize (GtkWidget *w)
 {
@@ -197,7 +247,10 @@ realize (GtkWidget *w)
   if ( sw->color)
     gdk_gc_set_rgb_fg_color (sw->gc, sw->color);
 
+  gtk_drag_dest_set (w, GTK_DEST_DEFAULT_ALL, targets, 2, GDK_ACTION_COPY);
+
   g_signal_connect (sw->da, "expose-event", G_CALLBACK (on_da_expose), sw);
+  g_signal_connect (sw, "drag-data-received", G_CALLBACK (on_drag_data_rx), 0);
 }
 
 
