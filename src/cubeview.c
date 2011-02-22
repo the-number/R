@@ -600,7 +600,7 @@ gbk_cubeview_init (GbkCubeview *dc)
 			 | GDK_VISIBILITY_NOTIFY_MASK
 			 | GDK_POINTER_MOTION_MASK);
 
-  GTK_WIDGET_SET_FLAGS (dc, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (GTK_WIDGET (dc), TRUE);
 
   dc->cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
 		      dc );
@@ -683,7 +683,7 @@ size_allocate (GtkWidget *w, GtkAllocation *alloc)
   gint width = alloc->width;
 
 
-  if (!GTK_WIDGET_REALIZED (w))
+  if (!gtk_widget_get_realized (w))
     return;
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)

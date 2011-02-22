@@ -61,7 +61,7 @@ swatch_set_property (GObject     *object,
 
 	    sw->color = gdk_color_copy (new_color);
 
-	    if ( GTK_WIDGET_REALIZED (sw))
+	    if ( gtk_widget_get_realized (GTK_WIDGET (sw)))
 	      {
 		gdk_gc_set_rgb_fg_color (sw->gc, sw->color);
 		gtk_widget_queue_draw (GTK_WIDGET (sw));
