@@ -20,6 +20,8 @@
 #include "swatch.h"
 #include <gtk/gtk.h>
 
+#include "colour-dialog.h"
+
 #include <libintl.h>
 #define _(String) gettext (String)
 #define N_(String) (String)
@@ -198,34 +200,102 @@ on_drag_data_rx (GtkWidget *widget,
      gint            x,
      gint            y,
      GtkSelectionData *selection_data,
+     guint           info,
      guint           time,
      gpointer        user_data)
 {
-  guint16 *vals;
-  GdkColor colour;
   gboolean success = TRUE;
 
   if (selection_data->length < 0)
     {
+      g_warning ("Empty drag data");
       success = FALSE;
       goto end;
     }
 
-  if ((selection_data->format != 16) ||
-      (selection_data->length != 8))
+  switch (info)
     {
-      success = FALSE;
-      g_warning ("Received invalid color data");
-      goto end;
+    case GBK_DRAG_COLOUR:
+      {
+	guint16 *vals;
+	GdkColor colour;
+
+	if ((selection_data->format != 16) ||
+	    (selection_data->length != 8))
+	  {
+	    success = FALSE;
+	    g_warning ("Received invalid color data");
+	    goto end;
+	  }
+
+	vals = (guint16 *)selection_data->data;
+
+	colour.red =   vals[0];
+	colour.green = vals[1];
+	colour.blue =  vals[2];
+
+	g_object_set (widget, "color", &colour, NULL);
+	break;
+      }
+    case GBK_DRAG_FILELIST:
+      {
+	gchar **s = 0;
+	gchar **start = 0;
+
+	start = s = g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
+
+	while (*s)
+	  {
+	    GdkPixbuf *pixbuf = NULL;
+	    gchar *utf8;
+	    gchar *filename;
+
+	    GError *gerr=0;
+
+	    if ( strcmp (*s, "") == 0 ) 
+	      {
+		s++;
+		continue ;
+	      }
+
+	    /* Convert to utf8.  Is this necessary ?? */
+	    utf8 =  g_locale_to_utf8 (*s, -1, 0, 0, &gerr);
+	    if ( gerr )
+	      {
+		g_warning (gerr->message);
+		g_clear_error (&gerr);
+		gerr = 0;
+		continue;
+	      }
+
+	    /* Extract the filename from the uri */
+	    filename = g_filename_from_uri (utf8, 0, &gerr);
+	    if ( gerr )
+	      {
+		g_warning (gerr->message);
+		g_clear_error (&gerr);
+		continue;
+	      }
+	    g_free (utf8);
+
+	    pixbuf = create_pixbuf_from_file (filename,  &gerr);
+ 
+	    g_free (filename);
+
+	    g_object_set (widget, "texture", pixbuf, NULL);
+
+	    /* For now,  just use the first one.
+	     Later,  we'll add some method for disambiguating multiple files
+	    */
+	    break ;
+	    s++;
+	  }
+      }
+      break;
+    default:
+      g_warning ("Unsupported drag data type");
+      break;
     }
-
-  vals = (guint16 *)selection_data->data;
-
-  colour.red =   vals[0];
-  colour.green = vals[1];
-  colour.blue =  vals[2];
-
-  g_object_set (widget, "color", &colour, NULL);
 
  end:
   gtk_drag_finish (drag_context, success, FALSE, time);
