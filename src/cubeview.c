@@ -981,6 +981,11 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
     return FALSE;
 #endif
 
+  /* Force an update on the selection mechanism.  This avoids
+     annoying instances of moves occuring  when a rotation was 
+     intended. (Happens when experienced users become too fast). */
+  select_update (cv, cs);
+
   switch (event->button)
     {
     case 3:

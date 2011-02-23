@@ -327,18 +327,12 @@ select_get (const struct cublet_selection *cs)
 }
 
 
-
 /* This func,  determines which block the mouse is pointing at,  and if it
    has changed,  calls the function ptr "cs->action" */
 void
 select_update (GbkCubeview *cv, struct cublet_selection *cs)
 {
-  /* Ignore if selection is disabled */
-  if (0 == cs->timer)
-    return;
-
   pickPolygons (cv, cs, &cs->current_selection);
-
   if (cs->action)
     cs->action (cs, cs->data);
 }
