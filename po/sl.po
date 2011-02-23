@@ -1,0 +1,266 @@
+# Slovenian translation for gnubik.
+# Copyright (C) 2011 John Darrington.
+# This file is distributed under the same license as the gnubik package.
+# Klemen Košir <klemen.kosir@gmx.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnubik 2.3\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2009-01-06 11:48+0900\n"
+"PO-Revision-Date: 2011-02-23 11:14+0100\n"
+"Last-Translator: Klemen Košir <klemen.kosir@gmx.com>\n"
+"Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0)\n"
+
+#: src/colour-sel.c:181
+#, c-format
+msgid "Cannot create image from file %s: %s"
+msgstr "Slike iz datoteke %s ni mogoče ustvariti: %s"
+
+#: src/colour-sel.c:261
+msgid "Image Selector"
+msgstr "Izbirnik slik"
+
+#: src/colour-sel.c:289
+msgid "All Images"
+msgstr "Vse slike"
+
+#: src/colour-sel.c:296
+msgid "All Files"
+msgstr "Vse datoteke"
+
+#: src/colour-sel.c:440
+msgid "Pattern"
+msgstr "Vzorec"
+
+#: src/colour-sel.c:441
+msgid "Colour"
+msgstr "Barva"
+
+#: src/colour-sel.c:468
+msgid "Click here to use a pattern on the cube surface"
+msgstr "Če želite na površini kocke uporabiti vzorec, kliknite sem"
+
+#: src/colour-sel.c:750
+msgid "Colour selector"
+msgstr "Izbirnik barv"
+
+#: src/colour-sel.c:776
+msgid "Image"
+msgstr "Slika"
+
+#: src/colour-sel.c:777
+msgid "Se_lect"
+msgstr "Iz_beri"
+
+#: src/colour-sel.c:780
+msgid "Select an image file"
+msgstr "Izberite slikovno datoteko"
+
+#: src/colour-sel.c:783
+msgid "_Tiled"
+msgstr "_Razpostavljeno"
+
+#: src/colour-sel.c:785
+msgid ""
+"Place a copy of the image\n"
+"on each block"
+msgstr ""
+"Postavi kopijo slike\n"
+"na vsako polje"
+
+#: src/colour-sel.c:789
+msgid "_Mosaic"
+msgstr "_Mozaik"
+
+#: src/colour-sel.c:792
+msgid ""
+"Place a copy of the image across\n"
+"the entire face of the cube"
+msgstr ""
+"Postavi kopijo sliko\n"
+"čez celotno ploskev kocke"
+
+#: src/colour-sel.c:852
+msgid "A sample of the colour or pattern. You can click and select a new colour or pattern,  or drag one to this space."
+msgstr "Primerek barve ali vzorca. Na ta gumb lahko kliknete ter izberete novo barvo ali vzorec."
+
+#: src/menus.c:165
+msgid "Sets the number of blocks in each side"
+msgstr "Nastavi število kockic na vsaki strani"
+
+#: src/menus.c:167
+msgid "Size of cube:"
+msgstr "Velikost kocke:"
+
+#: src/menus.c:207
+msgid "Faster"
+msgstr "Hitreje"
+
+#: src/menus.c:210
+msgid "Slower"
+msgstr "Počasneje"
+
+#: src/menus.c:215
+msgid "Controls the speed with which slices rotate"
+msgstr "Nadzoruje hitrost vrtenja plasti, vrstic in stolpcev"
+
+#: src/menus.c:259
+msgid "Preferences"
+msgstr "Možnosti"
+
+#: src/menus.c:271
+msgid "Dimensions"
+msgstr "Mere"
+
+#: src/menus.c:272
+msgid "Animation"
+msgstr "Animacija"
+
+#: src/menus.c:273
+msgid "Lighting"
+msgstr "Osvetljevanje"
+
+#: src/menus.c:282
+msgid "Enable lighting"
+msgstr "Omogoči osvetljevanje"
+
+#: src/menus.c:284
+msgid "Makes the cube appear illuminated"
+msgstr "Osvetli kocko"
+
+#: src/menus.c:354
+msgid "Start cube with new settings?"
+msgstr "Ali želite začeti kocko z novimi nastavitvami?"
+
+#: src/textures.c:203
+msgid "Pixbuf has wrong number of channels"
+msgstr "Medpomnilnik sličic ima napačno število kanalov"
+
+#: src/textures.c:211
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Pixbuf ima neznan barvni prostor: %d"
+
+#: src/widget-set.c:114
+#, c-format
+msgid "Moves: %d / %d"
+msgstr "Premiki %d / %d"
+
+#: src/widget-set.c:140
+#, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] "Kocka je bila rešena v %d premikih"
+msgstr[1] "Kocka je bila rešena v %d premiku"
+msgstr[2] "Kocka je bila rešena v %d premikih"
+msgstr[3] "Kocka je bila rešena v %d premikih"
+
+#: src/widget-set.c:146
+msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr "Kocka NI rešena! Barve so pravilne, vendar imajo napačno usmerjenost"
+
+#: src/widget-set.c:200
+msgid "Rewind"
+msgstr "Previj"
+
+#: src/widget-set.c:201
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr "Vrni se na prejšnjo oznako (ali začetek) zaporedja premikov"
+
+#: src/widget-set.c:206
+msgid "Back"
+msgstr "Nazaj"
+
+#: src/widget-set.c:207
+msgid "Make one step backwards"
+msgstr "Premakni se za en korak nazaj"
+
+#: src/widget-set.c:213
+msgid "Stop"
+msgstr "Zaustavi"
+
+#: src/widget-set.c:214
+msgid "Stop running the sequence of moves"
+msgstr "Zaustavi predvajanje zaporedja premikov"
+
+#: src/widget-set.c:220
+msgid "Mark"
+msgstr "Označi"
+
+#: src/widget-set.c:221
+msgid "Mark the current place in the sequence of moves"
+msgstr "Označi trenutno mesto v zaporedju premikov"
+
+#: src/widget-set.c:227
+msgid "Forward"
+msgstr "Naprej"
+
+#: src/widget-set.c:228
+msgid "Make one step forwards"
+msgstr "Premakni se za en korak naprej"
+
+#: src/widget-set.c:234
+msgid "Play"
+msgstr "Predvajaj"
+
+#: src/widget-set.c:235
+msgid "Run forward through the sequence of moves"
+msgstr "Predvajaj zaporedje premikov"
+
+#: src/widget-set.c:322
+msgid "_Play Toolbar"
+msgstr "Orodna vrstica"
+
+#: src/widget-set.c:329
+msgid "_Status Bar"
+msgstr "Vrstica _stanja"
+
+#: src/widget-set.c:367
+msgid "/_Game"
+msgstr "/I_gra"
+
+#: src/widget-set.c:368
+msgid "/_Game/_New Game"
+msgstr "/I_gra/_Nova igra"
+
+#: src/widget-set.c:369
+msgid "/_Game/sep"
+msgstr "/_Igra/sep"
+
+#: src/widget-set.c:370
+msgid "/_Game/_Quit"
+msgstr "/I_gra/_Končaj"
+
+#: src/widget-set.c:371
+msgid "/_Settings"
+msgstr "/Na_stavitve"
+
+#: src/widget-set.c:372
+msgid "/_Settings/_Preferences"
+msgstr "/Na_stavitve/_Možnosti"
+
+#: src/widget-set.c:373
+msgid "/_Settings/_Colours"
+msgstr "/Na_stavitve/_Barve"
+
+#: src/widget-set.c:374
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/Na_stavitve/_Pokaži\\/Skrij"
+
+#: src/widget-set.c:380
+msgid "/_Help"
+msgstr "/Pomo_č"
+
+#: src/widget-set.c:381
+msgid "/_Help/_About"
+msgstr "/Pomo_č/_O programu"
+
+#: src/widget-set.c:431
+msgid "/Settings/Show\\/Hide"
+msgstr "/Nastavitve/Pokaži\\/Skrij"
