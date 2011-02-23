@@ -103,8 +103,6 @@ update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
 {
   static int context = 0;
 
-  static guint mesg_id = 0;
-
   gchar mesg[MSGLEN];
 
   if (0 == context)
@@ -116,10 +114,10 @@ update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
 	      game->posn,
 	      game->total);
 
-  if (mesg_id != 0)
-    gtk_statusbar_remove (statusbar, context, mesg_id);
+  if (game->mesg_id != 0)
+    gtk_statusbar_remove (statusbar, context, game->mesg_id);
 
-  mesg_id = gtk_statusbar_push (statusbar, context, mesg);
+  game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
 }
 
 GtkWidget *

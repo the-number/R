@@ -76,6 +76,8 @@ struct _GbkGame
 
   /* Id of the animate complete signal */
   gulong animate_complete_id;
+
+  guint mesg_id;
 };
 
 struct _GbkGameClass

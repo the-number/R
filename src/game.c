@@ -32,6 +32,7 @@ static guint signals [n_SIGNALS];
 static void
 gbk_game_init (GbkGame *game)
 {
+  game->mesg_id = 0;
   gbk_game_reset (game);
 }
 
