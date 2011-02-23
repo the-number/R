@@ -213,7 +213,7 @@ static SCM
 gnubik_error_dialog (SCM message)
 {
   char *msg = scm_to_locale_string (message);
-  //error_dialog (main_application_window, msg);
+  error_dialog (the_game->toplevel, msg);
   free (msg);
 
   return SCM_UNSPECIFIED;

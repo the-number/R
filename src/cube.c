@@ -18,7 +18,7 @@
 */
 
 #include <config.h>
-#include "cube.h"
+#include "cube.h" 
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -28,18 +28,7 @@
 static inline int cos_quadrant (int quarters);
 static inline int sin_quadrant (int quarters);
 
-
-static int 
-block_coords_to_index (const GbkCube *cube, int x)
-{
-  if (x == 0) return 1;
-
-  if (x == 2) return 2;
-  if (x == -2) return 0;
-
-  g_assert (0);
-  return -1;
-}
+static int  block_coords_to_index (const GbkCube *cube, int x, int dim);
 
 /*
   Manufacture a SCM object which is a vector of six vectors of (cube_size *
@@ -53,11 +42,22 @@ make_scm_cube (const GbkCube *cube)
 {
   Block *block;
 
-
   /* We can manufacture  our scheme object. */
   SCM scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
 
-  int colours[6][3][3];
+  int biggest = 0;
+  int li = -1;
+  int i;
+  for (i = 0; i < 3; ++i)
+    {
+      if (biggest < gbk_cube_get_size (cube, i))
+	{
+	  biggest = gbk_cube_get_size (cube, i);
+	  li = i;
+	}
+    }
+
+  int colours[6][biggest][biggest];
   
   /* Loop over all blocks and faces,  but only process if the face is on the
      outside of the cube. */
@@ -92,26 +92,25 @@ make_scm_cube (const GbkCube *cube)
 	  if (abs (face_direction[0]) > 0.1)
 	    colours[face_direction[0] < 0.0 ? 4 : 5]
 	      [block_coords_to_index
-	       (cube, block->transformation[13])]
+	       (cube, block->transformation[13], 1)]
 	      [block_coords_to_index
-	       (cube, block->transformation[14])] = face;
+	       (cube, block->transformation[14], 2)] = face;
 
 	  else if (abs (face_direction[1]) > 0.1)
 	    colours[face_direction[1] < 0.0 ? 2 : 3]
 	      [block_coords_to_index
-	       (cube, block->transformation[12])]
+	       (cube, block->transformation[12], 0)]
 	      [block_coords_to_index
-	       (cube, block->transformation[14])] = face;
+	       (cube, block->transformation[14], 2)] = face;
 
 	  else
 	    colours[face_direction[2] < 0.0 ? 0 : 1]
 	      [block_coords_to_index
-	       (cube, block->transformation[12])]
+	       (cube, block->transformation[12], 0)]
 	      [block_coords_to_index
-	       (cube, block->transformation[13])] = face;
+	       (cube, block->transformation[13], 1)] = face;
 	}
     }
-
 
 
   int face;
@@ -194,6 +193,14 @@ block_index_to_coords (const GbkCube *cube, int i, int dim)
 {
   return 2 * i - (cube->size[dim] - 1);
 }
+
+/* The inverse of the above */
+static int 
+block_coords_to_index (const GbkCube *cube, int x, int dim)
+{
+  return  (x + cube->size[dim] - 1 ) / 2;
+}
+
 
 
 static void
