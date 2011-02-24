@@ -36,13 +36,12 @@ src_gnubik_SOURCES = \
 	src/glarea.h \
 	src/guile-hooks.c src/guile-hooks.h \
 	src/main.c \
+	src/menus.c src/menus.h \
 	src/move.c src/move.h \
 	src/quarternion.c src/quarternion.h \
 	src/select.c src/select.h \
 	src/swatch.c src/swatch.h \
 	src/txfm.c src/txfm.h \
 	src/textures.c src/textures.h \
-	src/version.c src/version.h \
-	src/widget-set.c src/widget-set.h 
-
+	src/version.c src/version.h
 

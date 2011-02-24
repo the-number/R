@@ -23,7 +23,7 @@
 #include "colour-dialog.h"
 #include "drwBlock.h"
 #include "textures.h"
-#include "widget-set.h"
+#include "menus.h"
 #include "select.h"
 #include "cubeview.h"
 

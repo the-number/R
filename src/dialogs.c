@@ -25,7 +25,7 @@
 #include "cube.h"
 #include "version.h"
 #include "drwBlock.h"
-#include "widget-set.h"
+#include "menus.h"
 
 #include "game.h"
 

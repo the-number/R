@@ -23,7 +23,7 @@
 #include <libintl.h>
 #include <getopt.h>
 
-#include "widget-set.h"
+#include "menus.h"
 #include "cubeview.h"
 #include "glarea.h"
 #include "version.h"

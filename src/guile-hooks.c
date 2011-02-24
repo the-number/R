@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 #include "cube.h"
-#include "widget-set.h"
+#include "menus.h"
 
 #include <libguile.h>
 

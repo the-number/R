@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include "cube.h"
-#include "widget-set.h"
+#include "menus.h"
 #include "dialogs.h"
 #include "guile-hooks.h"
 #include "colour-dialog.h"
