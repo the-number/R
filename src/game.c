@@ -195,9 +195,26 @@ gbk_game_new (GbkCube *cube)
 }
 
 void
-gbk_game_set_master_view (GbkGame *game, GbkCubeview *cv)
+gbk_game_remove_view (GbkGame *game, GbkCubeview *cv)
 {
-  game->cubeview = cv;
+  GSList *element = g_slist_find (game->views, cv);
+
+  if ( element->data == game->masterview)
+    g_critical ("Removing the master view");
+
+  game->views = g_slist_remove_link (game->views, element);
+}
+
+void
+gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master)
+{
+  game->views = g_slist_prepend (game->views, cv);
+  if (master) 
+    game->masterview = cv;
+  else
+    {
+      g_signal_connect_swapped (cv, "destroy", G_CALLBACK (gbk_game_remove_view), game);
+    }
 }
 
 gboolean
@@ -287,7 +304,7 @@ next_move (GbkGame *game, gboolean backwards)
   if ( game->mode != MODE_PLAY ||
        terminal (game) )
     {
-      g_signal_handler_disconnect (game->cubeview,
+      g_signal_handler_disconnect (game->masterview,
 				   game->animate_complete_id);
       game->animate_complete_id = 0;
       game->mode = MODE_RECORD;
@@ -301,7 +318,7 @@ next_move (GbkGame *game, gboolean backwards)
       /* Single stepping */
       game->mode = MODE_RECORD;
       game->animate_complete_id = 
-	g_signal_connect_swapped (game->cubeview,
+	g_signal_connect_swapped (game->masterview,
 			      "animation-complete",
 				  G_CALLBACK (next_move), game);
     }
@@ -347,7 +364,7 @@ gbk_game_replay (GbkGame *game)
   game->mode = MODE_PLAY;
 
   game->animate_complete_id = 
-    g_signal_connect_swapped (game->cubeview,
+    g_signal_connect_swapped (game->masterview,
 			      "animation-complete",
 		      G_CALLBACK (move_forward), game);
 

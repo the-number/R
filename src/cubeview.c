@@ -53,6 +53,7 @@ enum
     PROP_0 = 0,
     PROP_CUBE,
     PROP_ASPECT,
+    PROP_FQ,
     PROP_COL0,    PROP_COL1,    PROP_COL2, PROP_COL3,    PROP_COL4,    PROP_COL5,
     PROP_IMG0,    PROP_IMG1,    PROP_IMG2, PROP_IMG3,    PROP_IMG4,    PROP_IMG5,
     PROP_SFC0,    PROP_SFC1,    PROP_SFC2, PROP_SFC3,    PROP_SFC4,    PROP_SFC5
@@ -128,6 +129,9 @@ cubeview_set_property (GObject     *object,
 
 	quarternion_from_rotation (&cubeview->qView, v, angle);
       }
+      break;
+    case PROP_FQ:
+      cubeview->frameQty = g_value_get_int (value);
       break;
     case PROP_COL0: case PROP_COL1:  case PROP_COL2:
     case PROP_COL3: case PROP_COL4:  case PROP_COL5:
@@ -219,6 +223,9 @@ cubeview_get_property (GObject     *object,
 	g_value_set_boxed (value, &col);
       }
       break;
+    case PROP_FQ:
+      g_value_set_int (value, cubeview->frameQty);
+      break;
     case PROP_IMG0: case PROP_IMG1:  case PROP_IMG2:
     case PROP_IMG3: case PROP_IMG4:  case PROP_IMG5:
       g_value_set_object (value, cubeview->pixbuf[prop_id - PROP_IMG0]);
@@ -255,6 +262,7 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
   GParamSpec *cube_param_spec;
   GParamSpec *aspect_param_spec;
+  GParamSpec *fq_param_spec;
 
 
   parent_class = g_type_class_peek_parent (klass);
@@ -263,6 +271,17 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
   gobject_class->set_property = cubeview_set_property;
   gobject_class->get_property = cubeview_get_property;
+
+  fq_param_spec = g_param_spec_int ("animation-frames",
+				    "Animation Frames",
+				    "How many frames to display per animation",
+				    0, 100, 2,
+				    G_PARAM_READWRITE);
+
+  g_object_class_install_property (gobject_class,
+                                   PROP_FQ,
+                                   fq_param_spec);
+
 
   cube_param_spec = g_param_spec_object ("cube",
 					 "Cube",
@@ -860,7 +879,7 @@ display_raw (GbkCubeview *dc)
 void
 gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames)
 {
-  dc->frameQty = frames;
+  g_object_set (dc, "animation-frames", frames, NULL);
 }
 
 gboolean

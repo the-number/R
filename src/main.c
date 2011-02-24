@@ -116,7 +116,7 @@ c_main (void *closure, int argc, char *argv[])
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (cubeview), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (hbox), cubeview, TRUE, TRUE, 0);
 
-  gbk_game_set_master_view (the_game, GBK_CUBEVIEW (cubeview));
+  gbk_game_add_view (the_game, GBK_CUBEVIEW (cubeview), TRUE);
 
   statusbar = create_statusbar (the_game);
   gtk_box_pack_start (GTK_BOX (form), statusbar, FALSE, FALSE, 0);

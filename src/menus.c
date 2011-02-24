@@ -55,6 +55,8 @@ new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
 
   g_object_set (view, "aspect", aspect, NULL);
 
+  gbk_game_add_view (game, GBK_CUBEVIEW (view), FALSE);
+
   gtk_widget_show_all (window);
 }
 
@@ -192,7 +194,7 @@ static const GtkActionEntry action_entries[] =
 {
   {"game-menu-action", NULL, N_("_Game")},
   {"view-menu-action", NULL, N_("_View")},
-  {"add-view-menu-action", NULL, N_("_Add View"), 
+  {"add-view-menu-action", NULL, N_("Add _View"), 
    NULL, N_("Add an auxiliary view of the cube")},
 
 
@@ -231,6 +233,42 @@ start_new_game (GbkGame *game, int size0, int size1, int size2, gboolean scrambl
 }
 
 
+static void
+animate_faster (GtkWidget *w, GbkGame *game)
+{
+  GSList *v;
+  int frames;
+
+  g_object_get (game->masterview, "animation-frames", &frames, NULL);
+  frames *= 2/3.0;
+
+  /* Iterate over all the views and set the new properties */
+  for (v = game->views ; v != NULL; v = g_slist_next (v))
+    {
+      g_object_set (v->data, "animation-frames", frames, NULL);
+    }
+}
+
+static void
+animate_slower (GtkWidget *w, GbkGame *game)
+{
+  int frames;
+  GSList *v;
+  g_object_get (game->masterview, "animation-frames", &frames, NULL);
+  frames /= 2/3.0;
+  if (frames == 0)
+    frames = 1;
+  
+  if (frames == 1)
+    frames = 2;
+
+  /* Iterate over all the views and set the new properties */
+  for (v = game->views ; v != NULL; v = g_slist_next (v))
+    {
+      g_object_set (v->data, "animation-frames", frames, NULL);
+    }
+}
+
 static const GtkActionEntry game_action_entries[] =
   {
     {
@@ -256,6 +294,21 @@ static const GtkActionEntry game_action_entries[] =
       NULL, "colours", G_CALLBACK (colour_select_menu)
     },
 
+    {
+      "animation-action", NULL, N_("_Animation"),
+      NULL, "animation", NULL
+    },
+
+    {
+      "animate-faster-action", NULL,  N_("_Faster"),
+      NULL, "animate-faster", G_CALLBACK (animate_faster)
+    },
+
+    {
+      "animate-slower-action", NULL, N_("_Slower"),
+      NULL, "animate-slower", G_CALLBACK (animate_slower)
+    },
+
   };
 
 
@@ -274,19 +327,14 @@ static const char menu_tree[] = "<ui>\
       <menuitem name=\"right\" action=\"add-view-right-action\"/> \
       <menuitem name=\"top\"   action=\"add-view-top-action\"/> \
       <menuitem name=\"bottom\" action=\"add-view-bottom-action\"/> \
-     </menu>\
-"\
-  /*
-     <menu name=\"show-hide-menu\" action=\"show-hide-menu-action\">\
-     <menuitem name=\"toggle-toolbar\" action=\"toolbar-action\"/>\
-     <menuitem name=\"toggle-statusbar\" action=\"statusbar-action\"/>\
-     </menu>\
-    </menu>\
-  */
-"\
-    </menu>\
+     </menu> \
+     <menu name=\"animation-menu\" action=\"animation-action\"> \
+       <menuitem name=\"faster\"   action=\"animate-faster-action\"/>	\
+       <menuitem name=\"slower\"   action=\"animate-slower-action\"/>	\
+     </menu> \
+    </menu> \
     <menu name=\"scripts-menu\" action=\"scripts-menu-action\">\
-    </menu>\
+    </menu> \
     <menu name=\"help-menu\" action=\"help-menu-action\">\
      <menuitem name=\"about\" action=\"about-action\"/>\
     </menu>\

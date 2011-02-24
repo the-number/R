@@ -385,16 +385,16 @@ colour_select_menu (GtkWidget *w, GbkGame *game)
       gchar prop[10];
       snprintf (prop, 10, "color%d", i);
 
-      g_object_get (game->cubeview, prop, &col, NULL);
+      g_object_get (game->masterview, prop, &col, NULL);
       g_object_set (cds->swatches[i], "color", col, NULL);
 
       snprintf (prop, 10, "image%d", i);
 
-      g_object_get (game->cubeview, prop, &pixbuf, NULL);
+      g_object_get (game->masterview, prop, &pixbuf, NULL);
       g_object_set (cds->swatches[i], "texture", pixbuf, NULL);      
       snprintf (prop, 10, "surface%d", i);
 
-      g_object_get (game->cubeview, prop, &surface, NULL);
+      g_object_get (game->masterview, prop, &surface, NULL);
       g_object_set (cds->swatches[i], "surface", surface, NULL);      
 
       g_signal_connect (cds->swatches[i], "toggled", G_CALLBACK (select_swatch), cds);
@@ -435,26 +435,31 @@ colour_select_menu (GtkWidget *w, GbkGame *game)
     {
       for (i = 0; i < 6 ; ++i)
 	{
-	  gchar faceprop[10];
-	  GdkColor *c = NULL;
-	  GdkPixbuf *pixbuf = NULL;
-	  GbkSwatch *s = GBK_SWATCH (cds->swatches[i]);
-	  enum surface surface;
+	  /* Iterate over all the views and set the new properties */
+	  GSList *v;
+	  for (v = game->views ; v != NULL; v = g_slist_next (v))
+	    {
+	      gchar faceprop[10];
+	      GdkColor *c = NULL;
+	      GdkPixbuf *pixbuf = NULL;
+	      GbkSwatch *s = GBK_SWATCH (cds->swatches[i]);
+	      enum surface surface;
 
-	  g_object_get (s, "color", &c, NULL);
+	      g_object_get (s, "color", &c, NULL);
 
-	  snprintf (faceprop, 10, "color%d", i);
-	  g_object_set (game->cubeview, faceprop, c, NULL);
+	      snprintf (faceprop, 10, "color%d", i);
+	      g_object_set (v->data, faceprop, c, NULL);
 
-	  g_object_get (s, "texture", &pixbuf, NULL);
+	      g_object_get (s, "texture", &pixbuf, NULL);
 
-	  snprintf (faceprop, 10, "image%d", i);
-	  g_object_set (game->cubeview, faceprop, pixbuf, NULL);
+	      snprintf (faceprop, 10, "image%d", i);
+	      g_object_set (v->data, faceprop, pixbuf, NULL);
 
-	  g_object_get (s, "surface", &surface, NULL);
+	      g_object_get (s, "surface", &surface, NULL);
 
-	  snprintf (faceprop, 10, "surface%d", i);
-	  g_object_set (game->cubeview, faceprop, surface, NULL);
+	      snprintf (faceprop, 10, "surface%d", i);
+	      g_object_set (v->data, faceprop, surface, NULL);
+	    }
 	}
       gtk_widget_queue_draw (GTK_WIDGET (game->toplevel));
     }

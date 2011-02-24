@@ -64,7 +64,10 @@ struct _GbkGame
   GbkCube *cube;
 
   /* The cubeview which we'll consider as the master one */
-  GbkCubeview *cubeview;
+  GbkCubeview *masterview;
+
+  /* A linked list of all the views, including the master */
+  GSList *views;
 
   enum mode mode;
 
@@ -96,8 +99,6 @@ GType gbk_game_get_type (void);
 
 GObject* gbk_game_new (GbkCube *cube);
 
-void gbk_game_set_master_view (GbkGame *game, GbkCubeview *cv);
-
 void gbk_game_rewind (GbkGame *game);
 void gbk_game_replay (GbkGame *game);
 void gbk_game_stop_replay (GbkGame *game);
@@ -110,5 +111,8 @@ gboolean gbk_game_at_end (GbkGame *game);
 
 void gbk_game_reset (GbkGame *game);
 
+void gbk_game_remove_view (GbkGame *game, GbkCubeview *cv);
+
+void gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master);
 
 #endif /* __GAME_H__ */
