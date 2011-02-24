@@ -200,13 +200,6 @@ static const GtkActionEntry action_entries[] =
   {"show-hide-menu-action", NULL, N_("Sho_w/Hide")},
   {"scripts-menu-action", NULL, N_("_Scripts")},
 
-#if 0
-  {
-   "preferences-action", GTK_STOCK_PREFERENCES, NULL,
-   NULL, "preferences", G_CALLBACK (preferences_dialog)
-  },
-#endif
-
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
    NULL, "about", G_CALLBACK (about_dialog)
@@ -265,27 +258,6 @@ static const GtkActionEntry game_action_entries[] =
 
   };
 
-#if COMPLETE_MENUS
-
-static const GtkToggleActionEntry statusbar_action_entries[] =
-  {
-    {
-   "statusbar-action", NULL, N_("_Status Bar"),
-   NULL, "show-hide-statusbar", G_CALLBACK (toggle_visibility), TRUE
-    },
-  };
-
-
-static const GtkToggleActionEntry toolbar_action_entries[] =
-  {
-    {
-   "toolbar-action", NULL, N_("_Play Toolbar"),
-   NULL, "show-hide-toolbar", G_CALLBACK (toggle_visibility), TRUE
-    }
-  };
-
-
-#endif
 
 static const char menu_tree[] = "<ui>\
   <menubar name=\"MainMenu\">\
@@ -294,11 +266,7 @@ static const char menu_tree[] = "<ui>\
      <menuitem name=\"new-game\" action=\"new-game-action\"/> \
      <menuitem name=\"quit\" action=\"quit-action\"/>\
     </menu>\
-    <menu name=\"view-menu\" action=\"view-menu-action\">"
-  /*
-     <menuitem name=\"preferences\" action=\"preferences-action\"/>\
-  */
-"\
+    <menu name=\"view-menu\" action=\"view-menu-action\"> \
      <menuitem name=\"colours\" action=\"colours-action\"/> \
      <menu name=\"add view\"   action=\"add-view-menu-action\"> \
       <menuitem name=\"rear\"  action=\"add-view-rear-action\"/> \
@@ -333,17 +301,9 @@ create_menubar (GbkGame *game)
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
   GtkActionGroup *action_group = gtk_action_group_new ("dialog-actions");
   GtkActionGroup *game_action_group = gtk_action_group_new ("game-actions");
-#if COMPLETE_MENUS
-  GtkActionGroup *toolbar_action_group = gtk_action_group_new ("toolbar-actions");
-  GtkActionGroup *statusbar_action_group = gtk_action_group_new ("statusbar-actions");
-#endif
 
   gtk_action_group_set_translation_domain (action_group, PACKAGE);
   gtk_action_group_set_translation_domain (game_action_group, PACKAGE);
-#if COMPLETE_MENUS
-  gtk_action_group_set_translation_domain (toolbar_action_group, PACKAGE);
-  gtk_action_group_set_translation_domain (statusbar_action_group, PACKAGE);
-#endif
 
   gtk_action_group_add_actions (action_group, action_entries,
 				sizeof (action_entries) /
@@ -354,23 +314,9 @@ create_menubar (GbkGame *game)
 				sizeof (game_action_entries) /
 				sizeof (game_action_entries[0]), game);
 
-#if COMPLETE_MENUS
-  gtk_action_group_add_toggle_actions (toolbar_action_group, toolbar_action_entries,
-				sizeof (toolbar_action_entries) /
-				sizeof (toolbar_action_entries[0]), &play_toolbar);
-
-  gtk_action_group_add_toggle_actions (statusbar_action_group, statusbar_action_entries,
-				sizeof (statusbar_action_entries) /
-				sizeof (statusbar_action_entries[0]), &statusbar);
-#endif
 
   gtk_ui_manager_insert_action_group (menu_manager, action_group, 0);
   gtk_ui_manager_insert_action_group (menu_manager, game_action_group, 0);
-
-#if COMPLETE_MENUS
-  gtk_ui_manager_insert_action_group (menu_manager, toolbar_action_group, 0);
-  gtk_ui_manager_insert_action_group (menu_manager, statusbar_action_group, 0);
-#endif
 
   if (0 ==
       gtk_ui_manager_add_ui_from_string (menu_manager, menu_tree,
