@@ -28,6 +28,9 @@
 
 #include <libguile.h>
 
+#if SCM_MAJOR_VERSION < 2
+# define scm_to_utf8_string(name) scm_to_locale_string(name)
+#endif
 
 /* When a script runs,  the first cube movement that is requested by the script
    must flush the move queue after the place of current insertion; further move
@@ -58,7 +61,7 @@ static GtkUIManager *uim;
 static SCM
 gnubik_create_menu (SCM name, SCM loc)
 {
-  char *ml = scm_to_locale_string (name);
+  char *ml = scm_to_utf8_string (name);
   char *loc_str = NULL;
 
   GtkActionGroup *ag = gtk_action_group_new (ml);
@@ -105,7 +108,7 @@ gnubik_create_menu (SCM name, SCM loc)
 static SCM
 gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
 {
-  char *ml = scm_to_locale_string (menu_location);
+  char *ml = scm_to_utf8_string (menu_location);
 
   char *loc_str = scm_to_locale_string (loc);
 
@@ -212,7 +215,7 @@ gnubik_run_moves ()
 static SCM
 gnubik_error_dialog (SCM message)
 {
-  char *msg = scm_to_locale_string (message);
+  char *msg = scm_to_utf8_string (message);
   error_dialog (the_game->toplevel, msg);
   free (msg);
 
@@ -241,7 +244,7 @@ read_script_directory (const char *dir_name)
 	  {
 	    snprintf (buffer, 1024, "%s/%s", dir_name, entry->d_name);
 
-	    scm_primitive_load (scm_makfrom0str (buffer));
+	    scm_primitive_load (scm_from_locale_string (buffer));
 	  }
     }
 

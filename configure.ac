@@ -71,8 +71,10 @@ fi
 
 
 dnl Checks for libraries.
-AC_SEARCH_LIBS([scm_c_string_length], [guile],,
+PKG_CHECK_MODULES(GUILE, guile-2.0,,
+  AC_SEARCH_LIBS([scm_c_string_length], [guile],,
 	AC_MSG_ERROR("Guile 1.8.0 or later is required"))
+)
 
 AC_SEARCH_LIBS([cos],[m],,
 	AC_MSG_ERROR("No maths library present" ))

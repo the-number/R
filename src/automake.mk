@@ -14,12 +14,14 @@ src_gnubik_CFLAGS = $(AM_CFLAGS) \
 	$(GLUT_CFLAGS) \
 	$(GDK_GL_EXT_CFLAGS) \
 	$(GTK_GL_EXT_CFLAGS) \
+	$(GUILE_CFLAGS) \
 	-DGDK_MULTIHEAD_SAFE=1
 
 src_gnubik_LDADD = $(GTK_LIBS) $(GDK_GL_EXT_LIBS) $(GTK_GL_EXT_LIBS) \
 	 $(GL_LIBS) \
 	 $(GLU_LIBS) \
-	 $(GLUT_LIBS)
+	 $(GLUT_LIBS) \
+	 $(GUILE_LIBS)
 
 
 src_gnubik_SOURCES = \
