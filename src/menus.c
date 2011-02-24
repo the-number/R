@@ -125,14 +125,13 @@ view_right (GtkAction *act, GbkGame *game)
 
 #define MSGLEN 100
 static void
-update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
+update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
 {
-  static int context = 0;
+  int context ;
 
   gchar mesg[MSGLEN];
 
-  if (0 == context)
-    context = gtk_statusbar_get_context_id (statusbar, "move-count");
+  context = gtk_statusbar_get_context_id (statusbar, "move-count");
 
   g_snprintf (mesg,
 	      MSGLEN,
@@ -140,18 +139,41 @@ update_statusbar (GbkGame *game, GtkStatusbar *statusbar)
 	      game->posn,
 	      game->total);
 
-  if (game->mesg_id != 0)
-    gtk_statusbar_remove (statusbar, context, game->mesg_id);
+  gtk_statusbar_pop (statusbar, context);
 
   game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
 }
+
+static void
+update_statusbar_animation (GbkCubeview *view, GParamSpec *sp, GtkStatusbar *statusbar)
+{
+  int context ;
+
+  gchar mesg[MSGLEN];
+  int n;
+
+  context = gtk_statusbar_get_context_id (statusbar, "animation");
+
+  g_object_get (view, "animation-frames", &n, NULL);
+  g_snprintf (mesg, MSGLEN,_("Animation frames: %d"), n);
+
+  gtk_statusbar_pop (statusbar, context);
+  gtk_statusbar_push (statusbar, context, mesg);
+}
+
 
 GtkWidget *
 create_statusbar (GbkGame *game)
 {
   GtkWidget *statusbar = gtk_statusbar_new ();
 
-  g_signal_connect (game, "queue-changed", G_CALLBACK (update_statusbar), statusbar);
+  g_signal_connect (game, "queue-changed",
+		    G_CALLBACK (update_statusbar_moves),
+		    statusbar);
+
+  g_signal_connect (game->masterview, "notify::animation-frames",
+		    G_CALLBACK (update_statusbar_animation),
+		    statusbar);
 
   return statusbar;
 }
@@ -196,22 +218,6 @@ declare_win (GbkCube *cube)
   mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
 #endif
 }
-
-
-#if WIDGETS_NOT_DISABLED
-
-/* Toggle the visibility of a widget */
-static void
-toggle_visibility (GtkToggleAction *ta, gpointer user_data)
-{
-  GObject **w = user_data;
-
-  g_object_set (*w, 
-		"visible", gtk_toggle_action_get_active (ta),
-		NULL);
-}
-#endif
-
 
 
 static const GtkActionEntry action_entries[] =
@@ -325,12 +331,12 @@ static const GtkActionEntry game_action_entries[] =
 
     {
       "animate-faster-action", NULL,  N_("_Faster"),
-      NULL, "animate-faster", G_CALLBACK (animate_faster)
+      "<control>plus", "animate-faster", G_CALLBACK (animate_faster)
     },
 
     {
       "animate-slower-action", NULL, N_("_Slower"),
-      NULL, "animate-slower", G_CALLBACK (animate_slower)
+      "<control>minus", "animate-slower", G_CALLBACK (animate_slower)
     },
 
   };
