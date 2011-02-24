@@ -43,6 +43,30 @@ new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
   GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   GtkWidget *view = gbk_cubeview_new (game->cube);
 
+  /* Copy all the properties from the master view to the new one */
+  {
+    guint n, i;
+    GParamSpec **specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (view), &n);
+    for (i = 0; i < n; ++i)
+      {
+	GValue value = {0};
+
+	if ( ! (specs[i]->flags & G_PARAM_WRITABLE))
+	  continue;
+
+	if ( ! (specs[i]->flags & G_PARAM_READABLE))
+	  continue;
+
+	if ( specs[i]->owner_type != G_OBJECT_TYPE (view))
+	  continue;
+	
+	g_value_init (&value, specs[i]->value_type);
+	g_object_get_property (G_OBJECT (game->masterview), specs[i]->name, &value);
+	g_object_set_property (G_OBJECT (view), specs[i]->name, &value);
+	g_value_unset (&value);
+      }
+  }
+
   gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
 
   title = g_strdup_printf ("%s %s", PACKAGE, description);
