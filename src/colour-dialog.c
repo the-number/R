@@ -371,13 +371,6 @@ colour_select_menu (GtkWidget *w, GbkGame *game)
     {
       cds->swatches[i] = gbk_swatch_new ();
 
-#if 0
-      const GtkTargetEntry target[2] = {
-	{"text/uri-list", 0, RDRAG_FILELIST},
-	{"application/x-color", 0, RDRAG_COLOUR},
-      };
-#endif
-
       GdkColor *col = NULL;
       GdkPixbuf *pixbuf = NULL;
       enum surface surface = 0;
