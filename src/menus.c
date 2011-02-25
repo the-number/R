@@ -65,6 +65,7 @@ new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
 	g_object_set_property (G_OBJECT (view), specs[i]->name, &value);
 	g_value_unset (&value);
       }
+    g_free (specs);
   }
 
   gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
