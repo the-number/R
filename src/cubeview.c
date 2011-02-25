@@ -275,7 +275,7 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
   fq_param_spec = g_param_spec_int ("animation-frames",
 				    "Animation Frames",
 				    "How many frames to display per animation",
-				    0, 100, 2,
+				    0, 255, 2,
 				    G_PARAM_READWRITE);
 
   g_object_class_install_property (gobject_class,
