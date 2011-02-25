@@ -155,7 +155,7 @@ update_statusbar_animation (GbkCubeview *view, GParamSpec *sp, GtkStatusbar *sta
   context = gtk_statusbar_get_context_id (statusbar, "animation");
 
   g_object_get (view, "animation-frames", &n, NULL);
-  g_snprintf (mesg, MSGLEN, _("Animation rate set to %d frames per turn."), n);
+  g_snprintf (mesg, MSGLEN, ngettext("Animation rate set to %d frame per turn.", "Animation rate set to %d frames per turn.", n), n);
 
   gtk_statusbar_pop (statusbar, context);
   gtk_statusbar_push (statusbar, context, mesg);
