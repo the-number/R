@@ -993,12 +993,10 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
   if (event->type != GDK_BUTTON_PRESS)
     return FALSE;
 
-#if 0
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
   if (gbk_cubeview_is_animating (cv))
     return FALSE;
-#endif
 
   /* Force an update on the selection mechanism.  This avoids
      annoying instances of moves occuring  when a rotation was 
