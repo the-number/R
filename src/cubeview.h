@@ -74,6 +74,7 @@ struct _GbkCubeview
 
   guint rotate_id;
   guint move_id;
+  guint dim_id;
   guint animation_timeout;
 
   GdkGLContext *glcontext;

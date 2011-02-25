@@ -106,11 +106,21 @@ cubeview_set_property (GObject     *object,
       {
 	cubeview->cube = g_value_get_object (value);
 	scene_init (cubeview);
-	g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
+
+	if (cubeview->dim_id)
+	  g_signal_handler_disconnect (cubeview->cube, cubeview->dim_id);
+
+	cubeview->dim_id = g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
 				  G_CALLBACK (scene_init), cubeview);
+
+	if (cubeview->move_id)
+	  g_signal_handler_disconnect (cubeview->cube, cubeview->move_id);
 
 	cubeview->move_id = 
 	  g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
+
+	if (cubeview->rotate_id)
+	  g_signal_handler_disconnect (cubeview->cube, cubeview->rotate_id);
 
 	cubeview->rotate_id =
 	  g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (on_rotate),
@@ -575,6 +585,9 @@ gbk_cubeview_finalize (GObject *o)
   GbkCubeview *cv = GBK_CUBEVIEW (o);
   select_destroy (cv->cs);
 
+  if (cv->dim_id)
+    g_signal_handler_disconnect (cv->cube, cv->dim_id);
+
   if (cv->rotate_id)
     g_signal_handler_disconnect (cv->cube, cv->rotate_id);
 
@@ -604,6 +617,7 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->idle_id = 0;
   dc->rotate_id = 0;
   dc->move_id = 0;
+  dc->dim_id = 0;
 
   dc->picture_rate = 40;
   dc->frameQty = 2;
