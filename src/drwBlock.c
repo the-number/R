@@ -180,7 +180,6 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       p2[3] = 1;
 
       vector_from_points (p2, p1, v);
-      gbk_cube_set_normal_vector (cv->cube, block_id, face, v);
 
       glPushName (0);
 

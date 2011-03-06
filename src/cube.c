@@ -35,8 +35,6 @@ static int  block_coords_to_index (const GbkCube *cube, int x, int dim);
   cube_size) elements,  each one holding the colour of a patch of the surface of
   the cube (a number from [0, 5]).
 */
-
-
 SCM
 make_scm_cube (const GbkCube *cube)
 {
@@ -58,6 +56,7 @@ make_scm_cube (const GbkCube *cube)
     }
 
   int colours[6][biggest][biggest];
+  memset (colours, -1, 6 * biggest * biggest);
   
   /* Loop over all blocks and faces,  but only process if the face is on the
      outside of the cube. */
@@ -76,9 +75,7 @@ make_scm_cube (const GbkCube *cube)
 
 	  point face_direction;
 
-	  memcpy (face_direction, block->face[face].centre, sizeof (point));
-
-	  transform_in_place (block->transformation, face_direction);
+	  transform (block->transformation, block->face[face].normal, face_direction);
 
 	  /* The face direction will have exactly one non-zero component;
 	     this is in the direction of the normal,  so we can infer which
@@ -168,19 +165,18 @@ make_scm_cube (const GbkCube *cube)
 
 
 
-/* Set the centre point of the face to (x0,  x1,  x2,  x3). */
+/* Set the normal of the face to (x0,  x1,  x2). */
 static inline void
-set_face_centre (Block *block,
+set_face_normal (Block *block,
 		 int face,
-		 GLfloat x0, GLfloat x1,
-		 GLfloat x2, GLfloat x3)
+		 GLfloat x0, GLfloat x1, GLfloat x2)
 {
-  point *centre = &block->face[face].centre;
+  point *normal = &block->face[face].normal;
 
-  (*centre)[0] = x0;
-  (*centre)[1] = x1;
-  (*centre)[2] = x2;
-  (*centre)[3] = x3;
+  (*normal)[0] = x0;
+  (*normal)[1] = x1;
+  (*normal)[2] = x2;
+  (*normal)[3] = 0;
 }
 
 /* During the construction of the array of blocks,  we start by assigning them
@@ -278,13 +274,13 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
 				 % ret->size[2], 2);
 
 
-      /* Set all the face centres. */
-      set_face_centre (block, 0, 0, 0, -1, 0);
-      set_face_centre (block, 1, 0, 0, 1, 0);
-      set_face_centre (block, 2, 0, -1, 0, 0);
-      set_face_centre (block, 3, 0, 1, 0, 0);
-      set_face_centre (block, 4, -1, 0, 0, 0);
-      set_face_centre (block, 5, 1, 0, 0, 0);
+      /* Set all the face normals. */
+      set_face_normal (block, 0, 0, 0, -1);
+      set_face_normal (block, 1, 0, 0,  1);
+      set_face_normal (block, 2, 0, -1, 0);
+      set_face_normal (block, 3, 0, 1,  0);
+      set_face_normal (block, 4, -1, 0, 0);
+      set_face_normal (block, 5, 1, 0,  0);
 
     } /* End of loop over blocks. */
 }
@@ -507,12 +503,13 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
 
   /* Create a matrix describing the rotation of we are about to perform.
      We do this by starting with the identity matrix... */
-  Matrix rotation = {
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1
-  };
+  Matrix rotation =
+    {
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    };
 
   /* If rotating about a non-square axis, then only 180 deg turns are
      permitted */
@@ -684,7 +681,6 @@ gbk_cube_get_status (const GbkCube *cube)
   int face;
   Block *block;
 
-
   /* Find out if the cube is at least half solved (the colours are right,  but
      some orientations are wrong (this can be seen on a face away from an edge
      of the cube with a pixmap on it). If the cube is not at least
@@ -702,7 +698,8 @@ gbk_cube_get_status (const GbkCube *cube)
 	{
 	  if (block->visible_faces & mask)
 	    {
-	      vector *v0 = &block->face[face].normal;
+	      vector v0;
+	      transform (block->transformation, block->face[face].normal, v0);
 
 	      if (x == 0)
 		{
@@ -710,17 +707,16 @@ gbk_cube_get_status (const GbkCube *cube)
 
 		  ++x;
 		}
-
 	      else
 		{
-		  if (!vectors_equal (q0, *v0))
+		  if (!vectors_equal (q0, v0))
 		    return NOT_SOLVED;
 		}
 	    }
 	}
     }
 
-
+#if 0
   /* The cube is at least half-solved. Check if it is fully solved by checking
      the alignments of all the quadrant vectors. If any are out,  then return
      the half-solved status to the caller. Note that it is only necessary to
@@ -755,6 +751,7 @@ gbk_cube_get_status (const GbkCube *cube)
 	    }
 	}
     }
+#endif
 
   /* struct cube is fully solved. */
   return SOLVED;
@@ -768,23 +765,6 @@ gbk_cube_get_visible_faces (const GbkCube *cube, int block_id)
   return cube->blocks[block_id].visible_faces;
 }
 
-
-
-
-/*
-  Set the normal vector for block/face.
-*/
-void
-gbk_cube_set_normal_vector (GbkCube *cube,
-			    int block, int face, const vector v)
-{
-  Matrix view;
-  vector *dest = &gbk_cube_get_face (cube, block, face)->normal;
-
-  glGetFloatv (GL_MODELVIEW_MATRIX, view);
-
-  transform (view, v, *dest);
-}
 
 
 void

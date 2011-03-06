@@ -40,14 +40,11 @@ typedef struct _Face
      querying the state. */
   vector quadrants[4];
 
+
   /* The normal vector is orthogonal to the face of the block. When all
      normals are in the same direction,  the cube colours are correct,  but not
      necessarily their orientations. */
   vector normal;
-
-  /* The position of the centre of the face,  relative to the centre of the
-     block. */
-  point centre;
 
 } Face;
 
