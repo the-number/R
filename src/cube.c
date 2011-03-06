@@ -495,9 +495,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
 			GLfloat slice_depth, int axis);
 
 
-/* Rotate the slice identified by a prior call to identify_blocks,  about the
-   axis,  through an angle specified by turns,  which is in quarters of complete
-   revolutions. */
+/* Rotate the CUBE according to move M */
 void
 gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
 {
@@ -678,7 +676,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
   quadrants do not,  then the colours are all on the right faces,  but not
   correctly orientated.
 */
-enum Cube_Status
+enum cube_status
 gbk_cube_get_status (const GbkCube *cube)
 {
   /* Loop variables for iterating over faces and blocks. */

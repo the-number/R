@@ -25,7 +25,7 @@
 #include "quarternion.h"
 
 /* Is the cube solved? */
-enum Cube_Status
+enum cube_status
 {
   NOT_SOLVED = 0,
   SOLVED,
@@ -114,7 +114,7 @@ void gbk_cube_get_quadrant_vector (const GbkCube *cube,
 				   int block,
 				   int face, int quadrant, vector v);
 
-enum Cube_Status gbk_cube_get_status (const GbkCube *cube);
+enum cube_status gbk_cube_get_status (const GbkCube *cube);
 
 
 /* Free the resources associated with an instance of the above structure. */

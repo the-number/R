@@ -128,11 +128,9 @@ view_right (GtkAction *act, GbkGame *game)
 static void
 update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
 {
-  int context ;
-
   gchar mesg[MSGLEN];
 
-  context = gtk_statusbar_get_context_id (statusbar, "move-count");
+  int context = gtk_statusbar_get_context_id (statusbar, "move-count");
 
   g_snprintf (mesg,
 	      MSGLEN,
@@ -143,6 +141,35 @@ update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
   gtk_statusbar_pop (statusbar, context);
 
   game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
+
+
+
+  /* Now check if the cube is solved and update statusbar accordingly */
+  
+  context = gtk_statusbar_get_context_id (statusbar, "cube-state");  
+
+  enum cube_status status = gbk_cube_get_status (game->cube);
+
+  if (NOT_SOLVED ==  status )
+    {
+      gtk_statusbar_pop (statusbar, context);
+    }
+  else if ( SOLVED == status)
+    {
+      g_snprintf (mesg, MSGLEN,
+		  ngettext ("Cube solved in %d move",
+			    "Cube solved in %d moves", game->posn),
+		  game->posn);
+      game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);      
+    }
+  else if  (HALF_SOLVED == status)
+    {
+      g_snprintf (mesg,
+		  MSGLEN,
+		  _
+		  ("Cube is NOT solved! The colours are correct,  but have incorrect orientation"));
+      game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
+    }
 }
 
 static void
@@ -177,47 +204,6 @@ create_statusbar (GbkGame *game)
 		    statusbar);
 
   return statusbar;
-}
-
-
-
-/* Declare that the cube has been solved */
-void
-declare_win (GbkCube *cube)
-{
-#if WIDGETS_NOT_DISABLED
-  static int context = 0;
-
-  static guint mesg_id = 0;
-
-  gchar mesg[MSGLEN];
-
-  enum Cube_Status status = cube_get_status (cube);
-
-  if (0 == context)
-    context = gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar), "win");
-
-  switch (status)
-    {
-    case SOLVED:
-      g_snprintf (mesg, MSGLEN, ngettext ("Cube solved in %d move",
-					  "Cube solved in %d moves",
-					  move_queue_progress (move_queue).
-					  total),
-		  move_queue_progress (move_queue).total);
-      break;
-    case HALF_SOLVED:
-      g_snprintf (mesg,
-		  MSGLEN,
-		  _
-		  ("Cube is NOT solved! The colours are correct,  but have incorrect orientation"));
-      break;
-    default:
-      g_assert_not_reached ();
-    }
-
-  mesg_id = gtk_statusbar_push (GTK_STATUSBAR (statusbar), context, mesg);
-#endif
 }
 
 
