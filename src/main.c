@@ -64,6 +64,7 @@ c_main (void *closure, int argc, char *argv[])
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (PACKAGE, "UTF-8");
   textdomain (PACKAGE);
 
   gtk_init (&argc, &argv);
