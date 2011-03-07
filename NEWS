@@ -1,12 +1,12 @@
 GNUbik 2.4-pre
-        * Animation is now significantly faster, makeing the
-          program a lot less frustrating on machines with
-          low-end graphics hardware.
+        * Animation is now significantly faster, making the
+          program a lot less frustrating when run on machines with
+          low-end graphics. 
 
-	* You now show several concurrent views of the 
-	  cube from different perspectives.
+	* You can now show several concurrent views of the 
+	  cube from different angles.
 
-	* Cubes no longer are restricted to cubic form.
+	* `Cubes' are no longer restricted to a cubic shape.
 	  General right-angled parallelepipeds are now 
           possible.
 
@@ -14,7 +14,7 @@ GNUbik 2.4-pre
 
 	* Fixed some portability issues.
 
-	* Added uk translation.
+	* Added uk and sl translation.
 
 	* We now depend on Gtk+ version 2.20 or later.
 
