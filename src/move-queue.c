@@ -1,5 +1,6 @@
 /*
-  Copyright (c) 2004  Dale Mellor
+  Copyright (c) 2004 Dale Mellor
+  Copyright (c) 2011 John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -64,7 +65,7 @@ _release_items (struct _Move_Queue_Item *next_item)
   while (next_item != NULL)
     {
       next = next_item->next;
-      free (next_item);
+      g_free (next_item);
       next_item = next;
     }
 }
@@ -73,7 +74,7 @@ void
 free_move_queue (Move_Queue * move_queue)
 {
   _release_items (move_queue->head);
-  free (move_queue);
+  g_free (move_queue);
 }
 
 

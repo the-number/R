@@ -229,7 +229,6 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
   if (NULL == (ret->blocks = g_malloc (ret->number_blocks * sizeof (Block))))
     {
       g_error ("Error allocating blocks");
-      free (ret);
       return ;
     }
 
@@ -643,7 +642,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
 
   if (!ret->blocks)
     {
-      free (ret);
+      g_free (ret);
       return NULL;
     }
 
