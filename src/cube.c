@@ -74,7 +74,6 @@ make_scm_cube (const GbkCube *cube)
 	     will tell us the direction the face is now facing. */
 
 	  point face_direction;
-
 	  transform (block->transformation, block->face[face].normal, face_direction);
 
 	  /* The face direction will have exactly one non-zero component;
@@ -92,14 +91,12 @@ make_scm_cube (const GbkCube *cube)
 	       (cube, block->transformation[13], 1)]
 	      [block_coords_to_index
 	       (cube, block->transformation[14], 2)] = face;
-
 	  else if (abs (face_direction[1]) > 0.1)
 	    colours[face_direction[1] < 0.0 ? 2 : 3]
 	      [block_coords_to_index
 	       (cube, block->transformation[12], 0)]
 	      [block_coords_to_index
 	       (cube, block->transformation[14], 2)] = face;
-
 	  else
 	    colours[face_direction[2] < 0.0 ? 0 : 1]
 	      [block_coords_to_index
@@ -229,7 +226,7 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
   ret->number_blocks = ret->size[0] * ret->size[1] * ret->size[2];
 
   g_free (ret->blocks);
-  if (NULL == (ret->blocks = calloc (ret->number_blocks, sizeof (Block))))
+  if (NULL == (ret->blocks = g_malloc (ret->number_blocks * sizeof (Block))))
     {
       g_error ("Error allocating blocks");
       free (ret);
@@ -632,7 +629,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
 
   /* Allocate memory for the return object. */
 
-  Slice_Blocks *ret = malloc (sizeof *ret);
+  Slice_Blocks *ret = g_malloc (sizeof *ret);
 
   ret->ref = 1;
   ret->number_blocks = 1;
@@ -642,7 +639,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
 	ret->number_blocks *= cube->size[dim];
     }
 
-  ret->blocks = malloc (ret->number_blocks * sizeof (int));
+  ret->blocks = g_malloc (ret->number_blocks * sizeof (int));
 
   if (!ret->blocks)
     {

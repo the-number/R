@@ -43,7 +43,7 @@ new_move_queue (void)
 {
   Move_Queue *ret;
 
-  if ((ret = malloc (sizeof (*ret))) == NULL)
+  if ((ret = g_malloc (sizeof (*ret))) == NULL)
     return NULL;
 
   _initialize_new_object (ret);
@@ -88,7 +88,7 @@ move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
 {
   struct _Move_Queue_Item *new_element;
 
-  if ((new_element = malloc (sizeof (*new_element))) == NULL)
+  if ((new_element = g_malloc (sizeof (*new_element))) == NULL)
     return 0;
 
   memcpy (&new_element->data, move_data, sizeof (*move_data));
