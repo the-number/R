@@ -34,17 +34,25 @@
 
 typedef struct _Face
 {
+  /* FIXME: This belongs in the view.  Not the cube */
+
   /* An array of vectors showing the orientation of the blocks. There are four
      vectors per face. These are used to orientate the mouse pointer,  to
      detect when the cube has been solved and to provide feedback to clients
      querying the state. */
+  /* FIXME: This belongs in the view.  Not the cube. */
   vector quadrants[4];
 
 
-  /* The normal vector is orthogonal to the face of the block. When all
+  /* The NORMAL vector is orthogonal to the face of the block. When all
      normals are in the same direction,  the cube colours are correct,  but not
      necessarily their orientations. */
   vector normal;
+
+
+  /* The UP vector shows the orienation of the squares on the faces. When the cube
+   is properly solved. The normals and the ups are in the same direction.*/
+  vector up;
 
 } Face;
 

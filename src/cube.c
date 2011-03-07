@@ -176,6 +176,22 @@ set_face_normal (Block *block,
   (*normal)[3] = 0;
 }
 
+
+/* Set the normal of the face to (x0,  x1,  x2). */
+static inline void
+set_face_up (Block *block,
+		 int face,
+		 GLfloat x0, GLfloat x1, GLfloat x2)
+{
+  point *up = &block->face[face].up;
+
+  (*up)[0] = x0;
+  (*up)[1] = x1;
+  (*up)[2] = x2;
+  (*up)[3] = 0;
+}
+
+
 /* During the construction of the array of blocks,  we start by assigning them
    coordinates with components (0,  1,  2,  ...),  and then transform them to the
    range (-(cube_size-1),  -(cube_size-2),  ...,  0,  1,  2,  ...,  cube_size-1); this
@@ -277,6 +293,14 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
       set_face_normal (block, 3, 0, 1,  0);
       set_face_normal (block, 4, -1, 0, 0);
       set_face_normal (block, 5, 1, 0,  0);
+
+      set_face_up (block, 0, 1, 0, 0);
+      set_face_up (block, 1, 1, 0, 0);
+      set_face_up (block, 2, 1, 0, 0);
+      set_face_up (block, 3, 1, 0, 0);
+      set_face_up (block, 4, 0, 1, 0);
+      set_face_up (block, 5, 0, 1,  0);
+
 
     } /* End of loop over blocks. */
 }
@@ -677,6 +701,8 @@ gbk_cube_get_status (const GbkCube *cube)
   int face;
   Block *block;
 
+  gboolean directions_uniform = TRUE;
+
   /* Find out if the cube is at least half solved (the colours are right,  but
      some orientations are wrong (this can be seen on a face away from an edge
      of the cube with a pixmap on it). If the cube is not at least
@@ -685,7 +711,8 @@ gbk_cube_get_status (const GbkCube *cube)
 
   for (face = 0; face < 6; ++face)
     {
-      vector q0;
+      vector q_n;
+      vector q_u;
       const unsigned int mask = 0x01 << face;
       int x = 0;
 
@@ -694,63 +721,37 @@ gbk_cube_get_status (const GbkCube *cube)
 	{
 	  if (block->visible_faces & mask)
 	    {
-	      vector v0;
-	      transform (block->transformation, block->face[face].normal, v0);
+	      vector v_n;
+	      vector v_u;
 
 	      if (x == 0)
 		{
-		  memcpy (q0, v0, sizeof (vector));
+		  transform (block->transformation, block->face[face].normal, q_n);
+
+		  if (directions_uniform)
+		    transform (block->transformation, block->face[face].up, q_u);
 
 		  ++x;
 		}
 	      else
 		{
-		  if (!vectors_equal (q0, v0))
+		  transform (block->transformation, block->face[face].normal, v_n);
+
+		  if ( directions_uniform)
+		    transform (block->transformation, block->face[face].up, v_u);
+
+		  if (!vectors_equal (q_n, v_n))
 		    return NOT_SOLVED;
+
+		  if (directions_uniform && !vectors_equal (q_u, v_u))
+		    directions_uniform = FALSE;
 		}
 	    }
 	}
     }
-
-#if 0
-  /* The cube is at least half-solved. Check if it is fully solved by checking
-     the alignments of all the quadrant vectors. If any are out,  then return
-     the half-solved status to the caller. Note that it is only necessary to
-     check two perpendicular quadrant vectors. */
-
-  for (face = 0; face < 6; ++face)
-    {
-      vector q1;
-      vector q0;
-      const unsigned int mask = 0x01 << face;
-      int x = 0;
-
-      for (block = cube->blocks + cube->number_blocks - 1;
-	   block >= cube->blocks; --block)
-	{
-	  /* Ignore faces which are inside the cube. */
-	  if (block->visible_faces & mask)
-	    {
-	      vector *v0 = block->face[face].quadrants;
-	      vector *v1 = v0 + 1;
-
-	      if (x == 0)
-		{
-		  memcpy (q0, v0, sizeof (vector));
-		  memcpy (q1, v1, sizeof (vector));
-
-		  ++x;
-		}
-
-	      else if (!vectors_equal (q0, *v0) || !vectors_equal (q1, *v1))
-		return HALF_SOLVED;
-	    }
-	}
-    }
-#endif
 
   /* struct cube is fully solved. */
-  return SOLVED;
+  return directions_uniform ? SOLVED : HALF_SOLVED;
 }
 
 
