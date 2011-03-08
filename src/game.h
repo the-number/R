@@ -48,6 +48,7 @@ struct GbkList
   struct GbkList *next;
   struct GbkList *prev;
   const struct move_data *data;
+  gboolean marked;
 };
 
 
@@ -102,6 +103,7 @@ GObject* gbk_game_new (GbkCube *cube);
 void gbk_game_rewind (GbkGame *game);
 void gbk_game_replay (GbkGame *game);
 void gbk_game_stop_replay (GbkGame *game);
+void gbk_game_set_mark (GbkGame *game);
 
 void gbk_game_next_move (GbkGame *game);
 void gbk_game_prev_move (GbkGame *game);

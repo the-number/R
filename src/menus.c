@@ -500,11 +500,8 @@ create_play_toolbar (GbkGame *game)
   g_signal_connect_swapped (acts[ACT_PREV], "activate",
 			    G_CALLBACK (gbk_game_prev_move), game);
 
-#if 0
-  g_signal_connect_swapped (mark, "activate",
-			    G_CALLBACK (request_mark_move_queue), container);
-
-#endif
+  g_signal_connect_swapped (acts[ACT_MARK], "activate",
+			    G_CALLBACK (gbk_game_set_mark), game);
 
 
   g_signal_connect_swapped (acts[ACT_PLAY], "activate",

@@ -217,6 +217,13 @@ gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master)
     }
 }
 
+void
+gbk_game_set_mark (GbkGame *game)
+{
+  game->iter->next->marked = TRUE;
+}
+
+
 gboolean
 gbk_game_at_start (GbkGame *game)
 {
@@ -255,6 +262,7 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
   n->next = d0;
   n->prev = &game->head;
   n->data = move_ref (move);
+  n->marked = FALSE;
 
   game->head.next = n;
 
@@ -283,8 +291,10 @@ gbk_game_rewind (GbkGame *game)
       mm->dir = ! mm->dir;
       gbk_cube_rotate_slice (game->cube, mm);
       move_unref (mm);
+      game->posn--;
+      if ( game->iter->next && game->iter->next->marked)
+	break;
     }
-  game->posn = 0;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 
