@@ -14,9 +14,12 @@ GNUbik 2.4-pre
 
 	* Fixed some portability issues.
 
-	* Added uk and sl translation.
+	* Added uk and sl translations.
 
 	* We now depend on Gtk+ version 2.20 or later.
+
+        * Made sure it'll work with Guile 2.0 although Guile 1.8 
+          is sufficient.
 
 GNUbik 2.3
 
