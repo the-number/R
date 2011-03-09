@@ -126,6 +126,22 @@ view_right (GtkAction *act, GbkGame *game)
 
 #define MSGLEN 100
 static void
+update_statusbar_mark (GbkGame *game, gint x, GtkStatusbar *statusbar)
+{
+  gchar mesg[MSGLEN];
+
+  int context = gtk_statusbar_get_context_id (statusbar, "marks");
+
+  g_snprintf (mesg,   MSGLEN,
+	      _("A mark is now set at position %d."),
+	      game->posn);
+
+  gtk_statusbar_pop (statusbar, context);
+
+  game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
+}
+
+static void
 update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
 {
   gchar mesg[MSGLEN];
@@ -197,6 +213,10 @@ create_statusbar (GbkGame *game)
 
   g_signal_connect (game, "queue-changed",
 		    G_CALLBACK (update_statusbar_moves),
+		    statusbar);
+
+  g_signal_connect (game, "mark-set",
+		    G_CALLBACK (update_statusbar_mark),
 		    statusbar);
 
   g_signal_connect (game->masterview, "notify::animation-frames",

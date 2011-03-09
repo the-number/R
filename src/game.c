@@ -24,6 +24,7 @@ static void on_move (GbkCube *cube, gpointer m, GbkGame *game);
 enum  
 {
   QUEUE_CHANGED,
+  MARK_SET,
   n_SIGNALS
 };
 
@@ -184,6 +185,17 @@ gbk_game_class_init (GbkGameClass *klass)
 		  G_TYPE_NONE,
 		  0);
 
+  signals [MARK_SET] =
+    g_signal_new ("mark-set",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  0,
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE,
+		  1,
+		  G_TYPE_INT
+		  );
 }
 
 G_DEFINE_TYPE (GbkGame, gbk_game, G_TYPE_OBJECT);
@@ -220,7 +232,11 @@ gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master)
 void
 gbk_game_set_mark (GbkGame *game)
 {
+  g_return_if_fail ( game->iter->next != NULL);
+
   game->iter->next->marked = TRUE;
+
+  g_signal_emit (game, signals [MARK_SET], 0, game->posn);
 }
 
 
