@@ -72,7 +72,14 @@ struct _GbkGame
 
   enum mode mode;
 
-  struct GbkList most_recent;
+
+  /* This is the end iterator.  It represents ONE MOVE
+     PAST the most recent move */
+  struct GbkList end_of_moves;
+
+  /* The "current" move.  That is, the place in the queue that we are now.
+     When not replaying, it's always equal to most_recent.prev
+   */
   struct GbkList *iter;
 
   int posn;

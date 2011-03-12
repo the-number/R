@@ -48,13 +48,13 @@ delete_queue_from (GbkGame *game, struct GbkList *start)
   struct GbkList *sn = start->prev;
   struct GbkList *n = start;
 
-  while (n != &game->most_recent)
+  while (n != &game->end_of_moves)
     {
       struct GbkList *nn = n->next;
       if ( n->data)
 	move_unref (n->data);
     
-      if ( n != &game->most_recent)
+      if ( n != &game->end_of_moves)
 	g_slice_free (struct GbkList, n);
 
       n = nn;
@@ -62,14 +62,14 @@ delete_queue_from (GbkGame *game, struct GbkList *start)
 
   game->total = game->posn;
 
-  game->most_recent.prev = sn;
-  return &game->most_recent;
+  game->end_of_moves.prev = sn;
+  return &game->end_of_moves;
 }
 
 static void
 delete_queue (GbkGame *game)
 {
-  struct GbkList *n = &game->most_recent;
+  struct GbkList *n = &game->end_of_moves;
 
   while (n != NULL)
     {
@@ -77,14 +77,13 @@ delete_queue (GbkGame *game)
       if ( n->data)
 	move_unref (n->data);
     
-      if ( n != &game->most_recent)
+      if ( n != &game->end_of_moves)
 	g_slice_free (struct GbkList, n);
 
       n = nn;
     }
 
-  game->most_recent.prev = NULL;
-  game->most_recent.next = NULL;
+  game->end_of_moves.prev = NULL;
 
   game->total = game->posn = 0;
 }
@@ -98,11 +97,11 @@ gbk_game_reset (GbkGame *game)
   game->animate_complete_id = 0;
   game->mode = MODE_RECORD;
 
-  game->most_recent.prev = NULL; 
-  game->most_recent.next = NULL;
-  game->most_recent.data = NULL;
+  game->end_of_moves.prev = NULL; 
+  game->end_of_moves.next = NULL;
+  game->end_of_moves.data = NULL;
   
-  game->iter = &game->most_recent;
+  game->iter = &game->end_of_moves;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
@@ -244,7 +243,7 @@ gbk_game_set_mark (GbkGame *game)
 gboolean
 gbk_game_at_end (GbkGame *game)
 {
-  return (game->iter == &game->most_recent);
+  return (game->iter == &game->end_of_moves);
 }
 
 
@@ -268,25 +267,23 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
   if ( game->animate_complete_id != 0)
     return;
 
-  if  (game->iter != &game->most_recent)
-    {
-      game->iter = delete_queue_from (game, game->iter);
-    }
+  if  (! gbk_game_at_end (game))
+    game->iter = delete_queue_from (game, game->iter);
 
   struct GbkList *d0 = game->iter->prev;
   struct GbkList *n = g_slice_alloc0 (sizeof *n);
 
   n->prev = d0;
-  n->next = &game->most_recent;
+  n->next = &game->end_of_moves;
   n->data = move_ref (move);
   n->marked = FALSE;
 
-  game->most_recent.prev = n;
+  game->end_of_moves.prev = n;
 
   if (d0)
     d0->next = n;
 
-  game->iter = &game->most_recent;
+  game->iter = &game->end_of_moves;
   game->posn++;
   game->total = game->posn;
 
