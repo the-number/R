@@ -39,21 +39,22 @@ gbk_game_init (GbkGame *game)
 
 /*
   Delete all the elements in the queue,
-  starting at START.  Returns a pointer to the head.
+  starting at START.  Returns a pointer to the 
+  most recent move.
 */
 static struct GbkList *
 delete_queue_from (GbkGame *game, struct GbkList *start)
 {
-  struct GbkList *sn = start->next;
+  struct GbkList *sn = start->prev;
   struct GbkList *n = start;
 
-  while (n != &game->head)
+  while (n != &game->most_recent)
     {
-      struct GbkList *nn = n->prev;
+      struct GbkList *nn = n->next;
       if ( n->data)
 	move_unref (n->data);
     
-      if ( n != &game->head)
+      if ( n != &game->most_recent)
 	g_slice_free (struct GbkList, n);
 
       n = nn;
@@ -61,29 +62,29 @@ delete_queue_from (GbkGame *game, struct GbkList *start)
 
   game->total = game->posn;
 
-  game->head.next = sn;
-  return &game->head;
+  game->most_recent.prev = sn;
+  return &game->most_recent;
 }
 
 static void
 delete_queue (GbkGame *game)
 {
-  struct GbkList *n = &game->head;
+  struct GbkList *n = &game->most_recent;
 
   while (n != NULL)
     {
-      struct GbkList *nn = n->next;
+      struct GbkList *nn = n->prev;
       if ( n->data)
 	move_unref (n->data);
     
-      if ( n != &game->head)
+      if ( n != &game->most_recent)
 	g_slice_free (struct GbkList, n);
 
       n = nn;
     }
 
-  game->head.next = NULL;
-  game->head.prev = NULL;
+  game->most_recent.prev = NULL;
+  game->most_recent.next = NULL;
 
   game->total = game->posn = 0;
 }
@@ -97,11 +98,11 @@ gbk_game_reset (GbkGame *game)
   game->animate_complete_id = 0;
   game->mode = MODE_RECORD;
 
-  game->head.next = NULL; 
-  game->head.prev = NULL;
-  game->head.data = NULL;
+  game->most_recent.prev = NULL; 
+  game->most_recent.next = NULL;
+  game->most_recent.data = NULL;
   
-  game->iter = &game->head;
+  game->iter = &game->most_recent;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
@@ -232,9 +233,9 @@ gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master)
 void
 gbk_game_set_mark (GbkGame *game)
 {
-  g_return_if_fail ( game->iter->next != NULL);
+  g_return_if_fail ( game->iter->prev != NULL);
 
-  game->iter->next->marked = TRUE;
+  game->iter->prev->marked = TRUE;
 
   g_signal_emit (game, signals [MARK_SET], 0, game->posn);
 }
@@ -243,14 +244,14 @@ gbk_game_set_mark (GbkGame *game)
 gboolean
 gbk_game_at_start (GbkGame *game)
 {
-  return (game->iter == &game->head);
+  return (game->iter == &game->most_recent);
 }
 
 
 gboolean
 gbk_game_at_end (GbkGame *game)
 {
-  return (game->iter->next == NULL); 
+  return (game->iter->prev == NULL); 
 }
 
 
@@ -267,25 +268,25 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
   if ( game->animate_complete_id != 0)
     return;
 
-  if  (game->iter != &game->head)
+  if  (game->iter != &game->most_recent)
     {
       game->iter = delete_queue_from (game, game->iter);
     }
 
-  struct GbkList *d0 = game->iter->next;
+  struct GbkList *d0 = game->iter->prev;
   struct GbkList *n = g_slice_alloc0 (sizeof *n);
 
-  n->next = d0;
-  n->prev = &game->head;
+  n->prev = d0;
+  n->next = &game->most_recent;
   n->data = move_ref (move);
   n->marked = FALSE;
 
-  game->head.next = n;
+  game->most_recent.prev = n;
 
   if (d0)
-    d0->prev = n;
+    d0->next = n;
 
-  game->iter = &game->head;
+  game->iter = &game->most_recent;
   game->posn++;
   game->total = game->posn;
 
@@ -300,7 +301,7 @@ gbk_game_rewind (GbkGame *game)
 
   while (!gbk_game_at_end (game))
     {
-      game->iter = game->iter->next;
+      game->iter = game->iter->prev;
       const struct move_data *m = game->iter->data;
 
       struct move_data *mm = move_copy (m);
@@ -308,7 +309,7 @@ gbk_game_rewind (GbkGame *game)
       gbk_cube_rotate_slice (game->cube, mm);
       move_unref (mm);
       game->posn--;
-      if ( game->iter->next && game->iter->next->marked)
+      if ( game->iter->prev && game->iter->prev->marked)
 	break;
     }
 
@@ -352,7 +353,7 @@ next_move (GbkGame *game, gboolean backwards)
   if ( backwards )
     {
       game->posn--;
-      game->iter = game->iter->next;
+      game->iter = game->iter->prev;
 
       m = move_copy (game->iter->data);
       m->dir = ! m->dir;
@@ -362,7 +363,7 @@ next_move (GbkGame *game, gboolean backwards)
       game->posn++;
 
       m = move_copy (game->iter->data);
-      game->iter = game->iter->prev;
+      game->iter = game->iter->next;
     }
 
   gbk_cube_rotate_slice (game->cube, m);

@@ -45,8 +45,8 @@ enum mode
 
 struct GbkList
 {
-  struct GbkList *next;
   struct GbkList *prev;
+  struct GbkList *next;
   const struct move_data *data;
   gboolean marked;
 };
@@ -72,7 +72,7 @@ struct _GbkGame
 
   enum mode mode;
 
-  struct GbkList head;
+  struct GbkList most_recent;
   struct GbkList *iter;
 
   int posn;
