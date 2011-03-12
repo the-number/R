@@ -435,11 +435,11 @@ set_playbar_sensitivities (GbkGame *g, GtkAction **acts)
 {
   gboolean play_state = (g->mode == MODE_PLAY);
 
-  gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_end (g));
-  gtk_action_set_sensitive (acts[ACT_PREV],   !play_state && !gbk_game_at_end (g));
+  gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_start (g));
+  gtk_action_set_sensitive (acts[ACT_PREV],   !play_state && !gbk_game_at_start (g));
 
-  gtk_action_set_sensitive (acts[ACT_PLAY],   !play_state && !gbk_game_at_start (g));
-  gtk_action_set_sensitive (acts[ACT_NEXT],   !play_state && !gbk_game_at_start (g));
+  gtk_action_set_sensitive (acts[ACT_PLAY],   !play_state && !gbk_game_at_end (g));
+  gtk_action_set_sensitive (acts[ACT_NEXT],   !play_state && !gbk_game_at_end (g));
 
   gtk_action_set_sensitive (acts[ACT_STOP], play_state);
 }

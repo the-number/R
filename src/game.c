@@ -242,14 +242,14 @@ gbk_game_set_mark (GbkGame *game)
 
 
 gboolean
-gbk_game_at_start (GbkGame *game)
+gbk_game_at_end (GbkGame *game)
 {
   return (game->iter == &game->most_recent);
 }
 
 
 gboolean
-gbk_game_at_end (GbkGame *game)
+gbk_game_at_start (GbkGame *game)
 {
   return (game->iter->prev == NULL); 
 }
@@ -299,7 +299,7 @@ gbk_game_rewind (GbkGame *game)
 {
   game->mode = MODE_REWIND;
 
-  while (!gbk_game_at_end (game))
+  while (!gbk_game_at_start (game))
     {
       game->iter = game->iter->prev;
       const struct move_data *m = game->iter->data;
@@ -326,7 +326,7 @@ next_move (GbkGame *game, gboolean backwards)
   struct move_data *m;
 
   term_pred * terminal = backwards ? 
-    gbk_game_at_end : gbk_game_at_start ;
+    gbk_game_at_start : gbk_game_at_end ;
 
   if ( game->mode != MODE_PLAY ||
        terminal (game) )
