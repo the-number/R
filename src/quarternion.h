@@ -36,7 +36,7 @@ void quarternion_get_inverse (Quarternion *inv, const Quarternion *q);
 
 void quarternion_from_rotation (Quarternion *q, const vector u, float theta);
 
-void quarternion_print (const Quarternion *q);
+void quarternion_dump (const Quarternion *q);
 
 void quarternion_to_matrix (Matrix M, const Quarternion *q);
 

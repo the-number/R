@@ -24,7 +24,7 @@
 
 /* print out the location of a point.  For debug only */
 void
-plot (point p)
+point_dump (point p)
 {
   int i;
 
@@ -80,7 +80,7 @@ transform (const Matrix M, const pv x, pv q)
 
 /* print a matrix on the stdout.  For debugging */
 void
-showMatrix (const Matrix M)
+matrix_dump (const Matrix M)
 {
   int i, j;
 

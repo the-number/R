@@ -41,10 +41,10 @@ void transform (const Matrix M, const pv x, pv q);
 void pre_mult (const Matrix M, Matrix N);
 
 /* Display Matrix M on stdout */
-void showMatrix (const Matrix M);
+void matrix_dump (const Matrix M);
 
 /* Display point p's co-ordinates on stdout*/
-void plot (point p);
+void point_dump (point p);
 
 /* Set an element of a matrix */
 void set (Matrix M, int x, int y, float value);

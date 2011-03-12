@@ -95,7 +95,7 @@ quarternion_from_rotation (Quarternion * q, const vector u, float theta)
 
 
 void
-quarternion_print (const Quarternion * q)
+quarternion_dump (const Quarternion * q)
 {
   printf ("(%0.2f,  %0.2f,  %0.2f,  %0.2f)\n", q->w, q->x, q->y, q->z);
 }
