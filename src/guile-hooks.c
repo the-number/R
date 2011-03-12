@@ -32,15 +32,6 @@
 # define scm_to_utf8_string(name) scm_to_locale_string(name)
 #endif
 
-/* When a script runs,  the first cube movement that is requested by the script
-   must flush the move queue after the place of current insertion; further move
-   requests must be appended to the end of the move queue. This variable is used
-   to track the first request. */
-
-static int moved;
-
-
-
 /* This function is called from the menu when the user makes a selection. The
    data is a string which was registered with the menu system and gives the name
    of a scheme procedure to execute. */
@@ -48,11 +39,7 @@ static int moved;
 static void
 run_scheme (GtkAction *act, SCM exp)
 {
-  moved = 0;
-
   scm_eval (exp, scm_interaction_environment());
-
-  //  request_play ();
 }
 
 /* The menu manager */
@@ -153,34 +140,12 @@ gnubik_cube_state ()
 
 
 
-
-/* The first time a script makes a move on the cube,  the move_queue must be
-   truncated to the current place,  and the place is marked so that the viewer
-   can rewind the effects of the script. This script performs the necessary
-   preparations. */
-
-static void
-start_moves_if_first ()
-{
-  if (!moved)
-    {
-      moved = 1;
-      //request_truncate_move_queue ();
-      //      request_mark_move_queue ();
-    }
-}
-
-
-
-
 /* Function which,  when called from scheme as gnubik-rotate-animated,  causes one
    side of the cube to rotate on-screen. */
 
 static SCM
 gnubik_rotate_animated (SCM list)
 {
-  start_moves_if_first ();
-
   for (; !SCM_NULLP (list); list = SCM_CDR (list))
     {
       struct move_data *move = move_create (scm_to_int (SCM_CADAR (list)),
@@ -193,20 +158,6 @@ gnubik_rotate_animated (SCM list)
 
   return SCM_UNSPECIFIED;
 }
-
-
-
-/* Function allowing a script to apply all its moves in one go to the cube,
-   without creating animations on the display. */
-
-static SCM
-gnubik_run_moves ()
-{
-  //request_fast_forward ();
-
-  return SCM_UNSPECIFIED;
-}
-
 
 
 
@@ -273,8 +224,6 @@ startup_guile_scripts (GtkUIManager * ui_manager)
 
   scm_c_define_gsubr ("gnubik-rotate-animated",
 		      1, 0, 0, gnubik_rotate_animated);
-
-  scm_c_define_gsubr ("gnubik-run-moves", 0, 0, 0, gnubik_run_moves);
 
   scm_c_define_gsubr ("gnubik-error-dialog", 1, 0, 0, gnubik_error_dialog);
 
