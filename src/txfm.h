@@ -43,7 +43,7 @@ void matrix_pre_mult (Matrix N, const Matrix M);
 void matrix_dump (const Matrix M);
 
 /* Display point p's co-ordinates on stdout*/
-void point_dump (point p);
+void point_dump (const point p);
 
 /* Set an element of a matrix */
 void matrix_set (Matrix M, int x, int y, float value);

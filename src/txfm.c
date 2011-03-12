@@ -24,7 +24,7 @@
 
 /* print out the location of a point.  For debug only */
 void
-point_dump (point p)
+point_dump (const point p)
 {
   int i;
 
