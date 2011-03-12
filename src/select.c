@@ -283,6 +283,8 @@ choose_items (GLint hits, GLuint buffer[], struct facet_selection *selection)
 #define SEL_FACE 1
 #define SEL_QUAD 2
 
+  g_return_if_fail (hits >= 0);
+
   ptr = (GLuint *) buffer;
 
   for (i = 0; i < hits; i++)

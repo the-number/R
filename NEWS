@@ -14,6 +14,9 @@ GNUbik 2.4-pre
 
 	* Fixed some portability issues.
 
+	* Fixed a bug where the program would crash on
+          startup with larger size cubes.
+
 	* Added uk and sl translations.
 
 	* We now depend on Gtk+ version 2.20 or later.
