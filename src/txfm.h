@@ -37,7 +37,7 @@ void vector_transform_in_place (pv x, const Matrix tx);
 void vector_transform (pv q, const pv x, const Matrix M);
 
 /* Pre Multiply Matrix N,  by Matrix M,   the result is left in N */
-void matrix_pre_mult (const Matrix M, Matrix N);
+void matrix_pre_mult (Matrix N, const Matrix M);
 
 /* Display Matrix M on stdout */
 void matrix_dump (const Matrix M);
@@ -49,7 +49,7 @@ void point_dump (point p);
 void matrix_set (Matrix M, int x, int y, float value);
 
 /* Create a vector from the difference of two points */
-void vector_from_points (point p1, point p2, vector v);
+void vector_from_points (vector v, const point p1, const point p2);
 
 /* Return non-zero if the two vectors are equal. */
 bool vectors_equal (const vector v1, const vector v2);

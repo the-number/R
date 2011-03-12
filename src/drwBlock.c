@@ -179,7 +179,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       p2[2] = 1;
       p2[3] = 1;
 
-      vector_from_points (p2, p1, v);
+      vector_from_points (v, p2, p1);
 
       glPushName (0);
 
@@ -198,7 +198,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       glVertex3d (-limit1, -limit2, 0);
       glEnd ();
 
-      vector_from_points (p2, p1, v);
+      vector_from_points (v, p2, p1);
       gbk_cube_set_quadrant_vector (cv->cube, block_id, face, 0, v);
 
       glLoadName (1);
@@ -216,7 +216,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       glVertex3d (-limit2, limit1, 0);
       glEnd ();
 
-      vector_from_points (p2, p1, v);
+      vector_from_points (v, p2, p1);
       gbk_cube_set_quadrant_vector (cv->cube, block_id, face, 1, v);
 
       glLoadName (2);
@@ -234,7 +234,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       glVertex3d (limit1, limit2, 0);
       glEnd ();
 
-      vector_from_points (p2, p1, v);
+      vector_from_points (v, p2, p1);
       gbk_cube_set_quadrant_vector (cv->cube, block_id, face, 2, v);
 
       glLoadName (3);
@@ -257,7 +257,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
       glEnd ();
       glPopName ();
 
-      vector_from_points (p2, p1, v);
+      vector_from_points (v, p2, p1);
       gbk_cube_set_quadrant_vector (cv->cube, block_id, face, 3, v);
     }
 

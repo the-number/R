@@ -101,7 +101,7 @@ matrix_dump (const Matrix M)
 
 /* Pre-multiply a matrix N,  by matrix M */
 void
-matrix_pre_mult (const Matrix M, Matrix N)
+matrix_pre_mult (Matrix N, const Matrix M)
 {
   int i, j;
   int k;
@@ -146,7 +146,7 @@ matrix_set (Matrix M, int x, int y, float value)
 
 /* Create a vector by taking the difference of 2 points */
 void
-vector_from_points (point p1, point p2, vector v)
+vector_from_points (vector v, const point p1, const point p2)
 {
   int i;
 

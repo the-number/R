@@ -570,7 +570,7 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
      iteration. */
   for (i = md->blocks_in_motion->blocks + md->blocks_in_motion->number_blocks - 1;
        i >= md->blocks_in_motion->blocks; --i)
-    matrix_pre_mult (rotation, cube->blocks[*i].transformation);
+    matrix_pre_mult (cube->blocks[*i].transformation, rotation);
 
   g_signal_emit (cube, signals [MOVED], 0, md);
   move_unref (md);
