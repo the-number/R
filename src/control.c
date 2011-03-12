@@ -83,7 +83,7 @@ getTurnAxis (GbkCube *cube, const struct facet_selection *items, GLfloat *vector
 
   /* Select the untransformed vector for the selected edge
      and transform it,  so that we go the right way */
-  matrix_transform (t, axes[items->face][items->quadrant], vector);
+  vector_transform (t, axes[items->face][items->quadrant], vector);
 }
 
 static void
@@ -170,7 +170,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
 	gbk_cube_get_quadrant_vector (cv->cube, selection->block,
 			     selection->face, selection->quadrant, v);
 
-	matrix_transform_in_place (proj, v);
+	vector_transform_in_place (proj, v);
 
 	cv->cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }

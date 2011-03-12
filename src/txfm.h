@@ -1,5 +1,4 @@
 /*
-
     A little library to do matrix arithmetic
     Copyright (C) 1998  John Darrington
 
@@ -33,9 +32,9 @@ typedef pv point, vector;
 void vector_mult (vector v, float scalar);
 
 /* pre-multiply point/vector pv by matrix tx */
-void matrix_transform_in_place (const Matrix tx, pv x);
+void vector_transform_in_place (const Matrix tx, pv x);
 
-void matrix_transform (const Matrix M, const pv x, pv q);
+void vector_transform (const Matrix M, const pv x, pv q);
 
 
 /* Pre Multiply Matrix N,  by Matrix M,   the result is left in N */

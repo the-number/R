@@ -74,7 +74,7 @@ make_scm_cube (const GbkCube *cube)
 	     will tell us the direction the face is now facing. */
 
 	  point face_direction;
-	  matrix_transform (block->transformation, block->face[face].normal, face_direction);
+	  vector_transform (block->transformation, block->face[face].normal, face_direction);
 
 	  /* The face direction will have exactly one non-zero component;
 	     this is in the direction of the normal,  so we can infer which
@@ -503,7 +503,7 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
 
   glGetFloatv (GL_MODELVIEW_MATRIX, view);
 
-  matrix_transform (view, v, *dest);
+  vector_transform (view, v, *dest);
 }
 
 static Slice_Blocks *
@@ -726,19 +726,19 @@ gbk_cube_get_status (const GbkCube *cube)
 
 	      if (x == 0)
 		{
-		  matrix_transform (block->transformation, block->face[face].normal, q_n);
+		  vector_transform (block->transformation, block->face[face].normal, q_n);
 
 		  if (directions_uniform)
-		    matrix_transform (block->transformation, block->face[face].up, q_u);
+		    vector_transform (block->transformation, block->face[face].up, q_u);
 
 		  ++x;
 		}
 	      else
 		{
-		  matrix_transform (block->transformation, block->face[face].normal, v_n);
+		  vector_transform (block->transformation, block->face[face].normal, v_n);
 
 		  if ( directions_uniform)
-		    matrix_transform (block->transformation, block->face[face].up, v_u);
+		    vector_transform (block->transformation, block->face[face].up, v_u);
 
 		  if (!vectors_equal (q_n, v_n))
 		    return NOT_SOLVED;

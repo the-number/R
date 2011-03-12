@@ -39,7 +39,7 @@ point_dump (point p)
 
 /* Pre-multiply a point or vector x,  by matrix M */
 void
-matrix_transform_in_place (const Matrix M, pv x)
+vector_transform_in_place (const Matrix M, pv x)
 {
   int i, j;
 
@@ -61,7 +61,7 @@ matrix_transform_in_place (const Matrix M, pv x)
 
 /* Pre-multiply a point or vector x,  by matrix M, placing the result into q */
 void
-matrix_transform (const Matrix M, const pv x, pv q)
+vector_transform (const Matrix M, const pv x, pv q)
 {
   int i, j;
 
