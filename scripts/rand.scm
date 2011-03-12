@@ -16,13 +16,13 @@
 
 
 ;; Procedure which generates a list of lists of three random items, and sends it
-;; to gnubik-rotate-animated. The three random components are the face number
+;; to gnubik-append-moves. The three random components are the face number
 ;; (0, 1 or 2), the slice number (-(size-1), ..., size-3, size-1), and the
 ;; direction to turn the slice (0 or 1).
 
 (define (gnubik-randomize num)
   (let ((size (caddar (gnubik-cube-state))))
-    (gnubik-rotate-animated
+    (gnubik-append-moves
      (let loop ((num num) (ret '()))
        (if (eq? num 0)
            ret

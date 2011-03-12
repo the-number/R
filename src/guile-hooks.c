@@ -140,11 +140,10 @@ gnubik_cube_state ()
 
 
 
-/* Function which,  when called from scheme as gnubik-rotate-animated,  causes one
-   side of the cube to rotate on-screen. */
-
+/* Function which,  when called from scheme as gnubik-append-moves,
+   appends moves to the queue and then runs the queue. */
 static SCM
-gnubik_rotate_animated (SCM list)
+gnubik_append_moves (SCM list)
 {
   for (; !SCM_NULLP (list); list = SCM_CDR (list))
     {
@@ -152,9 +151,11 @@ gnubik_rotate_animated (SCM list)
 					    scm_to_int (SCM_CAAR (list)),
 					    scm_to_int (SCM_CADDAR (list)));
 
-      gbk_cube_rotate_slice (the_game->cube, move);
+      gbk_game_append_move (the_game, move);
+
       move_unref (move);
     }
+  gbk_game_replay (the_game);
 
   return SCM_UNSPECIFIED;
 }
@@ -222,8 +223,8 @@ startup_guile_scripts (GtkUIManager * ui_manager)
 
   scm_c_define_gsubr ("gnubik-cube-state", 0, 0, 0, gnubik_cube_state);
 
-  scm_c_define_gsubr ("gnubik-rotate-animated",
-		      1, 0, 0, gnubik_rotate_animated);
+  scm_c_define_gsubr ("gnubik-append-moves",
+		      1, 0, 0, gnubik_append_moves);
 
   scm_c_define_gsubr ("gnubik-error-dialog", 1, 0, 0, gnubik_error_dialog);
 

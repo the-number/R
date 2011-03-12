@@ -77,6 +77,9 @@ struct _GbkGame
      PAST the most recent move */
   struct GbkList end_of_moves;
 
+
+  struct GbkList *start_of_moves;
+
   /* The "current" move.  That is, the place in the queue that we are now.
      When not replaying, it's always equal to most_recent.prev
    */
@@ -123,5 +126,8 @@ void gbk_game_reset (GbkGame *game);
 void gbk_game_remove_view (GbkGame *game, GbkCubeview *cv);
 
 void gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master);
+void gbk_game_append_move (GbkGame *game, struct move_data *move);
+void gbk_game_dump_moves (GbkGame *game);
+
 
 #endif /* __GAME_H__ */

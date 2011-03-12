@@ -264,7 +264,7 @@
 
 (define move-buffer '())
 (define (execute-move-buffer!)
-  (gnubik-rotate-animated (reverse! move-buffer))
+  (gnubik-append-moves (reverse! move-buffer))
   (set! move-buffer '()))
 (define (clear-move-buffer!)
   (set! move-buffer '()))
@@ -274,7 +274,7 @@
 
 ;; A procedure which applies the above function for specific symbolic move
 ;; names. It also returns an entry that should be passed in a list to
-;; gnubik-rotate-animated et al., to cause the cube to be rotated in the C world
+;; gnubik-append-moves et al., to cause the cube to be rotated in the C world
 ;; also (the correspondence between the scheme moves and those in the C world
 ;; have been determined by trial and error).
 ;;
