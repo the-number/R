@@ -19,6 +19,7 @@
 #ifndef TXFM_H
 #define TXFM_H
 
+#include <stdbool.h>
 #include <GL/gl.h>
 
 #define MATRIX_DIM 4
@@ -32,13 +33,13 @@ typedef pv point, vector;
 void vector_mult (vector v, float scalar);
 
 /* pre-multiply point/vector pv by matrix tx */
-void transform_in_place (const Matrix tx, pv x);
+void matrix_transform_in_place (const Matrix tx, pv x);
 
-void transform (const Matrix M, const pv x, pv q);
+void matrix_transform (const Matrix M, const pv x, pv q);
 
 
 /* Pre Multiply Matrix N,  by Matrix M,   the result is left in N */
-void pre_mult (const Matrix M, Matrix N);
+void matrix_pre_mult (const Matrix M, Matrix N);
 
 /* Display Matrix M on stdout */
 void matrix_dump (const Matrix M);
@@ -47,13 +48,13 @@ void matrix_dump (const Matrix M);
 void point_dump (point p);
 
 /* Set an element of a matrix */
-void set (Matrix M, int x, int y, float value);
+void matrix_set (Matrix M, int x, int y, float value);
 
 /* Create a vector from the difference of two points */
 void vector_from_points (point p1, point p2, vector v);
 
 /* Return non-zero if the two vectors are equal. */
-int vectors_equal (const vector v1, const vector v2);
+bool vectors_equal (const vector v1, const vector v2);
 
 
 #endif /* TXFM_H */

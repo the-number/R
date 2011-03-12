@@ -39,7 +39,7 @@ point_dump (point p)
 
 /* Pre-multiply a point or vector x,  by matrix M */
 void
-transform_in_place (const Matrix M, pv x)
+matrix_transform_in_place (const Matrix M, pv x)
 {
   int i, j;
 
@@ -61,7 +61,7 @@ transform_in_place (const Matrix M, pv x)
 
 /* Pre-multiply a point or vector x,  by matrix M, placing the result into q */
 void
-transform (const Matrix M, const pv x, pv q)
+matrix_transform (const Matrix M, const pv x, pv q)
 {
   int i, j;
 
@@ -101,7 +101,7 @@ matrix_dump (const Matrix M)
 
 /* Pre-multiply a matrix N,  by matrix M */
 void
-pre_mult (const Matrix M, Matrix N)
+matrix_pre_mult (const Matrix M, Matrix N)
 {
   int i, j;
   int k;
@@ -113,8 +113,6 @@ pre_mult (const Matrix M, Matrix N)
     0, 0, 0, 0,
     0, 0, 0, 0
   };
-
-
 
   for (k = 0; k < MATRIX_DIM; k++)
     {
@@ -137,7 +135,7 @@ pre_mult (const Matrix M, Matrix N)
 
 /* Set matrix element x,  y to value */
 void
-set (Matrix M, int x, int y, float value)
+matrix_set (Matrix M, int x, int y, float value)
 {
   assert (x <= MATRIX_DIM);
   assert (y <= MATRIX_DIM);
@@ -161,7 +159,7 @@ vector_from_points (point p1, point p2, vector v)
 
 /* Return zero if any corresponding components of the two vectors are not equal,
    otherwise return one to indicate the vectors are identical. */
-int
+bool
 vectors_equal (const vector v1, const vector v2)
 {
   int i;

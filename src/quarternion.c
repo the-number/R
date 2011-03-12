@@ -36,49 +36,49 @@ void
 quarternion_to_matrix (Matrix M, const Quarternion * q)
 {
   /* Diagonals ... */
-  set (M, 0, 0, q->w * q->w + q->x * q->x - q->y * q->y - q->z * q->z);
+  matrix_set (M, 0, 0, q->w * q->w + q->x * q->x - q->y * q->y - q->z * q->z);
 
 
-  set (M, 1, 1, q->w * q->w - q->x * q->x + q->y * q->y - q->z * q->z);
+  matrix_set (M, 1, 1, q->w * q->w - q->x * q->x + q->y * q->y - q->z * q->z);
 
 
-  set (M, 2, 2, q->w * q->w - q->x * q->x - q->y * q->y + q->z * q->z);
+  matrix_set (M, 2, 2, q->w * q->w - q->x * q->x - q->y * q->y + q->z * q->z);
 
 
-  set (M, MATRIX_DIM - 1, MATRIX_DIM - 1,
+  matrix_set (M, MATRIX_DIM - 1, MATRIX_DIM - 1,
        q->w * q->w + q->x * q->x + q->y * q->y + q->z * q->z);
 
 
   /* Last row */
 
-  set (M, 0, MATRIX_DIM - 1, 0.0);
-  set (M, 1, MATRIX_DIM - 1, 0.0);
-  set (M, 2, MATRIX_DIM - 1, 0.0);
+  matrix_set (M, 0, MATRIX_DIM - 1, 0.0);
+  matrix_set (M, 1, MATRIX_DIM - 1, 0.0);
+  matrix_set (M, 2, MATRIX_DIM - 1, 0.0);
 
   /* Last Column */
 
-  set (M, MATRIX_DIM - 1, 0, 0.0);
-  set (M, MATRIX_DIM - 1, 1, 0.0);
-  set (M, MATRIX_DIM - 1, 2, 0.0);
+  matrix_set (M, MATRIX_DIM - 1, 0, 0.0);
+  matrix_set (M, MATRIX_DIM - 1, 1, 0.0);
+  matrix_set (M, MATRIX_DIM - 1, 2, 0.0);
 
 
   /* Others */
 
-  set (M, 0, 1, 2 * q->x * q->y + 2 * q->w * q->z);
+  matrix_set (M, 0, 1, 2 * q->x * q->y + 2 * q->w * q->z);
 
 
-  set (M, 0, 2, 2 * q->x * q->z - 2 * q->w * q->y);
+  matrix_set (M, 0, 2, 2 * q->x * q->z - 2 * q->w * q->y);
 
-  set (M, 1, 2, 2 * q->y * q->z + 2 * q->w * q->x);
-
-
-  set (M, 1, 0, 2 * q->x * q->y - 2 * q->w * q->z);
+  matrix_set (M, 1, 2, 2 * q->y * q->z + 2 * q->w * q->x);
 
 
-  set (M, 2, 0, 2 * q->x * q->z + 2 * q->w * q->y);
+  matrix_set (M, 1, 0, 2 * q->x * q->y - 2 * q->w * q->z);
 
 
-  set (M, 2, 1, 2 * q->y * q->z - 2 * q->w * q->x);
+  matrix_set (M, 2, 0, 2 * q->x * q->z + 2 * q->w * q->y);
+
+
+  matrix_set (M, 2, 1, 2 * q->y * q->z - 2 * q->w * q->x);
 }
 
 void
