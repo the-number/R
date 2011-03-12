@@ -973,7 +973,7 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
   quarternion_get_inverse (&q, &cv->qView);
 
   quarternion_to_matrix (m, &q);
-  vector_transform_in_place (m, v);
+  vector_transform_in_place (v, m);
   
   gbk_cube_rotate (cube, v, step);
 }
