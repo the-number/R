@@ -34,79 +34,34 @@ static void
 gbk_game_init (GbkGame *game)
 {
   game->mesg_id = 0;
+  game->start_of_moves.next = &game->end_of_moves; 
+
   gbk_game_reset (game);
 }
 
-/*
-  Delete all the elements in the queue,
-  starting at START.  Returns a pointer to the 
-  most recent move.
-*/
-static struct GbkList *
-delete_queue_from (GbkGame *game, struct GbkList *start)
-{
-  struct GbkList *sn = start->prev;
-  struct GbkList *n = start;
+static void delete_moves (GbkGame *game,  struct GbkList *from);
 
-  while (n != &game->end_of_moves)
-    {
-      struct GbkList *nn = n->next;
-      if ( n->data)
-	move_unref (n->data);
-    
-      if ( n != &game->end_of_moves)
-	g_slice_free (struct GbkList, n);
-
-      n = nn;
-    }
-
-  game->total = game->posn;
-
-  game->end_of_moves.prev = sn;
-  if (sn == NULL)
-    game->start_of_moves = NULL;
-
-  return &game->end_of_moves;
-}
-
-static void
-delete_queue (GbkGame *game)
-{
-  struct GbkList *n = &game->end_of_moves;
-
-  while (n != NULL)
-    {
-      struct GbkList *nn = n->prev;
-      if ( n->data)
-	move_unref (n->data);
-    
-      if ( n != &game->end_of_moves)
-	g_slice_free (struct GbkList, n);
-
-      n = nn;
-    }
-
-  game->end_of_moves.prev = NULL;
-  game->start_of_moves = NULL;
-
-  game->total = game->posn = 0;
-}
 
 void
 gbk_game_reset (GbkGame *game)
 {
-  game->posn = 0;
-  delete_queue (game);
-
   game->animate_complete_id = 0;
   game->mode = MODE_RECORD;
 
-  game->end_of_moves.prev = NULL; 
+  delete_moves (game, game->start_of_moves.next);
+
+  game->end_of_moves.prev = &game->start_of_moves;
   game->end_of_moves.next = NULL;
   game->end_of_moves.data = NULL;
+
+  game->start_of_moves.prev = NULL; 
+  game->start_of_moves.next = &game->end_of_moves;
+  game->start_of_moves.data = NULL;
   
-  game->iter = &game->end_of_moves;
-  game->start_of_moves = NULL;
+  game->iter = &game->start_of_moves;
+
+  game->posn = 0;
+  game->total = 0;
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
 }
@@ -248,46 +203,78 @@ gbk_game_set_mark (GbkGame *game)
 gboolean
 gbk_game_at_end (GbkGame *game)
 {
-  return (game->iter == &game->end_of_moves);
+  return (game->iter->next == &game->end_of_moves);
 }
 
 
 gboolean
 gbk_game_at_start (GbkGame *game)
 {
-  return (game->iter->prev == NULL); 
+  return (game->iter == &game->start_of_moves);
 }
 
 
 
 
-/* Insert MOVE into the queue before WHERE */
+
+/* Delete all the moves beginning at FROM */
 static void
+delete_moves (GbkGame *game,  struct GbkList *from)
+{
+  g_print ("%s\n", __FUNCTION__);
+  struct GbkList *n = from;
+  struct GbkList *prev = from->prev;
+  while (n != &game->end_of_moves)
+    {
+      struct GbkList *next = n->next;
+
+      if (n == game->iter)
+	game->iter = prev;
+
+      move_unref (n->data);
+      g_slice_free (struct GbkList, n);
+      game->total--;
+      
+      n = next;
+    }
+
+  if (prev)
+    prev->next = &game->end_of_moves;
+  game->end_of_moves.prev = prev;
+}
+
+/* Insert MOVE into the queue before WHERE */
+static struct GbkList *
 insert_move (GbkGame *game, struct move_data *move, struct GbkList *where)
 {
   struct GbkList *before = where->prev;
   struct GbkList *n = g_slice_alloc0 (sizeof *n);
+
+  if ( where != &game->end_of_moves)
+    {
+      g_warning ("Inserting in middle of moves");
+      delete_moves (game, where);
+    }
 
   n->prev = before;
   n->next = where;
   n->data = move_ref (move);
   n->marked = FALSE;
 
-  if ( before)
+
+  if (before)
     before->next = n;
-
-  if ( game->iter == &game->end_of_moves)
-      game->iter = n;
-
-  if ( game->start_of_moves == NULL)
+	
+  if ( game->start_of_moves.next == NULL)
     {
-      game->start_of_moves = n;
-      game->iter = n;
+      game->start_of_moves.next = n;
     }
 
   where->prev = n;
 
   game->total++;
+
+  return n;
 }
 
 
@@ -302,10 +289,10 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
   if ( game->animate_complete_id != 0)
     return;
 
-  if  (! gbk_game_at_end (game))
-    game->iter = delete_queue_from (game, game->iter);
+  if ( game->iter->next != &game->end_of_moves)
+    delete_moves (game, game->iter->next);
 
-  insert_move (game, move, game->iter);
+  game->iter = insert_move (game, move, game->iter->next); 
 
   game->posn++;
 
@@ -317,6 +304,12 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
 void
 gbk_game_append_move (GbkGame *game, struct move_data *move)
 {
+  g_print ("%s\n", __FUNCTION__);
+  if ( game->iter->next != &game->end_of_moves)
+    delete_moves (game, game->iter->next);
+
+  g_assert (game->iter->next == &game->end_of_moves);
+
   insert_move (game, move, &game->end_of_moves);
   
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
@@ -329,7 +322,6 @@ gbk_game_rewind (GbkGame *game)
 
   while (!gbk_game_at_start (game))
     {
-      game->iter = game->iter->prev;
       const struct move_data *m = game->iter->data;
 
       struct move_data *mm = move_copy (m);
@@ -337,8 +329,7 @@ gbk_game_rewind (GbkGame *game)
       gbk_cube_rotate_slice (game->cube, mm);
       move_unref (mm);
       game->posn--;
-      if ( game->iter->prev && game->iter->prev->marked)
-	break;
+      game->iter = game->iter->prev;
     }
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
@@ -353,14 +344,17 @@ next_move (GbkGame *game, gboolean backwards)
 {
   struct move_data *m;
 
-  term_pred * terminal = backwards ? 
-    gbk_game_at_start : gbk_game_at_end ;
+  /* Choose the terminal predicate. That is, when to stop moving. */
+  term_pred * terminal =
+    backwards ? gbk_game_at_start : gbk_game_at_end ;
 
   if ( game->mode != MODE_PLAY ||
        terminal (game) )
     {
-      g_signal_handler_disconnect (game->masterview,
-				   game->animate_complete_id);
+      if ( game->animate_complete_id != 0)
+	g_signal_handler_disconnect (game->masterview,
+				     game->animate_complete_id);
+
       game->animate_complete_id = 0;
       game->mode = MODE_RECORD;
 
@@ -374,24 +368,23 @@ next_move (GbkGame *game, gboolean backwards)
       game->mode = MODE_RECORD;
       game->animate_complete_id = 
 	g_signal_connect_swapped (game->masterview,
-			      "animation-complete",
+				  "animation-complete",
 				  G_CALLBACK (next_move), game);
     }
 
   if ( backwards )
     {
-      game->posn--;
-      game->iter = game->iter->prev;
-
       m = move_copy (game->iter->data);
       m->dir = ! m->dir;
+      game->iter = game->iter->prev;
+      game->posn--;
     }
   else
     {
-      game->posn++;
-
-      m = move_copy (game->iter->data);
       game->iter = game->iter->next;
+      m = move_copy (game->iter->data);
+
+      game->posn++;
     }
 
   gbk_cube_rotate_slice (game->cube, m);
@@ -445,10 +438,12 @@ gbk_game_next_move (GbkGame *game)
 void
 gbk_game_dump_moves (GbkGame *game)
 {
-  struct GbkList *n = game->start_of_moves;
+  struct GbkList *n = game->start_of_moves.next;
+  g_print ("Start %p\n", n);
 
   while (n != &game->end_of_moves)
     {
+      if ( n == game->iter ) printf ("* "); else printf ("  ");
       move_dump (n->data);
       n = n->next;
     }

@@ -77,8 +77,8 @@ struct _GbkGame
      PAST the most recent move */
   struct GbkList end_of_moves;
 
-
-  struct GbkList *start_of_moves;
+  /* Begin iterator. One BEFORE the first move */
+  struct GbkList start_of_moves;
 
   /* The "current" move.  That is, the place in the queue that we are now.
      When not replaying, it's always equal to most_recent.prev
