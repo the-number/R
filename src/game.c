@@ -39,8 +39,6 @@ gbk_game_init (GbkGame *game)
   gbk_game_reset (game);
 }
 
-static void delete_moves (GbkGame *game,  struct GbkList *from);
-
 
 void
 gbk_game_reset (GbkGame *game)
@@ -48,7 +46,7 @@ gbk_game_reset (GbkGame *game)
   game->animate_complete_id = 0;
   game->mode = MODE_RECORD;
 
-  delete_moves (game, game->start_of_moves.next);
+  gbk_game_delete_moves (game, game->start_of_moves.next);
 
   game->end_of_moves.prev = &game->start_of_moves;
   game->end_of_moves.next = NULL;
@@ -218,10 +216,9 @@ gbk_game_at_start (GbkGame *game)
 
 
 /* Delete all the moves beginning at FROM */
-static void
-delete_moves (GbkGame *game,  struct GbkList *from)
+void
+gbk_game_delete_moves (GbkGame *game,  struct GbkList *from)
 {
-  g_print ("%s\n", __FUNCTION__);
   struct GbkList *n = from;
   struct GbkList *prev = from->prev;
   while (n != &game->end_of_moves)
@@ -244,8 +241,8 @@ delete_moves (GbkGame *game,  struct GbkList *from)
 }
 
 /* Insert MOVE into the queue before WHERE */
-static struct GbkList *
-insert_move (GbkGame *game, struct move_data *move, struct GbkList *where)
+struct GbkList *
+gbk_game_insert_move (GbkGame *game, struct move_data *move, struct GbkList *where)
 {
   struct GbkList *before = where->prev;
   struct GbkList *n = g_slice_alloc0 (sizeof *n);
@@ -253,7 +250,7 @@ insert_move (GbkGame *game, struct move_data *move, struct GbkList *where)
   if ( where != &game->end_of_moves)
     {
       g_warning ("Inserting in middle of moves");
-      delete_moves (game, where);
+      gbk_game_delete_moves (game, where);
     }
 
   n->prev = before;
@@ -290,9 +287,9 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
     return;
 
   if ( game->iter->next != &game->end_of_moves)
-    delete_moves (game, game->iter->next);
+    gbk_game_delete_moves (game, game->iter->next);
 
-  game->iter = insert_move (game, move, game->iter->next); 
+  game->iter = gbk_game_insert_move (game, move, game->iter->next); 
 
   game->posn++;
 
@@ -300,20 +297,6 @@ on_move (GbkCube *cube, gpointer m, GbkGame *game)
 }
 
 
-
-void
-gbk_game_append_move (GbkGame *game, struct move_data *move)
-{
-  g_print ("%s\n", __FUNCTION__);
-  if ( game->iter->next != &game->end_of_moves)
-    delete_moves (game, game->iter->next);
-
-  g_assert (game->iter->next == &game->end_of_moves);
-
-  insert_move (game, move, &game->end_of_moves);
-  
-  g_signal_emit (game, signals [QUEUE_CHANGED], 0);
-}
 
 void
 gbk_game_rewind (GbkGame *game)

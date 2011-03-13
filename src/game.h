@@ -126,8 +126,11 @@ void gbk_game_reset (GbkGame *game);
 void gbk_game_remove_view (GbkGame *game, GbkCubeview *cv);
 
 void gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master);
-void gbk_game_append_move (GbkGame *game, struct move_data *move);
+
 void gbk_game_dump_moves (GbkGame *game);
+
+struct GbkList * gbk_game_insert_move (GbkGame *game, struct move_data *move, struct GbkList *where);
+void gbk_game_delete_moves (GbkGame *game,  struct GbkList *from);
 
 
 #endif /* __GAME_H__ */

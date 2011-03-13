@@ -145,16 +145,20 @@ gnubik_cube_state ()
 static SCM
 gnubik_append_moves (SCM list)
 {
+  if (!gbk_game_at_end (the_game))
+    gbk_game_delete_moves (the_game, the_game->iter->next);
+
   for (; !SCM_NULLP (list); list = SCM_CDR (list))
     {
       struct move_data *move = move_create (scm_to_int (SCM_CADAR (list)),
 					    scm_to_int (SCM_CAAR (list)),
 					    scm_to_int (SCM_CADDAR (list)));
 
-      gbk_game_append_move (the_game, move);
+      gbk_game_insert_move (the_game, move, &the_game->end_of_moves);
 
       move_unref (move);
     }
+
   gbk_game_replay (the_game);
 
   return SCM_UNSPECIFIED;
