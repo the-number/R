@@ -12,6 +12,7 @@ POFILES=po/bg.po \
 	po/de.po \
 	po/el.po \
 	po/en_US.po \
+	po/eo.po \
 	po/es.po \
 	po/eu.po \
 	po/fi.po \

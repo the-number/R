@@ -1,342 +1,336 @@
-# Danish translation GNUbik.
-# Copyright (C) 2011 GNUbik og nedenstående oversættere.
+# Esperanto translation.
+# Copyright (C) 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
-# Bjarke Freund-Hansen <dev@rocekiller.dk>, 2003.
-# Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011.
-# korrekturlæst Torben Grøn Helligsø.
+# Felipe Castro <fefcas@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4-pre1\n"
+"Project-Id-Version: gnubik 2.4\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2011-03-09 11:00+0100\n"
-"PO-Revision-Date: 2011-03-13 18:07+0200\n"
-"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
-"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
-"Language: da\n"
+"PO-Revision-Date: 2011-03-12 16:36-0300\n"
+"Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
+"Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: src/colour-dialog.c:182
 msgid "Image Selector"
-msgstr "Billedvælger"
+msgstr "Bildo-Elektilo"
 
 #: src/colour-dialog.c:207
 msgid "All Images"
-msgstr "Alle billeder"
+msgstr "Ĉiuj Bildoj"
 
 #: src/colour-dialog.c:211
 msgid "All Files"
-msgstr "Alle filer"
+msgstr "Ĉiuj Dosieroj"
 
 #: src/colour-dialog.c:294
 msgid "Colour selector"
-msgstr "Farvevælger"
+msgstr "Kolor-elektilo"
 
 #: src/colour-dialog.c:308
 msgid "Image"
-msgstr "Billede"
+msgstr "Bildo"
 
 #: src/colour-dialog.c:309
 msgid "Se_lect"
-msgstr "_Vælg"
+msgstr "E_lekti"
 
 #: src/colour-dialog.c:316
 msgid "Select an image file"
-msgstr "Vælg en billedfil"
+msgstr "Elekti bildan dosieron"
 
 #: src/colour-dialog.c:318
 msgid "_Tiled"
-msgstr "_Fliselagt"
+msgstr "_Kahele"
 
 #: src/colour-dialog.c:320
 msgid "Place a copy of the image on each block"
-msgstr "Placer en kopi af billedet på hver blok"
+msgstr "Meti kopion de la bildo en ĉiu bloko"
 
 #: src/colour-dialog.c:325
 msgid "_Mosaic"
-msgstr "_Mosaik"
+msgstr "_Mozaike"
 
 #: src/colour-dialog.c:328
 msgid "Place a copy of the image across the entire face of the cube"
-msgstr "Placer en kopi af billedet over hele kubens side"
+msgstr "Meti kopion de la bildo tra la tuta faco de la kubo"
 
 #: src/colour-dialog.c:334
 msgid "_Plain"
-msgstr "_Almindelig"
+msgstr "_Plate"
 
 #: src/colour-dialog.c:337
 msgid "Remove image from the cube face"
-msgstr "Fjern billede fra kubens side"
+msgstr "Forigi bildon el la kuba faco"
 
 #: src/dialogs.c:104
 msgid "Size of cube:"
-msgstr "Kubens størrelse:"
+msgstr "Kubo-grando:"
 
 #: src/dialogs.c:108
 msgid "Re_gular cube"
-msgstr "_Regulær kube"
+msgstr "Re_gula kubo"
 
 #: src/dialogs.c:114
 msgid "Sets the number of blocks in each side"
-msgstr "Angiver antallet af blokke på hver side"
+msgstr "Difinas la nombro da blokoj en ĉiu faco"
 
 #: src/dialogs.c:117
 msgid "Allow only cubes with all sides equal size"
-msgstr "Tillad kun kuber hvor alle sider har samme størrelse"
+msgstr "Permesi nur kubojn kun ĉiuj facoj egale grandaj"
 
 #: src/dialogs.c:161
 msgid "A 3 dimensional magic cube puzzle"
-msgstr "En 3-dimensionel magisk kube"
+msgstr "Puzlo de 3-dimensia magia kubo"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
 #: src/dialogs.c:166
 msgid "translator-credits"
-msgstr ""
-"Joe Hansen - 2010, 2011.\n"
-"\n"
-"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-"Mere info: http://www.dansk-gruppen.dk"
+msgstr "Felipe Castro"
 
 #: src/dialogs.c:186
 msgid "New Game"
-msgstr "Nyt spil"
+msgstr "Nova Maĉo"
 
 #: src/dialogs.c:198
 msgid "Dimensions"
-msgstr "Dimensioner"
+msgstr "Dimensioj"
 
 #: src/dialogs.c:208
 msgid "Initial position"
-msgstr "Startplacering"
+msgstr "Komenca pozicio"
 
 #: src/dialogs.c:211
 msgid "_Random"
-msgstr "_Vilkårlig"
+msgstr "_Hazarde"
 
 #: src/dialogs.c:213
 msgid "_Solved"
-msgstr "_Løst"
+msgstr "_Solvite"
 
 #: src/menus.c:92
 msgid "Rear View"
-msgstr "Baglæns visning"
+msgstr "Retro-Rigardo"
 
 #: src/menus.c:100
 msgid "Bottom View"
-msgstr "Bundvisning"
+msgstr "Malsupra-Rigardo"
 
 #: src/menus.c:107
 msgid "Top View"
-msgstr "Topvisning"
+msgstr "Supra-Rigardo"
 
 #: src/menus.c:115
 msgid "Left View"
-msgstr "Visning fra venstre"
+msgstr "Maldekstra-Rigardo"
 
 #: src/menus.c:122
 msgid "Right View"
-msgstr "Visning fra højre"
+msgstr "Dekstra-Rigardo"
 
 #: src/menus.c:136
 #, c-format
 msgid "A mark is now set at position %d."
-msgstr "Et mærke er nu placeret ved %d."
+msgstr "Marko nun estas difinita ĉe pozicio %d."
 
 #: src/menus.c:153
 #, c-format
 msgid "Moves: %d / %d"
-msgstr "Drejninger: %d / %d"
+msgstr "Movoj: %d / %d"
 
 #: src/menus.c:176
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "Kube løst med %d drejning"
-msgstr[1] "Kube løst med %d drejninger"
+msgstr[0] "Kubo solvita en %d movo"
+msgstr[1] "Kubo solvita en %d movoj"
 
 #: src/menus.c:186
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr "Kuben er IKKE løst! Farverne er korrekte, men har forkert retning"
+msgstr "La kubo NE estas solvita! La koloroj estas korektaj, sed kun malĝusta orientiĝo"
 
 #: src/menus.c:202
 #, c-format
 msgid "Animation rate set to %d frame per turn."
 msgid_plural "Animation rate set to %d frames per turn."
-msgstr[0] "Animationsrate er angivet til %d billede per runde."
-msgstr[1] "Animationsrate er angivet til %d billeder per runde."
+msgstr[0] "Animacia rapideco difinita je %d kadro por turno."
+msgstr[1] "Animacia rapideco difinita je %d kadroj por turno."
 
 #: src/menus.c:232
 msgid "_Game"
-msgstr "_Spil"
+msgstr "_Maĉo"
 
 #: src/menus.c:233
 msgid "_View"
-msgstr "_Visning"
+msgstr "_Rigardo"
 
 #: src/menus.c:234
 msgid "Add _View"
-msgstr "Tilføj _visning"
+msgstr "Aldoni _Rigardon"
 
 #: src/menus.c:235
 msgid "Add an auxiliary view of the cube"
-msgstr "Tilføj en hjælpevisning af kuben"
+msgstr "Aldoni helpan rigardon al la kubo"
 
 #: src/menus.c:238
 msgid "_Help"
-msgstr "_Hjælp"
+msgstr "_Helpo"
 
 #: src/menus.c:239
 msgid "Sho_w/Hide"
-msgstr "_Vis/skjul"
+msgstr "Mon_tri/Kaŝi"
 
 #: src/menus.c:240
 msgid "_Scripts"
-msgstr "_Skripter"
+msgstr "_Skriptoj"
 
 #: src/menus.c:312
 msgid "_Restart Game"
-msgstr "_Genstart spil"
+msgstr "_Rekomencigi Maĉon"
 
 #: src/menus.c:317
 msgid "_New Game"
-msgstr "_Nyt spil"
+msgstr "_Nova Maĉo"
 
 #: src/menus.c:322
 msgid "_Rear"
-msgstr "_Bagende"
+msgstr "_Retroe"
 
 #: src/menus.c:323
 msgid "_Left"
-msgstr "_Venstre"
+msgstr "_Maldekstre"
 
 #: src/menus.c:324
 msgid "Ri_ght"
-msgstr "_Højre"
+msgstr "_Dekstre"
 
 #: src/menus.c:325
 msgid "_Top"
-msgstr "_Øverst"
+msgstr "_Supre"
 
 #: src/menus.c:326
 msgid "_Bottom"
-msgstr "_Nederst"
+msgstr "Malsu_pre"
 
 #: src/menus.c:330
 msgid "_Colours"
-msgstr "_Farver"
+msgstr "_Koloroj"
 
 #: src/menus.c:335
 msgid "_Animation"
-msgstr "_Animation"
+msgstr "_Animacio"
 
 #: src/menus.c:340
 msgid "_Faster"
-msgstr "_Hurtigere"
+msgstr "Pli_rapide"
 
 #: src/menus.c:345
 msgid "_Slower"
-msgstr "_Langsommere"
+msgstr "Malplirapi_de"
 
 #: src/menus.c:455
 msgid "Rewind"
-msgstr "Spol tilbage"
+msgstr "Retroigi"
 
 #: src/menus.c:456
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Gå til det forrige mærke (eller begyndelsen) af drejesekvensen"
+msgstr "Iri al la antaŭa marko (aŭ al la komenco) de la sekvo de movoj"
 
 #: src/menus.c:462
 msgid "Back"
-msgstr "Tilbage"
+msgstr "Malantaŭen"
 
 #: src/menus.c:463
 msgid "Make one step backwards"
-msgstr "Gå et trin tilbage"
+msgstr "Fari unu paŝon malantaŭen"
 
 #: src/menus.c:469
 msgid "Stop"
-msgstr "Stop"
+msgstr "Halti"
 
 #: src/menus.c:470
 msgid "Stop running the sequence of moves"
-msgstr "Stop kørslen af drejningernes sekvens"
+msgstr "Halti ludadi la sekvon de movoj"
 
 #: src/menus.c:476
 msgid "Mark"
-msgstr "Marker"
+msgstr "Marki"
 
 #: src/menus.c:477
 msgid "Mark the current place in the sequence of moves"
-msgstr "Marker det aktuelle sted i drejesekvensen"
+msgstr "Marki la nunan lokon en la sekvo de movoj"
 
 #: src/menus.c:483
 msgid "Forward"
-msgstr "Fremad"
+msgstr "Antaŭen"
 
 #: src/menus.c:484
 msgid "Make one step forwards"
-msgstr "Gå et trin fremad"
+msgstr "Fari unu paŝon antaŭen"
 
 #: src/menus.c:490
 msgid "Play"
-msgstr "Afspil"
+msgstr "Ludi"
 
 #: src/menus.c:491
 msgid "Run forward through the sequence of moves"
-msgstr "Gå fremad igennem drejesekvensen"
+msgstr "Pluiri antaŭen tra la sekvoj de movoj"
 
 #: src/menus.c:556
 msgid "Gnubik error"
-msgstr "Gnubik-fejl"
+msgstr "Gnubik-eraro"
 
 #: src/swatch.c:135
 msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
-msgstr "En prøve på farven. Du kan klikke og vælge en ny farve, eller trække en farve til dette sted."
+msgstr "Specimeno de la koloro. Vi povas klaki kaj elekti novan koloron, aŭ treni unu al tiu ĉi spaco."
 
 #: src/textures.c:92
 msgid "Pixbuf has wrong number of channels"
-msgstr "Pixbuf har et forkert antal kanaler"
+msgstr "Bilderbufro havas malĝustan nombron da kanaloj"
 
 #: src/textures.c:101
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
-msgstr "Pixbuf har ukendt farveområde: %d"
+msgstr "Bilderbufro havas nekonatan kolorspacon: %d"
 
 #: scripts/debug.scm:50
 msgid "_Debug"
-msgstr "_Fejlsøg"
+msgstr "_Rafini"
 
 #: scripts/debug.scm:52
 msgid "_Move"
-msgstr "_Flyt"
+msgstr "_Movi"
 
 #: scripts/debug.scm:54
 msgid "_Dump state"
-msgstr "_Smid tilstand"
+msgstr "Ŝ_uti staton"
 
 #: scripts/rand.scm:37
 msgid "_Randomize"
-msgstr "_Vælg tilfældig"
+msgstr "_Malordigi"
 
 #: scripts/rand.scm:38
 msgid "_Animated"
-msgstr "_Animeret"
+msgstr "_Animacie"
 
 #: scripts/rand.scm:39
 msgid "_Fast"
-msgstr "_Hurtig"
+msgstr "_Rapide"
 
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
-msgstr "Dette skript virker kun på 3×3×3 kuber."
+msgstr "Tiu ĉi skripto nur traktas kubojn 3×3×3."
 
 #: scripts/mellor-solve.scm:399
 msgid "_Solvers"
-msgstr "_Løsningsalgoritmer"
+msgstr "_Solviloj"
 
 #: scripts/mellor-solve.scm:400
 msgid "_3×3"
@@ -344,28 +338,28 @@ msgstr "_3×3"
 
 #: scripts/mellor-solve.scm:404
 msgid "_Full cube"
-msgstr "_Hel kube"
+msgstr "_Tuta kubo"
 
 #: scripts/mellor-solve.scm:407
 msgid "Bottom _edge place"
-msgstr "Placering af nederste _kant"
+msgstr "Malsupra _eĝa loko"
 
 #: scripts/mellor-solve.scm:410
 msgid "Bottom _corner orient"
-msgstr "Orientering for nederste _hjørne"
+msgstr "Malsupra _angula oriento"
 
 #: scripts/mellor-solve.scm:413
 msgid "_Bottom corner place"
-msgstr "Placering af _nederste hjørne"
+msgstr "_Malsupra angula loko"
 
 #: scripts/mellor-solve.scm:416
 msgid "_Middle slice"
-msgstr "_Midterskive"
+msgstr "Me_za segmento"
 
 #: scripts/mellor-solve.scm:419
 msgid "_Top slice"
-msgstr "_Øverste skive"
+msgstr "_Supra segmento"
 
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
-msgstr "_Øverste kanter"
+msgstr "Su_praj eĝoj"

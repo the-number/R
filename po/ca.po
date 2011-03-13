@@ -7,68 +7,67 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gnubik\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-25 12:54+0100\n"
+"POT-Creation-Date: 2009-01-06 11:48+0900\n"
 "PO-Revision-Date: 2003-12-23 08:31+0100\n"
 "Last-Translator: Scs <scs@sobral.cat>\n"
 "Language-Team: Catalonia is not Spain <cat@cat.cat>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/colour-sel.c:185
+#: src/colour-sel.c:181
 #, c-format
 msgid "Cannot create image from file %s: %s"
 msgstr "Impossible crear la imatge a partir de l'arxiu %s:%s"
 
-#: src/colour-sel.c:265
+#: src/colour-sel.c:261
 msgid "Image Selector"
 msgstr "Selector de la imatge"
 
-#: src/colour-sel.c:287
+#: src/colour-sel.c:289
 #, fuzzy
 msgid "All Images"
 msgstr "Imatge"
 
-#: src/colour-sel.c:291
+#: src/colour-sel.c:296
 msgid "All Files"
 msgstr ""
 
-#: src/colour-sel.c:435
+#: src/colour-sel.c:440
 msgid "Pattern"
 msgstr "Patró"
 
-#: src/colour-sel.c:436
+#: src/colour-sel.c:441
 msgid "Colour"
 msgstr "Color"
 
-#: src/colour-sel.c:464
+#: src/colour-sel.c:468
 msgid "Click here to use a pattern on the cube surface"
 msgstr "Cliqui aquí­ per a aplicar un patró a la superfície del cub"
 
-#: src/colour-sel.c:756
+#: src/colour-sel.c:750
 msgid "Colour selector"
 msgstr "Selector de color"
 
-#: src/colour-sel.c:781
+#: src/colour-sel.c:776
 msgid "Image"
 msgstr "Imatge"
 
-#: src/colour-sel.c:782
+#: src/colour-sel.c:777
 msgid "Se_lect"
 msgstr "Se_leccionar"
 
-#: src/colour-sel.c:784
+#: src/colour-sel.c:780
 msgid "Select an image file"
 msgstr "Seleccionar un arxiu imatge"
 
-#: src/colour-sel.c:787
+#: src/colour-sel.c:783
 msgid "_Tiled"
 msgstr "En _mosaic"
 
-#: src/colour-sel.c:790
+#: src/colour-sel.c:785
 msgid ""
 "Place a copy of the image\n"
 "on each block"
@@ -76,11 +75,11 @@ msgstr ""
 "Posar una còpia de la imatge\n"
 "a cada bloc"
 
-#: src/colour-sel.c:795
+#: src/colour-sel.c:789
 msgid "_Mosaic"
 msgstr "_Ajustat"
 
-#: src/colour-sel.c:799
+#: src/colour-sel.c:792
 msgid ""
 "Place a copy of the image across\n"
 "the entire face of the cube"
@@ -88,7 +87,7 @@ msgstr ""
 "Posar una còpia de la imatge sobre\n"
 "tota la cara del cub"
 
-#: src/colour-sel.c:859
+#: src/colour-sel.c:852
 #, fuzzy
 msgid ""
 "A sample of the colour or pattern. You can click and select a new colour or "
@@ -97,262 +96,183 @@ msgstr ""
 "Una mostra del color o patró. Pot polsar i seleccionar un color nou o patró, "
 "o bé arrossegar-ne un a aquest espai."
 
-#: src/menus.c:168
+#: src/menus.c:165
 msgid "Sets the number of blocks in each side"
 msgstr "Estableix el nombre de blocs a cada costat"
 
-#: src/menus.c:170
+#: src/menus.c:167
 msgid "Size of cube:"
 msgstr "Mida del cub:"
 
-#: src/menus.c:209
+#: src/menus.c:207
 msgid "Faster"
 msgstr "Més ràpid"
 
-#: src/menus.c:212
+#: src/menus.c:210
 msgid "Slower"
 msgstr "Més lent"
 
-#: src/menus.c:218
+#: src/menus.c:215
 msgid "Controls the speed with which slices rotate"
 msgstr "Controla la velocitat de gir de les seccions"
 
-#: src/menus.c:262
+#: src/menus.c:259
 msgid "Preferences"
 msgstr "Preferències"
 
-#: src/menus.c:277
+#: src/menus.c:271
 msgid "Dimensions"
 msgstr "Dimensions"
 
-#: src/menus.c:278
+#: src/menus.c:272
 msgid "Animation"
 msgstr "Animació"
 
-#: src/menus.c:279
+#: src/menus.c:273
 msgid "Lighting"
 msgstr "Il·luminació"
 
-#: src/menus.c:288
+#: src/menus.c:282
 msgid "Enable lighting"
 msgstr "Habilitar la il·luminació"
 
-#: src/menus.c:290
+#: src/menus.c:284
 msgid "Makes the cube appear illuminated"
 msgstr "Fa que el cub apareixi il·luminat"
 
-#: src/menus.c:360
+#: src/menus.c:354
 msgid "Start cube with new settings?"
 msgstr "Iniciar el cub amb les noves opcions?"
 
-#: src/menus.c:519
-msgid "A 3 dimensional magic cube puzzle"
-msgstr ""
-
-#. TRANSLATORS: Do not translate this string. Instead, use it to list
-#. the people who have helped with translation to your language.
-#: src/menus.c:524
-msgid "translator-credits"
-msgstr ""
-
-#: src/textures.c:215
+#: src/textures.c:203
 msgid "Pixbuf has wrong number of channels"
 msgstr "Pixbuf té un nombre de canals incorrecte"
 
-#: src/textures.c:224
+#: src/textures.c:211
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Pixbuf té un espai de color desconegut: %d"
 
-#: src/widget-set.c:111
+#: src/widget-set.c:114
 #, fuzzy, c-format
 msgid "Moves: %d / %d"
 msgstr "Moviments: %d"
 
-#: src/widget-set.c:139
+#: src/widget-set.c:140
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Cub resolt en %d moviment"
 msgstr[1] "Cub resolt en %d moviments"
 
-#: src/widget-set.c:149
+#: src/widget-set.c:146
 #, fuzzy
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr ""
 "El cub no s'ha resolt! Els colors són correctes, però l'orientació no ho és."
 
-#: src/widget-set.c:198
+#: src/widget-set.c:200
 msgid "Rewind"
 msgstr ""
 
-#: src/widget-set.c:200
+#: src/widget-set.c:201
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:204
+#: src/widget-set.c:206
 msgid "Back"
 msgstr ""
 
-#: src/widget-set.c:205
+#: src/widget-set.c:207
 msgid "Make one step backwards"
 msgstr ""
 
-#: src/widget-set.c:210
+#: src/widget-set.c:213
 msgid "Stop"
 msgstr ""
 
-#: src/widget-set.c:211
+#: src/widget-set.c:214
 msgid "Stop running the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:216
+#: src/widget-set.c:220
 msgid "Mark"
 msgstr ""
 
-#: src/widget-set.c:218
+#: src/widget-set.c:221
 msgid "Mark the current place in the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:223
+#: src/widget-set.c:227
 msgid "Forward"
 msgstr ""
 
-#: src/widget-set.c:224
+#: src/widget-set.c:228
 msgid "Make one step forwards"
 msgstr ""
 
-#: src/widget-set.c:229
+#: src/widget-set.c:234
 msgid "Play"
 msgstr ""
 
-#: src/widget-set.c:231
+#: src/widget-set.c:235
 msgid "Run forward through the sequence of moves"
 msgstr ""
 
-#: src/widget-set.c:313
+#: src/widget-set.c:322
 msgid "_Play Toolbar"
 msgstr ""
 
-#: src/widget-set.c:320
+#: src/widget-set.c:329
 msgid "_Status Bar"
 msgstr ""
 
-#: src/widget-set.c:334
-#, fuzzy
-msgid "_Game"
+#: src/widget-set.c:367
+msgid "/_Game"
 msgstr "/_Joc"
 
-#: src/widget-set.c:335
-#, fuzzy
-msgid "_Settings"
-msgstr "/_Opcions"
-
-#: src/widget-set.c:336
-#, fuzzy
-msgid "_Help"
-msgstr "/_Ajuda"
-
-#: src/widget-set.c:337
-msgid "_Scripts"
-msgstr ""
-
-#: src/widget-set.c:345
-#, fuzzy
-msgid "_Colours"
-msgstr "Color"
-
-#: src/widget-set.c:349
-#, fuzzy
-msgid "Sho_w/Hide"
-msgstr "/_Opcions"
-
-#: src/widget-set.c:361
-#, fuzzy
-msgid "_New Game"
+#: src/widget-set.c:368
+msgid "/_Game/_New Game"
 msgstr "/_Joc/_Nou Joc"
 
-#: scripts/debug.scm:49
-msgid "_Debug"
-msgstr ""
+#: src/widget-set.c:369
+msgid "/_Game/sep"
+msgstr "/_Joc/sep"
 
-#: scripts/debug.scm:51
-msgid "_Move"
-msgstr ""
+#: src/widget-set.c:370
+msgid "/_Game/_Quit"
+msgstr "/_Joc/_Sortir"
 
-#: scripts/debug.scm:53
-msgid "_Dump state"
-msgstr ""
+#: src/widget-set.c:371
+msgid "/_Settings"
+msgstr "/_Opcions"
 
-#: scripts/rand.scm:41
-msgid "_Randomize"
-msgstr ""
+#: src/widget-set.c:372
+msgid "/_Settings/_Preferences"
+msgstr "/_Opcions/_Preferències"
 
-#: scripts/rand.scm:42
+#: src/widget-set.c:373
+msgid "/_Settings/_Colours"
+msgstr "/_Opcions/_Colors"
+
+#: src/widget-set.c:374
 #, fuzzy
-msgid "_Animated"
-msgstr "Animació"
+msgid "/_Settings/Sho_w\\/Hide"
+msgstr "/_Opcions"
 
-#: scripts/rand.scm:43
+#: src/widget-set.c:380
+msgid "/_Help"
+msgstr "/_Ajuda"
+
+#: src/widget-set.c:381
+msgid "/_Help/_About"
+msgstr "/_Ajuda/_Sobre"
+
+#: src/widget-set.c:431
 #, fuzzy
-msgid "_Fast"
-msgstr "Més ràpid"
-
-#: scripts/mellor-solve.scm:402
-msgid "_Solvers"
-msgstr ""
-
-#: scripts/mellor-solve.scm:403
-msgid "_3×3"
-msgstr ""
-
-#: scripts/mellor-solve.scm:407
-msgid "_Full cube"
-msgstr ""
-
-#: scripts/mellor-solve.scm:410
-msgid "Bottom _edge place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:413
-msgid "Bottom _corner orient"
-msgstr ""
-
-#: scripts/mellor-solve.scm:416
-msgid "_Bottom corner place"
-msgstr ""
-
-#: scripts/mellor-solve.scm:419
-msgid "_Middle slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:422
-msgid "_Top slice"
-msgstr ""
-
-#: scripts/mellor-solve.scm:425
-msgid "_Top edges"
-msgstr ""
-
-#~ msgid "/_Game/sep"
-#~ msgstr "/_Joc/sep"
-
-#~ msgid "/_Game/_Quit"
-#~ msgstr "/_Joc/_Sortir"
-
-#~ msgid "/_Settings/_Preferences"
-#~ msgstr "/_Opcions/_Preferències"
-
-#~ msgid "/_Settings/_Colours"
-#~ msgstr "/_Opcions/_Colors"
-
-#~ msgid "/_Help/_About"
-#~ msgstr "/_Ajuda/_Sobre"
-
-#, fuzzy
-#~ msgid "/Settings/Show\\/Hide"
-#~ msgstr "/_Opcions"
+msgid "/Settings/Show\\/Hide"
+msgstr "/_Opcions"
 
 #~ msgid "Use an image file on the cube face"
 #~ msgstr "Utilitzar una imatge sobre la cara del cub"
