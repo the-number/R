@@ -32,8 +32,8 @@
 #define GBK_IS_SWATCH_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GBK_TYPE_SWATCH))
 #define GBK_SWATCH_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GBK_TYPE_SWATCH, GbkSwatchClass))
 
-typedef struct _GbkSwatch        GbkSwatch;
-typedef struct _GbkSwatchClass   GbkSwatchClass;
+typedef struct _GbkSwatch GbkSwatch;
+typedef struct _GbkSwatchClass GbkSwatchClass;
 
 
 struct _GbkSwatch
@@ -64,7 +64,7 @@ GType gbk_swatch_get_type (void);
  * Method definitions.
  */
 
-GtkWidget * gbk_swatch_new (void);
+GtkWidget *gbk_swatch_new (void);
 
 
 

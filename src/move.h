@@ -43,9 +43,9 @@ struct move_data;
 struct move_data
 {
   int slice;
-  short dir;   /* 0 = cw, 1 = ccw */
-  short axis;  /* [0,2] */
-  short turns; /* Normally 1 or 2 */
+  short dir;			/* 0 = cw, 1 = ccw */
+  short axis;			/* [0,2] */
+  short turns;			/* Normally 1 or 2 */
 
   Slice_Blocks *blocks_in_motion;
   int ref;
@@ -54,10 +54,11 @@ struct move_data
 
 GType move_get_type (void);
 
-struct move_data * move_create (int slice, short axis, short dir);
+struct move_data *move_create (int slice, short axis, short dir);
 void move_unref (const struct move_data *);
-const struct move_data * move_ref (const struct move_data *) __attribute__((warn_unused_result));
-struct move_data * move_copy (const struct move_data *);
+const struct move_data *move_ref (const struct move_data *)
+  __attribute__ ((warn_unused_result));
+struct move_data *move_copy (const struct move_data *);
 
 short move_turns (const struct move_data *);
 short move_dir (const struct move_data *);

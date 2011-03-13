@@ -29,7 +29,7 @@
 #include <libguile.h>
 
 #if SCM_MAJOR_VERSION < 2
-# define scm_to_utf8_string(name) scm_to_locale_string(name)
+#define scm_to_utf8_string(name) scm_to_locale_string(name)
 #endif
 
 /* This function is called from the menu when the user makes a selection. The
@@ -37,9 +37,9 @@
    of a scheme procedure to execute. */
 
 static void
-run_scheme (GtkAction *act, SCM exp)
+run_scheme (GtkAction * act, SCM exp)
 {
-  scm_eval (exp, scm_interaction_environment());
+  scm_eval (exp, scm_interaction_environment ());
 }
 
 /* The menu manager */
@@ -227,8 +227,7 @@ startup_guile_scripts (GtkUIManager * ui_manager)
 
   scm_c_define_gsubr ("gnubik-cube-state", 0, 0, 0, gnubik_cube_state);
 
-  scm_c_define_gsubr ("gnubik-append-moves",
-		      1, 0, 0, gnubik_append_moves);
+  scm_c_define_gsubr ("gnubik-append-moves", 1, 0, 0, gnubik_append_moves);
 
   scm_c_define_gsubr ("gnubik-error-dialog", 1, 0, 0, gnubik_error_dialog);
 
@@ -240,11 +239,11 @@ startup_guile_scripts (GtkUIManager * ui_manager)
   read_script_directory (GUILEDIR);
   read_script_directory (SCRIPTDIR);
 
-    {
-      gchar *cfd = g_strdup_printf ("%s/gnubik",g_get_user_config_dir ());
+  {
+    gchar *cfd = g_strdup_printf ("%s/gnubik", g_get_user_config_dir ());
 
-      read_script_directory (cfd);
+    read_script_directory (cfd);
 
-      g_free (cfd);
-    }
+    g_free (cfd);
+  }
 }

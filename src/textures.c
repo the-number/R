@@ -45,7 +45,7 @@ texInit (void)
    Returns NULL if it cannot be created.
 */
 GLuint
-create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError **gerr)
+create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr)
 {
   GLuint texName;
 
@@ -89,7 +89,8 @@ create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError **gerr)
 	    if (gerr)
 	      {
 		*gerr = g_error_new (domain, 0,
-				     _("Pixbuf has wrong number of channels"));
+				     _
+				     ("Pixbuf has wrong number of channels"));
 	      }
 	    return 0;
 	  }

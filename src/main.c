@@ -37,12 +37,13 @@ static const char help_string[];
 
 struct application_options
 {
-  bool solved ;
-  int initial_cube_size[3] ;
+  bool solved;
+  int initial_cube_size[3];
   int frameQty;
 };
 
-static void parse_app_opts (int *argc, char **argv, struct application_options *opts);
+static void parse_app_opts (int *argc, char **argv,
+			    struct application_options *opts);
 
 
 GbkGame *the_game;
@@ -60,7 +61,7 @@ c_main (void *closure, int argc, char *argv[])
   GtkWidget *cubeview;
   GtkWidget *statusbar;
 
-  struct application_options opts = { false, {3,3,3}, 2};
+  struct application_options opts = { false, {3, 3, 3}, 2 };
 
   /* Internationalisation stuff */
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -69,7 +70,7 @@ c_main (void *closure, int argc, char *argv[])
 
   gtk_init (&argc, &argv);
   gtk_gl_init (&argc, &argv);
-  
+
 #if DEBUG && HAVE_GL_GLUT_H
   glutInit ();
 #endif
@@ -81,7 +82,7 @@ c_main (void *closure, int argc, char *argv[])
 
   g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), NULL);
 
-  gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
+  gtk_window_set_icon_name (GTK_WINDOW (window), "gnubik");
 
   /* process arguments specific to this program */
   parse_app_opts (&argc, argv, &opts);
@@ -92,8 +93,8 @@ c_main (void *closure, int argc, char *argv[])
 
   /* create the cube */
   cube = GBK_CUBE (gbk_cube_new (opts.initial_cube_size[0],
-				     opts.initial_cube_size[1],
-				     opts.initial_cube_size[2]));
+				 opts.initial_cube_size[1],
+				 opts.initial_cube_size[2]));
 
   /* If a solved cube has not been requested,  then do some random
      moves on it */
@@ -112,7 +113,7 @@ c_main (void *closure, int argc, char *argv[])
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (form), hbox, TRUE, TRUE, 0);
-  
+
   cubeview = gbk_cubeview_new (cube);
   gbk_cubeview_set_frame_qty (GBK_CUBEVIEW (cubeview), opts.frameQty);
   gtk_box_pack_start (GTK_BOX (hbox), cubeview, TRUE, TRUE, 0);
@@ -178,18 +179,18 @@ parse_app_opts (int *argc, char **argv, struct application_options *opts)
 	  opts->solved = 1;
 	  break;
 	case 'z':
-	    opts->initial_cube_size[0] = atoi (strtok (optarg, ","));
-	    if ( opts->initial_cube_size[0] <= 0)
-	      opts->initial_cube_size[0] = 3;
-	    
-	    for (i = 1; i < 3; ++i)
-	      {
-		char *x = strtok (NULL, ",");
-		opts->initial_cube_size[i] = x ? atoi (x) : -1;
+	  opts->initial_cube_size[0] = atoi (strtok (optarg, ","));
+	  if (opts->initial_cube_size[0] <= 0)
+	    opts->initial_cube_size[0] = 3;
 
-		if ( opts->initial_cube_size[i] <= 0)
-		  opts->initial_cube_size[i] = opts->initial_cube_size[i-1];
-	      }
+	  for (i = 1; i < 3; ++i)
+	    {
+	      char *x = strtok (NULL, ",");
+	      opts->initial_cube_size[i] = x ? atoi (x) : -1;
+
+	      if (opts->initial_cube_size[i] <= 0)
+		opts->initial_cube_size[i] = opts->initial_cube_size[i - 1];
+	    }
 	  break;
 	case 'h':
 	  printf ("%s", help_string);
@@ -213,4 +214,3 @@ static const char help_string[] =
   "-z n,m,p\n--size=n\tShow a   n x m x p   sized cube \n\n"
   "-a n\n--animation=n\tNumber of intermediate positions to be shown in animations\n\n"
   "\n\nBug reports to " PACKAGE_BUGREPORT "\n";
-

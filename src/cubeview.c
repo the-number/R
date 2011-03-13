@@ -26,16 +26,17 @@
 #include "textures.h"
 #include <gdk/gdkkeysyms.h>
 
-static void realize (GtkWidget *w);
-static void size_allocate (GtkWidget *w, GtkAllocation *alloc);
-static gboolean expose (GtkWidget *w, GdkEventExpose *event);
+static void realize (GtkWidget * w);
+static void size_allocate (GtkWidget * w, GtkAllocation * alloc);
+static gboolean expose (GtkWidget * w, GdkEventExpose * event);
 
 static GLboolean have_accumulation_buffer (void);
 
-static gboolean on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data);
+static gboolean on_mouse_button (GtkWidget * w, GdkEventButton * event,
+				 gpointer data);
 
 
-static void cubeview_generate_texname (GbkCubeview *cubeview, int i);
+static void cubeview_generate_texname (GbkCubeview * cubeview, int i);
 
 
 /* Error string display.  This is always called by a macro
@@ -50,20 +51,20 @@ error_check (const char *file, int line_no, const char *string)
 }
 
 enum
-  {
-    PROP_0 = 0,
-    PROP_CUBE,
-    PROP_ASPECT,
-    PROP_FQ,
-    PROP_COL0,    PROP_COL1,    PROP_COL2, PROP_COL3,    PROP_COL4,    PROP_COL5,
-    PROP_IMG0,    PROP_IMG1,    PROP_IMG2, PROP_IMG3,    PROP_IMG4,    PROP_IMG5,
-    PROP_SFC0,    PROP_SFC1,    PROP_SFC2, PROP_SFC3,    PROP_SFC4,    PROP_SFC5
-  };
+{
+  PROP_0 = 0,
+  PROP_CUBE,
+  PROP_ASPECT,
+  PROP_FQ,
+  PROP_COL0, PROP_COL1, PROP_COL2, PROP_COL3, PROP_COL4, PROP_COL5,
+  PROP_IMG0, PROP_IMG1, PROP_IMG2, PROP_IMG3, PROP_IMG4, PROP_IMG5,
+  PROP_SFC0, PROP_SFC1, PROP_SFC2, PROP_SFC3, PROP_SFC4, PROP_SFC5
+};
 
-static void animate_move (GbkCubeview *dc, const struct move_data *move);
+static void animate_move (GbkCubeview * dc, const struct move_data *move);
 
 static void
-on_move (GbkCube *cube, struct move_data *move, GbkCubeview *cv)
+on_move (GbkCube * cube, struct move_data *move, GbkCubeview * cv)
 {
   animate_move (cv, move);
 }
@@ -81,25 +82,25 @@ unset_rotating_flag (gpointer data)
 
 
 static void
-on_rotate (GbkCubeview *cv)
+on_rotate (GbkCubeview * cv)
 {
-  if ( cv->rot_timer != 0)
+  if (cv->rot_timer != 0)
     g_source_remove (cv->rot_timer);
 
   cv->is_rotating = TRUE;
 
-  cv->rot_timer =  g_timeout_add (cv->picture_rate * 4, unset_rotating_flag, cv);
+  cv->rot_timer =
+    g_timeout_add (cv->picture_rate * 4, unset_rotating_flag, cv);
 
   gbk_cubeview_redisplay (cv);
 }
 
 static void
-cubeview_set_property (GObject     *object,
-		   guint            prop_id,
-		   const GValue    *value,
-		   GParamSpec      *pspec)
+cubeview_set_property (GObject * object,
+		       guint prop_id,
+		       const GValue * value, GParamSpec * pspec)
 {
-  GbkCubeview *cubeview  = GBK_CUBEVIEW (object);
+  GbkCubeview *cubeview = GBK_CUBEVIEW (object);
 
   switch (prop_id)
     {
@@ -111,21 +112,23 @@ cubeview_set_property (GObject     *object,
 	if (cubeview->dim_id)
 	  g_signal_handler_disconnect (cubeview->cube, cubeview->dim_id);
 
-	cubeview->dim_id = g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
-				  G_CALLBACK (scene_init), cubeview);
+	cubeview->dim_id =
+	  g_signal_connect_swapped (cubeview->cube, "notify::dimensions",
+				    G_CALLBACK (scene_init), cubeview);
 
 	if (cubeview->move_id)
 	  g_signal_handler_disconnect (cubeview->cube, cubeview->move_id);
 
-	cubeview->move_id = 
-	  g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move), cubeview);
+	cubeview->move_id =
+	  g_signal_connect (cubeview->cube, "move", G_CALLBACK (on_move),
+			    cubeview);
 
 	if (cubeview->rotate_id)
 	  g_signal_handler_disconnect (cubeview->cube, cubeview->rotate_id);
 
 	cubeview->rotate_id =
-	  g_signal_connect_swapped (cubeview->cube, "rotate", G_CALLBACK (on_rotate),
-				    cubeview);
+	  g_signal_connect_swapped (cubeview->cube, "rotate",
+				    G_CALLBACK (on_rotate), cubeview);
       }
       break;
     case PROP_ASPECT:
@@ -144,40 +147,52 @@ cubeview_set_property (GObject     *object,
     case PROP_FQ:
       cubeview->frameQty = g_value_get_int (value);
       break;
-    case PROP_COL0: case PROP_COL1:  case PROP_COL2:
-    case PROP_COL3: case PROP_COL4:  case PROP_COL5:
+    case PROP_COL0:
+    case PROP_COL1:
+    case PROP_COL2:
+    case PROP_COL3:
+    case PROP_COL4:
+    case PROP_COL5:
       {
 	GdkColor *col = g_value_get_boxed (value);
 
 	GLfloat *v = cubeview->colour[prop_id - PROP_COL0];
-	
+
 	v[0] = col->red / (GLfloat) 0xffff;
 	v[1] = col->green / (GLfloat) 0xffff;
 	v[2] = col->blue / (GLfloat) 0xffff;
-	
+
 	gbk_cubeview_redisplay (cubeview);
       }
       break;
-    case PROP_IMG0: case PROP_IMG1:  case PROP_IMG2:
-    case PROP_IMG3: case PROP_IMG4:  case PROP_IMG5:
+    case PROP_IMG0:
+    case PROP_IMG1:
+    case PROP_IMG2:
+    case PROP_IMG3:
+    case PROP_IMG4:
+    case PROP_IMG5:
       {
 	cubeview->pixbuf[prop_id - PROP_IMG0] = g_value_get_object (value);
 
 	glDeleteTextures (1, &cubeview->texName[prop_id - PROP_IMG0]);
 	cubeview->texName[prop_id - PROP_IMG0] = -1;
 
-	if ( gtk_widget_get_realized (GTK_WIDGET (cubeview)))
+	if (gtk_widget_get_realized (GTK_WIDGET (cubeview)))
 	  cubeview_generate_texname (cubeview, prop_id - PROP_IMG0);
 
 	gbk_cubeview_redisplay (cubeview);
       }
       break;
-    case PROP_SFC0: case PROP_SFC1:  case PROP_SFC2:
-    case PROP_SFC3: case PROP_SFC4:  case PROP_SFC5:
+    case PROP_SFC0:
+    case PROP_SFC1:
+    case PROP_SFC2:
+    case PROP_SFC3:
+    case PROP_SFC4:
+    case PROP_SFC5:
       {
 	cubeview->surface[prop_id - PROP_SFC0] = g_value_get_enum (value);
 
-	if ( cubeview->surface[prop_id - PROP_SFC0] == SURFACE_COLOURED)
+	if (cubeview->surface[prop_id - PROP_SFC0] == SURFACE_COLOURED)
 	  {
 	    cubeview->pixbuf[prop_id - PROP_SFC0] = NULL;
 	    glDeleteTextures (1, &cubeview->texName[prop_id - PROP_SFC0]);
@@ -195,36 +210,39 @@ cubeview_set_property (GObject     *object,
 
 
 static void
-cubeview_generate_texname (GbkCubeview *cubeview, int i)
+cubeview_generate_texname (GbkCubeview * cubeview, int i)
 {
   GError *gerr = NULL;
 
   g_return_if_fail (gtk_widget_get_realized (GTK_WIDGET (cubeview)));
-  
-  if ( cubeview->pixbuf[i] == NULL)
+
+  if (cubeview->pixbuf[i] == NULL)
     return;
 
-  cubeview->texName[i] = create_pattern_from_pixbuf (cubeview->pixbuf[i], &gerr);
+  cubeview->texName[i] =
+    create_pattern_from_pixbuf (cubeview->pixbuf[i], &gerr);
 
   if (gerr)
     g_warning ("Cannot generate texture for face %d: %s", i, gerr->message);
 }
 
 static void
-cubeview_get_property (GObject     *object,
-		   guint            prop_id,
-		   GValue          *value,
-		   GParamSpec      *pspec)
+cubeview_get_property (GObject * object,
+		       guint prop_id, GValue * value, GParamSpec * pspec)
 {
-  GbkCubeview *cubeview  = GBK_CUBEVIEW (object);
+  GbkCubeview *cubeview = GBK_CUBEVIEW (object);
 
   switch (prop_id)
     {
     case PROP_CUBE:
       g_value_set_object (value, cubeview->cube);
       break;
-    case PROP_COL0: case PROP_COL1:  case PROP_COL2:
-    case PROP_COL3: case PROP_COL4:  case PROP_COL5:
+    case PROP_COL0:
+    case PROP_COL1:
+    case PROP_COL2:
+    case PROP_COL3:
+    case PROP_COL4:
+    case PROP_COL5:
       {
 	GLfloat *v = cubeview->colour[prop_id - PROP_COL0];
 	GdkColor col;
@@ -237,12 +255,20 @@ cubeview_get_property (GObject     *object,
     case PROP_FQ:
       g_value_set_int (value, cubeview->frameQty);
       break;
-    case PROP_IMG0: case PROP_IMG1:  case PROP_IMG2:
-    case PROP_IMG3: case PROP_IMG4:  case PROP_IMG5:
+    case PROP_IMG0:
+    case PROP_IMG1:
+    case PROP_IMG2:
+    case PROP_IMG3:
+    case PROP_IMG4:
+    case PROP_IMG5:
       g_value_set_object (value, cubeview->pixbuf[prop_id - PROP_IMG0]);
       break;
-    case PROP_SFC0: case PROP_SFC1:  case PROP_SFC2:
-    case PROP_SFC3: case PROP_SFC4:  case PROP_SFC5:
+    case PROP_SFC0:
+    case PROP_SFC1:
+    case PROP_SFC2:
+    case PROP_SFC3:
+    case PROP_SFC4:
+    case PROP_SFC5:
       g_value_set_enum (value, cubeview->surface[prop_id - PROP_SFC0]);
       break;
     default:
@@ -251,21 +277,21 @@ cubeview_get_property (GObject     *object,
     };
 }
 
-enum  
+enum
 {
   ANIMATION_COMPLETE,
   n_SIGNALS
 };
 
-static guint signals [n_SIGNALS];
+static guint signals[n_SIGNALS];
 
 
 static GtkWidgetClass *parent_class = NULL;
 
-static void gbk_cubeview_finalize (GObject *cv);
+static void gbk_cubeview_finalize (GObject * cv);
 
 static void
-gbk_cubeview_class_init (GbkCubeviewClass *klass)
+gbk_cubeview_class_init (GbkCubeviewClass * klass)
 {
   gint i;
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
@@ -286,100 +312,91 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
   fq_param_spec = g_param_spec_int ("animation-frames",
 				    "Animation Frames",
 				    "How many frames to display per animation",
-				    0, 255, 2,
-				    G_PARAM_READWRITE);
+				    0, 255, 2, G_PARAM_READWRITE);
 
-  g_object_class_install_property (gobject_class,
-                                   PROP_FQ,
-                                   fq_param_spec);
+  g_object_class_install_property (gobject_class, PROP_FQ, fq_param_spec);
 
 
   cube_param_spec = g_param_spec_object ("cube",
 					 "Cube",
-					"The cube which this widget views",
-					GBK_TYPE_CUBE,
-					 G_PARAM_READWRITE);
+					 "The cube which this widget views",
+					 GBK_TYPE_CUBE, G_PARAM_READWRITE);
 
-  g_object_class_install_property (gobject_class,
-                                   PROP_CUBE,
-                                   cube_param_spec);
+  g_object_class_install_property (gobject_class, PROP_CUBE, cube_param_spec);
 
   aspect_param_spec = g_param_spec_pointer ("aspect",
 					    "Aspect",
 					    "The aspect from which this view sees the cube",
 					    G_PARAM_WRITABLE);
 
-  for (i = 0; i < 6 ; ++i)
-  {
-    gchar *name = g_strdup_printf ("color%d", i);
-    gchar *nick = g_strdup_printf ("The colour for face %d", i);
-    gchar *blurb = g_strdup_printf ("The GdkColor describing the colour for face %d", i);
+  for (i = 0; i < 6; ++i)
+    {
+      gchar *name = g_strdup_printf ("color%d", i);
+      gchar *nick = g_strdup_printf ("The colour for face %d", i);
+      gchar *blurb =
+	g_strdup_printf ("The GdkColor describing the colour for face %d", i);
 
-    GParamSpec *colour =
-      g_param_spec_boxed (name, nick, blurb,
-			  GDK_TYPE_COLOR,
-			  G_PARAM_READWRITE);
+      GParamSpec *colour = g_param_spec_boxed (name, nick, blurb,
+					       GDK_TYPE_COLOR,
+					       G_PARAM_READWRITE);
 
-    g_object_class_install_property (gobject_class, PROP_COL0 + i, colour);
+      g_object_class_install_property (gobject_class, PROP_COL0 + i, colour);
 
-    g_free (name);
-    g_free (nick);
-    g_free (blurb);
-  }
+      g_free (name);
+      g_free (nick);
+      g_free (blurb);
+    }
 
 
-  for (i = 0; i < 6 ; ++i)
-  {
-    gchar *name = g_strdup_printf ("image%d", i);
-    gchar *nick = g_strdup_printf ("The image for face %d", i);
-    gchar *blurb = g_strdup_printf ("A GdkPixbuf to be rendered on face %d", i);
+  for (i = 0; i < 6; ++i)
+    {
+      gchar *name = g_strdup_printf ("image%d", i);
+      gchar *nick = g_strdup_printf ("The image for face %d", i);
+      gchar *blurb =
+	g_strdup_printf ("A GdkPixbuf to be rendered on face %d", i);
 
-    GParamSpec *pixbuf =
-      g_param_spec_object (name, nick, blurb,
-			  GDK_TYPE_PIXBUF,
-			  G_PARAM_READWRITE);
+      GParamSpec *pixbuf = g_param_spec_object (name, nick, blurb,
+						GDK_TYPE_PIXBUF,
+						G_PARAM_READWRITE);
 
-    g_object_class_install_property (gobject_class, PROP_IMG0 + i, pixbuf);
+      g_object_class_install_property (gobject_class, PROP_IMG0 + i, pixbuf);
 
-    g_free (name);
-    g_free (nick);
-    g_free (blurb);
-  }
+      g_free (name);
+      g_free (nick);
+      g_free (blurb);
+    }
 
-  for (i = 0; i < 6 ; ++i)
-  {
-    gchar *name = g_strdup_printf ("surface%d", i);
-    gchar *nick = g_strdup_printf ("The surface for face %d", i);
-    gchar *blurb = g_strdup_printf ("How the image (if any) should be rendered to face %d", i);
+  for (i = 0; i < 6; ++i)
+    {
+      gchar *name = g_strdup_printf ("surface%d", i);
+      gchar *nick = g_strdup_printf ("The surface for face %d", i);
+      gchar *blurb =
+	g_strdup_printf
+	("How the image (if any) should be rendered to face %d", i);
 
-    GParamSpec *sfc =
-      g_param_spec_enum (name, nick, blurb,
-			  GBK_TYPE_SURFACE,
-			  SURFACE_COLOURED,
-			  G_PARAM_READWRITE);
+      GParamSpec *sfc = g_param_spec_enum (name, nick, blurb,
+					   GBK_TYPE_SURFACE,
+					   SURFACE_COLOURED,
+					   G_PARAM_READWRITE);
 
-    g_object_class_install_property (gobject_class, PROP_SFC0 + i, sfc);
+      g_object_class_install_property (gobject_class, PROP_SFC0 + i, sfc);
 
-    g_free (name);
-    g_free (nick);
-    g_free (blurb);
-  }
+      g_free (name);
+      g_free (nick);
+      g_free (blurb);
+    }
 
 
 
   g_object_class_install_property (gobject_class,
-                                   PROP_ASPECT,
-                                   aspect_param_spec);
+				   PROP_ASPECT, aspect_param_spec);
 
-  signals [ANIMATION_COMPLETE] =
+  signals[ANIMATION_COMPLETE] =
     g_signal_new ("animation-complete",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  0,
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE,
-		  0);
+		  NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
   widget_class->realize = realize;
   widget_class->size_allocate = size_allocate;
@@ -388,15 +405,16 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
   GdkScreen *screen = gdk_screen_get_default ();
   GdkWindow *root = gdk_screen_get_root_window (screen);
 
-  const GdkGLConfigMode mode[] =
-    {
-      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH | GDK_GL_MODE_ACCUM,
-      GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE  | GDK_GL_MODE_DEPTH,
-    };
+  const GdkGLConfigMode mode[] = {
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_DEPTH |
+      GDK_GL_MODE_ACCUM,
+    GDK_GL_MODE_RGB | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_DEPTH,
+  };
 
   for (i = 0; i < sizeof (mode) / sizeof (mode[0]); ++i)
     {
-      klass->glconfig = gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
+      klass->glconfig =
+	gdk_gl_config_new_by_mode_for_screen (screen, mode[i]);
 
       if (klass->glconfig != NULL)
 	break;
@@ -409,32 +427,31 @@ gbk_cubeview_class_init (GbkCubeviewClass *klass)
 
 
   GdkGLWindow *rootglwin = gdk_gl_window_new (klass->glconfig, root, 0);
-  klass->master_ctx = gdk_gl_context_new (GDK_GL_DRAWABLE (rootglwin), 0, TRUE, GDK_GL_RGBA_TYPE);
+  klass->master_ctx =
+    gdk_gl_context_new (GDK_GL_DRAWABLE (rootglwin), 0, TRUE,
+			GDK_GL_RGBA_TYPE);
   g_object_unref (rootglwin);
 }
 
 static void
-initialize_gl_capability (GtkWidget *glxarea)
+initialize_gl_capability (GtkWidget * glxarea)
 {
   GbkCubeviewClass *klass = GBK_CUBEVIEW_CLASS (G_OBJECT_GET_CLASS (glxarea));
 
   gtk_widget_set_gl_capability (glxarea,
 				klass->glconfig,
-				klass->master_ctx,
-				TRUE, GDK_GL_RGBA_TYPE);
+				klass->master_ctx, TRUE, GDK_GL_RGBA_TYPE);
 }
 
-static gboolean            
-grab_focus  (GtkWidget *widget,
-		GdkEventCrossing *event,
-		gpointer data) 
+static gboolean
+grab_focus (GtkWidget * widget, GdkEventCrossing * event, gpointer data)
 {
   gtk_widget_grab_focus (widget);
   return FALSE;
 }
 
 static gboolean
-cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
+cube_orientate_mouse (GtkWidget * w, GdkEventMotion * event, gpointer data)
 {
   gint xmotion = 0;
   gint ymotion = 0;
@@ -446,7 +463,7 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
   GdkModifierType mm;
   gdk_window_get_pointer (window, NULL, NULL, &mm);
 
-  if (! (GDK_BUTTON1_MASK & mm))
+  if (!(GDK_BUTTON1_MASK & mm))
     return FALSE;
 
   if (dc->last_mouse_x >= 0)
@@ -474,12 +491,12 @@ cube_orientate_mouse (GtkWidget *w, GdkEventMotion *event, gpointer data)
 
 /* orientate the whole cube with the arrow keys */
 static gboolean
-cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
+cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
   const int shifted = event->state & GDK_SHIFT_MASK;
-  
+
   int axis;
   int dir;
 
@@ -533,7 +550,7 @@ cube_orientate_keys (GtkWidget *w, GdkEventKey *event, gpointer data)
 
 /* Rotate the cube about the z axis (relative to the viewer ) */
 static gboolean
-z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
+z_rotate (GtkWidget * w, GdkEventScroll * event, gpointer data)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
@@ -545,7 +562,7 @@ z_rotate (GtkWidget *w, GdkEventScroll *event, gpointer data)
 }
 
 static gboolean
-on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+on_crossing (GtkWidget * widget, GdkEventCrossing * event, gpointer data)
 {
   struct cublet_selection *cs = data;
 
@@ -561,7 +578,8 @@ on_crossing  (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 
 /* Disable / Enable the selection based on the state of button 1 */
 static gboolean
-enable_disable_selection (GtkWidget *w, GdkEventButton *event, gpointer data)
+enable_disable_selection (GtkWidget * w, GdkEventButton * event,
+			  gpointer data)
 {
   struct cublet_selection *cs = data;
 
@@ -581,7 +599,7 @@ enable_disable_selection (GtkWidget *w, GdkEventButton *event, gpointer data)
 }
 
 static void
-gbk_cubeview_finalize (GObject *o)
+gbk_cubeview_finalize (GObject * o)
 {
   GbkCubeview *cv = GBK_CUBEVIEW (o);
   select_destroy (cv->cs);
@@ -604,7 +622,7 @@ gbk_cubeview_finalize (GObject *o)
 
 
 static void
-gbk_cubeview_init (GbkCubeview *dc)
+gbk_cubeview_init (GbkCubeview * dc)
 {
   dc->cs = NULL;
   dc->pending_movement = NULL;
@@ -636,12 +654,10 @@ gbk_cubeview_init (GbkCubeview *dc)
 
   gtk_widget_set_can_focus (GTK_WIDGET (dc), TRUE);
 
-  dc->cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func,
-		      dc );
+  dc->cs = select_create (GTK_WIDGET (dc), 50, 1, selection_func, dc);
 
   /* Grab the keyboard focus whenever the mouse enters the widget */
-  g_signal_connect (dc, "enter-notify-event",
-		    G_CALLBACK (grab_focus), NULL);
+  g_signal_connect (dc, "enter-notify-event", G_CALLBACK (grab_focus), NULL);
 
   g_signal_connect (dc, "key-press-event",
 		    G_CALLBACK (cube_orientate_keys), NULL);
@@ -649,8 +665,7 @@ gbk_cubeview_init (GbkCubeview *dc)
   g_signal_connect (dc, "motion-notify-event",
 		    G_CALLBACK (cube_orientate_mouse), NULL);
 
-  g_signal_connect (dc, "scroll-event",
-		    G_CALLBACK (z_rotate), NULL);
+  g_signal_connect (dc, "scroll-event", G_CALLBACK (z_rotate), NULL);
 
   g_signal_connect (dc, "leave-notify-event",
 		    G_CALLBACK (on_crossing), dc->cs);
@@ -670,9 +685,12 @@ gbk_cubeview_init (GbkCubeview *dc)
   dc->colour[0][0] = 1.0;
   dc->colour[1][1] = 1.0;
   dc->colour[2][2] = 1.0;
-  dc->colour[3][1] = 1.0;   dc->colour[3][2] = 1.0;
-  dc->colour[4][0] = 1.0;   dc->colour[4][2] = 1.0;
-  dc->colour[5][0] = 1.0;   dc->colour[5][1] = 1.0;
+  dc->colour[3][1] = 1.0;
+  dc->colour[3][2] = 1.0;
+  dc->colour[4][0] = 1.0;
+  dc->colour[4][2] = 1.0;
+  dc->colour[5][0] = 1.0;
+  dc->colour[5][1] = 1.0;
 
   dc->pixbuf[0] = NULL;
   dc->pixbuf[1] = NULL;
@@ -695,20 +713,21 @@ gbk_cubeview_init (GbkCubeview *dc)
 G_DEFINE_TYPE (GbkCubeview, gbk_cubeview, GTK_TYPE_DRAWING_AREA);
 
 
-GtkWidget*
-gbk_cubeview_new (GbkCube *cube)
+GtkWidget *
+gbk_cubeview_new (GbkCube * cube)
 {
-  return GTK_WIDGET (g_object_new (gbk_cubeview_get_type (), "cube", cube, NULL));
+  return
+    GTK_WIDGET (g_object_new (gbk_cubeview_get_type (), "cube", cube, NULL));
 }
-
 
+
 
 static display display_anti_alias;
 static display display_raw;
 
 /* Resize callback.  */
 static void
-size_allocate (GtkWidget *w, GtkAllocation *alloc)
+size_allocate (GtkWidget * w, GtkAllocation * alloc)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
@@ -729,7 +748,8 @@ size_allocate (GtkWidget *w, GtkAllocation *alloc)
   min_dim = (width < height) ? width : height;
 
   /* Ensure that cube is always the same proportions */
-  glViewport ((width - min_dim) / 2, (height - min_dim) / 2, min_dim,  min_dim);
+  glViewport ((width - min_dim) / 2, (height - min_dim) / 2, min_dim,
+	      min_dim);
 }
 
 static gboolean
@@ -737,7 +757,7 @@ handleRedisplay (gpointer data)
 {
   GbkCubeview *cv = data;
 
-  if ( cv->is_rotating || !have_accumulation_buffer () )
+  if (cv->is_rotating || !have_accumulation_buffer ())
     display_raw (cv);
   else
     display_anti_alias (cv);
@@ -749,7 +769,7 @@ handleRedisplay (gpointer data)
 }
 
 void
-gbk_cubeview_redisplay (GbkCubeview *cv)
+gbk_cubeview_redisplay (GbkCubeview * cv)
 {
   if (0 == cv->idle_id)
     cv->idle_id = g_idle_add (handleRedisplay, cv);
@@ -757,12 +777,12 @@ gbk_cubeview_redisplay (GbkCubeview *cv)
 
 /* Expose callback.  Just redraw the scene */
 static gboolean
-expose (GtkWidget *w, GdkEventExpose *event)
+expose (GtkWidget * w, GdkEventExpose * event)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
 
   if (GTK_WIDGET_CLASS (parent_class)->expose_event)
-    if ( GTK_WIDGET_CLASS (parent_class)->expose_event (w, event) )
+    if (GTK_WIDGET_CLASS (parent_class)->expose_event (w, event))
       return TRUE;
 
   gbk_cubeview_redisplay (dc);
@@ -771,7 +791,7 @@ expose (GtkWidget *w, GdkEventExpose *event)
 
 
 static void
-realize (GtkWidget *w)
+realize (GtkWidget * w)
 {
   GbkCubeview *dc = GBK_CUBEVIEW (w);
   int i;
@@ -788,7 +808,7 @@ realize (GtkWidget *w)
       return;
     }
 
-  for (i = 0; i < 6 ; ++i)
+  for (i = 0; i < 6; ++i)
     cubeview_generate_texname (dc, i);
 
   gtk_widget_set_size_request (w, 300, 300);
@@ -825,10 +845,10 @@ have_accumulation_buffer (void)
 
 
 void error_check (const char *file, int line_no, const char *string);
- 
+
 
 static void
-render_scene (GbkCubeview *cv, GLint jitter)
+render_scene (GbkCubeview * cv, GLint jitter)
 {
   projection_init (&cv->scene, jitter);
 
@@ -845,7 +865,7 @@ render_scene (GbkCubeview *cv, GLint jitter)
 /* Reset the bit planes, and render the scene using the accumulation
    buffer for antialiasing*/
 static void
-display_anti_alias (GbkCubeview *dc)
+display_anti_alias (GbkCubeview * dc)
 {
   int jitter;
 
@@ -875,7 +895,7 @@ display_anti_alias (GbkCubeview *dc)
    without anti-aliasing.
  */
 static void
-display_raw (GbkCubeview *dc)
+display_raw (GbkCubeview * dc)
 {
   if (!gdk_gl_drawable_make_current (dc->gldrawable, dc->glcontext))
     {
@@ -892,13 +912,13 @@ display_raw (GbkCubeview *dc)
 
 
 void
-gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames)
+gbk_cubeview_set_frame_qty (GbkCubeview * dc, int frames)
 {
   g_object_set (dc, "animation-frames", frames, NULL);
 }
 
 gboolean
-gbk_cubeview_is_animating (GbkCubeview *dc)
+gbk_cubeview_is_animating (GbkCubeview * dc)
 {
   return dc->current_move != NULL;
 }
@@ -906,12 +926,12 @@ gbk_cubeview_is_animating (GbkCubeview *dc)
 
 /* Wrapper to set the modelview matrix */
 void
-gbk_cubeview_model_view_init (GbkCubeview *cv)
+gbk_cubeview_model_view_init (GbkCubeview * cv)
 {
   struct scene_view *scene = &cv->scene;
   GbkCube *cube = cv->cube;
   /* start with the cube slightly skew,  so we can see all its aspects */
-  GLdouble cube_orientation[2] = {15.0, 15.0};
+  GLdouble cube_orientation[2] = { 15.0, 15.0 };
 
   Matrix m;
 
@@ -951,13 +971,13 @@ gbk_cubeview_model_view_init (GbkCubeview *cv)
 
 /* Rotate cube about axis (screen relative) */
 void
-gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
+gbk_cubeview_rotate_cube (GbkCubeview * cv, int axis, int dir)
 {
   GbkCube *cube = cv->cube;
   /* how many degrees to turn the cube with each hit */
   const GLdouble step = 2.0;
 
-  vector v = { 0, 0, 0, 0};
+  vector v = { 0, 0, 0, 0 };
 
   g_assert (axis >= 0);
   g_assert (axis < 3);
@@ -974,12 +994,12 @@ gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir)
 
   quarternion_to_matrix (m, &q);
   vector_transform_in_place (v, m);
-  
+
   gbk_cube_rotate (cube, v, step);
 }
-
-
 
+
+
 
 /* Animation related stuff */
 
@@ -1000,7 +1020,7 @@ static gboolean inverted_rotation;
 
 /* handle mouse clicks */
 static gboolean
-on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
+on_mouse_button (GtkWidget * w, GdkEventButton * event, gpointer data)
 {
   GbkCubeview *cv = GBK_CUBEVIEW (w);
 
@@ -1044,26 +1064,27 @@ on_mouse_button (GtkWidget *w, GdkEventButton *event, gpointer data)
 
 /* Does exactly what it says on the tin :-) */
 static void
-animate_move (GbkCubeview *cv, const struct move_data *move)
+animate_move (GbkCubeview * cv, const struct move_data *move)
 {
   /* Abort any current animation */
-  if ( cv->current_move)
+  if (cv->current_move)
     move_unref (cv->current_move);
 
   cv->current_move = move_ref (move);
 
   cv->animation_angle = 90.0 * move_turns (cv->current_move);
 
-  cv->animation_timeout = g_timeout_add (cv->picture_rate, animate_callback, cv);
+  cv->animation_timeout =
+    g_timeout_add (cv->picture_rate, animate_callback, cv);
 }
 
 
 /* a timeout  calls this func,  to animate the cube */
-static gboolean 
+static gboolean
 animate_callback (gpointer data)
 {
   GbkCubeview *cv = data;
-  
+
   /* how many degrees motion per frame */
   GLfloat increment = 90.0 / (cv->frameQty + 1);
 
@@ -1076,7 +1097,8 @@ animate_callback (gpointer data)
   if (cv->animation_angle > 0)
     {
       /* call this timeout again */
-      cv->animation_timeout = g_timeout_add (cv->picture_rate, animate_callback, data);
+      cv->animation_timeout =
+	g_timeout_add (cv->picture_rate, animate_callback, data);
     }
   else
     {
@@ -1084,16 +1106,16 @@ animate_callback (gpointer data)
       move_unref (cv->current_move);
       cv->current_move = NULL;
 
-      g_signal_emit (cv, signals[ANIMATION_COMPLETE] , 0);
+      g_signal_emit (cv, signals[ANIMATION_COMPLETE], 0);
       select_update (cv, cv->cs);
       cv->animation_timeout = 0;
     }
 
   return FALSE;
 }				/* end animate () */
-
-
 
+
+
 
 GType
 gbk_cubeview_surface_get_type (void)
@@ -1101,13 +1123,12 @@ gbk_cubeview_surface_get_type (void)
   static GType etype = 0;
   if (etype == 0)
     {
-      static const GEnumValue values[] =
-	{
-	  { SURFACE_COLOURED, "SURFACE_COLOURED", "Plain Surface" },
-	  { SURFACE_TILED,    "SURFACE_TILED", "Tiled Surface" },
-	  { SURFACE_MOSAIC,   "SURFACE_MOSAIC", "Mosaic Surface" },
-	  { 0, NULL, NULL }
-	};
+      static const GEnumValue values[] = {
+	{SURFACE_COLOURED, "SURFACE_COLOURED", "Plain Surface"},
+	{SURFACE_TILED, "SURFACE_TILED", "Tiled Surface"},
+	{SURFACE_MOSAIC, "SURFACE_MOSAIC", "Mosaic Surface"},
+	{0, NULL, NULL}
+      };
 
       etype = g_enum_register_static
 	(g_intern_static_string ("CubeviewSurface"), values);
@@ -1115,4 +1136,3 @@ gbk_cubeview_surface_get_type (void)
     }
   return etype;
 }
-

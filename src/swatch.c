@@ -31,37 +31,35 @@ static GtkWidgetClass *parent_class = NULL;
 
 
 enum
-  {
-    PROP_0 = 0,
-    PROP_COLOR,
-    PROP_TEXTURE,
-    PROP_SURFACE
-  };
+{
+  PROP_0 = 0,
+  PROP_COLOR,
+  PROP_TEXTURE,
+  PROP_SURFACE
+};
 
 
 
 static void
-swatch_set_property (GObject     *object,
-		   guint            prop_id,
-		   const GValue    *value,
-		   GParamSpec      *pspec)
+swatch_set_property (GObject * object,
+		     guint prop_id, const GValue * value, GParamSpec * pspec)
 {
-  GbkSwatch *sw  = GBK_SWATCH (object);
+  GbkSwatch *sw = GBK_SWATCH (object);
 
   switch (prop_id)
     {
     case PROP_COLOR:
       {
 	GdkColor *new_color = g_value_get_boxed (value);
-	
-	if ( new_color)
+
+	if (new_color)
 	  {
 	    if (sw->color)
 	      gdk_color_free (sw->color);
 
 	    sw->color = gdk_color_copy (new_color);
 
-	    if ( gtk_widget_get_realized (GTK_WIDGET (sw)))
+	    if (gtk_widget_get_realized (GTK_WIDGET (sw)))
 	      {
 		gdk_gc_set_rgb_fg_color (sw->gc, sw->color);
 		gtk_widget_queue_draw (GTK_WIDGET (sw));
@@ -74,7 +72,7 @@ swatch_set_property (GObject     *object,
     case PROP_TEXTURE:
       sw->pixbuf = g_value_get_object (value);
 
-      if ( sw->pixbuf)
+      if (sw->pixbuf)
 	{
 	  if (sw->stype == SURFACE_COLOURED)
 	    sw->stype = SURFACE_TILED;
@@ -86,7 +84,7 @@ swatch_set_property (GObject     *object,
       break;
     case PROP_SURFACE:
       sw->stype = g_value_get_enum (value);
-      if ( sw->stype == SURFACE_COLOURED)
+      if (sw->stype == SURFACE_COLOURED)
 	sw->pixbuf = NULL;
 
       gtk_widget_queue_draw (GTK_WIDGET (sw));
@@ -99,12 +97,10 @@ swatch_set_property (GObject     *object,
 
 
 static void
-swatch_get_property (GObject     *object,
-		   guint            prop_id,
-		   GValue          *value,
-		   GParamSpec      *pspec)
+swatch_get_property (GObject * object,
+		     guint prop_id, GValue * value, GParamSpec * pspec)
 {
-  GbkSwatch *sw  = GBK_SWATCH (object);
+  GbkSwatch *sw = GBK_SWATCH (object);
 
   switch (prop_id)
     {
@@ -125,14 +121,15 @@ swatch_get_property (GObject     *object,
 
 
 static void
-gbk_swatch_init (GbkSwatch *sw)
+gbk_swatch_init (GbkSwatch * sw)
 {
   sw->da = gtk_drawing_area_new ();
 
   gtk_container_add (GTK_CONTAINER (sw), sw->da);
 
   gtk_widget_set_tooltip_text (GTK_WIDGET (sw),
-			       _("A sample of the colour. You can click and select a new colour, or drag one to this space."));
+			       _
+			       ("A sample of the colour. You can click and select a new colour, or drag one to this space."));
 
   sw->color = NULL;
   sw->pixbuf = NULL;
@@ -142,7 +139,7 @@ gbk_swatch_init (GbkSwatch *sw)
 
 
 static gboolean
-on_da_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
+on_da_expose (GtkWidget * w, GdkEventExpose * event, gpointer data)
 {
   GbkSwatch *sw = GBK_SWATCH (data);
 
@@ -151,9 +148,7 @@ on_da_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
       gdk_draw_rectangle (w->window,
 			  sw->gc,
 			  TRUE,
-			  0, 0,
-			  w->allocation.width,
-			  w->allocation.height);
+			  0, 0, w->allocation.width, w->allocation.height);
     }
   else
     {
@@ -163,15 +158,15 @@ on_da_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
       gdk_drawable_get_size (w->window, &width, &height);
 
       scaled_pixbuf = gdk_pixbuf_scale_simple (sw->pixbuf,
-				 width, height, GDK_INTERP_NEAREST);
+					       width, height,
+					       GDK_INTERP_NEAREST);
 
       g_assert (scaled_pixbuf);
 
       gdk_draw_pixbuf (w->window,
 		       sw->gc,
 		       scaled_pixbuf,
-		       0, 0,
-		       0, 0, width, height, GDK_RGB_DITHER_NONE, 0,0);
+		       0, 0, 0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);
 
       g_object_unref (scaled_pixbuf);
     }
@@ -183,11 +178,11 @@ on_da_expose (GtkWidget *w, GdkEventExpose *event, gpointer data)
 #define SWATCH_WIDTH 64
 #define SWATCH_HEIGHT 64
 
-enum 
-  {
-    GBK_DRAG_FILELIST,
-    GBK_DRAG_COLOUR
-  };
+enum
+{
+  GBK_DRAG_FILELIST,
+  GBK_DRAG_COLOUR
+};
 
 static const GtkTargetEntry targets[2] = {
   {"text/uri-list", 0, GBK_DRAG_FILELIST},
@@ -195,14 +190,12 @@ static const GtkTargetEntry targets[2] = {
 };
 
 static void
-on_drag_data_rx (GtkWidget *widget,
-     GdkDragContext *drag_context,
-     gint            x,
-     gint            y,
-     GtkSelectionData *selection_data,
-     guint           info,
-     guint           time,
-     gpointer        user_data)
+on_drag_data_rx (GtkWidget * widget,
+		 GdkDragContext * drag_context,
+		 gint x,
+		 gint y,
+		 GtkSelectionData * selection_data,
+		 guint info, guint time, gpointer user_data)
 {
   gboolean success = TRUE;
 
@@ -220,19 +213,18 @@ on_drag_data_rx (GtkWidget *widget,
 	guint16 *vals;
 	GdkColor colour;
 
-	if ((selection_data->format != 16) ||
-	    (selection_data->length != 8))
+	if ((selection_data->format != 16) || (selection_data->length != 8))
 	  {
 	    success = FALSE;
 	    g_warning ("Received invalid color data");
 	    goto end;
 	  }
 
-	vals = (guint16 *)selection_data->data;
+	vals = (guint16 *) selection_data->data;
 
-	colour.red =   vals[0];
+	colour.red = vals[0];
 	colour.green = vals[1];
-	colour.blue =  vals[2];
+	colour.blue = vals[2];
 
 	g_object_set (widget, "color", &colour, NULL);
 	break;
@@ -242,7 +234,8 @@ on_drag_data_rx (GtkWidget *widget,
 	gchar **s = 0;
 	gchar **start = 0;
 
-	start = s = g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
+	start = s =
+	  g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
 
 	while (*s)
 	  {
@@ -250,17 +243,17 @@ on_drag_data_rx (GtkWidget *widget,
 	    gchar *utf8;
 	    gchar *filename;
 
-	    GError *gerr=0;
+	    GError *gerr = 0;
 
-	    if ( strcmp (*s, "") == 0 ) 
+	    if (strcmp (*s, "") == 0)
 	      {
 		s++;
-		continue ;
+		continue;
 	      }
 
 	    /* Convert to utf8.  Is this necessary ?? */
-	    utf8 =  g_locale_to_utf8 (*s, -1, 0, 0, &gerr);
-	    if ( gerr )
+	    utf8 = g_locale_to_utf8 (*s, -1, 0, 0, &gerr);
+	    if (gerr)
 	      {
 		g_warning (gerr->message);
 		g_clear_error (&gerr);
@@ -270,7 +263,7 @@ on_drag_data_rx (GtkWidget *widget,
 
 	    /* Extract the filename from the uri */
 	    filename = g_filename_from_uri (utf8, 0, &gerr);
-	    if ( gerr )
+	    if (gerr)
 	      {
 		g_warning (gerr->message);
 		g_clear_error (&gerr);
@@ -278,16 +271,16 @@ on_drag_data_rx (GtkWidget *widget,
 	      }
 	    g_free (utf8);
 
-	    pixbuf = create_pixbuf_from_file (filename,  &gerr);
- 
+	    pixbuf = create_pixbuf_from_file (filename, &gerr);
+
 	    g_free (filename);
 
 	    g_object_set (widget, "texture", pixbuf, NULL);
 
 	    /* For now,  just use the first one.
-	     Later,  we'll add some method for disambiguating multiple files
-	    */
-	    break ;
+	       Later,  we'll add some method for disambiguating multiple files
+	     */
+	    break;
 	    s++;
 	  }
       }
@@ -297,12 +290,12 @@ on_drag_data_rx (GtkWidget *widget,
       break;
     }
 
- end:
+end:
   gtk_drag_finish (drag_context, success, FALSE, time);
 }
 
 static void
-realize (GtkWidget *w)
+realize (GtkWidget * w)
 {
   GbkSwatch *sw = GBK_SWATCH (w);
 
@@ -314,18 +307,19 @@ realize (GtkWidget *w)
   GdkWindow *pw = gtk_widget_get_parent_window (sw->da);
   sw->gc = gdk_gc_new (pw);
 
-  if ( sw->color)
+  if (sw->color)
     gdk_gc_set_rgb_fg_color (sw->gc, sw->color);
 
   gtk_drag_dest_set (w, GTK_DEST_DEFAULT_ALL, targets, 2, GDK_ACTION_COPY);
 
   g_signal_connect (sw->da, "expose-event", G_CALLBACK (on_da_expose), sw);
-  g_signal_connect (sw, "drag-data-received", G_CALLBACK (on_drag_data_rx), 0);
+  g_signal_connect (sw, "drag-data-received", G_CALLBACK (on_drag_data_rx),
+		    0);
 }
 
 
 static void
-gbk_swatch_class_init (GbkSwatchClass *klass)
+gbk_swatch_class_init (GbkSwatchClass * klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -342,18 +336,17 @@ gbk_swatch_class_init (GbkSwatchClass *klass)
 
   color_param_spec = g_param_spec_boxed ("color",
 					 "Colour",
-					  "The colour of the swatch",
-					  GDK_TYPE_COLOR,
-					  G_PARAM_READWRITE);
+					 "The colour of the swatch",
+					 GDK_TYPE_COLOR, G_PARAM_READWRITE);
 
   texture_param_spec = g_param_spec_object ("texture",
-					 "Texture",
-					  "A pixbuf representing the texture of the swatch",
-					  GDK_TYPE_PIXBUF,
-					  G_PARAM_READWRITE);
+					    "Texture",
+					    "A pixbuf representing the texture of the swatch",
+					    GDK_TYPE_PIXBUF,
+					    G_PARAM_READWRITE);
 
   surface_param_spec = g_param_spec_enum ("surface",
-					 "Surface",
+					  "Surface",
 					  "Tiled or Mosaic",
 					  GBK_TYPE_SURFACE,
 					  SURFACE_COLOURED,
@@ -361,16 +354,13 @@ gbk_swatch_class_init (GbkSwatchClass *klass)
 
 
   g_object_class_install_property (gobject_class,
-                                   PROP_COLOR,
-                                   color_param_spec);
+				   PROP_COLOR, color_param_spec);
 
   g_object_class_install_property (gobject_class,
-                                   PROP_TEXTURE,
-                                   texture_param_spec);
+				   PROP_TEXTURE, texture_param_spec);
 
   g_object_class_install_property (gobject_class,
-                                   PROP_SURFACE,
-                                   surface_param_spec);
+				   PROP_SURFACE, surface_param_spec);
 }
 
 G_DEFINE_TYPE (GbkSwatch, gbk_swatch, GTK_TYPE_TOGGLE_BUTTON);
@@ -378,6 +368,5 @@ G_DEFINE_TYPE (GbkSwatch, gbk_swatch, GTK_TYPE_TOGGLE_BUTTON);
 GtkWidget *
 gbk_swatch_new (void)
 {
-  return g_object_new (gbk_swatch_get_type (),  NULL);
+  return g_object_new (gbk_swatch_get_type (), NULL);
 }
-

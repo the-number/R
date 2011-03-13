@@ -426,8 +426,9 @@ static const int cursors_hot_y[] = {
 
 /* Get the cursor which matches the angle the closest */
 void
-get_cursor (float angle, const unsigned char **data, const unsigned char **mask,
-	    int *height, int *width, int *hot_x, int *hot_y)
+get_cursor (float angle, const unsigned char **data,
+	    const unsigned char **mask, int *height, int *width, int *hot_x,
+	    int *hot_y)
 {
   int index;
   float frac;

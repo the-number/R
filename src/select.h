@@ -31,14 +31,14 @@ struct facet_selection
   int quadrant;
 };
 
-struct cublet_selection ;
+struct cublet_selection;
 
 typedef void select_func (struct cublet_selection *, gpointer data);
 
 /* Initialise the selection library */
-struct cublet_selection *
-select_create (GtkWidget *w, int holdoff,
-		double precision, select_func *do_this, gpointer data);
+struct cublet_selection *select_create (GtkWidget * w, int holdoff,
+					double precision,
+					select_func * do_this, gpointer data);
 
 void select_destroy (struct cublet_selection *);
 
@@ -47,7 +47,7 @@ void select_disable (struct cublet_selection *);
 void select_enable (struct cublet_selection *);
 
 
-void select_update (GbkCubeview *cv, struct cublet_selection *cs);
+void select_update (GbkCubeview * cv, struct cublet_selection *cs);
 
 /* Return  a pointer to a structre containing the selected items */
 const struct facet_selection *select_get (const struct cublet_selection *cs);

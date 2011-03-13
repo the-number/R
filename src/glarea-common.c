@@ -33,8 +33,7 @@ struct jitter_v
   GLdouble y;
 };
 
-static const struct jitter_v j8[8] = 
-{
+static const struct jitter_v j8[8] = {
   {0.5625, 0.4375}, {0.0625, 0.9375}, {0.3125, 0.6875}, {0.6875, 0.8125},
   {0.8125, 0.1875}, {0.9375, 0.5625}, {0.4375, 0.0625}, {0.1875, 0.3125}
 };
@@ -86,29 +85,32 @@ accPerspective (const struct scene_view *sv,
   right = top * aspect;
   left = -right;
   accFrustum (left, right, bottom, top,
-	      sv->cp_near, sv->cp_far, pixdx, pixdy, eyedx,
-	      eyedy, focus);
+	      sv->cp_near, sv->cp_far, pixdx, pixdy, eyedx, eyedy, focus);
 }
 
 
 void
-scene_init (GbkCubeview *cv)
+scene_init (GbkCubeview * cv)
 {
   GbkCube *cube = cv->cube;
-  cv->scene.bounding_sphere_radius = gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 0);
-  cv->scene.bounding_sphere_radius += gbk_cube_get_size (cube, 1) * gbk_cube_get_size (cube, 1);
-  cv->scene.bounding_sphere_radius += gbk_cube_get_size (cube, 2) * gbk_cube_get_size (cube, 2);
+  cv->scene.bounding_sphere_radius =
+    gbk_cube_get_size (cube, 0) * gbk_cube_get_size (cube, 0);
+  cv->scene.bounding_sphere_radius +=
+    gbk_cube_get_size (cube, 1) * gbk_cube_get_size (cube, 1);
+  cv->scene.bounding_sphere_radius +=
+    gbk_cube_get_size (cube, 2) * gbk_cube_get_size (cube, 2);
   cv->scene.bounding_sphere_radius = sqrt (cv->scene.bounding_sphere_radius);
 
   cv->scene.fovy = 33.0;
-  cv->scene.cp_near = cv->scene.bounding_sphere_radius / (tan (cv->scene.fovy * M_PI / 360.0));
+  cv->scene.cp_near =
+    cv->scene.bounding_sphere_radius / (tan (cv->scene.fovy * M_PI / 360.0));
   cv->scene.cp_far = cv->scene.cp_near + 2 * cv->scene.bounding_sphere_radius;
 }
 
 void
 projection_init (struct scene_view *scene, int jitter)
 {
-  glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT, GL_FASTEST);
+  glHint (GL_CLIP_VOLUME_CLIPPING_HINT_EXT, GL_FASTEST);
 
   glEnable (GL_DEPTH_TEST);
   glClearColor (0, 0, 0, 0);
@@ -116,8 +118,7 @@ projection_init (struct scene_view *scene, int jitter)
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
 
-  accPerspective (scene, 1, 
-		  j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
+  accPerspective (scene, 1, j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
 }
 
 void
@@ -148,5 +149,3 @@ lighting_init (void)
   glEnable (GL_LIGHT0);
   glEnable (GL_LIGHT1);
 }
-
-

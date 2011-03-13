@@ -36,12 +36,12 @@ enum surface
   SURFACE_MOSAIC
 };
 
-struct scene_view 
+struct scene_view
 {
-  GLdouble fovy ;
-  GLdouble cp_near ;
-  GLdouble cp_far ;
-  GLdouble bounding_sphere_radius ;
+  GLdouble fovy;
+  GLdouble cp_near;
+  GLdouble cp_far;
+  GLdouble bounding_sphere_radius;
 };
 
 /*
@@ -54,8 +54,8 @@ struct scene_view
 #define GBK_IS_CUBEVIEW_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GBK_TYPE_CUBEVIEW))
 #define GBK_CUBEVIEW_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GBK_TYPE_CUBEVIEW, GbkCubeviewClass))
 
-typedef struct _GbkCubeview        GbkCubeview;
-typedef struct _GbkCubeviewClass   GbkCubeviewClass;
+typedef struct _GbkCubeview GbkCubeview;
+typedef struct _GbkCubeviewClass GbkCubeviewClass;
 
 
 typedef void display (GbkCubeview *);
@@ -66,7 +66,7 @@ struct _GbkCubeview
 
   GbkCube *cube;
 
-  struct cublet_selection *cs ;
+  struct cublet_selection *cs;
   struct scene_view scene;
 
   /* instance members */
@@ -84,19 +84,19 @@ struct _GbkCubeview
   struct move_data *pending_movement;
 
   /* Position of the mouse cursor */
-  gdouble last_mouse_x ;
-  gdouble last_mouse_y ;
+  gdouble last_mouse_x;
+  gdouble last_mouse_y;
 
   /* Angle of the mouse cursor */
   float cursorAngle;
 
   /* The current angle through which an animation has turned */
-  GLfloat animation_angle ;
+  GLfloat animation_angle;
 
   /* the number of frames drawn when a slice of the cube rotates 90 degrees */
-  int frameQty ;
+  int frameQty;
   /* picture rate in ms. 40ms = 25 frames per sec */
-  int picture_rate ;
+  int picture_rate;
 
   const struct move_data *current_move;
 
@@ -126,22 +126,22 @@ GType gbk_cubeview_get_type (void);
 /*
  * Method definitions.
  */
-GtkWidget* gbk_cubeview_new (GbkCube *c);
+GtkWidget *gbk_cubeview_new (GbkCube * c);
 
 
 /* Rotate the cube about the axis (screen relative) in direction dir */
-void gbk_cubeview_redisplay (GbkCubeview *dc);
+void gbk_cubeview_redisplay (GbkCubeview * dc);
 
 void error_check (const char *file, int line_no, const char *string);
 #define ERR_CHECK(string)  error_check (__FILE__,__LINE__,string)
 
-void gbk_cubeview_set_frame_qty (GbkCubeview *dc, int frames);
+void gbk_cubeview_set_frame_qty (GbkCubeview * dc, int frames);
 
-gboolean gbk_cubeview_is_animating (GbkCubeview *dc);
+gboolean gbk_cubeview_is_animating (GbkCubeview * dc);
 
-void gbk_cubeview_model_view_init (GbkCubeview *cv);
+void gbk_cubeview_model_view_init (GbkCubeview * cv);
 
-void gbk_cubeview_rotate_cube (GbkCubeview *cv, int axis, int dir);
+void gbk_cubeview_rotate_cube (GbkCubeview * cv, int axis, int dir);
 
 
 GType gbk_cubeview_surface_get_type (void);

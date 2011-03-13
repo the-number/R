@@ -42,11 +42,12 @@ GtkWidget *create_statusbar (GbkGame *);
 void setCubeColours (char *progname);
 
 /* Declare that the cube has been solved */
-void declare_win (GbkCube *cube);
+void declare_win (GbkCube * cube);
 
 /* Popup an error dialog box */
-void error_dialog (GtkWindow *parent, const char *format, ...);
+void error_dialog (GtkWindow * parent, const char *format, ...);
 
-void start_new_game (GbkGame *, int size0, int size1, int size2, gboolean scramble);
+void start_new_game (GbkGame *, int size0, int size1, int size2,
+		     gboolean scramble);
 
 #endif

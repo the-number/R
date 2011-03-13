@@ -26,7 +26,7 @@
 
 
 /* The texture names for each face */
-void draw_block (GbkCubeview *cv, int block_id, GLboolean anc);
-void drawCube (GbkCube *cube, GLboolean ancilliary, GbkCubeview *cv);
+void draw_block (GbkCubeview * cv, int block_id, GLboolean anc);
+void drawCube (GbkCube * cube, GLboolean ancilliary, GbkCubeview * cv);
 
 #endif

@@ -32,16 +32,16 @@
 #define GBK_IS_GAME_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GBK_TYPE_GAME))
 #define GBK_GAME_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GBK_TYPE_GAME, GbkGameClass))
 
-typedef struct _GbkGame        GbkGame;
-typedef struct _GbkGameClass   GbkGameClass;
+typedef struct _GbkGame GbkGame;
+typedef struct _GbkGameClass GbkGameClass;
 
 enum mode
-  {
-    MODE_NONE = 0,
-    MODE_RECORD,
-    MODE_PLAY,
-    MODE_REWIND,
-  };
+{
+  MODE_NONE = 0,
+  MODE_RECORD,
+  MODE_PLAY,
+  MODE_REWIND,
+};
 
 struct GbkList
 {
@@ -108,29 +108,30 @@ GType gbk_game_get_type (void);
  * Method definitions.
  */
 
-GObject* gbk_game_new (GbkCube *cube);
+GObject *gbk_game_new (GbkCube * cube);
 
-void gbk_game_rewind (GbkGame *game);
-void gbk_game_replay (GbkGame *game);
-void gbk_game_stop_replay (GbkGame *game);
-void gbk_game_set_mark (GbkGame *game);
+void gbk_game_rewind (GbkGame * game);
+void gbk_game_replay (GbkGame * game);
+void gbk_game_stop_replay (GbkGame * game);
+void gbk_game_set_mark (GbkGame * game);
 
-void gbk_game_next_move (GbkGame *game);
-void gbk_game_prev_move (GbkGame *game);
+void gbk_game_next_move (GbkGame * game);
+void gbk_game_prev_move (GbkGame * game);
 
-gboolean gbk_game_at_start (GbkGame *game);
-gboolean gbk_game_at_end (GbkGame *game);
+gboolean gbk_game_at_start (GbkGame * game);
+gboolean gbk_game_at_end (GbkGame * game);
 
-void gbk_game_reset (GbkGame *game);
+void gbk_game_reset (GbkGame * game);
 
-void gbk_game_remove_view (GbkGame *game, GbkCubeview *cv);
+void gbk_game_remove_view (GbkGame * game, GbkCubeview * cv);
 
-void gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master);
+void gbk_game_add_view (GbkGame * game, GbkCubeview * cv, gboolean master);
 
-void gbk_game_dump_moves (GbkGame *game);
+void gbk_game_dump_moves (GbkGame * game);
 
-struct GbkList * gbk_game_insert_move (GbkGame *game, struct move_data *move, struct GbkList *where);
-void gbk_game_delete_moves (GbkGame *game,  struct GbkList *from);
+struct GbkList *gbk_game_insert_move (GbkGame * game, struct move_data *move,
+				      struct GbkList *where);
+void gbk_game_delete_moves (GbkGame * game, struct GbkList *from);
 
 
 #endif /* __GAME_H__ */

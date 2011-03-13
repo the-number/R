@@ -51,7 +51,7 @@ static gboolean detect_motion (GtkWidget * w,
 static gboolean UnsetMotion (gpointer data);
 
 
-struct cublet_selection 
+struct cublet_selection
 {
   guint timer;
   select_func *action;
@@ -70,24 +70,23 @@ struct cublet_selection
   gint mouse_y;
 };
 
-static void pickPolygons (GbkCubeview *cv, struct cublet_selection *cs, struct facet_selection *sel);
+static void pickPolygons (GbkCubeview * cv, struct cublet_selection *cs,
+			  struct facet_selection *sel);
 
 /* Initialise the selection mechanism.  Holdoff is the time for which
 the mouse must stay still,  for anything to happen. Precision is the
 minimum distance it must have moved. DO_THIS is a pointer to a function
 to be called when a new block is selected. DATA is a data to be passed to DO_THIS*/
 struct cublet_selection *
-select_create (GtkWidget *w, int holdoff,
-	       double precision, select_func *do_this, gpointer data)
+select_create (GtkWidget * w, int holdoff,
+	       double precision, select_func * do_this, gpointer data)
 {
   struct cublet_selection *cs = g_malloc (sizeof *cs);
 
   cs->idle_threshold = holdoff;
   cs->granularity = precision;
 
-  g_signal_connect (w,
-		    "motion-notify-event",
-		    G_CALLBACK (detect_motion), cs);
+  g_signal_connect (w, "motion-notify-event", G_CALLBACK (detect_motion), cs);
 
   cs->action = do_this;
   cs->data = data;
@@ -179,7 +178,7 @@ UnsetMotion (gpointer data)
   cs->motion = FALSE;
 
   return TRUE;
-}  /* end UnsetMotion */
+}				/* end UnsetMotion */
 
 
 
@@ -188,8 +187,8 @@ get_widget_height (GtkWidget * w)
 {
   return w->allocation.height;
 }
-
 
+
 
 #include "select.h"
 #include <float.h>
@@ -205,7 +204,8 @@ get_widget_height (GtkWidget * w)
 
 
 
-static void choose_items (GLint hits, GLuint buffer[], struct facet_selection *);
+static void choose_items (GLint hits, GLuint buffer[],
+			  struct facet_selection *);
 
 
 
@@ -214,7 +214,8 @@ static void choose_items (GLint hits, GLuint buffer[], struct facet_selection *)
    then calls choose_items,  to determine which of them is closest to the screen.
 */
 static void
-pickPolygons (GbkCubeview *cv, struct cublet_selection *cs, struct facet_selection *sel)
+pickPolygons (GbkCubeview * cv, struct cublet_selection *cs,
+	      struct facet_selection *sel)
 {
   GLint height;
 
@@ -332,7 +333,7 @@ select_get (const struct cublet_selection *cs)
 /* This func,  determines which block the mouse is pointing at,  and if it
    has changed,  calls the function ptr "cs->action" */
 void
-select_update (GbkCubeview *cv, struct cublet_selection *cs)
+select_update (GbkCubeview * cv, struct cublet_selection *cs)
 {
   pickPolygons (cv, cs, &cs->current_selection);
   if (cs->action)
@@ -347,7 +348,7 @@ select_is_selected (const struct cublet_selection *cs)
 
 
 GtkWidget *
-cublet_selection_get_widget (const struct cublet_selection *cs)
+cublet_selection_get_widget (const struct cublet_selection * cs)
 {
   return cs->w;
 }

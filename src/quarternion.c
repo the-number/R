@@ -46,7 +46,7 @@ quarternion_to_matrix (Matrix M, const Quarternion * q)
 
 
   matrix_set (M, MATRIX_DIM - 1, MATRIX_DIM - 1,
-       q->w * q->w + q->x * q->x + q->y * q->y + q->z * q->z);
+	      q->w * q->w + q->x * q->x + q->y * q->y + q->z * q->z);
 
 
   /* Last row */
@@ -102,7 +102,7 @@ quarternion_dump (const Quarternion * q)
 
 
 void
-quarternion_get_inverse (Quarternion *inv, const Quarternion *q)
+quarternion_get_inverse (Quarternion * inv, const Quarternion * q)
 {
   float ssq = 0.0;
   ssq += q->w * q->w;
@@ -111,9 +111,9 @@ quarternion_get_inverse (Quarternion *inv, const Quarternion *q)
   ssq += q->z * q->z;
 
   inv->w = q->w / ssq;
-  inv->x = - q->x / ssq;
-  inv->y = - q->y / ssq;
-  inv->z = - q->z / ssq;
+  inv->x = -q->x / ssq;
+  inv->y = -q->y / ssq;
+  inv->z = -q->z / ssq;
 }
 
 /* Pre multiply q1 by q2 */

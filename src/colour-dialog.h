@@ -24,7 +24,7 @@
 
 void colour_select_menu (GtkWidget *, GbkGame *);
 
-GdkPixbuf *create_pixbuf_from_file (const gchar *filename, GError **gerr);
+GdkPixbuf *create_pixbuf_from_file (const gchar * filename, GError ** gerr);
 
 
 #endif

@@ -37,7 +37,7 @@
 
 
 static void
-new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
+new_view (GbkGame * game, const gchar * description, const gfloat * aspect)
 {
   gchar *title;
   GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -46,29 +46,31 @@ new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
   /* Copy all the properties from the master view to the new one */
   {
     guint n, i;
-    GParamSpec **specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (view), &n);
+    GParamSpec **specs =
+      g_object_class_list_properties (G_OBJECT_GET_CLASS (view), &n);
     for (i = 0; i < n; ++i)
       {
-	GValue value = {0};
+	GValue value = { 0 };
 
-	if ( ! (specs[i]->flags & G_PARAM_WRITABLE))
+	if (!(specs[i]->flags & G_PARAM_WRITABLE))
 	  continue;
 
-	if ( ! (specs[i]->flags & G_PARAM_READABLE))
+	if (!(specs[i]->flags & G_PARAM_READABLE))
 	  continue;
 
-	if ( specs[i]->owner_type != G_OBJECT_TYPE (view))
+	if (specs[i]->owner_type != G_OBJECT_TYPE (view))
 	  continue;
-	
+
 	g_value_init (&value, specs[i]->value_type);
-	g_object_get_property (G_OBJECT (game->masterview), specs[i]->name, &value);
+	g_object_get_property (G_OBJECT (game->masterview), specs[i]->name,
+			       &value);
 	g_object_set_property (G_OBJECT (view), specs[i]->name, &value);
 	g_value_unset (&value);
       }
     g_free (specs);
   }
 
-  gtk_window_set_icon_name (GTK_WINDOW(window), "gnubik");
+  gtk_window_set_icon_name (GTK_WINDOW (window), "gnubik");
 
   title = g_strdup_printf ("%s %s", PACKAGE, description);
 
@@ -86,55 +88,54 @@ new_view (GbkGame *game, const gchar *description, const gfloat *aspect)
 }
 
 static void
-view_rear (GtkAction *act, GbkGame *game)
+view_rear (GtkAction * act, GbkGame * game)
 {
-  gfloat aspect[4] = {180, 0, 1, 0};
+  gfloat aspect[4] = { 180, 0, 1, 0 };
   new_view (game, _("Rear View"), aspect);
 }
 
 
 static void
-view_bottom (GtkAction *act, GbkGame *game)
+view_bottom (GtkAction * act, GbkGame * game)
 {
-  gfloat aspect[4] = {90, 1, 0, 0};
+  gfloat aspect[4] = { 90, 1, 0, 0 };
   new_view (game, _("Bottom View"), aspect);
 }
 
 static void
-view_top (GtkAction *act, GbkGame *game)
+view_top (GtkAction * act, GbkGame * game)
 {
-  gfloat aspect[4] = {-90, 1, 0, 0};
+  gfloat aspect[4] = { -90, 1, 0, 0 };
   new_view (game, _("Top View"), aspect);
 }
 
 
 static void
-view_left (GtkAction *act, GbkGame *game)
+view_left (GtkAction * act, GbkGame * game)
 {
-  gfloat aspect[4] = {-90, 0, 1, 0};
+  gfloat aspect[4] = { -90, 0, 1, 0 };
   new_view (game, _("Left View"), aspect);
 }
 
 static void
-view_right (GtkAction *act, GbkGame *game)
+view_right (GtkAction * act, GbkGame * game)
 {
-  gfloat aspect[4] = {90, 0, 1, 0};
+  gfloat aspect[4] = { 90, 0, 1, 0 };
   new_view (game, _("Right View"), aspect);
 }
-
 
+
 
 #define MSGLEN 100
 static void
-update_statusbar_mark (GbkGame *game, gint x, GtkStatusbar *statusbar)
+update_statusbar_mark (GbkGame * game, gint x, GtkStatusbar * statusbar)
 {
   gchar mesg[MSGLEN];
 
   int context = gtk_statusbar_get_context_id (statusbar, "marks");
 
-  g_snprintf (mesg,   MSGLEN,
-	      _("A mark is now set at position %d."),
-	      game->posn);
+  g_snprintf (mesg, MSGLEN,
+	      _("A mark is now set at position %d."), game->posn);
 
   gtk_statusbar_pop (statusbar, context);
 
@@ -142,17 +143,13 @@ update_statusbar_mark (GbkGame *game, gint x, GtkStatusbar *statusbar)
 }
 
 static void
-update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
+update_statusbar_moves (GbkGame * game, GtkStatusbar * statusbar)
 {
   gchar mesg[MSGLEN];
 
   int context = gtk_statusbar_get_context_id (statusbar, "move-count");
 
-  g_snprintf (mesg,
-	      MSGLEN,
-	      _("Moves: %d / %d"),
-	      game->posn,
-	      game->total);
+  g_snprintf (mesg, MSGLEN, _("Moves: %d / %d"), game->posn, game->total);
 
   gtk_statusbar_pop (statusbar, context);
 
@@ -161,24 +158,24 @@ update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
 
 
   /* Now check if the cube is solved and update statusbar accordingly */
-  
-  context = gtk_statusbar_get_context_id (statusbar, "cube-state");  
+
+  context = gtk_statusbar_get_context_id (statusbar, "cube-state");
 
   enum cube_status status = gbk_cube_get_status (game->cube);
 
-  if (NOT_SOLVED ==  status )
+  if (NOT_SOLVED == status)
     {
       gtk_statusbar_pop (statusbar, context);
     }
-  else if ( SOLVED == status)
+  else if (SOLVED == status)
     {
       g_snprintf (mesg, MSGLEN,
 		  ngettext ("Cube solved in %d move",
 			    "Cube solved in %d moves", game->posn),
 		  game->posn);
-      game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);      
+      game->mesg_id = gtk_statusbar_push (statusbar, context, mesg);
     }
-  else if  (HALF_SOLVED == status)
+  else if (HALF_SOLVED == status)
     {
       g_snprintf (mesg,
 		  MSGLEN,
@@ -189,9 +186,10 @@ update_statusbar_moves (GbkGame *game, GtkStatusbar *statusbar)
 }
 
 static void
-update_statusbar_animation (GbkCubeview *view, GParamSpec *sp, GtkStatusbar *statusbar)
+update_statusbar_animation (GbkCubeview * view, GParamSpec * sp,
+			    GtkStatusbar * statusbar)
 {
-  int context ;
+  int context;
 
   gchar mesg[MSGLEN];
   int n;
@@ -199,7 +197,9 @@ update_statusbar_animation (GbkCubeview *view, GParamSpec *sp, GtkStatusbar *sta
   context = gtk_statusbar_get_context_id (statusbar, "animation");
 
   g_object_get (view, "animation-frames", &n, NULL);
-  g_snprintf (mesg, MSGLEN, ngettext("Animation rate set to %d frame per turn.", "Animation rate set to %d frames per turn.", n), n);
+  g_snprintf (mesg, MSGLEN,
+	      ngettext ("Animation rate set to %d frame per turn.",
+			"Animation rate set to %d frames per turn.", n), n);
 
   gtk_statusbar_pop (statusbar, context);
   gtk_statusbar_push (statusbar, context, mesg);
@@ -207,31 +207,27 @@ update_statusbar_animation (GbkCubeview *view, GParamSpec *sp, GtkStatusbar *sta
 
 
 GtkWidget *
-create_statusbar (GbkGame *game)
+create_statusbar (GbkGame * game)
 {
   GtkWidget *statusbar = gtk_statusbar_new ();
 
   g_signal_connect (game, "queue-changed",
-		    G_CALLBACK (update_statusbar_moves),
-		    statusbar);
+		    G_CALLBACK (update_statusbar_moves), statusbar);
 
   g_signal_connect (game, "mark-set",
-		    G_CALLBACK (update_statusbar_mark),
-		    statusbar);
+		    G_CALLBACK (update_statusbar_mark), statusbar);
 
   g_signal_connect (game->masterview, "notify::animation-frames",
-		    G_CALLBACK (update_statusbar_animation),
-		    statusbar);
+		    G_CALLBACK (update_statusbar_animation), statusbar);
 
   return statusbar;
 }
 
 
-static const GtkActionEntry action_entries[] =
-{
+static const GtkActionEntry action_entries[] = {
   {"game-menu-action", NULL, N_("_Game")},
   {"view-menu-action", NULL, N_("_View")},
-  {"add-view-menu-action", NULL, N_("Add _View"), 
+  {"add-view-menu-action", NULL, N_("Add _View"),
    NULL, N_("Add an auxiliary view of the cube")},
 
 
@@ -241,25 +237,24 @@ static const GtkActionEntry action_entries[] =
 
   {
    "about-action", GTK_STOCK_ABOUT, NULL,
-   NULL, "about", G_CALLBACK (about_dialog)
-  },
+   NULL, "about", G_CALLBACK (about_dialog)},
 
   {
    "quit-action", GTK_STOCK_QUIT, NULL,
-   "<control>Q", "quit", G_CALLBACK (gtk_main_quit)
-  }
+   "<control>Q", "quit", G_CALLBACK (gtk_main_quit)}
 };
 
 
 static void
-restart_game (GtkWidget *w, GbkGame *game)
+restart_game (GtkWidget * w, GbkGame * game)
 {
   gbk_cube_scramble (game->cube);
   gbk_game_reset (game);
 }
 
 void
-start_new_game (GbkGame *game, int size0, int size1, int size2, gboolean scramble)
+start_new_game (GbkGame * game, int size0, int size1, int size2,
+		gboolean scramble)
 {
   gbk_cube_set_size (game->cube, size0, size1, size2);
 
@@ -271,82 +266,80 @@ start_new_game (GbkGame *game, int size0, int size1, int size2, gboolean scrambl
 
 
 static void
-animate_faster (GtkWidget *w, GbkGame *game)
+animate_faster (GtkWidget * w, GbkGame * game)
 {
   GSList *v;
   int frames;
 
   g_object_get (game->masterview, "animation-frames", &frames, NULL);
-  frames *= 2/3.0;
+  frames *= 2 / 3.0;
 
   /* Iterate over all the views and set the new properties */
-  for (v = game->views ; v != NULL; v = g_slist_next (v))
+  for (v = game->views; v != NULL; v = g_slist_next (v))
     {
       g_object_set (v->data, "animation-frames", frames, NULL);
     }
 }
 
 static void
-animate_slower (GtkWidget *w, GbkGame *game)
+animate_slower (GtkWidget * w, GbkGame * game)
 {
   int frames;
   GSList *v;
   g_object_get (game->masterview, "animation-frames", &frames, NULL);
-  frames /= 2/3.0;
+  frames /= 2 / 3.0;
   if (frames == 0)
     frames = 1;
-  
+
   if (frames == 1)
     frames = 2;
 
   /* Iterate over all the views and set the new properties */
-  for (v = game->views ; v != NULL; v = g_slist_next (v))
+  for (v = game->views; v != NULL; v = g_slist_next (v))
     {
       g_object_set (v->data, "animation-frames", frames, NULL);
     }
 }
 
-static const GtkActionEntry game_action_entries[] =
+static const GtkActionEntry game_action_entries[] = {
   {
-    {
    "restart-game-action", NULL, N_("_Restart Game"),
-   NULL, "restart-game", G_CALLBACK (restart_game)
-    },
+   NULL, "restart-game", G_CALLBACK (restart_game)},
 
-    {
+  {
    "new-game-action", GTK_STOCK_NEW, N_("_New Game"),
-   "<control>N", "new-game", G_CALLBACK (new_game_dialog)
-    },
+   "<control>N", "new-game", G_CALLBACK (new_game_dialog)},
 
 
-    {"add-view-rear-action", NULL, N_("_Rear"), NULL, NULL, G_CALLBACK (view_rear)},
-    {"add-view-left-action", NULL, N_("_Left"), NULL, NULL, G_CALLBACK (view_left)},
-    {"add-view-right-action", NULL, N_("Ri_ght"), NULL, NULL, G_CALLBACK (view_right)},
-    {"add-view-top-action", NULL, N_("_Top"), NULL, NULL, G_CALLBACK (view_top)},
-    {"add-view-bottom-action", NULL, N_("_Bottom"), NULL, NULL, G_CALLBACK (view_bottom)},
+  {"add-view-rear-action", NULL, N_("_Rear"), NULL, NULL,
+   G_CALLBACK (view_rear)},
+  {"add-view-left-action", NULL, N_("_Left"), NULL, NULL,
+   G_CALLBACK (view_left)},
+  {"add-view-right-action", NULL, N_("Ri_ght"), NULL, NULL,
+   G_CALLBACK (view_right)},
+  {"add-view-top-action", NULL, N_("_Top"), NULL, NULL,
+   G_CALLBACK (view_top)},
+  {"add-view-bottom-action", NULL, N_("_Bottom"), NULL, NULL,
+   G_CALLBACK (view_bottom)},
 
 
-    {
-      "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
-      NULL, "colours", G_CALLBACK (colour_select_menu)
-    },
+  {
+   "colours-action", GTK_STOCK_SELECT_COLOR, N_("_Colours"),
+   NULL, "colours", G_CALLBACK (colour_select_menu)},
 
-    {
-      "animation-action", NULL, N_("_Animation"),
-      NULL, "animation", NULL
-    },
+  {
+   "animation-action", NULL, N_("_Animation"),
+   NULL, "animation", NULL},
 
-    {
-      "animate-faster-action", NULL,  N_("_Faster"),
-      "<control>plus", "animate-faster", G_CALLBACK (animate_faster)
-    },
+  {
+   "animate-faster-action", NULL, N_("_Faster"),
+   "<control>plus", "animate-faster", G_CALLBACK (animate_faster)},
 
-    {
-      "animate-slower-action", NULL, N_("_Slower"),
-      "<control>minus", "animate-slower", G_CALLBACK (animate_slower)
-    },
+  {
+   "animate-slower-action", NULL, N_("_Slower"),
+   "<control>minus", "animate-slower", G_CALLBACK (animate_slower)},
 
-  };
+};
 
 
 static const char menu_tree[] = "<ui>\
@@ -380,7 +373,7 @@ static const char menu_tree[] = "<ui>\
 
 
 GtkWidget *
-create_menubar (GbkGame *game)
+create_menubar (GbkGame * game)
 {
   GtkWidget *menubar;
   GtkUIManager *menu_manager = gtk_ui_manager_new ();
@@ -412,14 +405,16 @@ create_menubar (GbkGame *game)
 
   menubar = gtk_ui_manager_get_widget (menu_manager, "/ui/MainMenu");
 
-  gtk_window_add_accel_group (GTK_WINDOW (game->toplevel), gtk_ui_manager_get_accel_group (menu_manager));
+  gtk_window_add_accel_group (GTK_WINDOW (game->toplevel),
+			      gtk_ui_manager_get_accel_group (menu_manager));
 
   gtk_widget_show (menubar);
 
   return menubar;
 }
 
-enum {
+enum
+{
   ACT_REWIND = 0,
   ACT_PREV,
   ACT_STOP,
@@ -431,21 +426,25 @@ enum {
 
 
 static void
-set_playbar_sensitivities (GbkGame *g, GtkAction **acts)
+set_playbar_sensitivities (GbkGame * g, GtkAction ** acts)
 {
   gboolean play_state = (g->mode == MODE_PLAY);
 
-  gtk_action_set_sensitive (acts[ACT_REWIND], !play_state && !gbk_game_at_start (g));
-  gtk_action_set_sensitive (acts[ACT_PREV],   !play_state && !gbk_game_at_start (g));
+  gtk_action_set_sensitive (acts[ACT_REWIND], !play_state
+			    && !gbk_game_at_start (g));
+  gtk_action_set_sensitive (acts[ACT_PREV], !play_state
+			    && !gbk_game_at_start (g));
 
-  gtk_action_set_sensitive (acts[ACT_PLAY],   !play_state && !gbk_game_at_end (g));
-  gtk_action_set_sensitive (acts[ACT_NEXT],   !play_state && !gbk_game_at_end (g));
+  gtk_action_set_sensitive (acts[ACT_PLAY], !play_state
+			    && !gbk_game_at_end (g));
+  gtk_action_set_sensitive (acts[ACT_NEXT], !play_state
+			    && !gbk_game_at_end (g));
 
   gtk_action_set_sensitive (acts[ACT_STOP], play_state);
 }
 
 GtkWidget *
-create_play_toolbar (GbkGame *game)
+create_play_toolbar (GbkGame * game)
 {
   int i;
   static GtkAction *acts[n_ACTS];
@@ -453,15 +452,15 @@ create_play_toolbar (GbkGame *game)
   acts[ACT_REWIND] =
     gtk_action_new ("rewind",
 		    _("Rewind"),
-		    _("Go to the previous mark (or the beginning) of the sequence of moves"),
+		    _
+		    ("Go to the previous mark (or the beginning) of the sequence of moves"),
 		    GTK_STOCK_MEDIA_REWIND);
 
 
-  acts[ACT_PREV] = 
+  acts[ACT_PREV] =
     gtk_action_new ("previous",
 		    _("Back"),
-		    _("Make one step backwards"),
-		    GTK_STOCK_MEDIA_PREVIOUS);
+		    _("Make one step backwards"), GTK_STOCK_MEDIA_PREVIOUS);
 
 
   acts[ACT_STOP] =
@@ -471,21 +470,20 @@ create_play_toolbar (GbkGame *game)
 		    GTK_STOCK_MEDIA_STOP);
 
 
-  acts[ACT_MARK] = 
+  acts[ACT_MARK] =
     gtk_action_new ("mark",
 		    _("Mark"),
 		    _("Mark the current place in the sequence of moves"),
 		    GTK_STOCK_MEDIA_STOP);
 
 
-  acts[ACT_NEXT] = 
+  acts[ACT_NEXT] =
     gtk_action_new ("next",
 		    _("Forward"),
-		    _("Make one step forwards"),
-		    GTK_STOCK_MEDIA_NEXT);
+		    _("Make one step forwards"), GTK_STOCK_MEDIA_NEXT);
 
 
-  acts [ACT_PLAY] = 
+  acts[ACT_PLAY] =
     gtk_action_new ("forward",
 		    _("Play"),
 		    _("Run forward through the sequence of moves"),
@@ -496,16 +494,17 @@ create_play_toolbar (GbkGame *game)
 
   set_playbar_sensitivities (game, acts);
 
-  g_signal_connect (game, "queue-changed", G_CALLBACK (set_playbar_sensitivities), acts);
+  g_signal_connect (game, "queue-changed",
+		    G_CALLBACK (set_playbar_sensitivities), acts);
 
-  gtk_toolbar_set_style (GTK_TOOLBAR (play_toolbar),  GTK_TOOLBAR_BOTH);
+  gtk_toolbar_set_style (GTK_TOOLBAR (play_toolbar), GTK_TOOLBAR_BOTH);
 
 
   for (i = 0; i < n_ACTS; ++i)
     {
       gtk_toolbar_insert (GTK_TOOLBAR (play_toolbar),
-			  GTK_TOOL_ITEM (gtk_action_create_tool_item (acts[i])),
-			  -1);
+			  GTK_TOOL_ITEM (gtk_action_create_tool_item
+					 (acts[i])), -1);
     }
 
   g_signal_connect_swapped (acts[ACT_REWIND], "activate",
@@ -535,7 +534,7 @@ create_play_toolbar (GbkGame *game)
 
 /* Popup an error dialog box */
 void
-error_dialog (GtkWindow *parent, const gchar *format, ...)
+error_dialog (GtkWindow * parent, const gchar * format, ...)
 {
   va_list ap;
   GtkWidget *dialog;
@@ -561,4 +560,3 @@ error_dialog (GtkWindow *parent, const gchar *format, ...)
 
   gtk_widget_destroy (dialog);
 }
-

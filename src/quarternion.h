@@ -32,18 +32,18 @@ struct quarternion
 typedef struct quarternion Quarternion;
 
 
-void quarternion_get_inverse (Quarternion *inv, const Quarternion *q);
+void quarternion_get_inverse (Quarternion * inv, const Quarternion * q);
 
-void quarternion_from_rotation (Quarternion *q, const vector u, float theta);
+void quarternion_from_rotation (Quarternion * q, const vector u, float theta);
 
-void quarternion_dump (const Quarternion *q);
+void quarternion_dump (const Quarternion * q);
 
-void quarternion_to_matrix (Matrix M, const Quarternion *q);
+void quarternion_to_matrix (Matrix M, const Quarternion * q);
 
 /* Pre multiply q1 by q2 */
-void quarternion_pre_mult (Quarternion *q1, const Quarternion *q2);
+void quarternion_pre_mult (Quarternion * q1, const Quarternion * q2);
 
-void quarternion_set_to_unit (Quarternion *q);
+void quarternion_set_to_unit (Quarternion * q);
 
 
 #endif /* QUARTERNION_H */

@@ -44,14 +44,16 @@ struct preferences_state
 };
 
 static struct preferences_state *
-pref_state_create (GtkBox *parent, const GbkGame *game)
+pref_state_create (GtkBox * parent, const GbkGame * game)
 {
   gint i;
   struct preferences_state *ps = g_malloc (sizeof (*ps));
 
-  for (i = 0; i < 3 ; ++i)
+  for (i = 0; i < 3; ++i)
     {
-      ps->adj[i] = gtk_adjustment_new (gbk_cube_get_size (game->cube, 0), 1, G_MAXFLOAT, 1, 1, 0);
+      ps->adj[i] =
+	gtk_adjustment_new (gbk_cube_get_size (game->cube, 0), 1, G_MAXFLOAT,
+			    1, 1, 0);
       g_object_ref (ps->adj[i]);
       ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
       g_object_ref (ps->entry[i]);
@@ -65,7 +67,7 @@ static void
 pref_state_destroy (struct preferences_state *ps)
 {
   int i;
-  for (i = 0; i < 3 ; ++i)
+  for (i = 0; i < 3; ++i)
     {
       g_object_unref (ps->adj[i]);
       g_object_unref (ps->entry[i]);
@@ -77,44 +79,46 @@ pref_state_destroy (struct preferences_state *ps)
 
 /* Allows only cubic cubes if the togglebutton is active */
 static void
-toggle_regular (GtkToggleButton *button, gpointer data)
+toggle_regular (GtkToggleButton * button, gpointer data)
 {
   gint i;
-  struct preferences_state * ps = data;
+  struct preferences_state *ps = data;
 
-  if ( gtk_toggle_button_get_active (button))
+  if (gtk_toggle_button_get_active (button))
     {
-      for (i = 0; i < 3 ; ++i)
+      for (i = 0; i < 3; ++i)
 	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ps->entry[i]),
 					GTK_ADJUSTMENT (ps->adj[0]));
       gtk_adjustment_value_changed (GTK_ADJUSTMENT (ps->adj[0]));
     }
   else
     {
-      for (i = 0; i < 3 ; ++i)
+      for (i = 0; i < 3; ++i)
 	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ps->entry[i]),
 					GTK_ADJUSTMENT (ps->adj[i]));
     }
 }
 
 static struct preferences_state *
-create_dimension_widget (GtkContainer *parent, const GbkGame *game)
+create_dimension_widget (GtkContainer * parent, const GbkGame * game)
 {
   gint i;
   GtkWidget *label = gtk_label_new (_("Size of cube:"));
 
   GtkWidget *hbox = gtk_hbox_new (FALSE, BOX_PADDING);
   GtkWidget *vbox = gtk_vbox_new (TRUE, BOX_PADDING);
-  GtkWidget *checkbox = gtk_check_button_new_with_mnemonic (_("Re_gular cube"));
+  GtkWidget *checkbox =
+    gtk_check_button_new_with_mnemonic (_("Re_gular cube"));
   GtkWidget *vbox2 = gtk_vbox_new (TRUE, BOX_PADDING);
 
-  struct preferences_state *ps  = pref_state_create (GTK_BOX (vbox), game);
+  struct preferences_state *ps = pref_state_create (GTK_BOX (vbox), game);
 
   gtk_widget_set_tooltip_text (vbox,
 			       _("Sets the number of blocks in each side"));
 
   gtk_widget_set_tooltip_text (checkbox,
-			       _("Allow only cubes with all sides equal size"));
+			       _
+			       ("Allow only cubes with all sides equal size"));
 
   g_signal_connect (checkbox, "toggled", G_CALLBACK (toggle_regular), ps);
 
@@ -127,8 +131,7 @@ create_dimension_widget (GtkContainer *parent, const GbkGame *game)
   for (i = 0; i < 3; ++i)
     gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps->entry[i]),
 			       gbk_cube_get_size (game->cube, i)),
-
-  gtk_widget_show_all (hbox);
+      gtk_widget_show_all (hbox);
 
   gtk_container_add (parent, hbox);
 
@@ -142,7 +145,7 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
   /* Create the widgets */
   GtkWidget *dialog = gtk_about_dialog_new ();
 
-  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
+  gtk_window_set_icon_name (GTK_WINDOW (dialog), "gnubik");
 
   gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
@@ -161,8 +164,8 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 				 _("A 3 dimensional magic cube puzzle"));
 
   gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (dialog),
-       /* TRANSLATORS: Do not translate this string. Instead, use it to list
-	  the people who have helped with translation to your language. */
+					   /* TRANSLATORS: Do not translate this string. Instead, use it to list
+					      the people who have helped with translation to your language. */
 					   _("translator-credits"));
 
   gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
@@ -172,14 +175,14 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
 }
-
-
-
-
 
 
+
+
+
+
 void
-new_game_dialog (GtkWidget *w, GbkGame *game)
+new_game_dialog (GtkWidget * w, GbkGame * game)
 {
   gint response;
 
@@ -199,18 +202,22 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
 
   g_object_set (frame_dimensions, "shadow-type", GTK_SHADOW_NONE, NULL);
 
-  gtk_window_set_icon_name (GTK_WINDOW(dialog), "gnubik");
+  gtk_window_set_icon_name (GTK_WINDOW (dialog), "gnubik");
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), game->toplevel);
 
-  struct preferences_state *ps = create_dimension_widget (GTK_CONTAINER (frame_dimensions), game);
+  struct preferences_state *ps =
+    create_dimension_widget (GTK_CONTAINER (frame_dimensions), game);
 
   GtkWidget *frame_pos = gtk_frame_new (_("Initial position"));
   GtkWidget *bb = gtk_vbutton_box_new ();
 
-  GtkWidget *random_state = gtk_radio_button_new_with_mnemonic_from_widget (NULL, _("_Random"));
-  GtkWidget *solved_state = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (random_state),
-									 _("_Solved"));
+  GtkWidget *random_state =
+    gtk_radio_button_new_with_mnemonic_from_widget (NULL, _("_Random"));
+  GtkWidget *solved_state =
+    gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON
+						    (random_state),
+						    _("_Solved"));
 
   g_object_set (frame_pos, "shadow-type", GTK_SHADOW_NONE, NULL);
 
@@ -230,18 +237,15 @@ new_game_dialog (GtkWidget *w, GbkGame *game)
 
   if (response == GTK_RESPONSE_ACCEPT)
     {
-      start_new_game 
+      start_new_game
 	(game,
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[0])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[1])),
 	 gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps->entry[2])),
-	 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (random_state))
-	);
+	 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (random_state)));
     }
 
   pref_state_destroy (ps);
-  
+
   gtk_widget_destroy (dialog);
 }
-
-

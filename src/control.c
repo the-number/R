@@ -60,7 +60,8 @@ vector2axis (GLfloat * vector)
 /* Determine the axis about which to rotate the slice,  from the objects
 selected by the cursor position */
 static void
-getTurnAxis (GbkCube *cube, const struct facet_selection *items, GLfloat *vector)
+getTurnAxis (GbkCube * cube, const struct facet_selection *items,
+	     GLfloat * vector)
 {
   Matrix t;
 
@@ -87,7 +88,7 @@ getTurnAxis (GbkCube *cube, const struct facet_selection *items, GLfloat *vector
 }
 
 static void
-set_mouse_cursor (GtkWidget *w, const struct cublet_selection *cs)
+set_mouse_cursor (GtkWidget * w, const struct cublet_selection *cs)
 {
   const unsigned char *mask_bits;
   const unsigned char *data_bits;
@@ -138,7 +139,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
   if (gbk_cubeview_is_animating (cv))
     return;
 
-  if ( select_is_selected (cs))
+  if (select_is_selected (cs))
     {
       const struct facet_selection *selection = select_get (cs);
       GLfloat turn_axis[4];
@@ -158,17 +159,18 @@ selection_func (struct cublet_selection *cs, gpointer data)
       /* Delete the old move and create a new one */
       move_unref (cv->pending_movement);
       cv->pending_movement = move_create (slice, axis, dir);
-      
+
       /* Here we take the orientation of the selected quadrant and multiply it
          by the projection matrix.  The result gives us the angle (on the screen)
-	 at which the mouse cursor needs to be drawn. */
+         at which the mouse cursor needs to be drawn. */
       {
 	Matrix proj;
 
 	glGetFloatv (GL_PROJECTION_MATRIX, proj);
 
 	gbk_cube_get_quadrant_vector (cv->cube, selection->block,
-			     selection->face, selection->quadrant, v);
+				      selection->face, selection->quadrant,
+				      v);
 
 	vector_transform_in_place (v, proj);
 

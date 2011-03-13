@@ -85,7 +85,7 @@ free_move_queue (Move_Queue * move_queue)
    the operation is successful; 0 (zero) indicates that there was insufficient
    memory to grow the queue. */
 int
-move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
+move_queue_push (Move_Queue * move_queue, const struct move_data *move_data)
 {
   struct _Move_Queue_Item *new_element;
 
@@ -124,7 +124,8 @@ move_queue_push (Move_Queue * move_queue, const struct move_data * move_data)
    at the tail,  and in this case zero may be returned if there is insufficient
    memory to grow the queue. In all other cases 1 (one) will be returned. */
 int
-move_queue_push_current (Move_Queue * move_queue, const struct move_data *move_data)
+move_queue_push_current (Move_Queue * move_queue,
+			 const struct move_data *move_data)
 {
   /* If there are no data in the queue,  then perform a standard push
      operation. Also do this if we are at the tail. */

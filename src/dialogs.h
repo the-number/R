@@ -24,11 +24,11 @@
 
 struct preferences_state;
 
-void request_new_game (GtkAction *act, struct preferences_state *ps);
+void request_new_game (GtkAction * act, struct preferences_state *ps);
 
-void about_dialog (GtkWidget *w, GtkWindow *);
+void about_dialog (GtkWidget * w, GtkWindow *);
 
-void new_game_dialog (GtkWidget *w, GbkGame *game);
+void new_game_dialog (GtkWidget * w, GbkGame * game);
 
 
 #endif

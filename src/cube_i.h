@@ -22,7 +22,7 @@
 
 
 #ifndef __GBK_CUBE_H__
-#    error This is a private header file and should not be included directly in any user source code.
+#error This is a private header file and should not be included directly in any user source code.
 #endif
 
 
@@ -51,7 +51,7 @@ typedef struct _Face
 
 
   /* The UP vector shows the orienation of the squares on the faces. When the cube
-   is properly solved. The normals and the ups are in the same direction.*/
+     is properly solved. The normals and the ups are in the same direction. */
   vector up;
 
 } Face;

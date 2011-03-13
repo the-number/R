@@ -54,15 +54,15 @@ typedef enum
   COL_WHITE
 } colour_type;
 
-static const GLfloat colors[][3] =
-{
+static const GLfloat colors[][3] = {
   {0.0, 0.0, 0.0},		/*Black */
   {1.0, 1.0, 1.0}		/*White */
 };
 
 
 
-static void draw_face (GbkCubeview *, GLint face, int block_id, GLboolean draw_names);
+static void draw_face (GbkCubeview *, GLint face, int block_id,
+		       GLboolean draw_names);
 
 /* this macro produces +1 if i is even. -1 if i is odd */
 /* We use it to transform the faces of the block from zero,  to the
@@ -73,7 +73,7 @@ static void draw_face (GbkCubeview *, GLint face, int block_id, GLboolean draw_n
     If ANCILLIARY is true, render the ancialliary components also.
  */
 void
-draw_block (GbkCubeview *cv, int block_id, GLboolean ancilliary)
+draw_block (GbkCubeview * cv, int block_id, GLboolean ancilliary)
 {
   int i;
 
@@ -124,15 +124,15 @@ draw_block (GbkCubeview *cv, int block_id, GLboolean ancilliary)
       glPopMatrix ();
     }
   glPopName ();
-  
-}  /* end block */
+
+}				/* end block */
 
 
 /* render FACE of BLOCK_ID.
    If DRAW_NAMES is true, the render the ancillary polygons used for selection.
  */
 static void
-draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
+draw_face (GbkCubeview * cv, GLint face, int block_id, GLboolean draw_names)
 {
   point p1;
   point p2;
@@ -150,25 +150,25 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
   if (draw_names)
     {
       /* the dead zone is the space on the square,  which pointing to with
-	 the mouse will not change the selection.  This gives a bit of
-	 histeresis,  and makes it easier to use. */
+         the mouse will not change the selection.  This gives a bit of
+         histeresis,  and makes it easier to use. */
       const GLfloat deadZone = 0.02;
       const GLfloat limit1 = (1 - deadZone);
       const GLfloat limit2 = (1 - 2 * deadZone);
 
       /* This polygon is drawn as four quadrants,  thus:
-	 _______
-	 |\     /|
-	 | \   / |
-	 |  \ /  |
-	 |   \   |
-	 |  / \  |
-	 | /   \ |
-	 |/____ \|
+         _______
+         |\     /|
+         | \   / |
+         |  \ /  |
+         |   \   |
+         |  / \  |
+         | /   \ |
+         |/____ \|
 
-	 The reason for this is to provide support for an enhanced selection
-	 mechanism which can detect which edge of the face is being pointed to.
-      */
+         The reason for this is to provide support for an enhanced selection
+         mechanism which can detect which edge of the face is being pointed to.
+       */
 
       p1[0] = 0;
       p1[1] = 0;
@@ -302,27 +302,31 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
 	    ypos =
 	      (block_id % (gbk_cube_get_size (cv->cube, 0)
 			   * gbk_cube_get_size (cv->cube, 1)))
-			   / gbk_cube_get_size (cv->cube, 0);
+	      / gbk_cube_get_size (cv->cube, 0);
 	    break;
 	  case 2:
 	  case 3:
 	    iss_x = 1.0 / gbk_cube_get_size (cv->cube, 0);
 	    iss_y = 1.0 / gbk_cube_get_size (cv->cube, 2);
-	    xpos = block_id % ( gbk_cube_get_size (cv->cube, 0) 
-				* gbk_cube_get_size (cv->cube, 1))
-	                        % gbk_cube_get_size (cv->cube, 0);
+	    xpos = block_id % (gbk_cube_get_size (cv->cube, 0)
+			       * gbk_cube_get_size (cv->cube, 1))
+	      % gbk_cube_get_size (cv->cube, 0);
 	    ypos =
-	      block_id / (gbk_cube_get_size (cv->cube, 0) * gbk_cube_get_size (cv->cube, 1));
+	      block_id / (gbk_cube_get_size (cv->cube, 0) *
+			  gbk_cube_get_size (cv->cube, 1));
 	    break;
 	  case 4:
 	  case 5:
 	    iss_x = 1.0 / gbk_cube_get_size (cv->cube, 2);
 	    iss_y = 1.0 / gbk_cube_get_size (cv->cube, 1);
 	    xpos =
-	      block_id / (gbk_cube_get_size (cv->cube, 0) * gbk_cube_get_size (cv->cube, 1));
+	      block_id / (gbk_cube_get_size (cv->cube, 0) *
+			  gbk_cube_get_size (cv->cube, 1));
 	    ypos =
-	      block_id % (gbk_cube_get_size (cv->cube, 0) * gbk_cube_get_size (cv->cube, 1))
-	         / gbk_cube_get_size (cv->cube, 0);
+	      block_id % (gbk_cube_get_size (cv->cube, 0) *
+			  gbk_cube_get_size (cv->cube,
+					     1)) /
+	      gbk_cube_get_size (cv->cube, 0);
 	    break;
 	  }
 
@@ -349,16 +353,13 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
 	iss_x = iss_y = 1.0;
       }
 
-    glTexCoord2f (iss_x * xpos,
-		  iss_y * (ypos + 1));
+    glTexCoord2f (iss_x * xpos, iss_y * (ypos + 1));
     glVertex3d (-1, -1, 0);
 
-    glTexCoord2f (iss_x * (xpos + 1),
-		  iss_y * (ypos + 1));
+    glTexCoord2f (iss_x * (xpos + 1), iss_y * (ypos + 1));
     glVertex3d (1, -1, 0);
 
-    glTexCoord2f (iss_x * (xpos + 1),
-		  iss_y * ypos);
+    glTexCoord2f (iss_x * (xpos + 1), iss_y * ypos);
     glVertex3d (1, 1, 0);
 
     glTexCoord2f (iss_x * xpos, iss_y * ypos);
@@ -397,7 +398,7 @@ draw_face (GbkCubeview *cv, GLint face, int block_id, GLboolean draw_names)
 
 /* render the cube */
 void
-drawCube (GbkCube *cube, GLboolean ancilliary, GbkCubeview *cv)
+drawCube (GbkCube * cube, GLboolean ancilliary, GbkCubeview * cv)
 {
   int i;
 
@@ -478,7 +479,7 @@ drawCube (GbkCube *cube, GLboolean ancilliary, GbkCubeview *cv)
 	  GLdouble angle = cv->animation_angle;
 
 	  int unity = 1;
-	  if (! move_dir (cv->current_move))
+	  if (!move_dir (cv->current_move))
 	    unity = -1;
 
 	  switch (move_axis (cv->current_move))

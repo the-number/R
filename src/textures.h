@@ -22,6 +22,6 @@
 
 void texInit (void);
 
-GLuint create_pattern_from_pixbuf (const GdkPixbuf *pixbuf, GError **gerr);
+GLuint create_pattern_from_pixbuf (const GdkPixbuf * pixbuf, GError ** gerr);
 
 #endif

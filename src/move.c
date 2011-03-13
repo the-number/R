@@ -27,10 +27,10 @@
 /* A structure containing information about a movement taking place. */
 struct move_data
 {
-  int slice;   /* Zero is the centre of the cube */
-  short dir;   /* 0 = cw, 1 = ccw */
-  short axis;  /* [0,2] */
-  short turns; /* Normally 1 or 2 */
+  int slice;			/* Zero is the centre of the cube */
+  short dir;			/* 0 = cw, 1 = ccw */
+  short axis;			/* [0,2] */
+  short turns;			/* Normally 1 or 2 */
 
   Slice_Blocks *blocks_in_motion;
 };
@@ -42,7 +42,8 @@ move_set_turns (struct move_data *m, int turns)
   m->turns = turns;
 }
 
-struct move_data * move_create (int slice, short axis, short dir)
+struct move_data *
+move_create (int slice, short axis, short dir)
 {
   struct move_data *m = g_slice_alloc (sizeof (*m));
 
@@ -81,7 +82,7 @@ free_slice_blocks (Slice_Blocks * slice)
 }
 
 
-static void 
+static void
 move_free (struct move_data *m)
 {
   free_slice_blocks (m->blocks_in_motion);
@@ -103,7 +104,7 @@ x_move_unref (struct move_data *m)
 static struct move_data *
 x_move_unref (struct move_data *m)
 {
-  if ( NULL == m)
+  if (NULL == m)
     return NULL;
 
   if (0 == --m->ref)
@@ -121,7 +122,7 @@ x_move_unref (struct move_data *m)
 void
 move_unref (const struct move_data *m_)
 {
-  struct move_data *m = (struct move_data *)m_;
+  struct move_data *m = (struct move_data *) m_;
 
   x_move_unref (m);
 }
@@ -145,10 +146,10 @@ move_ref (const struct move_data *m)
 }
 #endif
 
-struct move_data * 
+struct move_data *
 move_copy (const struct move_data *n)
 {
-  if ( n == NULL)
+  if (n == NULL)
     return NULL;
 
   struct move_data *m = g_slice_alloc0 (sizeof (*m));
@@ -171,11 +172,11 @@ move_get_type (void)
 {
   static GType t = 0;
 
-  if (t == 0 )
+  if (t == 0)
     {
-      t = g_boxed_type_register_static  ("gnubik-move",
-					 (GBoxedCopyFunc) move_copy,
-					 (GBoxedFreeFunc) x_move_unref);
+      t = g_boxed_type_register_static ("gnubik-move",
+					(GBoxedCopyFunc) move_copy,
+					(GBoxedFreeFunc) x_move_unref);
     }
 
   return t;
@@ -199,6 +200,3 @@ move_axis (const struct move_data *m)
 {
   return m->axis;
 }
-
-
-

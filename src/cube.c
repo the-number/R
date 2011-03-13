@@ -18,7 +18,7 @@
 */
 
 #include <config.h>
-#include "cube.h" 
+#include "cube.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -28,7 +28,7 @@
 static inline int cos_quadrant (int quarters);
 static inline int sin_quadrant (int quarters);
 
-static int  block_coords_to_index (const GbkCube *cube, int x, int dim);
+static int block_coords_to_index (const GbkCube * cube, int x, int dim);
 
 /*
   Manufacture a SCM object which is a vector of six vectors of (cube_size *
@@ -36,7 +36,7 @@ static int  block_coords_to_index (const GbkCube *cube, int x, int dim);
   the cube (a number from [0, 5]).
 */
 SCM
-make_scm_cube (const GbkCube *cube)
+make_scm_cube (const GbkCube * cube)
 {
   Block *block;
 
@@ -57,7 +57,7 @@ make_scm_cube (const GbkCube *cube)
 
   int colours[6][biggest][biggest];
   memset (colours, -1, 6 * biggest * biggest);
-  
+
   /* Loop over all blocks and faces,  but only process if the face is on the
      outside of the cube. */
   for (block = cube->blocks + cube->number_blocks - 1;
@@ -66,7 +66,7 @@ make_scm_cube (const GbkCube *cube)
       int face;
       for (face = 0; face < 6; ++face)
 	{
-	  if (! (block->visible_faces & (0x01 << face)))
+	  if (!(block->visible_faces & (0x01 << face)))
 	    continue;
 
 	  /* Apply the rotation part of the block transformation to the
@@ -74,7 +74,8 @@ make_scm_cube (const GbkCube *cube)
 	     will tell us the direction the face is now facing. */
 
 	  point face_direction;
-	  vector_transform (face_direction, block->face[face].normal, block->transformation);
+	  vector_transform (face_direction, block->face[face].normal,
+			    block->transformation);
 
 	  /* The face direction will have exactly one non-zero component;
 	     this is in the direction of the normal,  so we can infer which
@@ -134,16 +135,17 @@ make_scm_cube (const GbkCube *cube)
 
       int i, j;
       SCM scm_block_vector
-	= scm_c_make_vector (gbk_cube_get_size (cube, dimA) * 
+	= scm_c_make_vector (gbk_cube_get_size (cube, dimA) *
 			     gbk_cube_get_size (cube, dimB),
 			     SCM_UNSPECIFIED);
 
       for (i = 0; i < gbk_cube_get_size (cube, dimA); ++i)
 	for (j = 0; j < gbk_cube_get_size (cube, dimB); ++j)
 	  scm_vector_set_x (scm_block_vector,
-			    scm_from_int (i + gbk_cube_get_size (cube, dimA) * j),
+			    scm_from_int (i +
+					  gbk_cube_get_size (cube, dimA) * j),
 			    scm_from_int (colours[face][i][j]));
-	
+
       scm_vector_set_x (scm_face_vector,
 			scm_from_int (face), scm_block_vector);
 
@@ -156,17 +158,15 @@ make_scm_cube (const GbkCube *cube)
 			       scm_from_int (gbk_cube_get_size (cube, 2))),
 		   scm_face_vector);
 }
-
-
-
 
+
+
+
 
 
 /* Set the normal of the face to (x0,  x1,  x2). */
 static inline void
-set_face_normal (Block *block,
-		 int face,
-		 GLfloat x0, GLfloat x1, GLfloat x2)
+set_face_normal (Block * block, int face, GLfloat x0, GLfloat x1, GLfloat x2)
 {
   point *normal = &block->face[face].normal;
 
@@ -179,9 +179,7 @@ set_face_normal (Block *block,
 
 /* Set the normal of the face to (x0,  x1,  x2). */
 static inline void
-set_face_up (Block *block,
-		 int face,
-		 GLfloat x0, GLfloat x1, GLfloat x2)
+set_face_up (Block * block, int face, GLfloat x0, GLfloat x1, GLfloat x2)
 {
   point *up = &block->face[face].up;
 
@@ -198,29 +196,29 @@ set_face_up (Block *block,
    function performs the transformation. Later on we will also be needing the
    inverse transformation. */
 static inline int
-block_index_to_coords (const GbkCube *cube, int i, int dim)
+block_index_to_coords (const GbkCube * cube, int i, int dim)
 {
   return 2 * i - (cube->size[dim] - 1);
 }
 
 /* The inverse of the above */
-static int 
-block_coords_to_index (const GbkCube *cube, int x, int dim)
+static int
+block_coords_to_index (const GbkCube * cube, int x, int dim)
 {
-  return  (x + cube->size[dim] - 1 ) / 2;
+  return (x + cube->size[dim] - 1) / 2;
 }
 
 
 
 static void
-gbk_cube_init (GbkCube *ret)
+gbk_cube_init (GbkCube * ret)
 {
   ret->blocks = NULL;
   quarternion_set_to_unit (&ret->orientation);
 }
 
 void
-gbk_cube_set_size (GbkCube *cube, int s0, int s1, int s2)
+gbk_cube_set_size (GbkCube * cube, int s0, int s1, int s2)
 {
   gint s[3];
 
@@ -232,7 +230,7 @@ gbk_cube_set_size (GbkCube *cube, int s0, int s1, int s2)
 }
 
 static void
-cube_set_size (GbkCube *ret, int s0, int s1, int s2)
+cube_set_size (GbkCube * ret, int s0, int s1, int s2)
 {
   int i;
   ret->size[0] = s0;
@@ -245,7 +243,7 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
   if (NULL == (ret->blocks = g_malloc (ret->number_blocks * sizeof (Block))))
     {
       g_error ("Error allocating blocks");
-      return ;
+      return;
     }
 
   /* Loop over the array of blocks,  and initialize each one. */
@@ -258,13 +256,40 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
          invisible surfaces,  thus slowing down animation. */
 
       block->visible_faces
-	= (FACE_0 * (0 == i / (gbk_cube_get_size (ret, 0) * gbk_cube_get_size (ret, 1))))
-	| (FACE_1 * (gbk_cube_get_size (ret,2) - 1 == i / (gbk_cube_get_size (ret, 0) * gbk_cube_get_size (ret, 1))))
-	| (FACE_2 * (0 == i / gbk_cube_get_size (ret, 0) % gbk_cube_get_size (ret, 1)))
-	| (FACE_3 * (gbk_cube_get_size (ret, 1) - 1 == i / gbk_cube_get_size (ret, 0) % gbk_cube_get_size (ret, 1)))
-	| FACE_4 * (0 == i % gbk_cube_get_size (ret, 0))
-	| FACE_5 * (gbk_cube_get_size (ret, 0) - 1 == i % gbk_cube_get_size (ret, 0))
-	;
+	=
+	(FACE_0 *
+	 (0 ==
+	  i / (gbk_cube_get_size (ret, 0) *
+	       gbk_cube_get_size (ret,
+				  1)))) | (FACE_1 * (gbk_cube_get_size (ret,
+									2) -
+						     1 ==
+						     i /
+						     (gbk_cube_get_size
+						      (ret,
+						       0) *
+						      gbk_cube_get_size (ret,
+									 1))))
+	| (FACE_2 *
+	   (0 ==
+	    i / gbk_cube_get_size (ret, 0) % gbk_cube_get_size (ret,
+								1))) | (FACE_3
+									*
+									(gbk_cube_get_size
+									 (ret,
+									  1) -
+									 1 ==
+									 i /
+									 gbk_cube_get_size
+									 (ret,
+									  0) %
+									 gbk_cube_get_size
+									 (ret,
+									  1)))
+	| FACE_4 * (0 ==
+		    i % gbk_cube_get_size (ret,
+					   0)) | FACE_5 *
+	(gbk_cube_get_size (ret, 0) - 1 == i % gbk_cube_get_size (ret, 0));
 
       /* Initialize all transformations to the identity matrix,  then set the
          translation part to correspond to the initial position of the
@@ -282,43 +307,41 @@ cube_set_size (GbkCube *ret, int s0, int s1, int s2)
 	block_index_to_coords (ret, (i / ret->size[0]) % ret->size[1], 1);
 
       block->transformation[14]
-	= block_index_to_coords (ret, (i / (ret->size[0] * ret->size[1])) 
+	= block_index_to_coords (ret, (i / (ret->size[0] * ret->size[1]))
 				 % ret->size[2], 2);
 
 
       /* Set all the face normals. */
       set_face_normal (block, 0, 0, 0, -1);
-      set_face_normal (block, 1, 0, 0,  1);
+      set_face_normal (block, 1, 0, 0, 1);
       set_face_normal (block, 2, 0, -1, 0);
-      set_face_normal (block, 3, 0, 1,  0);
+      set_face_normal (block, 3, 0, 1, 0);
       set_face_normal (block, 4, -1, 0, 0);
-      set_face_normal (block, 5, 1, 0,  0);
+      set_face_normal (block, 5, 1, 0, 0);
 
       set_face_up (block, 0, 1, 0, 0);
       set_face_up (block, 1, 1, 0, 0);
       set_face_up (block, 2, 1, 0, 0);
       set_face_up (block, 3, 1, 0, 0);
       set_face_up (block, 4, 0, 1, 0);
-      set_face_up (block, 5, 0, 1,  0);
+      set_face_up (block, 5, 0, 1, 0);
 
 
-    } /* End of loop over blocks. */
+    }				/* End of loop over blocks. */
 }
 
 
 enum
-  {
-    PROP_0 = 0,
-    PROP_DIMENSIONS
-  };
+{
+  PROP_0 = 0,
+  PROP_DIMENSIONS
+};
 
 static void
-cube_set_property (GObject         *object,
-		   guint            prop_id,
-		   const GValue    *value,
-		   GParamSpec      *pspec)
+cube_set_property (GObject * object,
+		   guint prop_id, const GValue * value, GParamSpec * pspec)
 {
-  GbkCube *cube  = GBK_CUBE (object);
+  GbkCube *cube = GBK_CUBE (object);
 
   switch (prop_id)
     {
@@ -337,12 +360,10 @@ cube_set_property (GObject         *object,
 
 
 static void
-cube_get_property (GObject         *object,
-		   guint            prop_id,
-		   GValue          *value,
-		   GParamSpec      *pspec)
+cube_get_property (GObject * object,
+		   guint prop_id, GValue * value, GParamSpec * pspec)
 {
-  GbkCube *cube  = GBK_CUBE (object);
+  GbkCube *cube = GBK_CUBE (object);
 
   switch (prop_id)
     {
@@ -356,16 +377,18 @@ cube_get_property (GObject         *object,
 }
 
 
-enum  {
-  MOVED, 
+enum
+{
+  MOVED,
   ROTATED,
-  n_SIGNALS};
+  n_SIGNALS
+};
 
-static guint signals [n_SIGNALS];
+static guint signals[n_SIGNALS];
 
 
 static void
-gbk_cube_class_init (GbkCubeClass *klass)
+gbk_cube_class_init (GbkCubeClass * klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
@@ -380,30 +403,24 @@ gbk_cube_class_init (GbkCubeClass *klass)
 					 G_PARAM_READWRITE);
 
   g_object_class_install_property (gobject_class,
-                                   PROP_DIMENSIONS,
-                                   gbk_param_spec);
+				   PROP_DIMENSIONS, gbk_param_spec);
 
 
-  signals [MOVED] =
+  signals[MOVED] =
     g_signal_new ("move",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  0,
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__BOXED,
-		  G_TYPE_NONE,
-		  1,
-		  move_get_type ());
+		  G_TYPE_NONE, 1, move_get_type ());
 
-  signals [ROTATED] =
+  signals[ROTATED] =
     g_signal_new ("rotate",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  0,
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE,
-		  0);
+		  NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
 
@@ -412,20 +429,20 @@ G_DEFINE_TYPE (GbkCube, gbk_cube, G_TYPE_OBJECT);
 
 
 int
-gbk_cube_get_size (const GbkCube *cube, int dim)
+gbk_cube_get_size (const GbkCube * cube, int dim)
 {
   gint *s;
   g_assert (dim >= 0);
   g_assert (dim < 3);
-  
-  g_object_get ((GbkCube *)cube, "dimensions", &s, NULL);
+
+  g_object_get ((GbkCube *) cube, "dimensions", &s, NULL);
 
   return s[dim];
 }
 
 
 void
-gbk_cube_scramble (GbkCube *cube)
+gbk_cube_scramble (GbkCube * cube)
 {
   int i;
 
@@ -450,7 +467,7 @@ gbk_cube_scramble (GbkCube *cube)
 
 
 int
-gbk_cube_get_number_of_blocks (const GbkCube *cube)
+gbk_cube_get_number_of_blocks (const GbkCube * cube)
 {
   return cube->number_blocks;
 }
@@ -461,7 +478,7 @@ gbk_cube_get_number_of_blocks (const GbkCube *cube)
   it in transform. Return 0 on success,  1 on error.
 */
 int
-gbk_cube_get_block_transform (const GbkCube *cube,
+gbk_cube_get_block_transform (const GbkCube * cube,
 			      int block_id, Matrix transform)
 {
   memcpy (transform, cube->blocks[block_id].transformation, sizeof (Matrix));
@@ -470,22 +487,22 @@ gbk_cube_get_block_transform (const GbkCube *cube,
 }
 
 
-GObject*
+GObject *
 gbk_cube_new (int x, int y, int z)
 {
-  gint s[3] ;
+  gint s[3];
 
   s[0] = x;
   s[1] = y;
   s[2] = z;
-  
-  return  g_object_new (gbk_cube_get_type (), "dimensions", s, NULL);
+
+  return g_object_new (gbk_cube_get_type (), "dimensions", s, NULL);
 }
 
 
 /* Utility function to fetch a particular face of the cube. */
 static inline Face *
-gbk_cube_get_face (GbkCube *cube, int block, int face)
+gbk_cube_get_face (GbkCube * cube, int block, int face)
 {
   return cube->blocks[block].face + face;
 }
@@ -494,7 +511,7 @@ gbk_cube_get_face (GbkCube *cube, int block, int face)
   Set the vector for block/face/quadrant to v.
 */
 void
-gbk_cube_set_quadrant_vector (GbkCube *cube,
+gbk_cube_set_quadrant_vector (GbkCube * cube,
 			      int block,
 			      int face, int quadrant, const vector v)
 {
@@ -506,14 +523,13 @@ gbk_cube_set_quadrant_vector (GbkCube *cube,
   vector_transform (*dest, v, view);
 }
 
-static Slice_Blocks *
-cube_identify_blocks_2 (const GbkCube * cube,
-			GLfloat slice_depth, int axis);
+static Slice_Blocks *cube_identify_blocks_2 (const GbkCube * cube,
+					     GLfloat slice_depth, int axis);
 
 
 /* Rotate the CUBE according to move M */
 void
-gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
+gbk_cube_rotate_slice (GbkCube * cube, const struct move_data *m)
 {
   struct move_data *md = move_copy (m);
   int turns;
@@ -523,21 +539,20 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
 
   /* Create a matrix describing the rotation of we are about to perform.
      We do this by starting with the identity matrix... */
-  Matrix rotation =
-    {
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, 0, 1
-    };
+  Matrix rotation = {
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+  };
 
   /* If rotating about a non-square axis, then only 180 deg turns are
      permitted */
-  if ( !gbk_cube_square_axis (cube, move_axis (md)))
+  if (!gbk_cube_square_axis (cube, move_axis (md)))
     {
       move_set_turns (md, 2);
     }
- 
+
   /* Rotating backward 90 deg is the same as forward by 270 deg */
   turns = move_turns (md);
   if (move_dir (md) == 0 && move_turns (md) == 1)
@@ -559,8 +574,9 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
     = -sin_quadrant (turns);
 
 
-  if ( NULL == md->blocks_in_motion )
-    ((struct move_data *) md)->blocks_in_motion = cube_identify_blocks_2 (cube, md->slice, move_axis (md));
+  if (NULL == md->blocks_in_motion)
+    ((struct move_data *) md)->blocks_in_motion =
+      cube_identify_blocks_2 (cube, md->slice, move_axis (md));
 
   g_assert (md->blocks_in_motion);
 
@@ -568,29 +584,31 @@ gbk_cube_rotate_slice (GbkCube *cube, const struct move_data *m)
   /* Apply the rotation matrix to all the blocks in this slice. We iterate
      backwards to avoid recalculating the end of the loop with every
      iteration. */
-  for (i = md->blocks_in_motion->blocks + md->blocks_in_motion->number_blocks - 1;
+  for (i =
+       md->blocks_in_motion->blocks + md->blocks_in_motion->number_blocks - 1;
        i >= md->blocks_in_motion->blocks; --i)
     matrix_pre_mult (cube->blocks[*i].transformation, rotation);
 
-  g_signal_emit (cube, signals [MOVED], 0, md);
+  g_signal_emit (cube, signals[MOVED], 0, md);
   move_unref (md);
 }
+
 /* End of function rotate_slice (). */
 
 
 /* Return true iff the section orthogonal to the axis is square. */
 gboolean
-gbk_cube_square_axis (const GbkCube *cube, int axis)
+gbk_cube_square_axis (const GbkCube * cube, int axis)
 {
   int other_axis_size = -1;
   int j;
-  for (j = 0; j  < 3 ; ++j)
+  for (j = 0; j < 3; ++j)
     {
       if (j == axis)
 	continue;
-	
-      if ( other_axis_size != -1 &&
-	   other_axis_size != gbk_cube_get_size (cube, j))
+
+      if (other_axis_size != -1 &&
+	  other_axis_size != gbk_cube_get_size (cube, j))
 	return FALSE;
       other_axis_size = gbk_cube_get_size (cube, j);
     }
@@ -600,9 +618,8 @@ gbk_cube_square_axis (const GbkCube *cube, int axis)
 
 /* Return the quadrant vector in v. */
 void
-gbk_cube_get_quadrant_vector (const GbkCube *cube,
-			      int block,
-			      int face, int quadrant, vector v)
+gbk_cube_get_quadrant_vector (const GbkCube * cube,
+			      int block, int face, int quadrant, vector v)
 {
   memcpy (v,
 	  gbk_cube_get_face ((GbkCube *) cube, block,
@@ -643,8 +660,7 @@ sin_quadrant (int quarters)
 */
 
 static Slice_Blocks *
-cube_identify_blocks_2 (const GbkCube * cube,
-			GLfloat slice_depth, int axis)
+cube_identify_blocks_2 (const GbkCube * cube, GLfloat slice_depth, int axis)
 {
   /* Looping variables. */
   int dim, j = 0;
@@ -658,7 +674,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
   ret->number_blocks = 1;
   for (dim = 0; dim < 3; ++dim)
     {
-      if ( dim != axis)
+      if (dim != axis)
 	ret->number_blocks *= cube->size[dim];
     }
 
@@ -674,7 +690,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
      axis-component of the location part of its transformation matrix
      corresponds to the requested slice depth,  then we make a note of its
      offset in the return->blocks array. */
-  
+
   for (i = cube->blocks + cube->number_blocks - 1; i >= cube->blocks; --i)
     {
       if (fabs (i->transformation[12 + axis] - slice_depth) < 0.1)
@@ -694,7 +710,7 @@ cube_identify_blocks_2 (const GbkCube * cube,
   correctly orientated.
 */
 enum cube_status
-gbk_cube_get_status (const GbkCube *cube)
+gbk_cube_get_status (const GbkCube * cube)
 {
   /* Loop variables for iterating over faces and blocks. */
 
@@ -726,19 +742,23 @@ gbk_cube_get_status (const GbkCube *cube)
 
 	      if (x == 0)
 		{
-		  vector_transform (q_n, block->face[face].normal, block->transformation);
+		  vector_transform (q_n, block->face[face].normal,
+				    block->transformation);
 
 		  if (directions_uniform)
-		    vector_transform (q_u, block->face[face].up, block->transformation);
+		    vector_transform (q_u, block->face[face].up,
+				      block->transformation);
 
 		  ++x;
 		}
 	      else
 		{
-		  vector_transform (v_n, block->face[face].normal, block->transformation);
+		  vector_transform (v_n, block->face[face].normal,
+				    block->transformation);
 
-		  if ( directions_uniform)
-		    vector_transform (v_u, block->face[face].up, block->transformation);
+		  if (directions_uniform)
+		    vector_transform (v_u, block->face[face].up,
+				      block->transformation);
 
 		  if (!vectors_equal (q_n, v_n))
 		    return NOT_SOLVED;
@@ -757,7 +777,7 @@ gbk_cube_get_status (const GbkCube *cube)
 
 /* Return an int identifying all the visible faces in this block. */
 unsigned int
-gbk_cube_get_visible_faces (const GbkCube *cube, int block_id)
+gbk_cube_get_visible_faces (const GbkCube * cube, int block_id)
 {
   return cube->blocks[block_id].visible_faces;
 }
@@ -765,11 +785,11 @@ gbk_cube_get_visible_faces (const GbkCube *cube, int block_id)
 
 
 void
-gbk_cube_rotate (GbkCube *cube, const vector v, gfloat step)
+gbk_cube_rotate (GbkCube * cube, const vector v, gfloat step)
 {
   Quarternion rot;
   quarternion_from_rotation (&rot, v, step);
   quarternion_pre_mult (&cube->orientation, &rot);
 
-  g_signal_emit (cube, signals [ROTATED], 0);
+  g_signal_emit (cube, signals[ROTATED], 0);
 }
