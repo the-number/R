@@ -190,9 +190,7 @@ gbk_game_add_view (GbkGame *game, GbkCubeview *cv, gboolean master)
 void
 gbk_game_set_mark (GbkGame *game)
 {
-  g_return_if_fail ( game->iter->prev != NULL);
-
-  game->iter->prev->marked = TRUE;
+  game->iter->marked = TRUE;
 
   g_signal_emit (game, signals [MARK_SET], 0, game->posn);
 }
@@ -313,6 +311,7 @@ gbk_game_rewind (GbkGame *game)
       move_unref (mm);
       game->posn--;
       game->iter = game->iter->prev;
+      if ( game->iter->marked)	break;
     }
 
   g_signal_emit (game, signals [QUEUE_CHANGED], 0);
