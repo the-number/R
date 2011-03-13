@@ -1,13 +1,13 @@
 # American translations for GNUbik (mainly the word colour/color)
-# Copyright (C) 2003 John Darrington
-# John Darrington <john@darrington.wattle.id.au>, 2003.
+# Copyright (C) 2003, 2011 John Darrington
+# John Darrington <john@darrington.wattle.id.au>, 2003, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNUbik 2.0\n"
+"Project-Id-Version: GNUbik 2.4\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-11-25 12:54+0100\n"
-"PO-Revision-Date: 2003-07-28 10:38+0800\n"
+"POT-Creation-Date: 2011-03-13 17:42+0100\n"
+"PO-Revision-Date: 2011-03-13 17:55+0100\n"
 "Last-Translator: John Darrington <john@darrington.wattle.id.au>\n"
 "Language-Team: American <john@darrington.wattle.id.au>\n"
 "Language: \n"
@@ -15,304 +15,356 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/colour-sel.c:185
-#, c-format
-msgid "Cannot create image from file %s: %s"
-msgstr ""
-
-#: src/colour-sel.c:265
+#: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr ""
 
-#: src/colour-sel.c:287
+#: src/colour-dialog.c:209
 msgid "All Images"
 msgstr ""
 
-#: src/colour-sel.c:291
+#: src/colour-dialog.c:213
 msgid "All Files"
 msgstr ""
 
-#: src/colour-sel.c:435
-msgid "Pattern"
-msgstr ""
-
-#: src/colour-sel.c:436
-msgid "Colour"
-msgstr "Color"
-
-#: src/colour-sel.c:464
-msgid "Click here to use a pattern on the cube surface"
-msgstr ""
-
-#: src/colour-sel.c:756
+#: src/colour-dialog.c:296
 msgid "Colour selector"
 msgstr "Color selector"
 
-#: src/colour-sel.c:781
+#: src/colour-dialog.c:313
 msgid "Image"
 msgstr ""
 
-#: src/colour-sel.c:782
+#: src/colour-dialog.c:314
 msgid "Se_lect"
 msgstr ""
 
-#: src/colour-sel.c:784
+#: src/colour-dialog.c:322
 msgid "Select an image file"
 msgstr ""
 
-#: src/colour-sel.c:787
+#: src/colour-dialog.c:324
 msgid "_Tiled"
 msgstr ""
 
-#: src/colour-sel.c:790
-msgid ""
-"Place a copy of the image\n"
-"on each block"
+#: src/colour-dialog.c:326
+msgid "Place a copy of the image on each block"
 msgstr ""
 
-#: src/colour-sel.c:795
+#: src/colour-dialog.c:331
 msgid "_Mosaic"
 msgstr ""
 
-#: src/colour-sel.c:799
-msgid ""
-"Place a copy of the image across\n"
-"the entire face of the cube"
+#: src/colour-dialog.c:335
+msgid "Place a copy of the image across the entire face of the cube"
 msgstr ""
 
-#: src/colour-sel.c:859
-msgid ""
-"A sample of the colour or pattern. You can click and select a new colour or "
-"pattern,  or drag one to this space."
-msgstr ""
-"A sample of the color or pattern. You can click and select a new color or "
-"pattern, or drag one to this space."
-
-#: src/menus.c:168
-msgid "Sets the number of blocks in each side"
+#: src/colour-dialog.c:341
+msgid "_Plain"
 msgstr ""
 
-#: src/menus.c:170
+#: src/colour-dialog.c:344
+msgid "Remove image from the cube face"
+msgstr ""
+
+#: src/dialogs.c:106
 msgid "Size of cube:"
 msgstr ""
 
-#: src/menus.c:209
-msgid "Faster"
+#: src/dialogs.c:111
+msgid "Re_gular cube"
 msgstr ""
 
-#: src/menus.c:212
-msgid "Slower"
+#: src/dialogs.c:117
+msgid "Sets the number of blocks in each side"
 msgstr ""
 
-#: src/menus.c:218
-msgid "Controls the speed with which slices rotate"
+#: src/dialogs.c:121
+msgid "Allow only cubes with all sides equal size"
 msgstr ""
 
-#: src/menus.c:262
-msgid "Preferences"
-msgstr ""
-
-#: src/menus.c:277
-msgid "Dimensions"
-msgstr ""
-
-#: src/menus.c:278
-msgid "Animation"
-msgstr ""
-
-#: src/menus.c:279
-msgid "Lighting"
-msgstr ""
-
-#: src/menus.c:288
-msgid "Enable lighting"
-msgstr ""
-
-#: src/menus.c:290
-msgid "Makes the cube appear illuminated"
-msgstr ""
-
-#: src/menus.c:360
-msgid "Start cube with new settings?"
-msgstr ""
-
-#: src/menus.c:519
+#: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
 msgstr ""
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
-#: src/menus.c:524
+#: src/dialogs.c:169
 msgid "translator-credits"
 msgstr "John Darrington"
 
-#: src/textures.c:215
-msgid "Pixbuf has wrong number of channels"
+#: src/dialogs.c:189
+msgid "New Game"
 msgstr ""
 
-#: src/textures.c:224
+#: src/dialogs.c:201
+msgid "Dimensions"
+msgstr ""
+
+#: src/dialogs.c:212
+msgid "Initial position"
+msgstr ""
+
+#: src/dialogs.c:216
+msgid "_Random"
+msgstr ""
+
+#: src/dialogs.c:220
+msgid "_Solved"
+msgstr ""
+
+#: src/menus.c:94
+msgid "Rear View"
+msgstr ""
+
+#: src/menus.c:102
+msgid "Bottom View"
+msgstr ""
+
+#: src/menus.c:109
+msgid "Top View"
+msgstr ""
+
+#: src/menus.c:117
+msgid "Left View"
+msgstr ""
+
+#: src/menus.c:124
+msgid "Right View"
+msgstr ""
+
+#: src/menus.c:138
 #, c-format
-msgid "Pixbuf has unknown colorspace: %d"
+msgid "A mark is now set at position %d."
 msgstr ""
 
-#: src/widget-set.c:111
+#: src/menus.c:152
 #, c-format
 msgid "Moves: %d / %d"
 msgstr ""
 
-#: src/widget-set.c:139
+#: src/menus.c:173
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/widget-set.c:149
+#: src/menus.c:183
 msgid ""
 "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr ""
 "Cube is NOT solved! The colors are correct, but have incorrect orientation"
 
-#: src/widget-set.c:198
-msgid "Rewind"
-msgstr ""
+#: src/menus.c:201
+#, c-format
+msgid "Animation rate set to %d frame per turn."
+msgid_plural "Animation rate set to %d frames per turn."
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/widget-set.c:200
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr ""
-
-#: src/widget-set.c:204
-msgid "Back"
-msgstr ""
-
-#: src/widget-set.c:205
-msgid "Make one step backwards"
-msgstr ""
-
-#: src/widget-set.c:210
-msgid "Stop"
-msgstr ""
-
-#: src/widget-set.c:211
-msgid "Stop running the sequence of moves"
-msgstr ""
-
-#: src/widget-set.c:216
-msgid "Mark"
-msgstr ""
-
-#: src/widget-set.c:218
-msgid "Mark the current place in the sequence of moves"
-msgstr ""
-
-#: src/widget-set.c:223
-msgid "Forward"
-msgstr ""
-
-#: src/widget-set.c:224
-msgid "Make one step forwards"
-msgstr ""
-
-#: src/widget-set.c:229
-msgid "Play"
-msgstr ""
-
-#: src/widget-set.c:231
-msgid "Run forward through the sequence of moves"
-msgstr ""
-
-#: src/widget-set.c:313
-msgid "_Play Toolbar"
-msgstr ""
-
-#: src/widget-set.c:320
-msgid "_Status Bar"
-msgstr ""
-
-#: src/widget-set.c:334
+#: src/menus.c:228
 msgid "_Game"
 msgstr ""
 
-#: src/widget-set.c:335
-msgid "_Settings"
+#: src/menus.c:229
+msgid "_View"
 msgstr ""
 
-#: src/widget-set.c:336
+#: src/menus.c:230
+msgid "Add _View"
+msgstr ""
+
+#: src/menus.c:231
+msgid "Add an auxiliary view of the cube"
+msgstr ""
+
+#: src/menus.c:234
 msgid "_Help"
 msgstr ""
 
-#: src/widget-set.c:337
-msgid "_Scripts"
-msgstr ""
-
-#: src/widget-set.c:345
-msgid "_Colours"
-msgstr "_Colors"
-
-#: src/widget-set.c:349
+#: src/menus.c:235
 msgid "Sho_w/Hide"
 msgstr ""
 
-#: src/widget-set.c:361
+#: src/menus.c:236
+msgid "_Scripts"
+msgstr ""
+
+#: src/menus.c:306
+msgid "_Restart Game"
+msgstr ""
+
+#: src/menus.c:310
 msgid "_New Game"
 msgstr ""
 
-#: scripts/debug.scm:49
+#: src/menus.c:314
+msgid "_Rear"
+msgstr ""
+
+#: src/menus.c:316
+msgid "_Left"
+msgstr ""
+
+#: src/menus.c:318
+msgid "Ri_ght"
+msgstr ""
+
+#: src/menus.c:320
+msgid "_Top"
+msgstr ""
+
+#: src/menus.c:322
+msgid "_Bottom"
+msgstr ""
+
+#: src/menus.c:327
+msgid "_Colours"
+msgstr "_Colors"
+
+#: src/menus.c:331
+msgid "_Animation"
+msgstr ""
+
+#: src/menus.c:335
+msgid "_Faster"
+msgstr ""
+
+#: src/menus.c:339
+msgid "_Slower"
+msgstr ""
+
+#: src/menus.c:454
+msgid "Rewind"
+msgstr ""
+
+#: src/menus.c:456
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr ""
+
+#: src/menus.c:462
+msgid "Back"
+msgstr ""
+
+#: src/menus.c:463
+msgid "Make one step backwards"
+msgstr ""
+
+#: src/menus.c:468
+msgid "Stop"
+msgstr ""
+
+#: src/menus.c:469
+msgid "Stop running the sequence of moves"
+msgstr ""
+
+#: src/menus.c:475
+msgid "Mark"
+msgstr ""
+
+#: src/menus.c:476
+msgid "Mark the current place in the sequence of moves"
+msgstr ""
+
+#: src/menus.c:482
+msgid "Forward"
+msgstr ""
+
+#: src/menus.c:483
+msgid "Make one step forwards"
+msgstr ""
+
+#: src/menus.c:488
+msgid "Play"
+msgstr ""
+
+#: src/menus.c:489
+msgid "Run forward through the sequence of moves"
+msgstr ""
+
+#: src/menus.c:555
+msgid "Gnubik error"
+msgstr ""
+
+#: src/swatch.c:132
+msgid ""
+"A sample of the colour. You can click and select a new colour, or drag one "
+"to this space."
+msgstr "A sample of the color. You can click and select a new color, or drag one to this space."
+
+#: src/textures.c:93
+msgid "Pixbuf has wrong number of channels"
+msgstr ""
+
+#: src/textures.c:102
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr ""
+
+#: scripts/debug.scm:50
 msgid "_Debug"
 msgstr ""
 
-#: scripts/debug.scm:51
+#: scripts/debug.scm:52
 msgid "_Move"
 msgstr ""
 
-#: scripts/debug.scm:53
+#: scripts/debug.scm:54
 msgid "_Dump state"
 msgstr ""
 
-#: scripts/rand.scm:41
+#: scripts/rand.scm:37
 msgid "_Randomize"
 msgstr ""
 
-#: scripts/rand.scm:42
+#: scripts/rand.scm:38
 msgid "_Animated"
 msgstr ""
 
-#: scripts/rand.scm:43
+#: scripts/rand.scm:39
 msgid "_Fast"
 msgstr ""
 
-#: scripts/mellor-solve.scm:402
+#: scripts/flubrd.scm:50
+msgid "This script only works on 3×3×3 cubes."
+msgstr ""
+
+#: scripts/mellor-solve.scm:399
 msgid "_Solvers"
 msgstr ""
 
-#: scripts/mellor-solve.scm:403
+#: scripts/mellor-solve.scm:400
 msgid "_3×3"
 msgstr ""
 
-#: scripts/mellor-solve.scm:407
+#: scripts/mellor-solve.scm:404
 msgid "_Full cube"
 msgstr ""
 
-#: scripts/mellor-solve.scm:410
+#: scripts/mellor-solve.scm:407
 msgid "Bottom _edge place"
 msgstr ""
 
-#: scripts/mellor-solve.scm:413
+#: scripts/mellor-solve.scm:410
 msgid "Bottom _corner orient"
 msgstr ""
 
-#: scripts/mellor-solve.scm:416
+#: scripts/mellor-solve.scm:413
 msgid "_Bottom corner place"
 msgstr ""
 
-#: scripts/mellor-solve.scm:419
+#: scripts/mellor-solve.scm:416
 msgid "_Middle slice"
 msgstr ""
 
-#: scripts/mellor-solve.scm:422
+#: scripts/mellor-solve.scm:419
 msgid "_Top slice"
 msgstr ""
 
-#: scripts/mellor-solve.scm:425
+#: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr ""
+
+#~ msgid "Colour"
+#~ msgstr "Color"
