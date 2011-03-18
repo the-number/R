@@ -88,43 +88,65 @@ getTurnAxis (GbkCube * cube, const struct facet_selection *items,
 }
 
 static void
-set_mouse_cursor (GtkWidget * w, const struct cublet_selection *cs)
+set_mouse_cursor (GtkWidget *w, const struct cublet_selection *cs)
 {
-  const unsigned char *mask_bits;
-  const unsigned char *data_bits;
-  int hot_x, hot_y;
-  int width, height;
   GbkCubeview *cv = GBK_CUBEVIEW (w);
-
-  GdkCursor *cursor;
-  GdkPixmap *source, *mask;
-  GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
-  GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
+  GdkCursor *selected_cursor = cv->background_cursor;
 
   if (select_is_selected (cs))
     {
-      get_cursor (cv->cursorAngle, &data_bits, &mask_bits, &height, &width,
-		  &hot_x, &hot_y);
-
-
-      source = gdk_bitmap_create_from_data (NULL, (const gchar *) data_bits,
-					    width, height);
-      mask = gdk_bitmap_create_from_data (NULL, (const gchar *) mask_bits,
-					  width, height);
-
-      cursor =
-	gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, hot_x, hot_y);
-      g_object_unref (source);
-      g_object_unref (mask);
-    }
-  else
-    {
       GdkDisplay *display = gtk_widget_get_display (w);
-      cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+      GdkModifierType keymask;
+      gdk_display_get_pointer (display,
+			       NULL, NULL, NULL, &keymask);
+
+      int index;
+      float angle = (int) cv->cursor_angle % 360;
+
+      if (angle < 0)
+	angle += 360.0;
+
+      index = round (angle / cursor_interval);
+      index = index % n_CURSORS;
+
+      if ( keymask & GDK_SHIFT_MASK)
+	index += n_CURSORS;
+
+      if (NULL == cursor[index] )
+	{
+	  const unsigned char *mask_bits;
+	  const unsigned char *data_bits;
+	  int hot_x, hot_y;
+	  int width, height;
+
+	  GdkPixmap *source, *mask;
+	  GdkColor fg = { 0, 65535, 65535, 65535 };	/* White. */
+	  GdkColor bg = { 0, 0, 0, 0 };	/* Black. */
+
+
+	  get_cursor (index % n_CURSORS, &data_bits, &mask_bits, &height, &width,
+		      &hot_x, &hot_y, keymask & GDK_SHIFT_MASK);
+
+	  source = gdk_bitmap_create_from_data (NULL,
+						(const gchar *) data_bits,
+						width, height);
+
+	  mask = gdk_bitmap_create_from_data (NULL,
+					      (const gchar *) mask_bits,
+					      width, height);
+
+
+	  selected_cursor = gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, hot_x, hot_y);
+	  g_object_unref (source);
+	  g_object_unref (mask);
+
+	  cursor[index] = selected_cursor;
+	}
+      else
+	selected_cursor = cursor[index];
     }
 
-  gdk_window_set_cursor (w->window, cursor);
-  gdk_cursor_unref (cursor);
+  gdk_window_set_cursor (w->window, selected_cursor);
 }
 
 
@@ -158,6 +180,15 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
       /* Delete the old move and create a new one */
       move_unref (cv->pending_movement);
+
+      GdkDisplay *display = gtk_widget_get_display (cv);
+      GdkModifierType keymask;
+      gdk_display_get_pointer (display,
+			       NULL, NULL, NULL, &keymask);
+
+      if ( keymask & GDK_SHIFT_MASK)
+	dir = !dir;
+
       cv->pending_movement = move_create (slice, axis, dir);
 
       /* Here we take the orientation of the selected quadrant and multiply it
@@ -174,7 +205,7 @@ selection_func (struct cublet_selection *cs, gpointer data)
 
 	vector_transform_in_place (v, proj);
 
-	cv->cursorAngle = atan2 (v[0], v[1]) * 180.0 / M_PI;
+	cv->cursor_angle = atan2 (v[0], v[1]) * 180.0 / M_PI;
       }
     }
 

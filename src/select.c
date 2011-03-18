@@ -19,6 +19,9 @@
 
 #include <config.h>
 
+
+#include <gdk/gdkkeysyms.h> 
+
 /* This library provides  a means of picking a block using the mouse cursor.
 
 Two mutually co-operative mechanisms are used in this library.  There is a
@@ -70,6 +73,22 @@ struct cublet_selection
   gint mouse_y;
 };
 
+
+
+static gboolean
+key_press (GtkWidget *w, GdkEventKey *e,  gpointer data)
+{
+  struct cublet_selection *cs = data;
+
+  if ( e->keyval != GDK_Shift_L && e->keyval != GDK_Shift_R )
+    return FALSE;
+    
+  selection_func (cs, w);
+
+  return FALSE;
+}
+
+
 static void pickPolygons (GbkCubeview * cv, struct cublet_selection *cs,
 			  struct facet_selection *sel);
 
@@ -87,6 +106,9 @@ select_create (GtkWidget * w, int holdoff,
   cs->granularity = precision;
 
   g_signal_connect (w, "motion-notify-event", G_CALLBACK (detect_motion), cs);
+
+  g_signal_connect (w, "key-press-event", G_CALLBACK (key_press), cs);
+  g_signal_connect (w, "key-release-event", G_CALLBACK (key_press), cs);
 
   cs->action = do_this;
   cs->data = data;

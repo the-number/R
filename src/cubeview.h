@@ -88,8 +88,7 @@ struct _GbkCubeview
   gdouble last_mouse_y;
 
   /* Angle of the mouse cursor */
-  float cursorAngle;
-
+  float cursor_angle;
   /* The current angle through which an animation has turned */
   GLfloat animation_angle;
 
@@ -109,6 +108,9 @@ struct _GbkCubeview
 
   gboolean is_rotating;
   guint rot_timer;
+
+  /* The cursor to use when nothing is selected */
+  GdkCursor *background_cursor ;
 };
 
 struct _GbkCubeviewClass

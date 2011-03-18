@@ -162,7 +162,7 @@ keys rotates the cube about the z axis.
 @section Using the mouse to rotate the cube
 
 Another way to rotate the whole cube is to use the mouse.  
-Hold down button 1, and move the mouse anywhere on the window. 
+Hold down @w{Button 1}, and move the mouse anywhere on the window. 
 This way, you can rotate the cube horizontally and vertically,
 If your mouse has a scroll wheel, it can be used to rotate the cube
 about the z axis.
@@ -174,7 +174,10 @@ about the z axis.
 To manipulate the cube,  you need to select a block to move, and a direction to turn it.
 Place the mouse cursor on a block to select it, then move the cursor against the edge of the block towards the direction you want to turn.
 Click @w{Button 1} when you're ready to turn make the move.
+If you hold down the @key{Shift} key whilst pressing the mouse button, 
+the rotation will occur in the opposite direction.
 At all times the mouse cursor will point in the direction of motion.
+
 
 
 @node Running scripts,Replaying moves,Manipulating,Using

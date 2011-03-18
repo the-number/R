@@ -1,6 +1,6 @@
 /*
   Routines to set mouse cursors
-  Copyright (C) 2003  John Darrington
+  Copyright (C) 2003, 2011  John Darrington
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 #include <config.h>
 #include <math.h>
 #include "cursors.h"
+
+GdkCursor *cursor[n_CURSORS * 2];
 
 #define ene_data_width 16
 #define ene_data_height 16
@@ -337,10 +339,11 @@ static const unsigned char w_mask_bits[] = {
   0x00, 0x0e, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00
 };
 
-/* The angle between successive cursor intervals. */
-static const float cursor_interval = 22.5;
 
-static const unsigned char *cursors_data[] = {
+/* The angle between successive cursor intervals. */
+const float cursor_interval = 360 / (float) n_CURSORS;
+
+static const unsigned char *cursors_data[n_CURSORS] = {
   s_data_bits,
   ssw_data_bits,
   sw_data_bits,
@@ -357,12 +360,11 @@ static const unsigned char *cursors_data[] = {
   ese_data_bits,
   se_data_bits,
   sse_data_bits,
-  s_data_bits
 };
 
 
 
-static const unsigned char *cursors_masks[] = {
+static const unsigned char *cursors_masks[n_CURSORS] = {
   s_mask_bits,
   ssw_mask_bits,
   sw_mask_bits,
@@ -379,11 +381,10 @@ static const unsigned char *cursors_masks[] = {
   ese_mask_bits,
   se_mask_bits,
   sse_mask_bits,
-  s_mask_bits
 };
 
 
-static const int cursors_hot_x[] = {
+static const int cursors_hot_x[n_CURSORS] = {
   s_data_x_hot,
   ssw_data_x_hot,
   sw_data_x_hot,
@@ -400,10 +401,9 @@ static const int cursors_hot_x[] = {
   ese_data_x_hot,
   se_data_x_hot,
   sse_data_x_hot,
-  s_data_x_hot
 };
 
-static const int cursors_hot_y[] = {
+static const int cursors_hot_y[n_CURSORS] = {
   s_data_y_hot,
   ssw_data_y_hot,
   sw_data_y_hot,
@@ -420,30 +420,21 @@ static const int cursors_hot_y[] = {
   ese_data_y_hot,
   se_data_y_hot,
   sse_data_y_hot,
-  s_data_y_hot
 };
-
 
 /* Get the cursor which matches the angle the closest */
 void
-get_cursor (float angle, const unsigned char **data,
+get_cursor (int index, const unsigned char **data,
 	    const unsigned char **mask, int *height, int *width, int *hot_x,
-	    int *hot_y)
+	    int *hot_y, gboolean reverse)
 {
-  int index;
-  float frac;
+  *hot_y = cursors_hot_y[index];
+  *hot_x = cursors_hot_x[index];
 
-  angle = (int) angle % 360;
+  if ( reverse )
+    index = index + 8;
 
-  if (angle < 0)
-    angle += 360.0;
-
-
-  index = frac = angle / cursor_interval;
-  frac = frac - index;
-
-  if (frac > 0.5)
-    index++;
+  index = index % n_CURSORS;
 
   *data = cursors_data[index];
   *mask = cursors_masks[index];
@@ -451,6 +442,4 @@ get_cursor (float angle, const unsigned char **data,
   *height = 16;
   *width = 16;
 
-  *hot_y = cursors_hot_y[index];
-  *hot_x = cursors_hot_x[index];
 }

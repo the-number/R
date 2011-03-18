@@ -19,9 +19,16 @@
 #ifndef CURSORS_H
 #define CURSORS_H
 
+#include <gdk/gdk.h>
 
-void get_cursor (float angle, const unsigned char **data,
+#define n_CURSORS 16
+
+extern GdkCursor *cursor[n_CURSORS * 2];
+
+extern const float cursor_interval;
+
+void get_cursor (int index, const unsigned char **data,
 		 const unsigned char **mask, int *height, int *width,
-		 int *hot_x, int *hot_y);
+		 int *hot_x, int *hot_y, gboolean rev);
 
 #endif

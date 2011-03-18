@@ -817,6 +817,8 @@ realize (GtkWidget * w)
   dc->last_mouse_y = -1;
 
   gdk_gl_drawable_gl_end (dc->gldrawable);
+
+  dc->background_cursor = gdk_cursor_new_for_display (gtk_widget_get_display (w), GDK_CROSSHAIR);
 }
 
 
@@ -1012,11 +1014,6 @@ gbk_cubeview_rotate_cube (GbkCubeview * cv, int axis, int dir)
 
 static gboolean animate_callback (gpointer data);
 
-static gboolean inverted_rotation;
-
-
-
-
 
 /* handle mouse clicks */
 static gboolean
@@ -1027,6 +1024,10 @@ on_mouse_button (GtkWidget * w, GdkEventButton * event, gpointer data)
   struct cublet_selection *cs = data;
   if (event->type != GDK_BUTTON_PRESS)
     return FALSE;
+ 
+  if  (event->button != 1)
+    return FALSE;
+
 
   /* Don't let a user make a move,  whilst one is already in progress,
      otherwise the cube falls to bits. */
@@ -1038,25 +1039,10 @@ on_mouse_button (GtkWidget * w, GdkEventButton * event, gpointer data)
      intended. (Happens when experienced users become too fast). */
   select_update (cv, cs);
 
-  switch (event->button)
-    {
-    case 3:
-      /* this is inherently dangerous.  If an event is missed somehow,
-         turn direction could get out of sync */
-
-      inverted_rotation = TRUE;
-
-      break;
-    case 1:
-      /* Make a move */
-      if (select_is_selected (cs))
-	{
-	  /* and tell the blocks.c library that a move has taken place */
-	  gbk_cube_rotate_slice (cv->cube, cv->pending_movement);
-	}
-
-      break;
-    }
+  /* Make a move */
+  if (select_is_selected (cs))
+    /* and tell the blocks.c library that a move has taken place */
+    gbk_cube_rotate_slice (cv->cube, cv->pending_movement);
 
   return FALSE;
 }
