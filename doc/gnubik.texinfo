@@ -89,7 +89,6 @@ are immediately  made visible on the display.
 @chapter  Configuration
 
 
-
 @menu
 * Options::        Command line options
 * Resources::      X resources
@@ -190,10 +189,10 @@ which randomize the cube, and which solve 3x3x3 cubes.
 
 When GNUbik starts up, it reads files ending in a @code{.scm} suffix
 in the @code{.../share/gnubik/scripts} directory (system-wide files)
-and in the @code{.gnubik/scripts} directory under your home directory
+and in the @code{.config/gnubik} directory under your home directory
 (personal files). These files are scheme scripts, and when they run
 they register themselves with the system so that items appear on the
-main GNUbik menu under the heading @code{Script-fu}. Making selections
+main GNUbik menu under the heading @code{Script}. Making selections
 from this menu runs the appropriate script.
 
 
@@ -254,7 +253,6 @@ pressing the @var{stop} button.
 @node Writing scripts, , Configuration, Top
 @chapter Writing scripts
 
-
 @menu
 * Scripting Introduction::  Introduction to script-fu
 * Script initialization::   Getting scripts into the system
@@ -266,7 +264,7 @@ pressing the @var{stop} button.
 @end menu
 
 @node Scripting Introduction, Script initialization, , Writing scripts
-@chapter Introduction to script-fu
+@section Introduction to script-fu
 
 GNUbik's script-fu is implemented with @code{GUILE}, GNU's ubiquitous
 extension language, which in turn implements @code{scheme}, a
@@ -276,7 +274,7 @@ In simple words, a script works as follows. When GNUbik starts up, it
 looks for scripts in standard places and executes each one it
 finds. In turn, the scripts define some procedures, and register some
 of their defined procedures with GNUbik, which associates the procedure with
-an item under the @code{Script-fu} menu.
+an item under the @code{Scripts} menu.
 
 When you select a menu item, GNUbik executes the procedure that was
 registered. The procedure will then request an object from GNUbik that
@@ -293,7 +291,7 @@ of your eyes!
 
 
 @node Script initialization, Raw interface, Scripting Introduction, Writing scripts
-@chapter Initialization of the script-fu system
+@section Initialization of the script-fu system
 
 When GNUbik starts up, it scans the following directories in the order
 given for files with a @code{.scm} extension, and executes them in the
@@ -306,7 +304,7 @@ are
 @item
 @code{.../share/gnubik/scripts}
 @item
-@code{~/.gnubik/scripts}
+@code{~/.config/gnubik}
 @end itemize
 
 Note that the exact location of the share directory is system
@@ -315,7 +313,7 @@ which the GNUbik program itself needs to function. They should not be
 changed once the GNUbik package is installed in a system. The
 @code{share/gnubik/scripts} directory is the place for system
 administrators to put scripts that all users can see on their GNUbik
-menus. Finally, the @code{.gnubik/scripts} directory is located under
+menus. Finally, the @code{~/.config/gnubik} directory is located under
 your home directory, and may contain any scripts that you have
 written, and which will only appear on the menu when you start the
 program up.
@@ -324,24 +322,28 @@ When the system finds a script, that script is executed and must use
 the following function to register itself with an item on GNUbik's
 menu bar.
 
-@deffn Procedure gnubik-register-script menu-path code
-@var{menu-path} should be a string indicating how the script should
-appear under the @code{Script-fu} menu, using @code{/} characters to
-indicate sub-menus and @code{_} characters in front of a letter to
-indicate that that letter should be used as the keyboard accelerator
-for the menu item. For example, the string @code{solvers/my _solver}
+@deffn Procedure gnubik-create-menu name parent
+Creates a menu called @var{name} as a submenu of @var{parent}.
+If @var{parent} is nil then the menu will be located directly under the @code{Scripts}
+menu.
+The @code{_} character in front of a letter 
+indicates that that letter should be used as the keyboard accelerator
+
+For example, the string @code{gnubik-create-menu "my _solver" solvers}
 will create an item under the @code{solvers} sub-menu, with @code{s}
 as the keyboard shortcut.
+@end deffn
 
-The second argument @var{code} should be a string specifying
-@code{scheme} code to run when the menu item is selected. It should
-usually be the name of a procedure which is the entry point for the
-script.
+@deffn Procedure gnubik-register-script code menu
+@var{menu} should be a menu object returned from @var{gnubik-create-menu}.
+The second argument @var{code} should be a 
+@code{scheme} procedure to run when the menu item is selected. It
+is the entry point for the script.
 @end deffn
 
 
 @node Raw interface, Symbolic interface, Script initialization, Writing scripts
-@chapter The basic (low-level) interface
+@section The basic (low-level) interface
 
 This chapter describes the basic interface that GNUbik provides to the
 @code{scheme} world. This interface can be used with any cube geometry
@@ -355,7 +357,7 @@ from GNUbik and check the geometry version number.
 
 
 
-@section The object given to the scheme world
+@subsection The object given to the scheme world
 
 In order to obtain a reflection of the current state of the cube, a
 script must call
@@ -400,7 +402,7 @@ proceed to the next chapter which presents a more comfortable (and
 stable) interface.
 
 
-@section Looking at the colours on the faces
+@subsection Looking at the colours on the faces
 
 Once you have a cube object, the following procedures are available to
 facilitate access to it.
@@ -418,14 +420,13 @@ object, not in the actual cube that the user is seeing on her screen.
 @end deffn
 
 
-
-@section Moving the object on the screen
+@subsection Moving the object on the screen
 
 When a script has determined a set of moves which are to be made on a
 cube, it calls the following procedure to get GNUbik to put the moves
 into its internal move buffer.
 
-@deffn Procedure gnubik-rotate-animated move-list
+@deffn Procedure gnubik-append-moves move-list
 The @var{move-list} is a list of lists of three items. For any one
 move (a quarter turn of a slice of the cube), the first item in the
 specification is the face which lies parallel to the desired slice,
@@ -440,23 +441,9 @@ or 1 (one) depending on whether the slice should be moved
 anticlockwise or clockwise, respectively.
 @end deffn
 
-Note that the above function may be called as many times as desired
-during the execution of a script, but that the moves will not actually
-take place until the script finishes. If it is desired that the moves
-which have been set up are executed in an instant, rather than being
-animated, then a script can call the following function.
-
-@deffn Procedure gnubik-run-moves
-Causes all the moves which the script has registered to be applied to
-the cube in one go, without being animated.
-@end deffn
-
-Animation of the moves occurs by default for a script which does not
-call the above procedure.
-
 
 @node Symbolic interface, Developer tips, Raw interface, Writing scripts
-@chapter FLUBRD symbolic interface for 3x3x3 cubes
+@section FLUBRD symbolic interface for 3x3x3 cubes
 
 The following functions provide access to a cube object in a way which
 hides the gory details of the representation. This makes it easier for
@@ -472,7 +459,7 @@ respectively to the words @code{front}, @code{left}, @code{up},
 @code{down} can be read as @code{top} and @code{bottom}, respectively.
 
 
-@section Looking at the colours on the faces
+@subsection Looking at the colours on the faces
 
 The following procedure returns the colour on the panel addressed
 symbolically by the letters of a given string.
@@ -500,7 +487,7 @@ changes to take effect. In particular, no rotations of the on-screen
 cube are initiated.
 
 
-@section Moving the faces
+@subsection Moving the faces
 
 The following function allows scripts to request that faces of the
 cube are rotated by a quarter turn.
@@ -528,7 +515,7 @@ until the script exits.
 
 The move buffer can be accessed directly via the symbol
 @code{move-buffer}. It is a list of moves that the low-level procedure
-@code{gnubik-rotate-animated} expects. Accessing and manipulating it
+@code{gnubik-append-moves} expects. Accessing and manipulating it
 directly before calling @code{execute-move-buffer!} may allow a script
 to perform some post-processing optimizations on the list of moves,
 for example. Alternatively, if the script decides to duck out or start
@@ -542,8 +529,8 @@ GNUbik program.
 
 
 @node Developer tips, , Symbolic interface, Writing scripts
-@chapter Hints and tips for script developers
-@section `Live' menu entries
+@section Hints and tips for script developers
+@subsection `Live' menu entries
 
 In order to eliminate the need to shutdown, startup, and then make
 selections from the menus every time a change is made to a script
@@ -555,14 +542,14 @@ development cycle.
 Suppose your development script is @code{/path/to/dev_script} (this
 can be anywhere at all in the filesystem). You can create a menu entry
 @code{Dev. test} to load and run this script by putting the following
-lines into a file called @code{~/.gnubik/scripts/dev-test.scm}
+lines into a file called @code{~/.config/gnubik/dev-test.scm}
 
 @example
 (define (run-dev-test)
    (load "/path/to/dev_script")
    (run-dev-script-proc))
 
-(gnubik-register-script "Dev. test" "run-dev-test")
+(gnubik-register-script "Dev. test" '(run-dev-test) dev-menu)
 @end example
 
 and then restarting GNUbik. Note that @code{run-dev-script-proc} is
