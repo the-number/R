@@ -22,7 +22,7 @@
 
 (define (gnubik-randomize num)
   (let ((size (caddar (gnubik-cube-state))))
-    (gnubik-append-moves
+    (gnubik-append-moves 
      (let loop ((num num) (ret '()))
        (if (eq? num 0)
            ret
@@ -35,24 +35,13 @@
 (define _ gettext)
 
 (define rand-menu (gnubik-create-menu (_ "_Randomize")))
-(define animate-menu (gnubik-create-menu (_ "_Animated") rand-menu))
-(define fast-menu (gnubik-create-menu (_ "_Fast") rand-menu))
 
-(gnubik-register-script "_8" '(gnubik-randomize 8) animate-menu)
-(gnubik-register-script "_7" '(gnubik-randomize 7) animate-menu)
-(gnubik-register-script "_6" '(gnubik-randomize 6) animate-menu)
-(gnubik-register-script "_5" '(gnubik-randomize 5) animate-menu)
-(gnubik-register-script "_4" '(gnubik-randomize 4) animate-menu)
-(gnubik-register-script "_3" '(gnubik-randomize 3) animate-menu)
-(gnubik-register-script "_2" '(gnubik-randomize 2) animate-menu)
-(gnubik-register-script "_1" '(gnubik-randomize 1) animate-menu)
-
-(gnubik-register-script "_128"  '(begin (gnubik-randomize 128) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_64"  '(begin (gnubik-randomize 64) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_32"  '(begin (gnubik-randomize 32) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "1_6"  '(begin (gnubik-randomize 16) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_8"  '(begin (gnubik-randomize 8) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_4"  '(begin (gnubik-randomize 4) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_2"  '(begin (gnubik-randomize 2) (gnubik-run-moves)) fast-menu)
-(gnubik-register-script "_1"  '(begin (gnubik-randomize 1) (gnubik-run-moves)) fast-menu)
+(gnubik-register-script "_8" '(gnubik-randomize 8) rand-menu)
+(gnubik-register-script "_7" '(gnubik-randomize 7) rand-menu)
+(gnubik-register-script "_6" '(gnubik-randomize 6) rand-menu)
+(gnubik-register-script "_5" '(gnubik-randomize 5) rand-menu)
+(gnubik-register-script "_4" '(gnubik-randomize 4) rand-menu)
+(gnubik-register-script "_3" '(gnubik-randomize 3) rand-menu)
+(gnubik-register-script "_2" '(gnubik-randomize 2) rand-menu)
+(gnubik-register-script "_1" '(gnubik-randomize 1) rand-menu)
 
