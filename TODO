@@ -1,4 +1,6 @@
-* See if you can get the animations any faster.
+* Some people have asked for to be able to make "custom" configurations.
+  That is, to be able to manually arrange the colours of the faces, and
+  have the program solve itself from that position.
 
 * Some insane individual might want a 4 dimensional version.  This
   could be  achieved by splitting the top level window into 8
