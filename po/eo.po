@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4\n"
+"Project-Id-Version: gnubik 2.4-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2011-03-09 11:00+0100\n"
-"PO-Revision-Date: 2011-03-12 16:36-0300\n"
+"PO-Revision-Date: 2011-03-13 12:26-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"

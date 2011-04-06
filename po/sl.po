@@ -5,154 +5,147 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.3\n"
+"Project-Id-Version: gnubik 2.4-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2009-01-06 11:48+0900\n"
-"PO-Revision-Date: 2011-02-23 11:14+0100\n"
+"POT-Creation-Date: 2011-03-09 11:00+0100\n"
+"PO-Revision-Date: 2011-04-05 20:49+0100\n"
 "Last-Translator: Klemen Košir <klemen.kosir@gmx.com>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0)\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 
-#: src/colour-sel.c:181
-#, c-format
-msgid "Cannot create image from file %s: %s"
-msgstr "Slike iz datoteke %s ni mogoče ustvariti: %s"
-
-#: src/colour-sel.c:261
+#: src/colour-dialog.c:182
 msgid "Image Selector"
 msgstr "Izbirnik slik"
 
-#: src/colour-sel.c:289
+#: src/colour-dialog.c:207
 msgid "All Images"
 msgstr "Vse slike"
 
-#: src/colour-sel.c:296
+#: src/colour-dialog.c:211
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: src/colour-sel.c:440
-msgid "Pattern"
-msgstr "Vzorec"
-
-#: src/colour-sel.c:441
-msgid "Colour"
-msgstr "Barva"
-
-#: src/colour-sel.c:468
-msgid "Click here to use a pattern on the cube surface"
-msgstr "Če želite na površini kocke uporabiti vzorec, kliknite sem"
-
-#: src/colour-sel.c:750
+#: src/colour-dialog.c:294
 msgid "Colour selector"
 msgstr "Izbirnik barv"
 
-#: src/colour-sel.c:776
+#: src/colour-dialog.c:308
 msgid "Image"
 msgstr "Slika"
 
-#: src/colour-sel.c:777
+#: src/colour-dialog.c:309
 msgid "Se_lect"
 msgstr "Iz_beri"
 
-#: src/colour-sel.c:780
+#: src/colour-dialog.c:316
 msgid "Select an image file"
 msgstr "Izberite slikovno datoteko"
 
-#: src/colour-sel.c:783
+#: src/colour-dialog.c:318
 msgid "_Tiled"
 msgstr "_Razpostavljeno"
 
-#: src/colour-sel.c:785
-msgid ""
-"Place a copy of the image\n"
-"on each block"
-msgstr ""
-"Postavi kopijo slike\n"
-"na vsako polje"
+#: src/colour-dialog.c:320
+msgid "Place a copy of the image on each block"
+msgstr "Postavi kopijo slike na vsako polje"
 
-#: src/colour-sel.c:789
+#: src/colour-dialog.c:325
 msgid "_Mosaic"
 msgstr "_Mozaik"
 
-#: src/colour-sel.c:792
-msgid ""
-"Place a copy of the image across\n"
-"the entire face of the cube"
-msgstr ""
-"Postavi kopijo sliko\n"
-"čez celotno ploskev kocke"
+#: src/colour-dialog.c:328
+msgid "Place a copy of the image across the entire face of the cube"
+msgstr "Postavi kopijo slike čez celotno ploskev kocke"
 
-#: src/colour-sel.c:852
-msgid "A sample of the colour or pattern. You can click and select a new colour or pattern,  or drag one to this space."
-msgstr "Primerek barve ali vzorca. Na ta gumb lahko kliknete ter izberete novo barvo ali vzorec."
+#: src/colour-dialog.c:334
+msgid "_Plain"
+msgstr "_Običajno"
 
-#: src/menus.c:165
-msgid "Sets the number of blocks in each side"
-msgstr "Nastavi število kockic na vsaki strani"
+#: src/colour-dialog.c:337
+msgid "Remove image from the cube face"
+msgstr "Odstrani sliko s ploskve kocke"
 
-#: src/menus.c:167
+#: src/dialogs.c:104
 msgid "Size of cube:"
 msgstr "Velikost kocke:"
 
-#: src/menus.c:207
-msgid "Faster"
-msgstr "Hitreje"
+#: src/dialogs.c:108
+msgid "Re_gular cube"
+msgstr "_Navadna kocka"
 
-#: src/menus.c:210
-msgid "Slower"
-msgstr "Počasneje"
+#: src/dialogs.c:114
+msgid "Sets the number of blocks in each side"
+msgstr "Nastavi število kockic na vsaki strani"
 
-#: src/menus.c:215
-msgid "Controls the speed with which slices rotate"
-msgstr "Nadzoruje hitrost vrtenja plasti, vrstic in stolpcev"
+#: src/dialogs.c:117
+msgid "Allow only cubes with all sides equal size"
+msgstr "Dovoli samo kocke, ki imajo vse stranice enako velike"
 
-#: src/menus.c:259
-msgid "Preferences"
-msgstr "Možnosti"
+#: src/dialogs.c:161
+msgid "A 3 dimensional magic cube puzzle"
+msgstr "Sestavljanka s čarobno tridimenzionalno kocko"
 
-#: src/menus.c:271
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/dialogs.c:166
+msgid "translator-credits"
+msgstr "Klemen Košir <https://launchpad.net/~klemen.kosir>"
+
+#: src/dialogs.c:186
+msgid "New Game"
+msgstr "Nova igra"
+
+#: src/dialogs.c:198
 msgid "Dimensions"
 msgstr "Mere"
 
-#: src/menus.c:272
-msgid "Animation"
-msgstr "Animacija"
+#: src/dialogs.c:208
+msgid "Initial position"
+msgstr "Začetni položaj"
 
-#: src/menus.c:273
-msgid "Lighting"
-msgstr "Osvetljevanje"
+#: src/dialogs.c:211
+msgid "_Random"
+msgstr "_Naključno"
 
-#: src/menus.c:282
-msgid "Enable lighting"
-msgstr "Omogoči osvetljevanje"
+#: src/dialogs.c:213
+msgid "_Solved"
+msgstr "_Rešena kocka"
 
-#: src/menus.c:284
-msgid "Makes the cube appear illuminated"
-msgstr "Osvetli kocko"
+#: src/menus.c:92
+msgid "Rear View"
+msgstr "Pogled z zadnje strani"
 
-#: src/menus.c:354
-msgid "Start cube with new settings?"
-msgstr "Ali želite začeti kocko z novimi nastavitvami?"
+#: src/menus.c:100
+msgid "Bottom View"
+msgstr "Pogled s spodnje strani"
 
-#: src/textures.c:203
-msgid "Pixbuf has wrong number of channels"
-msgstr "Medpomnilnik sličic ima napačno število kanalov"
+#: src/menus.c:107
+msgid "Top View"
+msgstr "Pogled z zgornje strani"
 
-#: src/textures.c:211
+#: src/menus.c:115
+msgid "Left View"
+msgstr "Pogled z leve strani"
+
+#: src/menus.c:122
+msgid "Right View"
+msgstr "Pogled z desne strani"
+
+#: src/menus.c:136
 #, c-format
-msgid "Pixbuf has unknown colorspace: %d"
-msgstr "Pixbuf ima neznan barvni prostor: %d"
+msgid "A mark is now set at position %d."
+msgstr "Oznaka je nastavljena na položaju %d."
 
-#: src/widget-set.c:114
+#: src/menus.c:153
 #, c-format
 msgid "Moves: %d / %d"
-msgstr "Premiki %d / %d"
+msgstr "Premiki: %d / %d"
 
-#: src/widget-set.c:140
+#: src/menus.c:176
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
@@ -161,106 +154,273 @@ msgstr[1] "Kocka je bila rešena v %d premiku"
 msgstr[2] "Kocka je bila rešena v %d premikih"
 msgstr[3] "Kocka je bila rešena v %d premikih"
 
-#: src/widget-set.c:146
+#: src/menus.c:186
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr "Kocka NI rešena! Barve so pravilne, vendar imajo napačno usmerjenost"
 
-#: src/widget-set.c:200
+#: src/menus.c:202
+#, c-format
+msgid "Animation rate set to %d frame per turn."
+msgid_plural "Animation rate set to %d frames per turn."
+msgstr[0] "Hitrost animacije je nastavljena na %d sličic na obrat."
+msgstr[1] "Hitrost animacije je nastavljena na %d sličico na obrat."
+msgstr[2] "Hitrost animacije je nastavljena na %d sličici na obrat."
+msgstr[3] "Hitrost animacije je nastavljena na %d sličice na obrat."
+
+#: src/menus.c:232
+msgid "_Game"
+msgstr "_Igra"
+
+#: src/menus.c:233
+msgid "_View"
+msgstr "_Pogled"
+
+#: src/menus.c:234
+msgid "Add _View"
+msgstr "Dodaj _pogled"
+
+#: src/menus.c:235
+msgid "Add an auxiliary view of the cube"
+msgstr "Dodaj pomožen pogled kocke"
+
+#: src/menus.c:238
+msgid "_Help"
+msgstr "Pomo_č"
+
+#: src/menus.c:239
+msgid "Sho_w/Hide"
+msgstr "_Pokaži/Skrij"
+
+#: src/menus.c:240
+msgid "_Scripts"
+msgstr "_Skripti"
+
+#: src/menus.c:312
+msgid "_Restart Game"
+msgstr "_Začni znova"
+
+#: src/menus.c:317
+msgid "_New Game"
+msgstr "_Nova igra"
+
+#: src/menus.c:322
+msgid "_Rear"
+msgstr "_Zadaj"
+
+#: src/menus.c:323
+msgid "_Left"
+msgstr "_Levo"
+
+#: src/menus.c:324
+msgid "Ri_ght"
+msgstr "_Desno"
+
+#: src/menus.c:325
+msgid "_Top"
+msgstr "_Zgoraj"
+
+#: src/menus.c:326
+msgid "_Bottom"
+msgstr "_Spodaj"
+
+#: src/menus.c:330
+msgid "_Colours"
+msgstr "_Barve"
+
+#: src/menus.c:335
+msgid "_Animation"
+msgstr "_Animacija"
+
+#: src/menus.c:340
+msgid "_Faster"
+msgstr "_Hitreje"
+
+#: src/menus.c:345
+msgid "_Slower"
+msgstr "_Počasneje"
+
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Previj"
 
-#: src/widget-set.c:201
+#: src/menus.c:456
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
 msgstr "Vrni se na prejšnjo oznako (ali začetek) zaporedja premikov"
 
-#: src/widget-set.c:206
+#: src/menus.c:462
 msgid "Back"
 msgstr "Nazaj"
 
-#: src/widget-set.c:207
+#: src/menus.c:463
 msgid "Make one step backwards"
 msgstr "Premakni se za en korak nazaj"
 
-#: src/widget-set.c:213
+#: src/menus.c:469
 msgid "Stop"
 msgstr "Zaustavi"
 
-#: src/widget-set.c:214
+#: src/menus.c:470
 msgid "Stop running the sequence of moves"
 msgstr "Zaustavi predvajanje zaporedja premikov"
 
-#: src/widget-set.c:220
+#: src/menus.c:476
 msgid "Mark"
 msgstr "Označi"
 
-#: src/widget-set.c:221
+#: src/menus.c:477
 msgid "Mark the current place in the sequence of moves"
 msgstr "Označi trenutno mesto v zaporedju premikov"
 
-#: src/widget-set.c:227
+#: src/menus.c:483
 msgid "Forward"
 msgstr "Naprej"
 
-#: src/widget-set.c:228
+#: src/menus.c:484
 msgid "Make one step forwards"
 msgstr "Premakni se za en korak naprej"
 
-#: src/widget-set.c:234
+#: src/menus.c:490
 msgid "Play"
 msgstr "Predvajaj"
 
-#: src/widget-set.c:235
+#: src/menus.c:491
 msgid "Run forward through the sequence of moves"
 msgstr "Predvajaj zaporedje premikov"
 
-#: src/widget-set.c:322
-msgid "_Play Toolbar"
-msgstr "Orodna vrstica"
+#: src/menus.c:556
+msgid "Gnubik error"
+msgstr "Napaka Gnubik"
 
-#: src/widget-set.c:329
-msgid "_Status Bar"
-msgstr "Vrstica _stanja"
+#: src/swatch.c:135
+msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
+msgstr "Vzorec barve. Tukaj lahko kliknete in izberete novo barvo, ali pa jo v to polje premaknete."
 
-#: src/widget-set.c:367
-msgid "/_Game"
-msgstr "/I_gra"
+#: src/textures.c:92
+msgid "Pixbuf has wrong number of channels"
+msgstr "Medpomnilnik sličic ima napačno število kanalov"
 
-#: src/widget-set.c:368
-msgid "/_Game/_New Game"
-msgstr "/I_gra/_Nova igra"
+#: src/textures.c:101
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Pixbuf ima neznan barvni prostor: %d"
 
-#: src/widget-set.c:369
-msgid "/_Game/sep"
-msgstr "/_Igra/sep"
+#: scripts/debug.scm:50
+msgid "_Debug"
+msgstr "_Razhroščevanje"
 
-#: src/widget-set.c:370
-msgid "/_Game/_Quit"
-msgstr "/I_gra/_Končaj"
+#: scripts/debug.scm:52
+msgid "_Move"
+msgstr "_Premakni"
 
-#: src/widget-set.c:371
-msgid "/_Settings"
-msgstr "/Na_stavitve"
+#: scripts/debug.scm:54
+msgid "_Dump state"
+msgstr "_Odloži stanje"
 
-#: src/widget-set.c:372
-msgid "/_Settings/_Preferences"
-msgstr "/Na_stavitve/_Možnosti"
+#: scripts/rand.scm:37
+msgid "_Randomize"
+msgstr "_Naključno"
 
-#: src/widget-set.c:373
-msgid "/_Settings/_Colours"
-msgstr "/Na_stavitve/_Barve"
+#: scripts/rand.scm:38
+msgid "_Animated"
+msgstr "_Animirano"
 
-#: src/widget-set.c:374
-msgid "/_Settings/Sho_w\\/Hide"
-msgstr "/Na_stavitve/_Pokaži\\/Skrij"
+#: scripts/rand.scm:39
+msgid "_Fast"
+msgstr "_Hitro"
 
-#: src/widget-set.c:380
-msgid "/_Help"
-msgstr "/Pomo_č"
+#: scripts/flubrd.scm:50
+msgid "This script only works on 3×3×3 cubes."
+msgstr "Ta skript deluje samo na kockah 3×3×3."
 
-#: src/widget-set.c:381
-msgid "/_Help/_About"
-msgstr "/Pomo_č/_O programu"
+#: scripts/mellor-solve.scm:399
+msgid "_Solvers"
+msgstr "_Reševalniki"
 
-#: src/widget-set.c:431
-msgid "/Settings/Show\\/Hide"
-msgstr "/Nastavitve/Pokaži\\/Skrij"
+#: scripts/mellor-solve.scm:400
+msgid "_3×3"
+msgstr "_3×3"
+
+#: scripts/mellor-solve.scm:404
+msgid "_Full cube"
+msgstr "_Polna kocka"
+
+#: scripts/mellor-solve.scm:407
+#, fuzzy
+msgid "Bottom _edge place"
+msgstr "Spodnji robni pult"
+
+#: scripts/mellor-solve.scm:410
+#, fuzzy
+msgid "Bottom _corner orient"
+msgstr "3. Okroglo (polmer kota):"
+
+#: scripts/mellor-solve.scm:413
+#, fuzzy
+msgid "_Bottom corner place"
+msgstr "Odpri omrežno mesto %s"
+
+#: scripts/mellor-solve.scm:416
+msgid "_Middle slice"
+msgstr "_Srednja plast"
+
+#: scripts/mellor-solve.scm:419
+msgid "_Top slice"
+msgstr "_Zgornja plast"
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top edges"
+msgstr "_Zgornji koti"
+
+#~ msgid "Cannot create image from file %s: %s"
+#~ msgstr "Slike iz datoteke %s ni mogoče ustvariti: %s"
+
+#~ msgid "Pattern"
+#~ msgstr "Vzorec"
+
+#~ msgid "Click here to use a pattern on the cube surface"
+#~ msgstr "Če želite na površini kocke uporabiti vzorec, kliknite sem"
+
+#~ msgid "Controls the speed with which slices rotate"
+#~ msgstr "Nadzoruje hitrost vrtenja plasti, vrstic in stolpcev"
+
+#~ msgid "Preferences"
+#~ msgstr "Možnosti"
+
+#~ msgid "Lighting"
+#~ msgstr "Osvetljevanje"
+
+#~ msgid "Enable lighting"
+#~ msgstr "Omogoči osvetljevanje"
+
+#~ msgid "Makes the cube appear illuminated"
+#~ msgstr "Osvetli kocko"
+
+#~ msgid "Start cube with new settings?"
+#~ msgstr "Ali želite začeti kocko z novimi nastavitvami?"
+
+#~ msgid "_Play Toolbar"
+#~ msgstr "Orodna vrstica"
+
+#~ msgid "_Status Bar"
+#~ msgstr "Vrstica _stanja"
+
+#~ msgid "/_Game/sep"
+#~ msgstr "/_Igra/sep"
+
+#~ msgid "/_Game/_Quit"
+#~ msgstr "/I_gra/_Končaj"
+
+#~ msgid "/_Settings"
+#~ msgstr "/Na_stavitve"
+
+#~ msgid "/_Settings/_Preferences"
+#~ msgstr "/Na_stavitve/_Možnosti"
+
+#~ msgid "/_Settings/_Colours"
+#~ msgstr "/Na_stavitve/_Barve"
+
+#~ msgid "/_Help/_About"
+#~ msgstr "/Pomo_č/_O programu"
+
+#~ msgid "/Settings/Show\\/Hide"
+#~ msgstr "/Nastavitve/Pokaži\\/Skrij"
