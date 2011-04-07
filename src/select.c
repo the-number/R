@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-
+#include "control.h"
 #include <gdk/gdkkeysyms.h> 
 
 /* This library provides  a means of picking a block using the mouse cursor.

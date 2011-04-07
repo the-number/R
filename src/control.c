@@ -181,13 +181,16 @@ selection_func (struct cublet_selection *cs, gpointer data)
       /* Delete the old move and create a new one */
       move_unref (cv->pending_movement);
 
-      GdkDisplay *display = gtk_widget_get_display (cv);
-      GdkModifierType keymask;
-      gdk_display_get_pointer (display,
-			       NULL, NULL, NULL, &keymask);
+      /* Reverse the direction when the shift key is down */
+      {
+	GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (cv));
+	GdkModifierType keymask;
+	gdk_display_get_pointer (display,
+				 NULL, NULL, NULL, &keymask);
 
-      if ( keymask & GDK_SHIFT_MASK)
-	dir = !dir;
+	if ( keymask & GDK_SHIFT_MASK)
+	  dir = !dir;
+      }
 
       cv->pending_movement = move_create (slice, axis, dir);
 
