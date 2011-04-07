@@ -1,6 +1,6 @@
 /*
     routines which actually draw the blocks of the cube.
-    Copyright (C) 1998  John Darrington
+    Copyright (C) 1998, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 
 
 /* The texture names for each face */
-void draw_block (GbkCubeview * cv, int block_id, GLboolean anc);
 void drawCube (GbkCube * cube, GLboolean ancilliary, GbkCubeview * cv);
 
 #endif

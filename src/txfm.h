@@ -1,6 +1,6 @@
 /*
     A little library to do matrix arithmetic
-    Copyright (C) 1998  John Darrington
+    Copyright (C) 1998, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

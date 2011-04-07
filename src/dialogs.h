@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2003  John Darrington
+    Copyright (C) 2003, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

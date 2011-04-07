@@ -341,7 +341,7 @@ static const unsigned char w_mask_bits[] = {
 
 
 /* The angle between successive cursor intervals. */
-const float cursor_interval = 360 / (float) n_CURSORS;
+const float cursor_interval = 360.0 / (float) n_CURSORS;
 
 static const unsigned char *cursors_data[n_CURSORS] = {
   s_data_bits,

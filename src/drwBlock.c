@@ -72,7 +72,7 @@ static void draw_face (GbkCubeview *, GLint face, int block_id,
 /*  Render the block pointed to by BLOCK_ID.
     If ANCILLIARY is true, render the ancialliary components also.
  */
-void
+static void
 draw_block (GbkCubeview * cv, int block_id, GLboolean ancilliary)
 {
   int i;

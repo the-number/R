@@ -1,6 +1,6 @@
 /*
     GNUbik -- A 3 dimensional magic cube game.
-    Copyright (C) 2003  John Darrington
+    Copyright (C) 2003, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,12 +37,6 @@ enum
 void set_toolbar_state (unsigned state);
 
 GtkWidget *create_statusbar (GbkGame *);
-
-
-void setCubeColours (char *progname);
-
-/* Declare that the cube has been solved */
-void declare_win (GbkCube * cube);
 
 /* Popup an error dialog box */
 void error_dialog (GtkWindow * parent, const char *format, ...);

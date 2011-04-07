@@ -1,6 +1,6 @@
 /*
     Texture mapping functions for the Cube
-    Copyright (C) 2003  John Darrington
+    Copyright (C) 2003, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,18 +28,6 @@
 #include <libintl.h>
 #define _(String) gettext (String)
 #define N_(String) (String)
-
-void
-texInit (void)
-{
-  GLuint texName[6];
-
-  glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
-
-  glGenTextures (6, texName);
-
-  glTexEnvi (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-}
 
 /* Create a texture from a gdk_pixbuf.
    Returns NULL if it cannot be created.

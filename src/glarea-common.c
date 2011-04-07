@@ -120,32 +120,3 @@ projection_init (struct scene_view *scene, int jitter)
 
   accPerspective (scene, 1, j8[jitter].x, j8[jitter].y, 0.0, 0.0, 1.0);
 }
-
-void
-lighting_init (void)
-{
-  GLfloat light_ambient[] = { 0.6, 0.6, 0.6, 1.0 };
-  GLfloat mat_diffuse[] = { 0.8, 0.8, 0.8, 1.0 };
-  GLfloat mat_specular[] = { 0.2, 0.2, 0.2, 1.0 };
-  GLfloat mat_shininess = 1.0;
-  GLfloat light_position[] = { -1.0, 0.5, 0.0, 0.0 };
-
-  glShadeModel (GL_SMOOTH);
-
-  glColorMaterial (GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-
-  glMaterialfv (GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv (GL_FRONT, GL_DIFFUSE, mat_diffuse);
-  glMaterialf (GL_FRONT, GL_SHININESS, mat_shininess);
-
-  glLightfv (GL_LIGHT0, GL_POSITION, light_position);
-  glLightfv (GL_LIGHT1, GL_AMBIENT, light_ambient);
-
-
-  glDisable (GL_LIGHTING);
-
-  glEnable (GL_COLOR_MATERIAL);
-
-  glEnable (GL_LIGHT0);
-  glEnable (GL_LIGHT1);
-}

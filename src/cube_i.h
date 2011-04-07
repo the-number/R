@@ -1,7 +1,6 @@
 /*
-    Copyright (C) 2009 John Darrington
     Copyright (c) 2004 Dale Mellor,  based on work which is
-    Copyright (C) 1998,  2003  John Darrington
+    Copyright (C) 1998,  2003, 2009, 2011  John Darrington
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
