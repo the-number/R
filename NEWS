@@ -1,4 +1,5 @@
-GNUbik 2.4-pre
+GNUbik 2.4
+
         * Animation is now significantly faster, making the
           program a lot less frustrating when run on machines with
           low-end graphics. 
