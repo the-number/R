@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnubik 2.4-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2011-03-09 11:00+0100\n"
-"PO-Revision-Date: 2011-04-05 20:49+0100\n"
+"PO-Revision-Date: 2011-04-09 09:50+0100\n"
 "Last-Translator: Klemen Košir <klemen.kosir@gmx.com>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
 "Language: sl\n"
@@ -345,19 +345,16 @@ msgid "_Full cube"
 msgstr "_Polna kocka"
 
 #: scripts/mellor-solve.scm:407
-#, fuzzy
 msgid "Bottom _edge place"
-msgstr "Spodnji robni pult"
+msgstr "Položaj spodnjih _robov"
 
 #: scripts/mellor-solve.scm:410
-#, fuzzy
 msgid "Bottom _corner orient"
-msgstr "3. Okroglo (polmer kota):"
+msgstr "Usmerjenost spodnjih _kotov"
 
 #: scripts/mellor-solve.scm:413
-#, fuzzy
 msgid "_Bottom corner place"
-msgstr "Odpri omrežno mesto %s"
+msgstr "Položaj _spodnjih kotov"
 
 #: scripts/mellor-solve.scm:416
 msgid "_Middle slice"
