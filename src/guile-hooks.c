@@ -148,7 +148,7 @@ gnubik_append_moves (SCM list)
   if (!gbk_game_at_end (the_game))
     gbk_game_delete_moves (the_game, the_game->iter->next);
 
-  for (; !SCM_NULLP (list); list = SCM_CDR (list))
+  for (; !scm_is_null (list); list = SCM_CDR (list))
     {
       struct move_data *move = move_create (scm_to_int (SCM_CADAR (list)),
 					    scm_to_int (SCM_CAAR (list)),
