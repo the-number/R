@@ -32,7 +32,7 @@
 #include "colour-dialog.h"
 
 /* We use a little bit of glut in debug mode */
-#if DEBUG && HAVE_GL_GLUT_H
+#if DEBUG
 #include <GL/glut.h>
 
 void
@@ -369,7 +369,7 @@ draw_face (GbkCubeview * cv, GLint face, int block_id, GLboolean draw_names)
 
   glDisable (GL_TEXTURE_2D);
 
-#if DEBUG && HAVE_GL_GLUT_H
+#if DEBUG
   {
     char str[4];
 

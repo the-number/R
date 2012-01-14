@@ -16,10 +16,6 @@ aclocal.m4: $(M4)
 config.h.in: configure.ac
 	autoheader
 
-m4/%.m4: $(AC_ARCHIVE_DIR)/m4/%.m4
-	@mkdir -p m4
-	cp $< $@
-
 BUILDAUX_DIR=build-aux
 
 AUXFILES=$(BUILDAUX_DIR)/compile $(BUILDAUX_DIR)/config.guess $(BUILDAUX_DIR)/config.sub $(BUILDAUX_DIR)/install-sh $(BUILDAUX_DIR)/missing $(BUILDAUX_DIR)/depcomp $(BUILDAUX_DIR)/texinfo.tex

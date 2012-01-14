@@ -71,7 +71,7 @@ c_main (void *closure, int argc, char *argv[])
   gtk_init (&argc, &argv);
   gtk_gl_init (&argc, &argv);
 
-#if DEBUG && HAVE_GL_GLUT_H
+#if DEBUG
   glutInit ();
 #endif
 

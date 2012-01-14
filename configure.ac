@@ -58,16 +58,15 @@ dnl Find the X11 include and library directories
 AC_PATH_X
 AC_PATH_XTRA
 
-AX_CHECK_GL
-AX_CHECK_GLU
+PKG_CHECK_MODULES(GL, gl,,
+  AC_SEARCH_LIBS([glEnable], [GL],,
+     AC_MSG_ERROR("No GL library seems to be installed")
+))
 
-if test "x$no_gl" = x"yes"; then
-   AC_MSG_ERROR("No GL library seems to be installed")
-fi
-
-if test "x$no_glu" = x"yes"; then
-   AC_MSG_ERROR("No GLU library seems to be installed")
-fi
+PKG_CHECK_MODULES(GLU, glu,,
+  AC_SEARCH_LIBS([gluErrorString], [GLU],,
+     AC_MSG_ERROR("No GLU library seems to be installed")
+))
 
 
 dnl Checks for libraries.
@@ -90,12 +89,11 @@ PKG_CHECK_MODULES(GTK_GL_EXT, gtkglext-1.0,,)
 dnl Glut is used only if building with debug info
 dnl If it's there, then include it. Otherwise don't bother
 if test x"$debug" = x"true" ; then 
-  AX_CHECK_GLUT
-  if test "x$no_glut" = x"yes"; then
-     AC_MSG_ERROR("Debug features requested but no GLUT library seems to be installed")
-  fi
+PKG_CHECK_MODULES(GLUT, glut,,
+  AC_SEARCH_LIBS([glutStrokeCharacter], [glut],,
+     AC_MSG_ERROR("Compilation with debug was requested but no GLUT library seems to be installed"))
+)
 fi
-
 
 AC_C_CONST
 AC_C_INLINE
