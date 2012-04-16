@@ -7,7 +7,9 @@ install-icons:
 	  $(MKDIR_P) $(themedir)/$${size}x$${size}/$(context) ; \
           $(INSTALL) $(top_srcdir)/icons/logo$$size.png $(themedir)/$${size}x$${size}/$(context)/gnubik.png ; \
 	done 
-	gtk-update-icon-cache --ignore-theme-index $(themedir)
+	if test -z $(DESTDIR) ; then \
+	 gtk-update-icon-cache --ignore-theme-index $(themedir) ; \
+	fi
 
 INSTALL_DATA_HOOKS = install-icons
 
