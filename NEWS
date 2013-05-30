@@ -1,3 +1,14 @@
+GNUbik 2.4.1  - A minor release with very few changes
+
+	* Rebuilt against newer version of automake (1.11.6) to address security advisories
+
+	  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4029
+	  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-3386
+
+       *  Updated several translations where contributions have been provided.
+
+       *  Several minor compatibility fixes.
+
 GNUbik 2.4
 
         * Animation is now significantly faster, making the
