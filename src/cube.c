@@ -44,14 +44,12 @@ make_scm_cube (const GbkCube * cube)
   SCM scm_face_vector = scm_c_make_vector (6, SCM_UNSPECIFIED);
 
   int biggest = 0;
-  int li = -1;
   int i;
   for (i = 0; i < 3; ++i)
     {
       if (biggest < gbk_cube_get_size (cube, i))
 	{
 	  biggest = gbk_cube_get_size (cube, i);
-	  li = i;
 	}
     }
 
