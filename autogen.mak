@@ -1,4 +1,3 @@
-M4=m4/ax_check_gl.m4 m4/ax_check_glu.m4 m4/ax_check_glut.m4 m4/ax_lang_compiler_ms.m4 m4/ax_pthread.m4
 
 AM_SFX=$(if $(AM_VERS),-$(AM_VERS),)
 
@@ -10,8 +9,8 @@ all: Makefile.in configure
 configure: aclocal.m4
 	autoconf
 
-aclocal.m4: $(M4)
-	$(ACLOCAL) -I m4
+aclocal.m4:
+	$(ACLOCAL)
 
 config.h.in: configure.ac
 	autoheader
