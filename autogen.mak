@@ -1,5 +1,6 @@
+M4=m4
 
-AM_SFX=$(if $(AM_VERS),-$(AM_VERS),)
+AM_SFX=-1.11
 
 ACLOCAL=aclocal$(AM_SFX)
 AUTOMAKE=automake$(AM_SFX)
@@ -9,8 +10,11 @@ all: Makefile.in configure
 configure: aclocal.m4
 	autoconf
 
-aclocal.m4:
-	$(ACLOCAL)
+m4:
+	mkdir m4
+
+aclocal.m4: $(M4)
+	$(ACLOCAL) -I m4
 
 config.h.in: configure.ac
 	autoheader
