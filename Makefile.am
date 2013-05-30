@@ -2,7 +2,7 @@
 
 SUBDIRS= po
 
-AUTOMAKE_OPTIONS = gnits 1.10 subdir-objects
+AUTOMAKE_OPTIONS = gnits 1.11 subdir-objects
 
 SUFFIXES=
 ALL_LOCAL=
