@@ -21,7 +21,7 @@
 #define __GBK_CUBEVIEW_H__
 
 #include <glib-object.h>
-#include <gtk/gtkdrawingarea.h>
+#include <gtk/gtk.h>
 
 #include <gtk/gtkgl.h>
 #include <gdk/gdkglconfig.h>

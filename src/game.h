@@ -21,7 +21,7 @@
 
 
 #include <glib-object.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include "cube.h"
 #include "cubeview.h"
 

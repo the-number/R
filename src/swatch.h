@@ -21,7 +21,7 @@
 
 
 #include <glib-object.h>
-#include <gtk/gtktogglebutton.h>
+#include <gtk/gtk.h>
 
 #include "drwBlock.h"
 
