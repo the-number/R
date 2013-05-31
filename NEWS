@@ -1,3 +1,5 @@
+	* We now depend on Gtk+ version 2.24
+
 GNUbik 2.4.2  - A minor release primarily to update translations
 
 	* Various new and updated translations.

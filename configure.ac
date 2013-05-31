@@ -82,7 +82,7 @@ AC_SEARCH_LIBS([cos],[m],,
 
 
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.20.0,,)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24.0,,)
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0,,)
 PKG_CHECK_MODULES(GDK_GL_EXT, gdkglext-1.0,,)
 PKG_CHECK_MODULES(GTK_GL_EXT, gtkglext-1.0,,)

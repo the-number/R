@@ -4,7 +4,7 @@ Installation of this program has several prerequisites:
    available from http://www.mesa3d.org 
    You can find further information about OpenGL at http://www.opengl.org
  
-*  gtk+-2.0 version 2.20 or later.
+*  gtk+-2.0 version 2.24 .
    
 *  You will also need the GTK Mesa/OpenGL extension 
    library ( http://gtkglext.sourceforge.net ).
