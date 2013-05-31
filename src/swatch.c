@@ -141,21 +141,23 @@ gbk_swatch_init (GbkSwatch * sw)
 static gboolean
 on_da_expose (GtkWidget * w, GdkEventExpose * event, gpointer data)
 {
+  GtkAllocation allocation;
   GbkSwatch *sw = GBK_SWATCH (data);
+  gtk_widget_get_allocation (w, &allocation);
 
   if (sw->pixbuf == NULL)
     {
-      gdk_draw_rectangle (w->window,
+      gdk_draw_rectangle (gtk_widget_get_window (w),
 			  sw->gc,
 			  TRUE,
-			  0, 0, w->allocation.width, w->allocation.height);
+			  0, 0, allocation.width, allocation.height);
     }
   else
     {
       GdkPixbuf *scaled_pixbuf = 0;
       gint width, height;
 
-      gdk_drawable_get_size (w->window, &width, &height);
+      gdk_drawable_get_size (gtk_widget_get_window (w), &width, &height);
 
       scaled_pixbuf = gdk_pixbuf_scale_simple (sw->pixbuf,
 					       width, height,
@@ -163,7 +165,7 @@ on_da_expose (GtkWidget * w, GdkEventExpose * event, gpointer data)
 
       g_assert (scaled_pixbuf);
 
-      gdk_draw_pixbuf (w->window,
+      gdk_draw_pixbuf (gtk_widget_get_window (w),
 		       sw->gc,
 		       scaled_pixbuf,
 		       0, 0, 0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);
@@ -184,10 +186,11 @@ enum
   GBK_DRAG_COLOUR
 };
 
-static const GtkTargetEntry targets[2] = {
-  {"text/uri-list", 0, GBK_DRAG_FILELIST},
-  {"application/x-color", 0, GBK_DRAG_COLOUR},
-};
+static const GtkTargetEntry targets[2] =
+  {
+    {"text/uri-list", 0, GBK_DRAG_FILELIST},
+    {"application/x-color", 0, GBK_DRAG_COLOUR},
+  };
 
 static void
 on_drag_data_rx (GtkWidget * widget,
@@ -199,7 +202,7 @@ on_drag_data_rx (GtkWidget * widget,
 {
   gboolean success = TRUE;
 
-  if (selection_data->length < 0)
+  if (gtk_selection_data_get_length (selection_data) < 0)
     {
       g_warning ("%s", "Empty drag data");
       success = FALSE;
@@ -213,14 +216,14 @@ on_drag_data_rx (GtkWidget * widget,
 	guint16 *vals;
 	GdkColor colour;
 
-	if ((selection_data->format != 16) || (selection_data->length != 8))
+	if ((gtk_selection_data_get_format (selection_data) != 16) || (gtk_selection_data_get_length (selection_data) != 8))
 	  {
 	    success = FALSE;
 	    g_warning ("%s", "Received invalid color data");
 	    goto end;
 	  }
 
-	vals = (guint16 *) selection_data->data;
+	vals = (guint16 *) gtk_selection_data_get_data (selection_data);
 
 	colour.red = vals[0];
 	colour.green = vals[1];
@@ -231,7 +234,8 @@ on_drag_data_rx (GtkWidget * widget,
       }
     case GBK_DRAG_FILELIST:
       {
-	gchar **s = g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
+	gchar **s =
+	  g_strsplit ((const gchar *) gtk_selection_data_get_data (selection_data), "\r\n", 0);
 
 	while (*s)
 	  {

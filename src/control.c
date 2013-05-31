@@ -146,7 +146,7 @@ set_mouse_cursor (GtkWidget *w, const struct cublet_selection *cs)
 	selected_cursor = cursor[index];
     }
 
-  gdk_window_set_cursor (w->window, selected_cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (w), selected_cursor);
 }
 
 

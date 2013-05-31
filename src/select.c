@@ -207,7 +207,9 @@ UnsetMotion (gpointer data)
 static int
 get_widget_height (GtkWidget * w)
 {
-  return w->allocation.height;
+  GtkAllocation allocation;
+  gtk_widget_get_allocation (w, &allocation);
+  return allocation.height;
 }
 
 

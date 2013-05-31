@@ -417,13 +417,13 @@ colour_select_menu (GtkWidget * w, GbkGame * game)
 
   gtk_box_pack_start (GTK_BOX (hbox_swatch), frame, TRUE, TRUE, BOX_PADDING);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox_swatch,
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox_swatch,
 		      TRUE, TRUE, BOX_PADDING);
 
   gtk_box_pack_start (GTK_BOX (hbox_cs), cds->colour_selector,
 		      TRUE, TRUE, BOX_PADDING);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox_cs,
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox_cs,
 		      TRUE, TRUE, BOX_PADDING);
 
   g_signal_connect (button_use_image, "clicked",

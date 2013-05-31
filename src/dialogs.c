@@ -229,9 +229,9 @@ new_game_dialog (GtkWidget * w, GbkGame * game)
   gtk_box_pack_start (GTK_BOX (vbox), frame_pos, FALSE, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame_dimensions, FALSE, 0, 0);
 
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox);
 
-  gtk_widget_show_all (GTK_DIALOG (dialog)->vbox);
+  gtk_widget_show_all (gtk_dialog_get_content_area (GTK_DIALOG (dialog)));
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 
