@@ -33,6 +33,7 @@ POFILES=po/bg.po \
 	po/sl.po \
 	po/sr.po \
 	po/sv.po \
+	po/vi.po \
 	po/zh_CN.po 
 
 
