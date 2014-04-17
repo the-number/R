@@ -66,7 +66,7 @@ swatch_set_property (GObject * object,
 	      }
 	  }
 	else
-	  g_warning ("Invalid color property for swatch");
+	  g_warning ("%s", "Invalid color property for swatch");
       }
       break;
     case PROP_TEXTURE:
@@ -201,7 +201,7 @@ on_drag_data_rx (GtkWidget * widget,
 
   if (selection_data->length < 0)
     {
-      g_warning ("Empty drag data");
+      g_warning ("%s", "Empty drag data");
       success = FALSE;
       goto end;
     }
@@ -216,7 +216,7 @@ on_drag_data_rx (GtkWidget * widget,
 	if ((selection_data->format != 16) || (selection_data->length != 8))
 	  {
 	    success = FALSE;
-	    g_warning ("Received invalid color data");
+	    g_warning ("%s", "Received invalid color data");
 	    goto end;
 	  }
 
@@ -255,7 +255,7 @@ on_drag_data_rx (GtkWidget * widget,
 	    utf8 = g_locale_to_utf8 (*s, -1, 0, 0, &gerr);
 	    if (gerr)
 	      {
-		g_warning (gerr->message);
+		g_warning ("%s", gerr->message);
 		g_clear_error (&gerr);
 		gerr = 0;
 		continue;
@@ -265,7 +265,7 @@ on_drag_data_rx (GtkWidget * widget,
 	    filename = g_filename_from_uri (utf8, 0, &gerr);
 	    if (gerr)
 	      {
-		g_warning (gerr->message);
+		g_warning ("%s", gerr->message);
 		g_clear_error (&gerr);
 		continue;
 	      }
@@ -286,7 +286,7 @@ on_drag_data_rx (GtkWidget * widget,
       }
       break;
     default:
-      g_warning ("Unsupported drag data type");
+      g_warning ("%s", "Unsupported drag data type");
       break;
     }
 

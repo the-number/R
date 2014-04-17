@@ -549,7 +549,7 @@ error_dialog (GtkWindow * parent, const gchar * format, ...)
   dialog = gtk_message_dialog_new (parent,
 				   GTK_DIALOG_MODAL,
 				   GTK_MESSAGE_ERROR,
-				   GTK_BUTTONS_CLOSE, message);
+				   GTK_BUTTONS_CLOSE, "%s", message);
   g_free (message);
 
   gtk_window_set_title (GTK_WINDOW (dialog), _("Gnubik error"));
