@@ -1,276 +1,411 @@
-# Norwegian translations for GNUbik 
+# Norwegian Bokmal translations for the gnubik package.
 # Copyright (C) 2003 John Darrington
-# John Darrington <john@darrington.wattle.id.au>, 2003.
+# This file is distributed under the same license as the gnubik package.
+# Stian Hole <stian@musikkpunkt.com>, 2003.
+# Johnny A. Solbu <johnny@solbu.net>, 2014.
+# Norwegian translations for GNUbik 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNUbik 2.0\n"
+"Project-Id-Version: gnubik 2.4\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2010-12-11 14:01+0100\n"
-"PO-Revision-Date: 2003-08-11 19:32-0100\n"
-"Last-Translator: Stian Hole <stian@musikkpunkt.com>\n"
-"Language-Team:  <stian@musikkpunkt.com>\n"
-"Language: \n"
+"POT-Creation-Date: 2011-04-09 12:35+0200\n"
+"PO-Revision-Date: 2014-04-23 17:44+0100\n"
+"Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
+"Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
+"Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: src/colour-sel.c:181
-#, c-format
-msgid "Cannot create image from file %s: %s"
-msgstr "Kan ikke lage bilde fra fil %s: %s"
-
-#: src/colour-sel.c:261
+#: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr "Bildevelger"
 
-#: src/colour-sel.c:289
-#, fuzzy
+#: src/colour-dialog.c:209
 msgid "All Images"
-msgstr "Bilde"
+msgstr "Alle bilder"
 
-#: src/colour-sel.c:296
+#: src/colour-dialog.c:213
 msgid "All Files"
-msgstr ""
+msgstr "Alle filer"
 
-#: src/colour-sel.c:440
-msgid "Pattern"
-msgstr "Mønster"
-
-#: src/colour-sel.c:441
-msgid "Colour"
-msgstr "Farge"
-
-#: src/colour-sel.c:468
-msgid "Click here to use a pattern on the cube surface"
-msgstr "Klikk her for å bruke et mønster på kubens overflate"
-
-#: src/colour-sel.c:750
+#: src/colour-dialog.c:296
 msgid "Colour selector"
 msgstr "Fargevelger"
 
-#: src/colour-sel.c:776
+#: src/colour-dialog.c:313
 msgid "Image"
 msgstr "Bilde"
 
-#: src/colour-sel.c:777
+#: src/colour-dialog.c:314
 msgid "Se_lect"
-msgstr "Ve_lg"
+msgstr "_Velg"
 
-#: src/colour-sel.c:780
+#: src/colour-dialog.c:322
 msgid "Select an image file"
 msgstr "Velg en bildefil"
 
-#: src/colour-sel.c:783
+#: src/colour-dialog.c:324
 msgid "_Tiled"
 msgstr "_Side ved side"
 
-#: src/colour-sel.c:785
-msgid ""
-"Place a copy of the image\n"
-"on each block"
-msgstr ""
-"Plasser en kopi av bildet\n"
-"på hver blokk"
+#: src/colour-dialog.c:326
+msgid "Place a copy of the image on each block"
+msgstr "Plasser en kopi av bildet på hver blokk"
 
-#: src/colour-sel.c:789
+#: src/colour-dialog.c:331
 msgid "_Mosaic"
 msgstr "_Mosaikk"
 
-#: src/colour-sel.c:792
-msgid ""
-"Place a copy of the image across\n"
-"the entire face of the cube"
-msgstr ""
-"Plasser en kopi av bilde over\n"
-"hele overflaten til kuben"
+#: src/colour-dialog.c:335
+msgid "Place a copy of the image across the entire face of the cube"
+msgstr "Plasser en kopi av bilde over hele overflaten til kuben"
 
-#: src/colour-sel.c:852
-#, fuzzy
-msgid ""
-"A sample of the colour or pattern. You can click and select a new colour or "
-"pattern,  or drag one to this space."
-msgstr ""
-"En prøve av fargen eller mønsteret. Du kan klikke og velge en ny farge eller "
-"et nytt mønsker, eller trekket et til dette området."
+#: src/colour-dialog.c:341
+msgid "_Plain"
+msgstr "Alminnelig"
 
-#: src/menus.c:165
-msgid "Sets the number of blocks in each side"
-msgstr "Setter antall blokker på hver side"
+#: src/colour-dialog.c:344
+msgid "Remove image from the cube face"
+msgstr "Fjern bilde fra kubens overflate"
 
-#: src/menus.c:167
+#: src/dialogs.c:106
 msgid "Size of cube:"
 msgstr "Størrelse på kuben:"
 
-#: src/menus.c:207
-msgid "Faster"
-msgstr "Fortere"
+#: src/dialogs.c:111
+msgid "Re_gular cube"
+msgstr "Normal kube"
 
-#: src/menus.c:210
-msgid "Slower"
-msgstr "Saktere"
+#: src/dialogs.c:117
+msgid "Sets the number of blocks in each side"
+msgstr "Setter antall blokker på hver side"
 
-#: src/menus.c:215
-msgid "Controls the speed with which slices rotate"
-msgstr "Kontrollerer hastigheten som skivene roterer med"
+#: src/dialogs.c:121
+msgid "Allow only cubes with all sides equal size"
+msgstr "Tillat bare kuber med alle sider i lik størrelse"
 
-#: src/menus.c:259
-msgid "Preferences"
-msgstr "Innstillinger"
+#: src/dialogs.c:164
+msgid "A 3 dimensional magic cube puzzle"
+msgstr "Et 3-dimensjonal magikubepuslespill"
 
-#: src/menus.c:271
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/dialogs.c:169
+msgid "translator-credits"
+msgstr ""
+"Stian Hole <stian@musikkpunkt.com> - 2003\n"
+"Johnny A. Solbu <johnny@solbu.net> - 2014"
+
+#: src/dialogs.c:189
+msgid "New Game"
+msgstr "Nytt spill"
+
+#: src/dialogs.c:201
 msgid "Dimensions"
 msgstr "Dimensjoner"
 
-#: src/menus.c:272
-msgid "Animation"
-msgstr "Animasjon"
+#: src/dialogs.c:212
+msgid "Initial position"
+msgstr "Utgangsposisjon"
 
-#: src/menus.c:273
-msgid "Lighting"
-msgstr "Belysning"
+#: src/dialogs.c:216
+msgid "_Random"
+msgstr "Tilfeldig"
 
-#: src/menus.c:282
-msgid "Enable lighting"
-msgstr "Aktiver belysning"
+#: src/dialogs.c:220
+msgid "_Solved"
+msgstr "Løst"
 
-#: src/menus.c:284
-msgid "Makes the cube appear illuminated"
-msgstr "Får kuben til å virke opplyst"
+#: src/menus.c:94
+msgid "Rear View"
+msgstr "Sett bakfra"
 
-#: src/menus.c:354
-msgid "Start cube with new settings?"
-msgstr "Start kube med nytt oppsett?"
+#: src/menus.c:102
+msgid "Bottom View"
+msgstr "Sett nedenfra"
 
-#: src/textures.c:203
-msgid "Pixbuf has wrong number of channels"
-msgstr "Pixbuf har feil antall kanaler"
+#: src/menus.c:109
+msgid "Top View"
+msgstr "Sett nedenfra"
 
-#: src/textures.c:211
+#: src/menus.c:117
+msgid "Left View"
+msgstr "Sett fra venstre"
+
+#: src/menus.c:124
+msgid "Right View"
+msgstr "Sett fra høyre"
+
+#: src/menus.c:138
 #, c-format
-msgid "Pixbuf has unknown colorspace: %d"
-msgstr "Pixbuf har ukjent fargerom: %d"
+msgid "A mark is now set at position %d."
+msgstr "Et merke er nå satt ved posisjon %d."
 
-#: src/widget-set.c:114
-#, fuzzy, c-format
+#: src/menus.c:152
+#, c-format
 msgid "Moves: %d / %d"
-msgstr "Trekk: %d"
+msgstr "Trekk: %d / %d"
 
-#: src/widget-set.c:140
+#: src/menus.c:173
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Kube løst med %d trekk"
 msgstr[1] "Kube løst med %d trekk"
 
-#: src/widget-set.c:146
-#, fuzzy
-msgid ""
-"Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr "Kuben er IKKE løst! Fargene stemmer, men orientering er ikke rett"
+#: src/menus.c:183
+msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr "Kuben er IKKE løst! Fargene stemmer, men har feil orientering"
 
-#: src/widget-set.c:200
+#: src/menus.c:201
+#, c-format
+msgid "Animation rate set to %d frame per turn."
+msgid_plural "Animation rate set to %d frames per turn."
+msgstr[0] "Animasjonsrate satt til %d bilde per omdreining."
+msgstr[1] "Animasjonsrate satt til %d bilder per omdreining."
+
+#: src/menus.c:228
+msgid "_Game"
+msgstr "_Spill"
+
+#: src/menus.c:229
+msgid "_View"
+msgstr "Visning"
+
+#: src/menus.c:230
+msgid "Add _View"
+msgstr "Legg til visning"
+
+#: src/menus.c:231
+msgid "Add an auxiliary view of the cube"
+msgstr "Legg til en ekstra visning av kuben"
+
+#: src/menus.c:234
+msgid "_Help"
+msgstr "_Hjelp"
+
+#: src/menus.c:235
+msgid "Sho_w/Hide"
+msgstr "Vis/skjul"
+
+#: src/menus.c:236
+msgid "_Scripts"
+msgstr "Skript"
+
+#: src/menus.c:306
+msgid "_Restart Game"
+msgstr "Start spill på nytt"
+
+#: src/menus.c:310
+msgid "_New Game"
+msgstr "_Nytt spill"
+
+#: src/menus.c:314
+msgid "_Rear"
+msgstr "Bak"
+
+#: src/menus.c:316
+msgid "_Left"
+msgstr "VEnstre"
+
+#: src/menus.c:318
+msgid "Ri_ght"
+msgstr "Høyre"
+
+#: src/menus.c:320
+msgid "_Top"
+msgstr "Topp"
+
+#: src/menus.c:322
+msgid "_Bottom"
+msgstr "Bunn"
+
+#: src/menus.c:327
+msgid "_Colours"
+msgstr "_Farger"
+
+#: src/menus.c:331
+msgid "_Animation"
+msgstr "_Animasjon"
+
+#: src/menus.c:335
+msgid "_Faster"
+msgstr "_Fortere"
+
+#: src/menus.c:339
+msgid "_Slower"
+msgstr "Saktere"
+
+#: src/menus.c:454
 msgid "Rewind"
-msgstr ""
+msgstr "Spol tilbake"
 
-#: src/widget-set.c:201
+#: src/menus.c:456
 msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr ""
+msgstr "Gå til forrige merke (eller begynnelsen) i bevegelsessekvensen"
 
-#: src/widget-set.c:206
+#: src/menus.c:462
 msgid "Back"
-msgstr ""
+msgstr "Tilbake"
 
-#: src/widget-set.c:207
+#: src/menus.c:463
 msgid "Make one step backwards"
-msgstr ""
+msgstr "Gå ett steg tilbake"
 
-#: src/widget-set.c:213
+#: src/menus.c:468
 msgid "Stop"
-msgstr ""
+msgstr "Stopp"
 
-#: src/widget-set.c:214
+#: src/menus.c:469
 msgid "Stop running the sequence of moves"
-msgstr ""
+msgstr "Slutt å kjøre bevegelsessekvensen"
 
-#: src/widget-set.c:220
+#: src/menus.c:475
 msgid "Mark"
-msgstr ""
+msgstr "Marker"
 
-#: src/widget-set.c:221
+#: src/menus.c:476
 msgid "Mark the current place in the sequence of moves"
-msgstr ""
+msgstr "Marker gjeldende sted i bevegelsessekvensen"
 
-#: src/widget-set.c:227
+#: src/menus.c:482
 msgid "Forward"
-msgstr ""
+msgstr "Forover"
 
-#: src/widget-set.c:228
+#: src/menus.c:483
 msgid "Make one step forwards"
-msgstr ""
+msgstr "Ta ett steg fremover"
 
-#: src/widget-set.c:234
+#: src/menus.c:488
 msgid "Play"
-msgstr ""
+msgstr "Spill av"
 
-#: src/widget-set.c:235
+#: src/menus.c:489
 msgid "Run forward through the sequence of moves"
-msgstr ""
+msgstr "Kjør frem gjennom bevegelsessekvensen"
 
-#: src/widget-set.c:322
-msgid "_Play Toolbar"
-msgstr ""
+#: src/menus.c:555
+msgid "Gnubik error"
+msgstr "Gnubik-feil"
 
-#: src/widget-set.c:329
-msgid "_Status Bar"
-msgstr ""
+#: src/swatch.c:132
+msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
+msgstr "En prøve av fargen. Du kan klikke og velge en ny farge eller trekket et til dette området."
 
-#: src/widget-set.c:367
-msgid "/_Game"
-msgstr "/_Spill"
+#: src/textures.c:81
+msgid "Pixbuf has wrong number of channels"
+msgstr "Pixbuf har feil antall kanaler"
 
-#: src/widget-set.c:368
-msgid "/_Game/_New Game"
-msgstr "/_Spill/_Nytt spill"
+#: src/textures.c:90
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr "Pixbuf har ukjent fargerom: %d"
 
-#: src/widget-set.c:369
-msgid "/_Game/sep"
-msgstr "/_Spill/sep"
+#: scripts/debug.scm:50
+msgid "_Debug"
+msgstr "Feilsøke"
 
-#: src/widget-set.c:370
-msgid "/_Game/_Quit"
-msgstr "/_Spill/_Avslutt"
+#: scripts/debug.scm:52
+msgid "_Move"
+msgstr "Flytt"
 
-#: src/widget-set.c:371
-msgid "/_Settings"
-msgstr "/_Innstillinger"
+#: scripts/debug.scm:54
+msgid "_Dump state"
+msgstr "Dump tilstand"
 
-#: src/widget-set.c:372
-msgid "/_Settings/_Preferences"
-msgstr "/_Innstillinger/_Innstillinger"
+#: scripts/rand.scm:37
+msgid "_Randomize"
+msgstr "Velg tilfeldig"
 
-#: src/widget-set.c:373
-msgid "/_Settings/_Colours"
-msgstr "/_Innstillinger/_Farget"
+#: scripts/flubrd.scm:50
+msgid "This script only works on 3×3×3 cubes."
+msgstr "Dette skriptet fungerer kun med 3x3x3-kuber."
 
-#: src/widget-set.c:374
+#: scripts/mellor-solve.scm:399
+msgid "_Solvers"
+msgstr "Løsningsalgoritmer"
+
+#: scripts/mellor-solve.scm:400
+msgid "_3×3"
+msgstr "_3×3"
+
+#: scripts/mellor-solve.scm:404
+msgid "_Full cube"
+msgstr "Hel Kube"
+
+#: scripts/mellor-solve.scm:407
+msgid "Bottom _edge place"
+msgstr "Bunnkantplassering"
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _corner orient"
+msgstr "Bunnhjørneorientering"
+
+#: scripts/mellor-solve.scm:413
+msgid "_Bottom corner place"
+msgstr "Bunnhjørneplassering"
+
+#: scripts/mellor-solve.scm:416
+msgid "_Middle slice"
+msgstr "Mitre skife"
+
+#: scripts/mellor-solve.scm:419
+msgid "_Top slice"
+msgstr "Toppskive"
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top edges"
+msgstr "Toppkanter"
+
+#~ msgid "Cannot create image from file %s: %s"
+#~ msgstr "Kan ikke lage bilde fra fil %s: %s"
+
+#~ msgid "Pattern"
+#~ msgstr "Mønster"
+
+#~ msgid "Click here to use a pattern on the cube surface"
+#~ msgstr "Klikk her for å bruke et mønster på kubens overflate"
+
+#~ msgid "Controls the speed with which slices rotate"
+#~ msgstr "Kontrollerer hastigheten som skivene roterer med"
+
+#~ msgid "Preferences"
+#~ msgstr "Innstillinger"
+
+#~ msgid "Lighting"
+#~ msgstr "Belysning"
+
+#~ msgid "Enable lighting"
+#~ msgstr "Aktiver belysning"
+
+#~ msgid "Makes the cube appear illuminated"
+#~ msgstr "Får kuben til å virke opplyst"
+
+#~ msgid "Start cube with new settings?"
+#~ msgstr "Start kube med nytt oppsett?"
+
+#~ msgid "/_Game/sep"
+#~ msgstr "/_Spill/sep"
+
+#~ msgid "/_Game/_Quit"
+#~ msgstr "/_Spill/_Avslutt"
+
+#~ msgid "/_Settings"
+#~ msgstr "/_Innstillinger"
+
+#~ msgid "/_Settings/_Preferences"
+#~ msgstr "/_Innstillinger/_Innstillinger"
+
+#~ msgid "/_Settings/_Colours"
+#~ msgstr "/_Innstillinger/_Farget"
+
+#~ msgid "/_Help/_About"
+#~ msgstr "/_Hjelp/_Om"
+
 #, fuzzy
-msgid "/_Settings/Sho_w\\/Hide"
-msgstr "/_Innstillinger"
-
-#: src/widget-set.c:380
-msgid "/_Help"
-msgstr "/_Hjelp"
-
-#: src/widget-set.c:381
-msgid "/_Help/_About"
-msgstr "/_Hjelp/_Om"
-
-#: src/widget-set.c:431
-#, fuzzy
-msgid "/Settings/Show\\/Hide"
-msgstr "/_Innstillinger"
-
-#~ msgid "Use an image file on the cube face"
-#~ msgstr "Bruk en bildefil på kubens overflate"
+#~ msgid "/Settings/Show\\/Hide"
+#~ msgstr "/_Innstillinger"
