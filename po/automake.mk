@@ -17,6 +17,7 @@ POFILES=po/bg.po \
 	po/eu.po \
 	po/fi.po \
 	po/fr.po \
+	po/gl.po \
 	po/he.po \
 	po/hr.po \
 	po/it.po \
