@@ -231,11 +231,7 @@ on_drag_data_rx (GtkWidget * widget,
       }
     case GBK_DRAG_FILELIST:
       {
-	gchar **s = 0;
-	gchar **start = 0;
-
-	start = s =
-	  g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
+	gchar **s = g_strsplit ((const gchar *) selection_data->data, "\r\n", 0);
 
 	while (*s)
 	  {
