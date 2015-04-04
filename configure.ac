@@ -75,6 +75,8 @@ PKG_CHECK_MODULES(GUILE, guile-2.0,,
 	AC_MSG_ERROR("Guile 1.8.0 or later is required"))
 )
 
+GUILE_PROGS
+
 AC_SEARCH_LIBS([cos],[m],,
 	AC_MSG_ERROR("No maths library present" ))
 

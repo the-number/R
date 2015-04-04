@@ -50,10 +50,10 @@ XGETTEXT_OPTIONS = \
 	--from-code=UTF-8 \
 	--add-comments='TRANSLATORS:'
 
-$(POTFILE): $(DIST_SOURCES) $(dist_script_DATA)
+$(POTFILE): $(DIST_SOURCES) $(dist_script_DATA) $(desktop_DATA)
 	@$(MKDIR_P) po
 	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS) $(DIST_SOURCES) --language=C --keyword=_ --keyword=N_ -o $@
-	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS) $(dist_script_DATA) --language=scheme --keyword=_ --keyword=N_ -j -o $@
+	$(XGETTEXT) --directory=$(top_srcdir) $(XGETTEXT_OPTIONS) $(dist_script_DATA) $(desktop_DATA) --language=scheme --keyword=_ --keyword=N_ -j -o $@
 
 
 $(POFILES): $(POTFILE)
