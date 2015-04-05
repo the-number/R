@@ -36,12 +36,11 @@
 
 (define rand-menu (gnubik-create-menu (_ "_Randomize")))
 
-(gnubik-register-script "_8" '(gnubik-randomize 8) rand-menu)
-(gnubik-register-script "_7" '(gnubik-randomize 7) rand-menu)
-(gnubik-register-script "_6" '(gnubik-randomize 6) rand-menu)
-(gnubik-register-script "_5" '(gnubik-randomize 5) rand-menu)
-(gnubik-register-script "_4" '(gnubik-randomize 4) rand-menu)
-(gnubik-register-script "_3" '(gnubik-randomize 3) rand-menu)
-(gnubik-register-script "_2" '(gnubik-randomize 2) rand-menu)
-(gnubik-register-script "_1" '(gnubik-randomize 1) rand-menu)
-
+(gnubik-register-script (format #f (_ "_~a") 8) '(gnubik-randomize 8) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 7) '(gnubik-randomize 7) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 6) '(gnubik-randomize 6) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 5) '(gnubik-randomize 5) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 4) '(gnubik-randomize 4) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 3) '(gnubik-randomize 3) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 2) '(gnubik-randomize 2) rand-menu)
+(gnubik-register-script (format #f (_ "_~a") 1) '(gnubik-randomize 1) rand-menu)
