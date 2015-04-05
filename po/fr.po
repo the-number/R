@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnubik 2.4\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2015-03-24 21:00+0100\n"
+"PO-Revision-Date: 2015-03-28 13:37+0100\n"
 "Last-Translator: Stéphane Aulery <lkppo@free.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
-msgstr "Choix de l'image"
+msgstr "Sélecteur d’image"
 
 #: src/colour-dialog.c:209
 msgid "All Images"
@@ -34,7 +34,7 @@ msgstr "Tous les fichiers"
 
 #: src/colour-dialog.c:296
 msgid "Colour selector"
-msgstr "Choix de la couleur"
+msgstr "Sélecteur de couleur"
 
 #: src/colour-dialog.c:313
 msgid "Image"
@@ -42,11 +42,11 @@ msgstr "Image"
 
 #: src/colour-dialog.c:314
 msgid "Se_lect"
-msgstr "Se_lection"
+msgstr "_Selection"
 
 #: src/colour-dialog.c:322
 msgid "Select an image file"
-msgstr "Choisir un fichier image"
+msgstr "Choisir une image"
 
 #: src/colour-dialog.c:324
 msgid "_Tiled"
@@ -54,7 +54,7 @@ msgstr "_Carrelé"
 
 #: src/colour-dialog.c:326
 msgid "Place a copy of the image on each block"
-msgstr "Appliquer une copie de l'image sur chaque bloc"
+msgstr "Habiller chaque bloc avec l’mage"
 
 #: src/colour-dialog.c:331
 msgid "_Mosaic"
@@ -62,15 +62,15 @@ msgstr "_Mosaïque"
 
 #: src/colour-dialog.c:335
 msgid "Place a copy of the image across the entire face of the cube"
-msgstr "Appliquer une copie de l'image sur toute la face du cube"
+msgstr "Habiller toutes faces du cube avec l’image"
 
 #: src/colour-dialog.c:341
 msgid "_Plain"
-msgstr "_Plein texte"
+msgstr "_Texte"
 
 #: src/colour-dialog.c:344
 msgid "Remove image from the cube face"
-msgstr "Supprimer l'image de la face du cube"
+msgstr "Supprimer l’image de la face du cube"
 
 #: src/dialogs.c:106
 msgid "Size of cube:"
@@ -82,15 +82,15 @@ msgstr "Cube ré_gulier"
 
 #: src/dialogs.c:117
 msgid "Sets the number of blocks in each side"
-msgstr "Préciser le nombre de blocs sur chaque côté"
+msgstr "Préciser le nombre de blocs de chaque face"
 
 #: src/dialogs.c:121
 msgid "Allow only cubes with all sides equal size"
-msgstr "Permettre seulement les cubes dont toutes les faces sont de même taille"
+msgstr "Autoriser seulement les cubes réguliers"
 
 #: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
-msgstr "Un cube magique à 3 dimensions"
+msgstr "Cube magique à 3 dimensions"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
@@ -112,11 +112,11 @@ msgstr "Position initiale"
 
 #: src/dialogs.c:216
 msgid "_Random"
-msgstr "Aléatoi_re"
+msgstr "_Aléatoire"
 
 #: src/dialogs.c:220
 msgid "_Solved"
-msgstr "Ré_soudre"
+msgstr "_Résoudre"
 
 #: src/menus.c:94
 msgid "Rear View"
@@ -141,7 +141,7 @@ msgstr "Vue de droite"
 #: src/menus.c:138
 #, c-format
 msgid "A mark is now set at position %d."
-msgstr "Une marque est maintenant à la position %d."
+msgstr "L’emplacement %d est marqué."
 
 #: src/menus.c:152
 #, c-format
@@ -152,18 +152,18 @@ msgstr "Mouvements : %d / %d"
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "Cube résolu en %d mouvements"
+msgstr[0] "Cube résolu en %d mouvement"
 msgstr[1] "Cube résolu en %d mouvements"
 
 #: src/menus.c:183
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr "Le cube n'est PAS fini ! Les couleurs sont correctes, mais pas l'orientation"
+msgstr "Le cube n'est PAS terminé ! Les couleurs sont correctes, mais pas l'orientation"
 
 #: src/menus.c:201
 #, c-format
 msgid "Animation rate set to %d frame per turn."
 msgid_plural "Animation rate set to %d frames per turn."
-msgstr[0] "Animation de %d image par tour."
+msgstr[0] "Animation d'une image par tour."
 msgstr[1] "Animation de %d images par tour."
 
 #: src/menus.c:228
@@ -176,15 +176,15 @@ msgstr "_Vue"
 
 #: src/menus.c:230
 msgid "Add _View"
-msgstr "Ajouter une _vue"
+msgstr "Ajouter une vu_e"
 
 #: src/menus.c:231
 msgid "Add an auxiliary view of the cube"
-msgstr "Ajouter une vue auxillière au cube"
+msgstr "Ajouter une vue auxiliaire au cube"
 
 #: src/menus.c:234
 msgid "_Help"
-msgstr "_Aide"
+msgstr "A_ide"
 
 #: src/menus.c:235
 msgid "Sho_w/Hide"
@@ -252,7 +252,7 @@ msgstr "En arrière"
 
 #: src/menus.c:463
 msgid "Make one step backwards"
-msgstr "Un pas en arrière"
+msgstr "Un coup en arrière"
 
 #: src/menus.c:468
 msgid "Stop"
@@ -268,7 +268,7 @@ msgstr "Marque"
 
 #: src/menus.c:476
 msgid "Mark the current place in the sequence of moves"
-msgstr "marquer la position actuelle de la séquence"
+msgstr "Marquer la position actuelle de la séquence"
 
 #: src/menus.c:482
 msgid "Forward"
@@ -276,7 +276,7 @@ msgstr "En avant"
 
 #: src/menus.c:483
 msgid "Make one step forwards"
-msgstr "Un pas en avant"
+msgstr "Un coup en avant"
 
 #: src/menus.c:488
 msgid "Play"
@@ -288,15 +288,15 @@ msgstr "Dérouler les séquences en marche avant"
 
 #: src/menus.c:555
 msgid "Gnubik error"
-msgstr "erreur de Gnubik"
+msgstr "Erreur de Gnubik"
 
 #: src/swatch.c:132
 msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
-msgstr "Un exemple de la couleur. Vous pouvez cliquer et choisir une nouvelle couleur, ou l'appliquer à cet endroit."
+msgstr "Un exemple de couleur. Vous pouvez cliquer et choisir une nouvelle couleur, ou en glisser une à cet endroit."
 
 #: src/textures.c:81
 msgid "Pixbuf has wrong number of channels"
-msgstr "Pixbuf n'a pas les bons numéros de canaux"
+msgstr "Pixbuf n’a pas les bons numéros de canaux"
 
 #: src/textures.c:90
 #, c-format
@@ -317,11 +317,11 @@ msgstr "_Vidage de la pile"
 
 #: scripts/rand.scm:37
 msgid "_Randomize"
-msgstr "_Tirage aléatoire"
+msgstr "Tirage _aléatoire"
 
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
-msgstr "Ce script marche seulement avec des cubes de dimension 3×3×3."
+msgstr "Ce script marche seulement avec des cubes réguliers de dimension 3."
 
 #: scripts/mellor-solve.scm:399
 msgid "_Solvers"
@@ -337,24 +337,24 @@ msgstr "Cube _entier"
 
 #: scripts/mellor-solve.scm:407
 msgid "Bottom _edge place"
-msgstr "Bord inférieur"
+msgstr "Bords _inférieur"
 
 #: scripts/mellor-solve.scm:410
 msgid "Bottom _corner orient"
-msgstr "Coin inférieur orienté"
+msgstr "_Coin inférieur orienté"
 
 #: scripts/mellor-solve.scm:413
 msgid "_Bottom corner place"
-msgstr "Coin inférieur"
+msgstr "Coin in_férieur"
 
 #: scripts/mellor-solve.scm:416
 msgid "_Middle slice"
-msgstr "Tranche du milieu"
+msgstr "Tranche du _milieu"
 
 #: scripts/mellor-solve.scm:419
 msgid "_Top slice"
-msgstr "Tranche du haut"
+msgstr "Tranche du _haut"
 
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
-msgstr "Bords supérieurs"
+msgstr "Bords _supérieurs"
