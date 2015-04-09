@@ -31,6 +31,11 @@
 
 #include "game.h"
 
+#include <libintl.h>
+
+#define _(String) gettext (String)
+#define N_(String) (String)
+
 static const char help_string[];
 
 
@@ -83,6 +88,8 @@ c_main (void *closure, int argc, char *argv[])
   g_signal_connect (window, "delete-event", G_CALLBACK (gtk_main_quit), NULL);
 
   gtk_window_set_icon_name (GTK_WINDOW (window), "gnubik");
+
+  gtk_window_set_title (GTK_WINDOW (window), _(PACKAGE_NAME));
 
   /* process arguments specific to this program */
   parse_app_opts (&argc, argv, &opts);

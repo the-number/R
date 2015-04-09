@@ -72,7 +72,7 @@ new_view (GbkGame * game, const gchar * description, const gfloat * aspect)
 
   gtk_window_set_icon_name (GTK_WINDOW (window), "gnubik");
 
-  title = g_strdup_printf ("%s %s", PACKAGE, description);
+  title = g_strdup_printf ("%s %s", _(PACKAGE_NAME), description);
 
   gtk_window_set_title (GTK_WINDOW (window), title);
 

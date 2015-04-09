@@ -150,7 +150,7 @@ about_dialog (GtkWidget * w, GtkWindow * toplevel)
   gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), toplevel);
 
-  gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG (dialog), PACKAGE_NAME);
+  gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG (dialog), _(PACKAGE_NAME));
 
   gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), PACKAGE_VERSION);
 

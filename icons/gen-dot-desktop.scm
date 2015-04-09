@@ -4,7 +4,7 @@
 
 (define (N_ x) x)
 
-(define generic-name (N_ "Gnubik"))
+(define generic-name (N_ "GNUbik"))
 (define comment (N_ "A 3D magic cube puzzle"))
 
 (define (thing p)
