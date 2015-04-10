@@ -1,3 +1,11 @@
+GNUbik 2.4.2-pre  - A minor release primarily to update translations
+
+	* Various new and updated translations.
+
+	* The .desktop file is now internationalised.
+
+	* A compiler warning on newer gcc versions has been eliminated.
+
 GNUbik 2.4.1  - A minor release with very few changes
 
 	* Rebuilt against newer version of automake (1.11.6) to address security advisories
