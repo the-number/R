@@ -2,15 +2,15 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
 # Jay A. Fleming <tito.nehru.naser@gmail.com>, 2010.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012—2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik-2.4\n"
+"Project-Id-Version: gnubik-2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2012-01-04 01:36+0200\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-12 11:14+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian <gnu@prevod.org>\n"
+"Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -320,6 +320,13 @@ msgstr "_Одбаци стање"
 msgid "_Randomize"
 msgstr "_Случајно"
 
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
+
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
 msgstr "Ова скрипта ради само на 3×3×3 коцкама."
@@ -359,6 +366,14 @@ msgstr "Горњи _прстен"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "_Горње ивице"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "Гнубик"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Слагалица магичне 3Д коцке"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Не могу да направим слику од датотеке %s: %s"

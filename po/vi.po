@@ -1,14 +1,15 @@
 # Vietnamese translation for gnubik.
-# Copyright © 2013 Free Software Foundation, Inc.
+# Bản dịch tiếng Việt dành cho gnubik.
+# Copyright © 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
-# First translated by Trần Ngọc Quân <vnwildman@gmail.com>, 2013.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2013, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik-2.4\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2013-06-04 08:29+0700\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-12 14:19+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>\n"
 "Language: vi\n"
@@ -96,7 +97,7 @@ msgstr "Trò chơi trí tuệ về khối lập phương ba chiều"
 #. the people who have helped with translation to your language.
 #: src/dialogs.c:169
 msgid "translator-credits"
-msgstr "Trần Ngọc Quân <vnwildman@gmail.com>"
+msgstr "Nhóm Việt hóa tại TranslationProject.org <translation-team-vi@lists.sourceforge.net>"
 
 #: src/dialogs.c:189
 msgid "New Game"
@@ -190,7 +191,7 @@ msgstr "Ẩn/_Hiện"
 
 #: src/menus.c:236
 msgid "_Scripts"
-msgstr "_Scripts"
+msgstr "_Văn lệnh"
 
 #: src/menus.c:306
 msgid "_Restart Game"
@@ -311,11 +312,18 @@ msgstr "Di chuyể_n"
 
 #: scripts/debug.scm:54
 msgid "_Dump state"
-msgstr "Trạng thái _Dump"
+msgstr "Đổ _trạng thái"
 
 #: scripts/rand.scm:37
 msgid "_Randomize"
 msgstr "_Ngẫu nhiên"
+
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
 
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
@@ -356,3 +364,11 @@ msgstr "Lát _Trên"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "_Cạnh trên"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Trò chơi trí tuệ về khối lập phương ba chiều"

@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2015-03-28 13:37+0100\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-11 11:03+0200\n"
 "Last-Translator: Stéphane Aulery <lkppo@free.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -319,6 +319,13 @@ msgstr "_Vidage de la pile"
 msgid "_Randomize"
 msgstr "Tirage _aléatoire"
 
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
+
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
 msgstr "Ce script marche seulement avec des cubes réguliers de dimension 3."
@@ -358,3 +365,11 @@ msgstr "Tranche du _haut"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "Bords _supérieurs"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Un cube magique à 3 dimensions qui fait chauffer les méninges"

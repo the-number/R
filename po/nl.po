@@ -1,16 +1,16 @@
 # Dutch translation for GNUbik.
-# Copyright (C) 2003-2010 John Darrington.
+# Copyright (C) 2003-2015 John Darrington.
 # This file is distributed under the same license as the gnubik package.
 #
 # Lidwine van As <gnubik-nl@coolpython.nl>, 2005.
 # Erwin Poeze <erwin.poeze@gmail.com>, 2010.
-# Benno Schulenberg <benno@vertaalt.nl>, 2011.
+# Benno Schulenberg <benno@vertaalt.nl>, 2011, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2011-05-26 21:53+0200\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-11 14:56+0200\n"
 "Last-Translator: Benno Schulenberg <benno@vertaalt.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -90,13 +90,13 @@ msgstr "Staat alleen kubussen toe waarvan alle zijdes even groot zijn"
 
 #: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
-msgstr "Een driedimensionale magischekubus-puzzel"
+msgstr "Een driedimensionale draaikubuspuzzel"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
 #: src/dialogs.c:169
 msgid "translator-credits"
-msgstr "Lidwine van As <gnubik-nl@coolpython.nl>, 2005;Erwin Poeze <erwin.poeze@gmail.com>, 2010;Benno Schulenberg <benno@vertaalt.nl>, 2011."
+msgstr "Lidwine van As <gnubik-nl@coolpython.nl>, 2005;Erwin Poeze <erwin.poeze@gmail.com>, 2010;Benno Schulenberg <benno@vertaalt.nl>, 2015."
 
 #: src/dialogs.c:189
 msgid "New Game"
@@ -319,6 +319,13 @@ msgstr "Toestand _dumpen"
 msgid "_Randomize"
 msgstr "_Schudden"
 
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
+
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
 msgstr "Dit script werkt alleen op 3x3x3 kubussen."
@@ -358,6 +365,14 @@ msgstr "_Bovenlaag"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "_Bovenranden"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Een 3D draaikubuspuzzel"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Kan geen afbeelding maken van bestand %s: %s"

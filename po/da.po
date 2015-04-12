@@ -1,16 +1,16 @@
 # Danish translation GNUbik.
-# Copyright (C) 2011 GNUbik og nedenstående oversættere.
+# Copyright (C) 2015 GNUbik og nedenstående oversættere.
 # This file is distributed under the same license as the gnubik package.
 # Bjarke Freund-Hansen <dev@rocekiller.dk>, 2003.
-# Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011.
+# Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011, 2015.
 # korrekturlæst Torben Grøn Helligsø.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4-pre1\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-03-09 11:00+0100\n"
-"PO-Revision-Date: 2011-03-13 18:07+0200\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-11 18:07+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -19,81 +19,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/colour-dialog.c:182
+#: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr "Billedvælger"
 
-#: src/colour-dialog.c:207
+#: src/colour-dialog.c:209
 msgid "All Images"
 msgstr "Alle billeder"
 
-#: src/colour-dialog.c:211
+#: src/colour-dialog.c:213
 msgid "All Files"
 msgstr "Alle filer"
 
-#: src/colour-dialog.c:294
+#: src/colour-dialog.c:296
 msgid "Colour selector"
 msgstr "Farvevælger"
 
-#: src/colour-dialog.c:308
+#: src/colour-dialog.c:313
 msgid "Image"
 msgstr "Billede"
 
-#: src/colour-dialog.c:309
+#: src/colour-dialog.c:314
 msgid "Se_lect"
 msgstr "_Vælg"
 
-#: src/colour-dialog.c:316
+#: src/colour-dialog.c:322
 msgid "Select an image file"
 msgstr "Vælg en billedfil"
 
-#: src/colour-dialog.c:318
+#: src/colour-dialog.c:324
 msgid "_Tiled"
 msgstr "_Fliselagt"
 
-#: src/colour-dialog.c:320
+#: src/colour-dialog.c:326
 msgid "Place a copy of the image on each block"
 msgstr "Placer en kopi af billedet på hver blok"
 
-#: src/colour-dialog.c:325
+#: src/colour-dialog.c:331
 msgid "_Mosaic"
 msgstr "_Mosaik"
 
-#: src/colour-dialog.c:328
+#: src/colour-dialog.c:335
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Placer en kopi af billedet over hele kubens side"
 
-#: src/colour-dialog.c:334
+#: src/colour-dialog.c:341
 msgid "_Plain"
 msgstr "_Almindelig"
 
-#: src/colour-dialog.c:337
+#: src/colour-dialog.c:344
 msgid "Remove image from the cube face"
 msgstr "Fjern billede fra kubens side"
 
-#: src/dialogs.c:104
+#: src/dialogs.c:106
 msgid "Size of cube:"
 msgstr "Kubens størrelse:"
 
-#: src/dialogs.c:108
+#: src/dialogs.c:111
 msgid "Re_gular cube"
 msgstr "_Regulær kube"
 
-#: src/dialogs.c:114
+#: src/dialogs.c:117
 msgid "Sets the number of blocks in each side"
 msgstr "Angiver antallet af blokke på hver side"
 
-#: src/dialogs.c:117
+#: src/dialogs.c:121
 msgid "Allow only cubes with all sides equal size"
 msgstr "Tillad kun kuber hvor alle sider har samme størrelse"
 
-#: src/dialogs.c:161
+#: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
 msgstr "En 3-dimensionel magisk kube"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
-#: src/dialogs.c:166
+#: src/dialogs.c:169
 msgid "translator-credits"
 msgstr ""
 "Joe Hansen - 2010, 2011.\n"
@@ -101,147 +101,147 @@ msgstr ""
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: src/dialogs.c:186
+#: src/dialogs.c:189
 msgid "New Game"
 msgstr "Nyt spil"
 
-#: src/dialogs.c:198
+#: src/dialogs.c:201
 msgid "Dimensions"
 msgstr "Dimensioner"
 
-#: src/dialogs.c:208
+#: src/dialogs.c:212
 msgid "Initial position"
 msgstr "Startplacering"
 
-#: src/dialogs.c:211
+#: src/dialogs.c:216
 msgid "_Random"
 msgstr "_Vilkårlig"
 
-#: src/dialogs.c:213
+#: src/dialogs.c:220
 msgid "_Solved"
 msgstr "_Løst"
 
-#: src/menus.c:92
+#: src/menus.c:94
 msgid "Rear View"
 msgstr "Baglæns visning"
 
-#: src/menus.c:100
+#: src/menus.c:102
 msgid "Bottom View"
 msgstr "Bundvisning"
 
-#: src/menus.c:107
+#: src/menus.c:109
 msgid "Top View"
 msgstr "Topvisning"
 
-#: src/menus.c:115
+#: src/menus.c:117
 msgid "Left View"
 msgstr "Visning fra venstre"
 
-#: src/menus.c:122
+#: src/menus.c:124
 msgid "Right View"
 msgstr "Visning fra højre"
 
-#: src/menus.c:136
+#: src/menus.c:138
 #, c-format
 msgid "A mark is now set at position %d."
 msgstr "Et mærke er nu placeret ved %d."
 
-#: src/menus.c:153
+#: src/menus.c:152
 #, c-format
 msgid "Moves: %d / %d"
 msgstr "Drejninger: %d / %d"
 
-#: src/menus.c:176
+#: src/menus.c:173
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
 msgstr[0] "Kube løst med %d drejning"
 msgstr[1] "Kube løst med %d drejninger"
 
-#: src/menus.c:186
+#: src/menus.c:183
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
 msgstr "Kuben er IKKE løst! Farverne er korrekte, men har forkert retning"
 
-#: src/menus.c:202
+#: src/menus.c:201
 #, c-format
 msgid "Animation rate set to %d frame per turn."
 msgid_plural "Animation rate set to %d frames per turn."
 msgstr[0] "Animationsrate er angivet til %d billede per runde."
 msgstr[1] "Animationsrate er angivet til %d billeder per runde."
 
-#: src/menus.c:232
+#: src/menus.c:228
 msgid "_Game"
 msgstr "_Spil"
 
-#: src/menus.c:233
+#: src/menus.c:229
 msgid "_View"
 msgstr "_Visning"
 
-#: src/menus.c:234
+#: src/menus.c:230
 msgid "Add _View"
 msgstr "Tilføj _visning"
 
-#: src/menus.c:235
+#: src/menus.c:231
 msgid "Add an auxiliary view of the cube"
 msgstr "Tilføj en hjælpevisning af kuben"
 
-#: src/menus.c:238
+#: src/menus.c:234
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: src/menus.c:239
+#: src/menus.c:235
 msgid "Sho_w/Hide"
 msgstr "_Vis/skjul"
 
-#: src/menus.c:240
+#: src/menus.c:236
 msgid "_Scripts"
 msgstr "_Skripter"
 
-#: src/menus.c:312
+#: src/menus.c:306
 msgid "_Restart Game"
 msgstr "_Genstart spil"
 
-#: src/menus.c:317
+#: src/menus.c:310
 msgid "_New Game"
 msgstr "_Nyt spil"
 
-#: src/menus.c:322
+#: src/menus.c:314
 msgid "_Rear"
 msgstr "_Bagende"
 
-#: src/menus.c:323
+#: src/menus.c:316
 msgid "_Left"
 msgstr "_Venstre"
 
-#: src/menus.c:324
+#: src/menus.c:318
 msgid "Ri_ght"
 msgstr "_Højre"
 
-#: src/menus.c:325
+#: src/menus.c:320
 msgid "_Top"
 msgstr "_Øverst"
 
-#: src/menus.c:326
+#: src/menus.c:322
 msgid "_Bottom"
 msgstr "_Nederst"
 
-#: src/menus.c:330
+#: src/menus.c:327
 msgid "_Colours"
 msgstr "_Farver"
 
-#: src/menus.c:335
+#: src/menus.c:331
 msgid "_Animation"
 msgstr "_Animation"
 
-#: src/menus.c:340
+#: src/menus.c:335
 msgid "_Faster"
 msgstr "_Hurtigere"
 
-#: src/menus.c:345
+#: src/menus.c:339
 msgid "_Slower"
 msgstr "_Langsommere"
 
-#: src/menus.c:455
+#: src/menus.c:454
 msgid "Rewind"
 msgstr "Spol tilbage"
 
@@ -257,51 +257,51 @@ msgstr "Tilbage"
 msgid "Make one step backwards"
 msgstr "Gå et trin tilbage"
 
-#: src/menus.c:469
+#: src/menus.c:468
 msgid "Stop"
 msgstr "Stop"
 
-#: src/menus.c:470
+#: src/menus.c:469
 msgid "Stop running the sequence of moves"
 msgstr "Stop kørslen af drejningernes sekvens"
 
-#: src/menus.c:476
+#: src/menus.c:475
 msgid "Mark"
 msgstr "Marker"
 
-#: src/menus.c:477
+#: src/menus.c:476
 msgid "Mark the current place in the sequence of moves"
 msgstr "Marker det aktuelle sted i drejesekvensen"
 
-#: src/menus.c:483
+#: src/menus.c:482
 msgid "Forward"
 msgstr "Fremad"
 
-#: src/menus.c:484
+#: src/menus.c:483
 msgid "Make one step forwards"
 msgstr "Gå et trin fremad"
 
-#: src/menus.c:490
+#: src/menus.c:488
 msgid "Play"
 msgstr "Afspil"
 
-#: src/menus.c:491
+#: src/menus.c:489
 msgid "Run forward through the sequence of moves"
 msgstr "Gå fremad igennem drejesekvensen"
 
-#: src/menus.c:556
+#: src/menus.c:555
 msgid "Gnubik error"
 msgstr "Gnubik-fejl"
 
-#: src/swatch.c:135
+#: src/swatch.c:132
 msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
 msgstr "En prøve på farven. Du kan klikke og vælge en ny farve, eller trække en farve til dette sted."
 
-#: src/textures.c:92
+#: src/textures.c:81
 msgid "Pixbuf has wrong number of channels"
 msgstr "Pixbuf har et forkert antal kanaler"
 
-#: src/textures.c:101
+#: src/textures.c:90
 #, c-format
 msgid "Pixbuf has unknown colorspace: %d"
 msgstr "Pixbuf har ukendt farveområde: %d"
@@ -322,13 +322,12 @@ msgstr "_Smid tilstand"
 msgid "_Randomize"
 msgstr "_Vælg tilfældig"
 
-#: scripts/rand.scm:38
-msgid "_Animated"
-msgstr "_Animeret"
-
-#: scripts/rand.scm:39
-msgid "_Fast"
-msgstr "_Hurtig"
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
 
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
@@ -369,3 +368,11 @@ msgstr "_Øverste skive"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "_Øverste kanter"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "En 3D-magisk kube"
