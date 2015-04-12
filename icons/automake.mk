@@ -43,9 +43,9 @@ EXTRA_DIST += icons/logo16.png icons/logo22.png icons/logo32.png icons/logo48.pn
 EXTRA_DIST += $(desktop_DATA)
 
 
-icons/gnubik.desktop: icons/gen-dot-desktop.scm  
+icons/gnubik.desktop: icons/gen-dot-desktop.scm  $(POFILES)
 	$(MKDIR_P) `dirname $@`
-	$(GUILE) $< $(POFILES) > $@,tmp
+	$(GUILE) $< `echo $(POFILES) | sed -e 's%po/%'$(srcdir)'/po/%g'` > $@,tmp
 	mv $@,tmp $@
 
 

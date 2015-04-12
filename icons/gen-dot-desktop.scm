@@ -30,7 +30,7 @@
 
 ;; Convert po/de.po to de
 (define (filename->isocode f)
-  (string-drop-right (string-drop f 3) 3))
+  (string-drop-right (string-drop f (1+ (string-rindex f #\/))) 3))
 
 (define (N_ x) x)
 
