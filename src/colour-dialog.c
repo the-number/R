@@ -206,6 +206,7 @@ choose_image (GtkWidget * w, gpointer data)
   /* File format filters. Probably just All Images is enough */
   all_images_filter = gtk_file_filter_new ();
   gtk_file_filter_add_pixbuf_formats (all_images_filter);
+  /* TRANSLATORS: "All  Images" implies nothing but images! */
   gtk_file_filter_set_name (all_images_filter, _("All Images"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fc), all_images_filter);
   all_files_filter = gtk_file_filter_new ();

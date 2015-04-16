@@ -227,6 +227,7 @@ create_statusbar (GbkGame * game)
 static const GtkActionEntry action_entries[] = {
   {"game-menu-action", NULL, N_("_Game")},
   {"view-menu-action", NULL, N_("_View")},
+  /* TRANSLATORS: Lets the user see the cube from a different angle */
   {"add-view-menu-action", NULL, N_("Add _View"),
    NULL, N_("Add an auxiliary view of the cube")},
 
