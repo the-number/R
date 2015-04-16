@@ -1,0 +1,393 @@
+# Arabic translation for gnubik
+# Copyright (C) 2015 John Darrington
+# This file is distributed under the same license as the gnubik package.
+# Abdo Alrhman Aiman <abdo.alrhman.aiman@gmail.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-04-16 14:16+0200\n"
+"Last-Translator: Abdo Alrhman Aiman <abdo.alrhman.aiman@gmail.com>\n"
+"Language-Team: Arabic <(nothing)>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#: src/colour-dialog.c:184
+msgid "Image Selector"
+msgstr "تحديد صورة"
+
+#: src/colour-dialog.c:209
+msgid "All Images"
+msgstr "الصور فقط"
+
+#: src/colour-dialog.c:213
+msgid "All Files"
+msgstr "كافة الملفات"
+
+#: src/colour-dialog.c:296
+msgid "Colour selector"
+msgstr "إِعدادات"
+
+#: src/colour-dialog.c:313
+msgid "Image"
+msgstr "تحديد صورة"
+
+#: src/colour-dialog.c:314
+msgid "Se_lect"
+msgstr "_تصفَّح..."
+
+#: src/colour-dialog.c:322
+msgid "Select an image file"
+msgstr "تحديد صورة واِستخدامها بدلًا عن اللون"
+
+#: src/colour-dialog.c:324
+msgid "_Tiled"
+msgstr "_كاملة"
+
+#: src/colour-dialog.c:326
+msgid "Place a copy of the image on each block"
+msgstr "وَضْع الصورة كاملة على كل جزء"
+
+#: src/colour-dialog.c:331
+msgid "_Mosaic"
+msgstr "مُقطَّعة"
+
+#: src/colour-dialog.c:335
+msgid "Place a copy of the image across the entire face of the cube"
+msgstr "وَضْع قطعة من الصورة على كل جزء"
+
+#: src/colour-dialog.c:341
+msgid "_Plain"
+msgstr "اِ_حذف الصورة"
+
+#: src/colour-dialog.c:344
+msgid "Remove image from the cube face"
+msgstr "حَذْف الصورة واِستعادة اللون"
+
+#: src/dialogs.c:106
+msgid "Size of cube:"
+msgstr "حَجْم المكعَّب:"
+
+#: src/dialogs.c:111
+msgid "Re_gular cube"
+msgstr "اِجعل الجوانب متساوية (مُستحسَّن)"
+
+#: src/dialogs.c:117
+msgid "Sets the number of blocks in each side"
+msgstr "تحديد عدد اﻷَجزاء الموجودة في كل جانب"
+
+#: src/dialogs.c:121
+msgid "Allow only cubes with all sides equal size"
+msgstr ""
+"مَنْع إِنشاء المكعَّبات غريبة الشكل،\n"
+"إِذ يُبقيها هذا الخيار متساوية الجوانب (مُستحسَّن)"
+
+#: src/dialogs.c:164
+msgid "A 3 dimensional magic cube puzzle"
+msgstr "اِلعَب بمكعَّب روبِك على الحاسوب"
+
+#. TRANSLATORS: Do not translate this string. Instead, use it to list
+#. the people who have helped with translation to your language.
+#: src/dialogs.c:169
+msgid "translator-credits"
+msgstr "عبد الرحمن أَيمن <abdo.alrhman.aiman@gmail.com>"
+
+#: src/dialogs.c:189
+msgid "New Game"
+msgstr "تخصيص مكعَّب"
+
+#: src/dialogs.c:201
+msgid "Dimensions"
+msgstr ""
+"التحجيم:\n"
+"(سيُطبَّق كل تختارهُ هنا عند نقركَ على \"مكعَّب عشوائيّ\" من قائمة \"اللعبة\")"
+
+#: src/dialogs.c:212
+msgid "Initial position"
+msgstr "الحالة:"
+
+#: src/dialogs.c:216
+msgid "_Random"
+msgstr "_غير محلول"
+
+#: src/dialogs.c:220
+msgid "_Solved"
+msgstr "_محلول"
+
+#: src/menus.c:94
+msgid "Rear View"
+msgstr "الخلف"
+
+#: src/menus.c:102
+msgid "Bottom View"
+msgstr "اﻷَسفل"
+
+#: src/menus.c:109
+msgid "Top View"
+msgstr "اﻷَعلى"
+
+#: src/menus.c:117
+msgid "Left View"
+msgstr "اليسار"
+
+#: src/menus.c:124
+msgid "Right View"
+msgstr "اليمين"
+
+#: src/menus.c:138
+#, c-format
+msgid "A mark is now set at position %d."
+msgstr "تم وَسْم الخطوة رقم %d."
+
+#: src/menus.c:152
+#, c-format
+msgid "Moves: %d / %d"
+msgstr "الخطوات: %d / %d"
+
+#: src/menus.c:173
+#, c-format
+msgid "Cube solved in %d move"
+msgid_plural "Cube solved in %d moves"
+msgstr[0] "تهانينا، لقد أَنهيتَ المكعَّب في 0 خطوات."
+msgstr[1] "تهانينا، لقد أَنهيتَ المكعَّب في خطوة واحدة."
+msgstr[2] "تهانينا، لقد أَنهيتَ المكعَّب في خطوتان."
+msgstr[3] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطوات."
+msgstr[4] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطواتًا."
+msgstr[5] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطوة."
+
+#: src/menus.c:183
+msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
+msgstr ""
+
+#: src/menus.c:201
+#, c-format
+msgid "Animation rate set to %d frame per turn."
+msgid_plural "Animation rate set to %d frames per turn."
+msgstr[0] "أَسرَع ما يُمكِن!"
+msgstr[1] "إِطارٌ واحد في كل خطوة"
+msgstr[2] "إِطاران في كل خطوة."
+msgstr[3] "%d إِطارات في كل خطوة."
+msgstr[4] "%d إِطاراتًا في كل خطوة."
+msgstr[5] "%d إِطار في كل خطوة."
+
+#: src/menus.c:228
+msgid "_Game"
+msgstr "ا_للعبة"
+
+#: src/menus.c:229
+msgid "_View"
+msgstr "_عرض"
+
+#: src/menus.c:230
+msgid "Add _View"
+msgstr "_شاهِد المكعَّب"
+
+#: src/menus.c:231
+msgid "Add an auxiliary view of the cube"
+msgstr "مشاهدة المكعَّب من زاوية مختلفة"
+
+#: src/menus.c:234
+msgid "_Help"
+msgstr "_تعليمات"
+
+#: src/menus.c:235
+msgid "Sho_w/Hide"
+msgstr ""
+
+#: src/menus.c:236
+msgid "_Scripts"
+msgstr "آليَّا_ت"
+
+#: src/menus.c:306
+msgid "_Restart Game"
+msgstr "معكَّب _عشوائيّ"
+
+#: src/menus.c:310
+msgid "_New Game"
+msgstr "_خصِّص مكعَّب"
+
+#: src/menus.c:314
+msgid "_Rear"
+msgstr "مِنَ ال_خلف"
+
+#: src/menus.c:316
+msgid "_Left"
+msgstr "مِنَ ال_يسار"
+
+#: src/menus.c:318
+msgid "Ri_ght"
+msgstr "مِنَ ال_يمين"
+
+#: src/menus.c:320
+msgid "_Top"
+msgstr "مِنَ الأَ_على"
+
+#: src/menus.c:322
+msgid "_Bottom"
+msgstr "مِنَ الأَ_سفل"
+
+#: src/menus.c:327
+msgid "_Colours"
+msgstr "إِ_عدادات"
+
+#: src/menus.c:331
+msgid "_Animation"
+msgstr "_سرعة المكعَّب"
+
+#: src/menus.c:335
+msgid "_Faster"
+msgstr "أَ_سرع"
+
+#: src/menus.c:339
+msgid "_Slower"
+msgstr "أَ_بطىء"
+
+#: src/menus.c:454
+msgid "Rewind"
+msgstr ""
+"أقرَب\n"
+"وَسَم"
+
+#: src/menus.c:456
+msgid "Go to the previous mark (or the beginning) of the sequence of moves"
+msgstr "الذهاب إِلى أَقرَب وَسَم، علمًا أَنَ المكعَّب يَوسِم نفسهُ آليًا عند البداية"
+
+#: src/menus.c:462
+msgid "Back"
+msgstr ""
+"الخطوة\n"
+"السابقة"
+
+#: src/menus.c:463
+msgid "Make one step backwards"
+msgstr "الرجوع إلى الخطوة السابقة"
+
+#: src/menus.c:468
+msgid "Stop"
+msgstr "توقَّف"
+
+#: src/menus.c:469
+msgid "Stop running the sequence of moves"
+msgstr "إِيقاف المكعَّب"
+
+#: src/menus.c:475
+msgid "Mark"
+msgstr "اِوسِمْ"
+
+#: src/menus.c:476
+msgid "Mark the current place in the sequence of moves"
+msgstr "القيام بوَسْم الخطوة الحالية، يمكنك الرجوع إلى الوَسَم لاحقًا بالنقر على زِر \"أَقرَب وَسَم\""
+
+#: src/menus.c:482
+msgid "Forward"
+msgstr ""
+"الخطوة\n"
+"التالية"
+
+#: src/menus.c:483
+msgid "Make one step forwards"
+msgstr "الذهاب إِلى الخطوة التالية"
+
+#: src/menus.c:488
+msgid "Play"
+msgstr ""
+"الخطوة\n"
+"اﻷَصليَّة"
+
+#: src/menus.c:489
+msgid "Run forward through the sequence of moves"
+msgstr "الذهاب إلى الخطوة التي تركتَ المكعَّب فيها"
+
+#: src/menus.c:555
+msgid "Gnubik error"
+msgstr "خطأ"
+
+#: src/swatch.c:132
+msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
+msgstr "التلاعُب بكل اﻷَجزاء التي تحمل هذا اللون، حيثُ يمكنكَ تغيير لون الجزء (بواسطة عجلة اﻷَلوان أَدناهُ) أَو اِستبدالهُ بصورة (بواسطة زِر \"حدِّد صورة\")"
+
+#: src/textures.c:81
+msgid "Pixbuf has wrong number of channels"
+msgstr ""
+
+#: src/textures.c:90
+#, c-format
+msgid "Pixbuf has unknown colorspace: %d"
+msgstr ""
+
+#: scripts/debug.scm:50
+msgid "_Debug"
+msgstr ""
+
+#: scripts/debug.scm:52
+msgid "_Move"
+msgstr ""
+
+#: scripts/debug.scm:54
+msgid "_Dump state"
+msgstr ""
+
+#: scripts/rand.scm:37
+msgid "_Randomize"
+msgstr "_تحريك آليّ"
+
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a مِنَ الحركات اﻵليَّة"
+
+#: scripts/flubrd.scm:50
+msgid "This script only works on 3×3×3 cubes."
+msgstr "عذرًا، خاصية الحل اﻵليّ لا تعمل سوى مع المكعَّبات 3x3x3."
+
+#: scripts/mellor-solve.scm:399
+msgid "_Solvers"
+msgstr "_الحل اﻵليّ"
+
+#: scripts/mellor-solve.scm:400
+msgid "_3×3"
+msgstr "_3x3x3"
+
+#: scripts/mellor-solve.scm:404
+msgid "_Full cube"
+msgstr "_كامل المكعَّب"
+
+#: scripts/mellor-solve.scm:407
+msgid "Bottom _edge place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:410
+msgid "Bottom _corner orient"
+msgstr ""
+
+#: scripts/mellor-solve.scm:413
+msgid "_Bottom corner place"
+msgstr ""
+
+#: scripts/mellor-solve.scm:416
+msgid "_Middle slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:419
+msgid "_Top slice"
+msgstr ""
+
+#: scripts/mellor-solve.scm:422
+msgid "_Top edges"
+msgstr ""
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "غِنوْبِكْ"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "اِلعَب بمكعَّب روبِك"

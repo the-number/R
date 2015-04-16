@@ -6,7 +6,9 @@ MSGMERGE=msgmerge
 MSGFMT=msgfmt
 
 
-POFILES=po/bg.po \
+POFILES=\
+	po/ar.po \
+	po/bg.po \
 	po/ca.po \
 	po/da.po \
 	po/de.po \
