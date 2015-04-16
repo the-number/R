@@ -14,6 +14,7 @@
 ;;   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+(setlocale LC_ALL "")
 
 ;; Procedure which generates a list of lists of three random items, and sends it
 ;; to gnubik-append-moves. The three random components are the face number
@@ -44,3 +45,4 @@
 (gnubik-register-script (format #f (_ "_~a") 3) '(gnubik-randomize 3) rand-menu)
 (gnubik-register-script (format #f (_ "_~a") 2) '(gnubik-randomize 2) rand-menu)
 (gnubik-register-script (format #f (_ "_~a") 1) '(gnubik-randomize 1) rand-menu)
+
