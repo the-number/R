@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the gnubik package.
 # Bjarke Freund-Hansen <dev@rocekiller.dk>, 2003.
 # Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011, 2015.
-# korrekturlæst Torben Grøn Helligsø.
+# korrekturlæst Torben Grøn Helligsø, Ask Hjort Larsen.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-11 18:07+0200\n"
+"PO-Revision-Date: 2015-05-01 18:07+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -89,14 +89,14 @@ msgstr "Tillad kun kuber hvor alle sider har samme størrelse"
 
 #: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
-msgstr "En 3-dimensionel magisk kube"
+msgstr "Et tænkespil med en magisk terning i 3D"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
 #: src/dialogs.c:169
 msgid "translator-credits"
 msgstr ""
-"Joe Hansen - 2010, 2011.\n"
+"Joe Hansen - 2010, 2011, 2015.\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
