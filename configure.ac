@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 
 AX_PREREQ(2.60)
-AC_INIT([GNUbik], [2.4.2-pre], [bug-gnubik@gnu.org], [gnubik], [http://www.gnu.org/software/gnubik])
+AC_INIT([GNUbik], [2.4.2], [bug-gnubik@gnu.org], [gnubik], [http://www.gnu.org/software/gnubik])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
