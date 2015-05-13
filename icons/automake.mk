@@ -18,7 +18,7 @@ uninstall-icons:
 	done 
 	gtk-update-icon-cache --ignore-theme-index $(themedir)
 
-desktopdir=$(datadir)/applications
+desktopdir=$(DESTDIR)$(datadir)/applications
 
 install-desktop:
 	$(MKDIR_P) $(desktopdir)
