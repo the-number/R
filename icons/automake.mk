@@ -36,11 +36,9 @@ UNINSTALL_DATA_HOOKS = uninstall-icons uninstall-desktop
 install-data-hook: $(INSTALL_DATA_HOOKS)
 uninstall-hook: $(UNINSTALL_DATA_HOOKS)
 
-desktop_DATA = icons/gen-dot-desktop.scm
-
 EXTRA_DIST += icons/logo22.xcf icons/logo32.xcf icons/logo48.xcf
 EXTRA_DIST += icons/logo16.png icons/logo22.png icons/logo32.png icons/logo48.png
-EXTRA_DIST += $(desktop_DATA)
+EXTRA_DIST += icons/gen-dot-desktop.scm
 
 
 icons/gnubik.desktop: icons/gen-dot-desktop.scm  $(POFILES)
