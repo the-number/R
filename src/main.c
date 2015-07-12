@@ -53,6 +53,8 @@ static void parse_app_opts (int *argc, char **argv,
 
 GbkGame *the_game;
 
+bool have_clip_volume_hint = false;
+
 static void
 c_main (void *closure, int argc, char *argv[])
 {
@@ -132,6 +134,17 @@ c_main (void *closure, int argc, char *argv[])
 
   gtk_widget_show_all (window);
 
+  {
+    char *s;
+    char  *str = strdup ((char *) glGetString (GL_EXTENSIONS));
+    for (s = strtok(str, " "); (s = strtok (NULL, " ")); )
+      {
+	if (strcmp (s, "GL_EXT_clip_volume_hint") == 0)
+	  have_clip_volume_hint = true;
+      }
+    free (str);
+  }
+  
   gtk_main ();
 }
 

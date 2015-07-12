@@ -21,6 +21,8 @@
 
 #include "cubeview.h"
 
+extern bool have_clip_volume_hint ;
+
 void perspectiveSet (struct scene_view *);
 void scene_init (GbkCubeview *);
 void projection_init (struct scene_view *, int jitter);

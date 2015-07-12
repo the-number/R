@@ -110,7 +110,8 @@ scene_init (GbkCubeview * cv)
 void
 projection_init (struct scene_view *scene, int jitter)
 {
-  glHint (GL_CLIP_VOLUME_CLIPPING_HINT_EXT, GL_FASTEST);
+  if (have_clip_volume_hint)
+    glHint (GL_CLIP_VOLUME_CLIPPING_HINT_EXT, GL_FASTEST);
 
   glEnable (GL_DEPTH_TEST);
   glClearColor (0, 0, 0, 0);
