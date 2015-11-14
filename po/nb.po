@@ -2,15 +2,14 @@
 # Copyright (C) 2003 John Darrington
 # This file is distributed under the same license as the gnubik package.
 # Stian Hole <stian@musikkpunkt.com>, 2003.
-# Johnny A. Solbu <johnny@solbu.net>, 2014.
-# Norwegian translations for GNUbik 
+# Johnny A. Solbu <johnny@solbu.net>, 2014, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2014-04-23 17:44+0100\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-05-15 02:04+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb_NO\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
@@ -321,6 +320,13 @@ msgstr "Dump tilstand"
 msgid "_Randomize"
 msgstr "Velg tilfeldig"
 
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
+
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
 msgstr "Dette skriptet fungerer kun med 3x3x3-kuber."
@@ -360,6 +366,14 @@ msgstr "Toppskive"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "Toppkanter"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Et 3D magikubepuslespill"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Kan ikke lage bilde fra fil %s: %s"

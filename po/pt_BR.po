@@ -1,26 +1,26 @@
 # Portuguese (pt_PT) translations for GNUbik 
-# Copyright (C) 2003, 2007, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2007, 2013, 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
 # John Darrington <john@darrington.wattle.id.au>, 2003.
 # Translators:
 # Daniel Marujo <daniel.marujo@gmail.com>, 2007.
 # João Fernando Ferreira <joao@joaoferreira.org>, 2007.
-# Felipe Castro <fefcas@gmail.com>, 2013.
+# Felipe Castro <fefcas@gmail.com>, 2013, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4\n"
+"Project-Id-Version: gnubik 2.4.2-pre1\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
-"POT-Creation-Date: 2011-04-09 12:35+0200\n"
-"PO-Revision-Date: 2013-10-31 14:05-0300\n"
+"POT-Creation-Date: 2015-04-10 18:32+0200\n"
+"PO-Revision-Date: 2015-05-31 10:01-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
@@ -324,6 +324,13 @@ msgstr "Mostrar _estado"
 msgid "_Randomize"
 msgstr "Emba_ralhar"
 
+#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
+#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
+#: scripts/rand.scm:45 scripts/rand.scm:46
+#, scheme-format
+msgid "_~a"
+msgstr "_~a"
+
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
 msgstr "Este script só trabalha em cubos 3×3×3."
@@ -363,6 +370,14 @@ msgstr "Fatia do _topo"
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
 msgstr "Margens do _topo"
+
+#: icons/gen-dot-desktop.scm:7
+msgid "GNUbik"
+msgstr "GNUbik"
+
+#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
+msgid "A 3D magic cube puzzle"
+msgstr "Um quebra-cabeça de cubo mágico 3D"
 
 #~ msgid "R_eset"
 #~ msgstr "_Reiniciar"
