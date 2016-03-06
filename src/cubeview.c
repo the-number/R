@@ -502,7 +502,7 @@ cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
 
   switch (event->keyval)
     {
-    case GDK_Right:
+    case GDK_KEY_Right:
       if (shifted)
 	{
 	  dir = 0;
@@ -514,7 +514,7 @@ cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
 	  axis = 1;
 	}
       break;
-    case GDK_Left:
+    case GDK_KEY_Left:
 
       if (shifted)
 	{
@@ -527,11 +527,11 @@ cube_orientate_keys (GtkWidget * w, GdkEventKey * event, gpointer data)
 	  axis = 1;
 	}
       break;
-    case GDK_Up:
+    case GDK_KEY_Up:
       axis = 0;
       dir = 0;
       break;
-    case GDK_Down:
+    case GDK_KEY_Down:
       axis = 0;
       dir = 1;
       break;

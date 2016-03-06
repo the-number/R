@@ -80,7 +80,7 @@ key_press (GtkWidget *w, GdkEventKey *e,  gpointer data)
 {
   struct cublet_selection *cs = data;
 
-  if ( e->keyval != GDK_Shift_L && e->keyval != GDK_Shift_R )
+  if ( e->keyval != GDK_KEY_Shift_L && e->keyval != GDK_KEY_Shift_R )
     return FALSE;
     
   selection_func (cs, w);
