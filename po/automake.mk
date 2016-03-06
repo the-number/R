@@ -74,14 +74,14 @@ ALL_LOCAL += $(GMOFILES)
 
 install-data-hook: $(GMOFILES)
 	for f in $(GMOFILES); do \
-	  lang=`echo $$f | sed -e 's%po/\(.*\)\.gmo%\1%' ` ; \
+	  lang=`echo $$f | $(SED) -e 's%po/\(.*\)\.gmo%\1%' ` ; \
 	  $(MKDIR_P) $(DESTDIR)$(prefix)/share/locale/$$lang/LC_MESSAGES; \
 	  $(INSTALL_DATA) $$f $(DESTDIR)$(prefix)/share/locale/$$lang/LC_MESSAGES/$(DOMAIN).mo ; \
 	done
 
 uninstall-hook:
 	for f in $(GMOFILES); do \
-	  lang=`echo $$f | sed -e 's%po/\(.*\)\.gmo%\1%' ` ; \
+	  lang=`echo $$f | $(SED) -e 's%po/\(.*\)\.gmo%\1%' ` ; \
 	  rm -f $(DESTDIR)$(prefix)/share/locale/$$lang/LC_MESSAGES/$(DOMAIN).mo ; \
 	done
 

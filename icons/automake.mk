@@ -43,7 +43,7 @@ EXTRA_DIST += icons/gen-dot-desktop.scm
 
 icons/gnubik.desktop: icons/gen-dot-desktop.scm  $(POFILES)
 	$(MKDIR_P) `dirname $@`
-	$(GUILE) $< `echo $(POFILES) | sed -e 's%po/%'$(srcdir)'/po/%g'` > $@,tmp
+	$(GUILE) $< `echo $(POFILES) | $(SED) -e 's%po/%'$(srcdir)'/po/%g'` > $@,tmp
 	mv $@,tmp $@
 
 
