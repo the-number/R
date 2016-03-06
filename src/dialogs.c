@@ -39,7 +39,7 @@
 
 struct preferences_state
 {
-  GtkObject *adj[3];
+  GObject *adj[3];
   GtkWidget *entry[3];
 };
 
@@ -51,9 +51,9 @@ pref_state_create (GtkBox * parent, const GbkGame * game)
 
   for (i = 0; i < 3; ++i)
     {
-      ps->adj[i] =
+      ps->adj[i] = G_OBJECT (
 	gtk_adjustment_new (gbk_cube_get_size (game->cube, 0), 1, G_MAXFLOAT,
-			    1, 1, 0);
+			    1, 1, 0));
       g_object_ref (ps->adj[i]);
       ps->entry[i] = gtk_spin_button_new (GTK_ADJUSTMENT (ps->adj[i]), 0, 0);
       g_object_ref (ps->entry[i]);
