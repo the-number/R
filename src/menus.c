@@ -453,8 +453,7 @@ create_play_toolbar (GbkGame * game)
   acts[ACT_REWIND] =
     gtk_action_new ("rewind",
 		    _("Rewind"),
-		    _
-		    ("Go to the previous mark (or the beginning) of the sequence of moves"),
+		    _("Go to the previous mark (or the beginning of the sequence of moves)"),
 		    GTK_STOCK_MEDIA_REWIND);
 
 
