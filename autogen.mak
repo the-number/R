@@ -1,6 +1,6 @@
 M4=m4
 
-AM_SFX=-1.14
+AM_SFX=-1.15
 
 ACLOCAL=aclocal$(AM_SFX)
 AUTOMAKE=automake$(AM_SFX)
