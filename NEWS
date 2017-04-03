@@ -1,3 +1,7 @@
+GNUbik 2.4.3  - A minor release primarily to update translations and some minor bug fixes
+
+	* An Arabic translation has been added
+
 	* We now depend on Gtk+ version 2.24
 
 GNUbik 2.4.2  - A minor release primarily to update translations
