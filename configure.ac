@@ -72,7 +72,7 @@ PKG_CHECK_MODULES(GLU, glu,,
 dnl Checks for libraries.
 PKG_CHECK_MODULES(GUILE, guile-2.0,,
   AC_SEARCH_LIBS([scm_c_string_length], [guile],,
-	AC_MSG_ERROR("Guile 1.8.0 or later is required"))
+	AC_MSG_ERROR("Guile 2.0 or later is required"))
 )
 
 GUILE_PROGS
