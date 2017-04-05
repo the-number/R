@@ -1,6 +1,6 @@
 themedir = $(DESTDIR)$(datadir)/icons/hicolor
 context = apps
-sizes = 16 22 24 32 48
+sizes = 16 22 32 48
 
 install-icons:
 	for size in $(sizes); do \
