@@ -2,76 +2,78 @@
 # Bản dịch tiếng Việt dành cho gnubik.
 # Copyright © 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
-# Trần Ngọc Quân <vnwildman@gmail.com>, 2013, 2015.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2013, 2015, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-12 14:19+0700\n"
+"PO-Revision-Date: 2017-04-04 07:41+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>\n"
 "Language: vi\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team-Website: <http://translationproject.org/team/vi.html>\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr "Hộp thoại chọn ảnh"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Tất cả các loại ảnh"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Mọi kiểu tập tin"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Hộp thoại chọn màu"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Ảnh"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "_Chọn"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Chọn một ảnh"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "_Lát gạch"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Đặt bản sao ảnh trên từng khối"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
-msgstr "_Mosaic"
+msgstr "_Ghép tranh"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Đặt ảnh tại từng mặt của khối lập phương"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "_Thường"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
-msgstr "Bỏ ảnh ra khỏi mặt của khối lập phương"
+msgstr "Xóa bỏ ảnh ra khỏi mặt của khối lập phương"
 
 #: src/dialogs.c:106
 msgid "Size of cube:"
@@ -147,13 +149,13 @@ msgstr "Dấu hiện tại được đặt tại vị trí %d."
 #: src/menus.c:152
 #, c-format
 msgid "Moves: %d / %d"
-msgstr "Nước đi: %d / %d"
+msgstr "Bước đi: %d / %d"
 
 #: src/menus.c:173
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "Khối lập phương được giải quyết sau %d nước đi"
+msgstr[0] "Khối lập phương được giải quyết sau %d bước đi"
 
 #: src/menus.c:183
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
@@ -163,7 +165,7 @@ msgstr "Khối lập phương CHƯA được giải! Màu thì đúng, nhưng h�
 #, c-format
 msgid "Animation rate set to %d frame per turn."
 msgid_plural "Animation rate set to %d frames per turn."
-msgstr[0] "Tốc độ hoạt hình được đặt thành %d khung hình cho mỗi nước đi."
+msgstr[0] "Tốc độ hoạt hình được đặt thành %d khung hình cho mỗi bước đi."
 
 #: src/menus.c:228
 msgid "_Game"
@@ -173,77 +175,78 @@ msgstr "_Ván chơi"
 msgid "_View"
 msgstr "_Trình bày"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Thêm _Hướng xem"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Thêm một hướng xem khối lập phương bổ trợ"
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "Trợ g_iúp"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "Ẩn/_Hiện"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "_Văn lệnh"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "Đặt _Lại ván chơi"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Ván Mới"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "_Sau"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "Bên t_rái"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "Bên _phải"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "_Trên"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "_Dưới"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "Màu _sắc"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Hoạt hình"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Nhanh lên"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "_Chậm đi"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Tua"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Đi đến điểm dấu kế trước (hay bắt đầu) của danh sách nước đi"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Đi đến điểm dấu kế trước (hay bắt đầu của danh sách bước đi)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -259,7 +262,7 @@ msgstr "Dừng"
 
 #: src/menus.c:469
 msgid "Stop running the sequence of moves"
-msgstr "Dừng chạy các nước đi nối tiếp nhau"
+msgstr "Dừng chạy các bước đi nối tiếp nhau"
 
 #: src/menus.c:475
 msgid "Mark"
@@ -267,7 +270,7 @@ msgstr "Đánh dấu"
 
 #: src/menus.c:476
 msgid "Mark the current place in the sequence of moves"
-msgstr "Đánh dấu mặt hiện tại trong chuỗi nước đi"
+msgstr "Đánh dấu mặt hiện tại trong chuỗi bước đi"
 
 #: src/menus.c:482
 msgid "Forward"
@@ -283,7 +286,7 @@ msgstr "Chạy"
 
 #: src/menus.c:489
 msgid "Run forward through the sequence of moves"
-msgstr "Chạy về phía kế sau một nước đi trong ván chơi"
+msgstr "Chạy về phía kế sau một bước đi trong ván chơi"
 
 #: src/menus.c:555
 msgid "Gnubik error"
@@ -314,13 +317,13 @@ msgstr "Di chuyể_n"
 msgid "_Dump state"
 msgstr "Đổ _trạng thái"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "_Ngẫu nhiên"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -365,10 +368,8 @@ msgstr "Lát _Trên"
 msgid "_Top edges"
 msgstr "_Cạnh trên"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "GNUbik"
+#~ msgid "GNUbik"
+#~ msgstr "GNUbik"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Trò chơi trí tuệ về khối lập phương ba chiều"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Trò chơi trí tuệ về khối lập phương ba chiều"

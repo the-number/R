@@ -2,19 +2,20 @@
 # Copyright (C) 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2015.
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2015, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-11 11:19+0300\n"
+"PO-Revision-Date: 2017-04-03 20:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 1.5\n"
 
@@ -22,51 +23,52 @@ msgstr ""
 msgid "Image Selector"
 msgstr "Вибір зображень"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Всі зображення"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Всі файли"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Вибір кольорів"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Зображення"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "Ви_брати"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Виберіть файл з зображенням"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "П_литка"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Розташувати копію зображення у кожному блоці"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
 msgstr "_Мозаїка"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Розташувати копію зображення на всіх боковій поверхні кубика."
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "З_вичайний"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
 msgstr "Вилучити зображення з поверхні кубика"
 
@@ -176,77 +178,78 @@ msgstr "_Гра"
 msgid "_View"
 msgstr "П_ерегляд"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Додати п_ерегляд"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Додати допоміжний перегляд кубика"
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "_Довідка"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "По_казати/Сховати"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "С_крипти"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "Пе_резапустити гру"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Нова гра"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "Зз_аду"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "_Ліворуч"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "Пр_аворуч"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "З_гори"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "З_низу"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "К_ольори"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Анімація"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Швидше"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "П_овільніше"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Повний назад"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Перейти до попередньої позначки (або до початку) послідовності обертань"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Перейти до попередньої позначки (або до початку послідовності обертань)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -317,13 +320,13 @@ msgstr "_Хід"
 msgid "_Dump state"
 msgstr "За_писати стан"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "Зап_лутати"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -368,13 +371,11 @@ msgstr "_Верхній шар"
 msgid "_Top edges"
 msgstr "_Верхні краї"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "GNUbik"
+#~ msgid "GNUbik"
+#~ msgstr "GNUbik"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Просторова головоломка — магічний кубик"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Просторова головоломка — магічний кубик"
 
 #~ msgid "_Animated"
 #~ msgstr "_Анімація"

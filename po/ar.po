@@ -1,15 +1,14 @@
-# Arabic translation for gnubik
-# Copyright (C) 2015 John Darrington
+# Arabic translation for Gnubik.
+# Copyright (C) 2017 John Darrington
 # This file is distributed under the same license as the gnubik package.
-# Abdo Alrhman Aiman <abdo.alrhman.aiman@gmail.com>, 2015.
-#
+# Abdorhman Ayman <abdorhman.ayman@protonmail.com>, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-16 14:16+0200\n"
-"Last-Translator: Abdo Alrhman Aiman <abdo.alrhman.aiman@gmail.com>\n"
+"PO-Revision-Date: 2017-04-03 20:36+0200\n"
+"Last-Translator: Abdorhman Ayman <abdorhman.ayman@protonmail.com>\n"
 "Language-Team: Arabic <(nothing)>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -17,133 +16,131 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Virtaal 0.7.1\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
-msgstr "تحديد صورة"
+msgstr "اِختيار صورة"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
-msgstr "الصور فقط"
+msgstr "كل الصور"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
-msgstr "كافة الملفات"
+msgstr "كل الملفات"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
-msgstr "إِعدادات"
-
-#: src/colour-dialog.c:313
-msgid "Image"
-msgstr "تحديد صورة"
+msgstr "اِختيار اﻷلوان"
 
 #: src/colour-dialog.c:314
+msgid "Image"
+msgstr "صورة"
+
+#: src/colour-dialog.c:315
 msgid "Se_lect"
-msgstr "_تصفَّح..."
+msgstr "تصفَّح..."
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
-msgstr "تحديد صورة واِستخدامها بدلًا عن اللون"
+msgstr "حدِّد صورة"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
-msgstr "_كاملة"
+msgstr "عاديّة"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
-msgstr "وَضْع الصورة كاملة على كل جزء"
+msgstr "أُترك الصورة كما هي"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
-msgstr "مُقطَّعة"
+msgstr "مُبعثرة"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
-msgstr "وَضْع قطعة من الصورة على كل جزء"
+msgstr "قطِّع الصورة إلى أجزاء أصغر ثم بعثرها"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
-msgstr "اِ_حذف الصورة"
+msgstr "اِحذف"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
-msgstr "حَذْف الصورة واِستعادة اللون"
+msgstr "اِحذف الصورة واِستعِد اللون الذي كان مكانها"
 
 #: src/dialogs.c:106
 msgid "Size of cube:"
-msgstr "حَجْم المكعَّب:"
+msgstr "أبعاد المُكعَّب:"
 
 #: src/dialogs.c:111
 msgid "Re_gular cube"
-msgstr "اِجعل الجوانب متساوية (مُستحسَّن)"
+msgstr "أبقِ المُكعَّب عاديًا"
 
 #: src/dialogs.c:117
 msgid "Sets the number of blocks in each side"
-msgstr "تحديد عدد اﻷَجزاء الموجودة في كل جانب"
+msgstr ""
 
 #: src/dialogs.c:121
 msgid "Allow only cubes with all sides equal size"
-msgstr ""
-"مَنْع إِنشاء المكعَّبات غريبة الشكل،\n"
-"إِذ يُبقيها هذا الخيار متساوية الجوانب (مُستحسَّن)"
+msgstr "أجبر المُكعَّب على البقاء متساوي الجوانب"
 
 #: src/dialogs.c:164
 msgid "A 3 dimensional magic cube puzzle"
-msgstr "اِلعَب بمكعَّب روبِك على الحاسوب"
+msgstr "مُكعَّب روبِك ثلاثيّ اﻷبعاد"
 
 #. TRANSLATORS: Do not translate this string. Instead, use it to list
 #. the people who have helped with translation to your language.
 #: src/dialogs.c:169
 msgid "translator-credits"
-msgstr "عبد الرحمن أَيمن <abdo.alrhman.aiman@gmail.com>"
+msgstr "Abdorhman Ayman"
 
 #: src/dialogs.c:189
 msgid "New Game"
-msgstr "تخصيص مكعَّب"
+msgstr "لعبة جديدة"
 
 #: src/dialogs.c:201
 msgid "Dimensions"
-msgstr ""
-"التحجيم:\n"
-"(سيُطبَّق كل تختارهُ هنا عند نقركَ على \"مكعَّب عشوائيّ\" من قائمة \"اللعبة\")"
+msgstr "اﻷبعاد..."
 
 #: src/dialogs.c:212
 msgid "Initial position"
-msgstr "الحالة:"
+msgstr "عند البداية..."
 
 #: src/dialogs.c:216
 msgid "_Random"
-msgstr "_غير محلول"
+msgstr "غير محلول"
 
 #: src/dialogs.c:220
 msgid "_Solved"
-msgstr "_محلول"
+msgstr "محلول"
 
 #: src/menus.c:94
 msgid "Rear View"
-msgstr "الخلف"
+msgstr "مشهد الخلف"
 
 #: src/menus.c:102
 msgid "Bottom View"
-msgstr "اﻷَسفل"
+msgstr "مشهد اﻷسفل"
 
 #: src/menus.c:109
 msgid "Top View"
-msgstr "اﻷَعلى"
+msgstr "مشهد اﻷعلى"
 
 #: src/menus.c:117
 msgid "Left View"
-msgstr "اليسار"
+msgstr "مشهد اليسار"
 
 #: src/menus.c:124
 msgid "Right View"
-msgstr "اليمين"
+msgstr "مشهد اليمين"
 
 #: src/menus.c:138
 #, c-format
 msgid "A mark is now set at position %d."
-msgstr "تم وَسْم الخطوة رقم %d."
+msgstr "عُلِّمَت الخطوة رقم %d."
 
 #: src/menus.c:152
 #, c-format
@@ -154,119 +151,116 @@ msgstr "الخطوات: %d / %d"
 #, c-format
 msgid "Cube solved in %d move"
 msgid_plural "Cube solved in %d moves"
-msgstr[0] "تهانينا، لقد أَنهيتَ المكعَّب في 0 خطوات."
-msgstr[1] "تهانينا، لقد أَنهيتَ المكعَّب في خطوة واحدة."
-msgstr[2] "تهانينا، لقد أَنهيتَ المكعَّب في خطوتان."
-msgstr[3] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطوات."
-msgstr[4] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطواتًا."
-msgstr[5] "تهانينا، لقد أَنهيتَ المكعَّب في %d خطوة."
+msgstr[0] "اِكتمل الحل بدون أي خطوات منك"
+msgstr[1] "اِكتملَ الحل بخطوة واحدة"
+msgstr[2] "اِكتملَ المُكعَّب بخطوتان"
+msgstr[3] "اِكتملَ المُكعَّب بـ %d خطوات"
+msgstr[4] "اِكتملَ المُكعَّب بـ %d خطوةً"
+msgstr[5] "اِكتملَ المُكعَّب بـ %d خطوة"
 
 #: src/menus.c:183
 msgid "Cube is NOT solved! The colours are correct,  but have incorrect orientation"
-msgstr ""
+msgstr "المُكعَّب لم يُحل! اﻷلوان صحيحة لكن في اِتجاه خاطيء"
 
 #: src/menus.c:201
 #, c-format
 msgid "Animation rate set to %d frame per turn."
 msgid_plural "Animation rate set to %d frames per turn."
-msgstr[0] "أَسرَع ما يُمكِن!"
-msgstr[1] "إِطارٌ واحد في كل خطوة"
-msgstr[2] "إِطاران في كل خطوة."
-msgstr[3] "%d إِطارات في كل خطوة."
-msgstr[4] "%d إِطاراتًا في كل خطوة."
-msgstr[5] "%d إِطار في كل خطوة."
+msgstr[0] "أصبح مُعدَّل الرسوميّات %d صورة كل خطوة"
+msgstr[1] "أصبح مُعدَّل الرسوميّات صورة واحد كل خطوة"
+msgstr[2] "أصبح مُعدَّل الرسوميّات صورتان كل خطوة"
+msgstr[3] "أصبح مُعدَّل الرسوميّات %d صور كل خطوة"
+msgstr[4] "أصبح مُعدَّل الرسوميّات %d صورةً كل خطوة"
+msgstr[5] "أصبح مُعدَّل الرسوميّات %d صورة كل خطوة"
 
 #: src/menus.c:228
 msgid "_Game"
-msgstr "ا_للعبة"
+msgstr "لعبة"
 
 #: src/menus.c:229
 msgid "_View"
-msgstr "_عرض"
+msgstr "عرض"
 
-#: src/menus.c:230
-msgid "Add _View"
-msgstr "_شاهِد المكعَّب"
-
+#. TRANSLATORS: Lets the user see the cube from a different angle
 #: src/menus.c:231
-msgid "Add an auxiliary view of the cube"
-msgstr "مشاهدة المكعَّب من زاوية مختلفة"
+msgid "Add _View"
+msgstr "شاهد مِنْ"
 
-#: src/menus.c:234
-msgid "_Help"
-msgstr "_تعليمات"
+#: src/menus.c:232
+msgid "Add an auxiliary view of the cube"
+msgstr "شاهد المُكعَّب من زاوية أُخرى"
 
 #: src/menus.c:235
+msgid "_Help"
+msgstr "مُساعدة"
+
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr ""
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
-msgstr "آليَّا_ت"
+msgstr "آليّ"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
-msgstr "معكَّب _عشوائيّ"
+msgstr "صفِّر اللعبة"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
-msgstr "_خصِّص مكعَّب"
+msgstr "لعبة جديدة"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
-msgstr "مِنَ ال_خلف"
+msgstr "الخلف"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
-msgstr "مِنَ ال_يسار"
+msgstr "اليسار"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
-msgstr "مِنَ ال_يمين"
+msgstr "اليمين"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
-msgstr "مِنَ الأَ_على"
+msgstr "اﻷعلى"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
-msgstr "مِنَ الأَ_سفل"
+msgstr "اﻷسفل"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
-msgstr "إِ_عدادات"
+msgstr "اﻷلوان"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
-msgstr "_سرعة المكعَّب"
+msgstr "سرعة الحركة"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
-msgstr "أَ_سرع"
+msgstr "أسرع"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
-msgstr "أَ_بطىء"
+msgstr "أبطأ"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
-msgstr ""
-"أقرَب\n"
-"وَسَم"
+msgstr "إلى العلامة/البداية"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "الذهاب إِلى أَقرَب وَسَم، علمًا أَنَ المكعَّب يَوسِم نفسهُ آليًا عند البداية"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "اِذهب إلى العلامة السابقة (أو إلى البداية إذا لم توجد علامة)"
 
 #: src/menus.c:462
 msgid "Back"
-msgstr ""
-"الخطوة\n"
-"السابقة"
+msgstr "للخلف"
 
 #: src/menus.c:463
 msgid "Make one step backwards"
-msgstr "الرجوع إلى الخطوة السابقة"
+msgstr "اِرجع للخلف خطوة واحدة"
 
 #: src/menus.c:468
 msgid "Stop"
@@ -274,43 +268,39 @@ msgstr "توقَّف"
 
 #: src/menus.c:469
 msgid "Stop running the sequence of moves"
-msgstr "إِيقاف المكعَّب"
+msgstr "أوقف المُكعَّب مكانه"
 
 #: src/menus.c:475
 msgid "Mark"
-msgstr "اِوسِمْ"
+msgstr "علِّم"
 
 #: src/menus.c:476
 msgid "Mark the current place in the sequence of moves"
-msgstr "القيام بوَسْم الخطوة الحالية، يمكنك الرجوع إلى الوَسَم لاحقًا بالنقر على زِر \"أَقرَب وَسَم\""
+msgstr "ضع علامة على المكان الحاليّ للمُكعَّب بحيث يمكنك العودة إليها لاحقًا، يُمكن وضع أكثر من علامة واحدة"
 
 #: src/menus.c:482
 msgid "Forward"
-msgstr ""
-"الخطوة\n"
-"التالية"
+msgstr "للأمام"
 
 #: src/menus.c:483
 msgid "Make one step forwards"
-msgstr "الذهاب إِلى الخطوة التالية"
+msgstr "تقدَّم للأمام خطوة واحدة"
 
 #: src/menus.c:488
 msgid "Play"
-msgstr ""
-"الخطوة\n"
-"اﻷَصليَّة"
+msgstr "عودة"
 
 #: src/menus.c:489
 msgid "Run forward through the sequence of moves"
-msgstr "الذهاب إلى الخطوة التي تركتَ المكعَّب فيها"
+msgstr "عُد إلى المكان الطبيعيّ للمُكعَّب"
 
 #: src/menus.c:555
 msgid "Gnubik error"
-msgstr "خطأ"
+msgstr "عُطل في غِنوبِك"
 
 #: src/swatch.c:132
 msgid "A sample of the colour. You can click and select a new colour, or drag one to this space."
-msgstr "التلاعُب بكل اﻷَجزاء التي تحمل هذا اللون، حيثُ يمكنكَ تغيير لون الجزء (بواسطة عجلة اﻷَلوان أَدناهُ) أَو اِستبدالهُ بصورة (بواسطة زِر \"حدِّد صورة\")"
+msgstr "يمكنك النقر ثم اِختيار لون آخر."
 
 #: src/textures.c:81
 msgid "Pixbuf has wrong number of channels"
@@ -333,61 +323,60 @@ msgstr ""
 msgid "_Dump state"
 msgstr ""
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
-msgstr "_تحريك آليّ"
+msgstr "حركة آليّة"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
-msgstr "_~a مِنَ الحركات اﻵليَّة"
+msgstr "_~a"
 
 #: scripts/flubrd.scm:50
 msgid "This script only works on 3×3×3 cubes."
-msgstr "عذرًا، خاصية الحل اﻵليّ لا تعمل سوى مع المكعَّبات 3x3x3."
+msgstr "الحلَّال اﻵليّ لا يعمل سوى على مكعبات 3×3×3."
 
 #: scripts/mellor-solve.scm:399
 msgid "_Solvers"
-msgstr "_الحل اﻵليّ"
+msgstr "حل آليّ"
 
+# هذه ليست غلطة!
 #: scripts/mellor-solve.scm:400
 msgid "_3×3"
-msgstr "_3x3x3"
+msgstr "3x3x3"
 
 #: scripts/mellor-solve.scm:404
 msgid "_Full cube"
-msgstr "_كامل المكعَّب"
+msgstr "المُكعَّب بالكامل"
 
 #: scripts/mellor-solve.scm:407
 msgid "Bottom _edge place"
-msgstr ""
+msgstr "الجزء د"
 
 #: scripts/mellor-solve.scm:410
 msgid "Bottom _corner orient"
-msgstr ""
+msgstr "الحزء هـ"
 
 #: scripts/mellor-solve.scm:413
 msgid "_Bottom corner place"
-msgstr ""
+msgstr "الجزء و"
 
 #: scripts/mellor-solve.scm:416
 msgid "_Middle slice"
-msgstr ""
+msgstr "الجزء ج"
 
 #: scripts/mellor-solve.scm:419
 msgid "_Top slice"
-msgstr ""
+msgstr "الجزء ب"
 
 #: scripts/mellor-solve.scm:422
 msgid "_Top edges"
-msgstr ""
+msgstr "الجزء أ"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "غِنوْبِكْ"
+#~ msgid "GNUbik"
+#~ msgstr "غِنوبِك"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "اِلعَب بمكعَّب روبِك"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "مُعكَّب روبِك ثلاثيّ اﻷبعاد"
