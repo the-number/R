@@ -90,7 +90,7 @@ gnubik_create_menu (SCM name, SCM loc)
   Function callable from scheme (as gnubik-register-script) which allows a
   script to specify a menu entry and the name of a procedure to call when that
   menu entry is selected. Note that /Scripts/ is always appended,  so all
-  scripts are forced under the Scripts main menu item. 
+  scripts are forced under the Scripts main menu item.
 */
 static SCM
 gnubik_register_script (SCM menu_location, SCM callback, SCM loc)
@@ -202,9 +202,8 @@ read_script_directory (const char *dir_name)
 
 	    scm_primitive_load (scm_from_locale_string (buffer));
 	  }
+      closedir (directory);
     }
-
-  closedir (directory);
 }
 
 
