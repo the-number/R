@@ -2,71 +2,72 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
 # Jay A. Fleming <tito.nehru.naser@gmail.com>, 2010.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012—2015.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012—2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik-2.4.2-pre1\n"
+"Project-Id-Version: gnubik-2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-12 11:14+0200\n"
+"PO-Revision-Date: 2017-04-06 04:38+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr "Избор слике"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Све слике"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Све датотеке"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Избор боје"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Слика"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "Иза_бери"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Изаберите слику"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "Попло_чано"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Поставите слику на сваки блок једне стране"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
 msgstr "_Мозаик"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Поставите слику преко целе стране коцке"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "_Обично"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
 msgstr "Уклоните слику са стране коцке"
 
@@ -176,77 +177,78 @@ msgstr "_Игра"
 msgid "_View"
 msgstr "_Поглед"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Додај _поглед"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Додајте помоћни поглед коцке"
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "_Помоћ"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "При_кажи/Сакриј"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "_Скрипте"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "Поново пок_рени игру"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Нова игра"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "_Залеђе"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "_Лево"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "_Десно"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "_Горе"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "Д_оле"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "_Боје"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Анимација"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Брже"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "_Спорије"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Уназад"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Идите на претходно означени или почетни потез у низу потеза"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Идите на претходно означени потез (или на почетак у низу потеза)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -317,13 +319,13 @@ msgstr "_Помери"
 msgid "_Dump state"
 msgstr "_Одбаци стање"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "_Случајно"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -368,13 +370,11 @@ msgstr "Горњи _прстен"
 msgid "_Top edges"
 msgstr "_Горње ивице"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "Гнубик"
+#~ msgid "GNUbik"
+#~ msgstr "Гнубик"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Слагалица магичне 3Д коцке"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Слагалица магичне 3Д коцке"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Не могу да направим слику од датотеке %s: %s"
