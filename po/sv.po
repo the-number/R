@@ -1,73 +1,74 @@
 # Swedish translation of gnubik.
-# Copyright (C) 2006, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2010, 2017 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnubik package.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-11-08 17:55+0100\n"
+"PO-Revision-Date: 2017-04-08 23:11+0800\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: src/colour-dialog.c:184
 msgid "Image Selector"
 msgstr "Bildväljare"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Alla bilder"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Alla filer"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Färgväljare"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Bild"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "Vä_lj"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Välj en bildfil"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "_Plattsatt"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Placera en kopia av bilden på varje block"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
 msgstr "_Mosaik"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Placera en kopia av bilden på hela kubens yta"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "_Standard"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
 msgstr "Ta bort bild från kubens yta"
 
@@ -178,77 +179,78 @@ msgstr "_Spel"
 msgid "_View"
 msgstr "_Vy"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Lägg till _Vy"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Lägg till en hjälpvy av kuben"
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "Vi_sa/Göm"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "_Skript"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "_Starta om spelet"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Nytt spel"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "_Baksida"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "_Vänster"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "_Höger"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "_Topp"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "Bo_tten"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "_Färger"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Animering"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Snabbare"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "_Långsammare"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Spola bakåt"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Gå till föregående markering (eller början) av vridningssekvensen"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Gå till föregående markering (eller början av vridningssekvensen)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -319,13 +321,13 @@ msgstr "_Flytta"
 msgid "_Dump state"
 msgstr "_Mata ut tillstånd"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "_Slumpa"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -370,13 +372,11 @@ msgstr "_Toppenskiva"
 msgid "_Top edges"
 msgstr "_Toppkanter"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "GNUbik"
+#~ msgid "GNUbik"
+#~ msgstr "GNUbik"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Ett magisk-kub-pussel i 3D"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Ett magisk-kub-pussel i 3D"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Kan inte skapa bild från filen %s: %s"
