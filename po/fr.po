@@ -3,21 +3,21 @@
 # This file is distributed under the same license as the gnubik package.
 # John Darrington <john@darrington.wattle.id.au>, 2003.
 # Guy Decarpentrie <guy@diagonales.org>, 2003.
-# Stéphane Aulery <lkppo@free.fr>, 2015.
+# Stéphane Aulery <lkppo@free.fr>, 2015, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-11 11:03+0200\n"
+"PO-Revision-Date: 2017-04-29 19:32+0200\n"
 "Last-Translator: Stéphane Aulery <lkppo@free.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "X-Generator: KBabel 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -25,51 +25,52 @@ msgstr ""
 msgid "Image Selector"
 msgstr "Sélecteur d’image"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Toutes les images"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Tous les fichiers"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Sélecteur de couleur"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Image"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "_Selection"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Choisir une image"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "_Carrelé"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Habiller chaque bloc avec l’mage"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
 msgstr "_Mosaïque"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Habiller toutes faces du cube avec l’image"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "_Texte"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
 msgstr "Supprimer l’image de la face du cube"
 
@@ -175,77 +176,78 @@ msgstr "_Jeux"
 msgid "_View"
 msgstr "_Vue"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Ajouter une vu_e"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Ajouter une vue auxiliaire au cube"
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "A_ide"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "A_fficher / Masquer"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "_Scripts"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "_Recommencer la partie"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Nouvelle partie"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "A_rrière"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "_Gauche"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "_Droite"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "Dess_us"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "Dess_ous"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "_Couleurs"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Animation"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Plus vite"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "_Moins vite"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Rembobiner"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Aller à la marque précédente (ou au début) de la séquence des mouvements"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Aller à la marque précédente (ou au début de la séquence des mouvements)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -316,13 +318,13 @@ msgstr "Dépla_cer"
 msgid "_Dump state"
 msgstr "_Vidage de la pile"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "Tirage _aléatoire"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -367,10 +369,8 @@ msgstr "Tranche du _haut"
 msgid "_Top edges"
 msgstr "Bords _supérieurs"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "GNUbik"
+#~ msgid "GNUbik"
+#~ msgstr "GNUbik"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Un cube magique à 3 dimensions qui fait chauffer les méninges"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Un cube magique à 3 dimensions qui fait chauffer les méninges"

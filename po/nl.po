@@ -4,20 +4,20 @@
 #
 # Lidwine van As <gnubik-nl@coolpython.nl>, 2005.
 # Erwin Poeze <erwin.poeze@gmail.com>, 2010.
-# Benno Schulenberg <benno@vertaalt.nl>, 2011, 2015.
+# Benno Schulenberg <benno@vertaalt.nl>, 2011, 2015, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnubik 2.4.2-pre1\n"
+"Project-Id-Version: gnubik 2.4.3\n"
 "Report-Msgid-Bugs-To: bug-gnubik@gnu.org\n"
 "POT-Creation-Date: 2015-04-10 18:32+0200\n"
-"PO-Revision-Date: 2015-04-11 14:56+0200\n"
+"PO-Revision-Date: 2017-04-18 16:14+0200\n"
 "Last-Translator: Benno Schulenberg <benno@vertaalt.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.0\n"
 
@@ -25,51 +25,52 @@ msgstr ""
 msgid "Image Selector"
 msgstr "Afbeeldingenkiezer"
 
-#: src/colour-dialog.c:209
+#. TRANSLATORS: "All  Images" implies nothing but images!
+#: src/colour-dialog.c:210
 msgid "All Images"
 msgstr "Alle afbeeldingen"
 
-#: src/colour-dialog.c:213
+#: src/colour-dialog.c:214
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: src/colour-dialog.c:296
+#: src/colour-dialog.c:297
 msgid "Colour selector"
 msgstr "Kleurenkiezer"
 
-#: src/colour-dialog.c:313
+#: src/colour-dialog.c:314
 msgid "Image"
 msgstr "Afbeelding"
 
-#: src/colour-dialog.c:314
+#: src/colour-dialog.c:315
 msgid "Se_lect"
 msgstr "_Selecteren"
 
-#: src/colour-dialog.c:322
+#: src/colour-dialog.c:323
 msgid "Select an image file"
 msgstr "Selecteer een afbeeldingsbestand"
 
-#: src/colour-dialog.c:324
+#: src/colour-dialog.c:325
 msgid "_Tiled"
 msgstr "_Tegeltjes"
 
-#: src/colour-dialog.c:326
+#: src/colour-dialog.c:327
 msgid "Place a copy of the image on each block"
 msgstr "Plaatst de afbeelding op elk vlakje van één kubuszijde"
 
-#: src/colour-dialog.c:331
+#: src/colour-dialog.c:332
 msgid "_Mosaic"
 msgstr "_Mozaïek"
 
-#: src/colour-dialog.c:335
+#: src/colour-dialog.c:336
 msgid "Place a copy of the image across the entire face of the cube"
 msgstr "Verdeelt de afbeelding over alle vlakjes van een kubuszijde"
 
-#: src/colour-dialog.c:341
+#: src/colour-dialog.c:342
 msgid "_Plain"
 msgstr "_Egaal"
 
-#: src/colour-dialog.c:344
+#: src/colour-dialog.c:345
 msgid "Remove image from the cube face"
 msgstr "Verwijdert de afbeelding van de kubuszijde"
 
@@ -175,77 +176,78 @@ msgstr "_Spel"
 msgid "_View"
 msgstr "_Aanzicht"
 
-#: src/menus.c:230
+#. TRANSLATORS: Lets the user see the cube from a different angle
+#: src/menus.c:231
 msgid "Add _View"
 msgstr "Aanzicht _toevoegen"
 
-#: src/menus.c:231
+#: src/menus.c:232
 msgid "Add an auxiliary view of the cube"
 msgstr "Voegt een hulpaanzicht van de kubus toe."
 
-#: src/menus.c:234
+#: src/menus.c:235
 msgid "_Help"
 msgstr "_Hulp"
 
-#: src/menus.c:235
+#: src/menus.c:236
 msgid "Sho_w/Hide"
 msgstr "_Tonen/Verbergen"
 
-#: src/menus.c:236
+#: src/menus.c:237
 msgid "_Scripts"
 msgstr "_Scripts"
 
-#: src/menus.c:306
+#: src/menus.c:307
 msgid "_Restart Game"
 msgstr "Spel _herstarten"
 
-#: src/menus.c:310
+#: src/menus.c:311
 msgid "_New Game"
 msgstr "_Nieuw spel"
 
-#: src/menus.c:314
+#: src/menus.c:315
 msgid "_Rear"
 msgstr "_Achterkant"
 
-#: src/menus.c:316
+#: src/menus.c:317
 msgid "_Left"
 msgstr "_Links"
 
-#: src/menus.c:318
+#: src/menus.c:319
 msgid "Ri_ght"
 msgstr "_Rechts"
 
-#: src/menus.c:320
+#: src/menus.c:321
 msgid "_Top"
 msgstr "_Boven"
 
-#: src/menus.c:322
+#: src/menus.c:323
 msgid "_Bottom"
 msgstr "_Onder"
 
-#: src/menus.c:327
+#: src/menus.c:328
 msgid "_Colours"
 msgstr "_Kleuren"
 
-#: src/menus.c:331
+#: src/menus.c:332
 msgid "_Animation"
 msgstr "_Animatie"
 
-#: src/menus.c:335
+#: src/menus.c:336
 msgid "_Faster"
 msgstr "_Sneller"
 
-#: src/menus.c:339
+#: src/menus.c:340
 msgid "_Slower"
 msgstr "_Langzamer"
 
-#: src/menus.c:454
+#: src/menus.c:455
 msgid "Rewind"
 msgstr "Terugspoelen"
 
 #: src/menus.c:456
-msgid "Go to the previous mark (or the beginning) of the sequence of moves"
-msgstr "Gaat naar de vorige markering in de stappenreeks (of naar het begin ervan)"
+msgid "Go to the previous mark (or the beginning of the sequence of moves)"
+msgstr "Gaat naar de vorige markering (of naar het begin van de stappenreeks)"
 
 #: src/menus.c:462
 msgid "Back"
@@ -316,13 +318,13 @@ msgstr "_Bewegen"
 msgid "_Dump state"
 msgstr "Toestand _dumpen"
 
-#: scripts/rand.scm:37
+#: scripts/rand.scm:38
 msgid "_Randomize"
 msgstr "_Schudden"
 
-#: scripts/rand.scm:39 scripts/rand.scm:40 scripts/rand.scm:41
-#: scripts/rand.scm:42 scripts/rand.scm:43 scripts/rand.scm:44
-#: scripts/rand.scm:45 scripts/rand.scm:46
+#: scripts/rand.scm:40 scripts/rand.scm:41 scripts/rand.scm:42
+#: scripts/rand.scm:43 scripts/rand.scm:44 scripts/rand.scm:45
+#: scripts/rand.scm:46 scripts/rand.scm:47
 #, scheme-format
 msgid "_~a"
 msgstr "_~a"
@@ -367,13 +369,11 @@ msgstr "_Bovenlaag"
 msgid "_Top edges"
 msgstr "_Bovenranden"
 
-#: icons/gen-dot-desktop.scm:7
-msgid "GNUbik"
-msgstr "GNUbik"
+#~ msgid "GNUbik"
+#~ msgstr "GNUbik"
 
-#: icons/gen-dot-desktop.scm:8 icons/gen-dot-desktop.scm:42
-msgid "A 3D magic cube puzzle"
-msgstr "Een 3D draaikubuspuzzel"
+#~ msgid "A 3D magic cube puzzle"
+#~ msgstr "Een 3D draaikubuspuzzel"
 
 #~ msgid "Cannot create image from file %s: %s"
 #~ msgstr "Kan geen afbeelding maken van bestand %s: %s"
