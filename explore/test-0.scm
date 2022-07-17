@@ -14,20 +14,29 @@
 ;;   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
+(define (number->colour a)
+  (case a
+    ((0) "red    ")
+    ((1) "green  ")
+    ((2) "blue   ")
+    ((3) "cyan   ")
+    ((4) "magenta")
+    ((5) "yellow ")
+    (else "what!?")))
 
 (define (test-dump-state)
   (let ((a (gnubik-cube-state)))
     
     (display "Cube geometry (version dimensionality size-of-dim-1 ...): ")
-    (newline)(display "          ")(display (car cube))
+    (newline)(display "          ")(display (car a))
     (newline)
     
     (array-for-each
      (lambda (b)
        (array-for-each
         (lambda (c)
-          (display c)(display " "))
+          (display (number->colour c))
+	  (display " "))
         b)
        (newline))
      (cdr a))
@@ -45,17 +54,17 @@
           (move-face b a)
           (execute-move-buffer!)))))
 
-(define _ gettext)
+>(define _ gettext)
 
 (define test-menu (gnubik-create-menu (_ "_Test 0")))
 
 (define menu (gnubik-create-menu (_ "_Move to test") test-menu))
 
-(gnubik-register-script (_ "_Show state") '(gnubik-dump-state) test-menu)
+(gnubik-register-script (_ "_Show state") '(test-dump-state) test-menu)
 
-(gnubik-register-script "_Front" '(debug-move-animated "f") menu)
-(gnubik-register-script "_Back" '(debug-move-animated "b") menu)
-(gnubik-register-script "_Left" '(debug-move-animated "l") menu)
-(gnubik-register-script "_Right" '(debug-move-animated "r") menu)
-(gnubik-register-script "_Up" '(debug-move-animated "u") menu)
-(gnubik-register-script "_Down" '(debug-move-animated "d") menu)
+(gnubik-register-script "_Front" '(test-move-animated "f") menu)
+(gnubik-register-script "_Back" '(test-move-animated "b") menu)
+(gnubik-register-script "_Left" '(test-move-animated "l") menu)
+(gnubik-register-script "_Right" '(test-move-animated "r") menu)
+(gnubik-register-script "_Up" '(test-move-animated "u") menu)
+(gnubik-register-script "_Down" '(test-move-animated "d") menu)
