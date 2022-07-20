@@ -1,10 +1,13 @@
+# 20220720 (C) Gunter Liszewski -*- mode: org; -*-
+*README
+
 This is a clone of the GNUbik package. Here the Rubik is explored
 with the help of GNUbik.  The GNUbik distribution is at
 
-https://git.savannah.gnu.org/git/gnubik.git
+[[https://git.savannah.gnu.org/git/gnubik.git]]
 
 GNUbik is a GNU package.  It is a 3D interactive graphics 
 puzzle. It renders an image of a magic cube 
 (similar to a rubik cube) and you attempt to solve it.
 
-
+*[[./explore][Explore]]
