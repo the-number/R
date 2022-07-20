@@ -1,0 +1,5 @@
+guix-shell-here () 
+{ 
+    local D="guix shell gnubik ...";
+    guix shell gnubik info-reader man-db texlive-base noweb $@ -D gnubik
+}
