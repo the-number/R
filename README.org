@@ -11,3 +11,5 @@ puzzle. It renders an image of a magic cube
 (similar to a rubik cube) and you attempt to solve it.
 
 * [[./explore][Explore]]
+
+[[https://github.com/the-number/R/commits/explore/0001/gnubik/explore][./explore Git log]]
