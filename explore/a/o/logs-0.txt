@@ -1,0 +1,227 @@
+commit 744a071b7388a5eb431b88099660d25c74cd8882
+Author: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+Date:   Wed Jul 20 11:50:27 2022 +0100
+
+    Rubik: a: explore/a
+    
+    Reading: The Mathematics of the Rubik
+    http://web.mit.edu/sp.268/www/rubik.pdf
+    
+    Page 4: (a^{-1})^{-1}=a
+       Here, for our convenience, we write -a for the inverse of a.
+       The inverse of the inverse of a is again a (not the neutral
+       element, the identity e), keeping in mind the basic
+       group theorems. We write -(-A)=A, for example.
+    
+    Page 4: Group theory gives the inverse element of A to be
+       -A, such that A*-A=0.
+       Here, we write O instead of e for the neutral element,
+       that is the permutation that does nothing.
+    
+       Given the inverse -A with A*-A=0, it follows for A=(ab),
+       that -(ab)=-b*-a, in our case because Rubik is a
+       non-commutative, or non-abelian group. (-b*-a <> -a*-b)
+    
+    Following from the earlier example which proved that the
+    Rubik group's F element, a clockwise 90 degree rotation
+    of the front face, is the permutation as intended.
+    
+    The earlier example
+    
+    (FU FUR FR FDR FD FDL FL FUL FC)*F=
+        (FU FUR FR FDR FD FDL FL FUL FC)*
+         (FUR FDR)(FUR FDL)(FUR FUL)*(FU FR)(FU FD)(FU FL)=
+        (FR FDR FD FDL FL FUL FU FUR FC)  which agrees, with the
+                                          visual perception
+    
+    Now, confirm our understanding that F is a permutation of
+    order four.  To proof this we apply F four times
+    and expect to arrive at the initial configuration of the cube.
+    
+    (FU FUR FR FDR FD FDL FL FUL FC)*F*F*F*F=
+    (FU FUR FR FDR FD FDL FL FUL FC).
+    
+    1. (FU FUR FR FDR FD FDL FL FUL FC)*
+         (FUR FDR)(FUR FDL)(FUR FUL)*(FU FR)(FU FD)(FU FL)=
+        (FR FDR FD FDL FL FUL FU FUR FC)
+    2. (FR FDR FD FDL FL FUL FU FUR FC)*
+         (FUR FDR)(FUR FDL)(FUR FUL)*(FU FR)(FU FD)(FU FL)=
+        (FD FDL FL FUL FU FUR FL FDR FC)
+    
+    Signed-off-by: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+commit de10d4b122da506f7639a3525be33264606c8752
+Author: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+Date:   Tue Jul 19 11:16:21 2022 +0100
+
+    gnubik: guix-shell-here, also permutations
+    
+    guix-shell-here -- guix shell gnubik ...
+    guix-shell-here ()
+    {
+        local D="guix shell gnubik ...";
+        guix shell gnubik info-reader man-db texlive-base noweb $@ -D gnubik
+    }
+    
+    Notes on the Rubik group:
+    
+    Permutations
+    
+    Given the permutation
+    (1 2 3 4 5)
+    (5 1 3 2 4), for example.
+    
+    In terms of cycles this is
+    (1 5 4 2)(3)  one 4-cycle, and a 1-cycle
+    = (1 5 4 2)   eliding the redundant (3)
+    
+    Proof: 1->5 5->4 4->2 2->1 and 3 remains
+    which gives
+    (1 2 3 4 5)*(1 5 4 2)=
+    (5 1 3 2 4) which agrees as given
+    
+    Also, the permutation
+    (1 5 4 2) = (5 4 2 1)
+    
+    Proof:
+    (1 2 3 4 5) * (5 4 2 1)=
+    (5 1 3 2 4), which agrees with our example.
+    
+    And reducing the 4-cycle to three 2-cycles,
+    showing that our example has odd parity
+    (5 4 2 1)=
+    (1 5 4 2)=
+    (1 5)(1 4)(1 2) three 2-cycles,
+                    odd parity
+    
+    Proof:
+    (1 2 3 4 5)*(1 5)(1 4)(1 2)=
+    (5 1 3 2 4) this could be good
+    
+    and again
+    (1 2 3 4 5)*(1 5 4 2)=
+    (1 2 3 4 5)*(5 4 2 1)=
+    (1 2 3 4 5)*(5 4)(5 2)(5 1)=
+    (5 1 3 2 4) which agrees, now
+    
+    An example of the Rubik group's element F
+    
+    F=(FUR FDR FDL FUL)(FU FR FD FL)(FC)=
+      (FUR FDR)(FUR FDL)(FUR FUL)*(FU FR)(FU FD)(FU FL)
+      a permutation of order 4, according to current understanding
+      a permutation of even parity
+    
+    Proof:
+    (FU FUR FR FDR FD FDL FL FUL FC)*F=
+    (FU FUR FR FDR FD FDL FL FUL FC)*
+     (FUR FDR)(FUR FDL)(FUR FUL)*(FU FR)(FU FD)(FU FL)=
+    (FR FDR FD FDL FL FUL FU FUR FC)  which agrees, with the
+                                      visual perception
+    
+    Algorithm A. Write the cononical cycle of a given combination
+    of permutations.
+    A1. [Start a cycle] Find the smallest element that has not been
+        noted, write a left opening parenthesis followed by the
+        starting element.
+    A2. [Complete the cycle] Follow the movements of the starting
+        element from step A1 until the cycle closes again with the
+        starting element. Close the cycle with a right closing
+        parentheses.
+    A3. [Next cycle or terminate] If there are unnoted elements
+        left then go to step A1.  Otherwise the algorithm
+        terminates. ||
+    
+    Example 1. Given (1 2 4)(3 5)*(6 1 2)(3 4); we have, written
+               in the two line notation for a permutation:
+               (1 2 3 4 5 6)
+               (6 3 5 2 4 1)
+    
+        A1. The smallest element is 1 and we write "(1 ".
+        A2. We follow and complete the cycle "(1 6)".
+        A3. There is more, so we go back to step A1.
+        A1. The smallest element left is 2 and we write "(2 ".
+        A2. We follow and complete "(2 3 5 4)". (Note that 4 is
+            followed by 2, therefor this cycle completes with
+            the 4 element.)
+        A3. All done. "(1 6)(2 3 5 4)" is the result. ||
+    
+            The smallest common multiplier of this result's cycle
+            lengths is 4, and therefor the order of this
+            permutation is 4.
+    
+            This permutation can be written as a combination of
+            four 2-cycles, namely (1 6)(2 3)(2 5)(2 4) and
+            therefor the parity of this permutation is even.
+    
+    Signed-off-by: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+commit 057d209be5472bdf1ab89684df8ab2f3ccc1557f
+Author: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+Date:   Sun Jul 17 23:03:03 2022 +0100
+
+    gnubik: spell out the colours and the six faces
+    
+    0 red       Front  F
+    1 green     Back      B
+    2 blue      Up     U
+    3 cyan      Down      D
+    4 magenta   Left   L
+    5 yellow    Right     R
+    
+    Notes: there are 3x3x3 cubes, with
+     8  corner cubes that are part of 3 faces
+     12 edge cubes that are part of 2 faces
+     6  centre cubes that are part of 1 face, and
+     1  invisible cube at the centre of the Rubic,
+        with no face.
+    
+    Things, here, are abstraced within the concepts of a
+    non-abelian group.  The set of 12 basic elements is
+     {F,f,B,b,U,u,D,d,L,l,R,r}.
+    
+     F clockwise 90 degree rotation of the front face
+     f counter-clockwise
+     B clockwise back face rotation by 90 degrees
+     b count-clockwise, back face
+     U up face, clockwise
+     u up face, counter-clockwise
+     D down face, clock
+     d down face, counter-clock
+     L left face, clock
+     l left face, counter clock
+     R right face, clock
+     r right face, counter-clock
+    
+    Names of the 26 visible cubes' examples
+     F   centre cube that is visible
+         on the front face (red)
+     FU  edge cube seen
+         on the front and up faces (red,blue)
+     FUL corner cube seen on
+         front, up, and left faces (red,blue,magenta)
+    
+    The Rubik group's zero element: no rotation, and
+    no change to the Rubik's arrangement, 0 (for now).
+    
+    The group's inverse element of the F transform, for
+    example, being the rotation of the front face in the
+    clockwise direction, is the f transform,
+    counter-clockwise rotation of the front face.
+    
+    The group's additive operation * sequences
+    two Rubik elements, and creates another composite
+    element of the Rubik group's set.
+    
+    For example, connecting two basic elements F and U,
+    creates the composite Rubik element F*U. This
+    operation first rotates the front face by
+    90 degrees in the clockwise direction, and then
+    rotates of the up face by 90 degrees. (Note:
+    order of operations matter as the group is
+    non-commutative.)
+    
+    As another example, the composite element A=F*U
+    of the Rubik group has the inverse element -A=u*f.
+    Proof: A*-A=0, with 0 being the neutral element,
+    since A*-A=F*U*(u*f)=0, and no change of
+    theRubik's arrangement is effected.
+    
+    Signed-off-by: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
