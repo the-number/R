@@ -1,0 +1,28 @@
+% 20220721 (C) Gunter Liszewski -*- mode: tex; -*-
+% another way to take note
+
+http://web.mit.edu/sp.268/www/rubik.pdf
+
+
+Here is one example given.
+$$(1 2 3)(2 3 1) = (1 3 2)\ order\ 3$$
+
+We juggle with this. First we apply the first cycle of this
+permutation to a standard permutation, $(123456)$, like
+$(123456)*(123)$.
+$$\left(\matrix{123456\cr
+                231456}\right)$$
+
+Then, we apply the second cycle, $(231)$, to the result
+$(231456)*(231)$ to get in the two line notation
+$$\left(\matrix{231456\cr
+                312456}\right)$$
+
+Now, we apply the given algorithm to write the canonical cycle notation of the resulting two line permutation
+$$\left(\matrix{123456\cr
+                312456}\right)$$
+and get
+$$(132)(4)(5)(6)$$
+and omit the redundant one-cycles to arrive at the given result
+$$(132)$$
+\bye
