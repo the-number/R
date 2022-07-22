@@ -1,7 +1,7 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  22 JUL 2022 15:36
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  23 JUL 2022 00:22
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
-Underfull \hbox (badness 10000) in paragraph at lines 35--44
+Underfull \hbox (badness 10000) in paragraph at lines 36--45
 []\tenrm We re-think, re-word, and re-start with a set of at-tributes, el-e-ments or ob-jects, 
 
 \hbox(6.94444+1.94444)x480.0, glue set 5.6849
@@ -13,4 +13,4 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--44
 .etc.
 
 [1] 4. Creating the Woozy set  [2] )
-Output written on perm4.dvi (2 pages, 3832 bytes).
+Output written on perm4.dvi (2 pages, 5756 bytes).

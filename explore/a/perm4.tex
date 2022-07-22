@@ -25,8 +25,9 @@
 \beginsection 2. Permutations
 
 \e
-TAoCP\f~1.2.5 gives two methods to generate all permutations
-of a given ordered set. Quantites of permutations are considered
+TAoCP in chapter 1.2.5 gives two methods to generate
+all permutations of a given ordered set.
+Quantites of permutations are considered
 with relevance to computing efficiencies.
 
 \beginsection 3. The Wide-Awake example Group
@@ -64,8 +65,39 @@ $\pi\*\eta\in\R$ and $\eta\*\pi\in\R.$
 \beginsection 4. Creating the Woozy set
 
 \proclaim Theorem X. An ordered set of $n$ elements
-has $n!$~arrangements.\f
+has $n!$~arrangements.
 
-This is to be considered.
+This has been give a little consideration.  Here, we
+convey our current understanding of the Permutations and
+Factorials section.\f
+
+Given a set of objects $W=\{a_1,a_2,...,a_n\}$.
+$P_n$ is the set of arrangements given $n$ objects
+$a_1,...,a_n$ $\in W$, such as
+$\{(a_1,a_2,...a_n),(a_2,a_1,...),...\}$. For example,
+with $W=\{1,2,3\}$, we have
+$$P_3=\{(123),(231),(312),(132),(321),(213)\}.$$
+
+\e
+Method 1, now, moves from $n=3$ to $n=4$ as follows.
+For each element in $P_{n-1}=P_3$, place element
+$a_n$ in each possible vacuous position to arrive at
+$P_n=P_4$, that is
+$$P_4=\{(a_na_1a_2a_3),
+       (a_1a_na_2a_3),
+       (a_1a_2a_na_3),
+       (a_1a_2a_3a_n),
+       ...,
+       (a_na_2a_1a_3),
+       (a_2a_na_1a_3),
+       (a_2a_1a_na_3),
+       (a_2a_1a_3a_n)\}$$
+
+\e
+Adding up all permutations that are so generated we have
+$p_n$ the number of all elements in $P_n$ to be
+$$p_n=\sum_{k=1}^np_k.$$
+With $p_k=k!$ for $1\le k\le n$ this equates to
+$$p_n=\sum_{k=1}^n k!$$. (To be confirmed.)
 
 \bye
