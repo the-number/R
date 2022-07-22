@@ -1,0 +1,50 @@
+% 20220722 (C) Gunter Liszewski -*- mode: tex; -*-
+% permutation basics
+
+\def\a{\left(\matrix}
+\def\b{\cr}
+\def\c{\right)}
+
+\def\d{\footnote*{http://web.mit.edu/sp.268/www/rubik.pdf}}
+\def\f{\footnote*{https://www-cs-faculty.stanford.edu/\%7Eknuth/taocp.html}}
+\def\e{\bigskip}
+\def\R{{Woozy}}
+\def\*{\circ}
+
+% 595.28 841.89 a5: 419.53 595.28
+\vsize=300pt % trial and likely error
+\hsize=480pt % landscape to view on your screen
+\footline={\tenrm Permutations\quad\dotfill\quad \folio}
+
+\beginsection 1. Plain \TeX nology % and some Maths
+
+\proclaim Theorem T. All things are not necessarily the same
+
+\beginsection 2. Permutations
+
+\e
+TAoCP\f~1.2.5 gives two methods to generate all permutations
+of a given ordered set. Quantites of permutations are considered
+with relevance to computing efficiencies.
+
+\beginsection 3. The Wide-Awake example Group
+
+\e
+Let $(\R,\*,0,-)$ be the group with a set
+$\R=\{woozy, vacuous, sleepy, wide-awake\}$, a binary
+operation $\*$, a neutral elment $0$, and
+for each element $\pi\in\R$ there is an inverse element
+$-\pi\in\R$ such that $\pi\*-\pi=0$.
+
+\e
+For now, here, we call this group's binary operation $composition$.
+Given two elements
+$\pi,\eta\in\R,$ then
+$\pi\*\eta\in\R$ and $\eta\*\pi\in\R.$
+
+% \e
+% in a woozy state of progress
+% $\pi=(a_1 a_2 ... a_n),$ and $\eta=(b_1 b_2 ... b_n)$, then
+% $\pi\*\eta\in\R$ and $\eta\*\pi\in\R.$
+
+\bye
