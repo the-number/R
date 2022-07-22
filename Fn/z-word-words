@@ -1,0 +1,8 @@
+z-word-words () 
+{ 
+    local D="z-word the list of words";
+    cat 105-${1:-01-01}-words.txt | while read a; do
+        echo == $a;
+        z-word $a > /dev/null 2> /dev/null;
+    done
+}

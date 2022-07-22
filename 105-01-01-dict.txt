@@ -1,0 +1,90 @@
+== 105-words for a Rubik group 1
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <129250332.14844.1658485417@dict.dict.org>
+250 ok
+552 no match [d/m/c = 0/0/47; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== woozy
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <129250339.14851.1658485419@dict.dict.org>
+250 ok
+150 1 definitions retrieved
+151 "woozy" wn "WordNet (r) 3.0 (2006)"
+woozy
+    adj 1: having or causing a whirling sensation; liable to
+           falling; "had a dizzy spell"; "a dizzy pinnacle"; "had a
+           headache and felt giddy"; "a giddy precipice"; "feeling
+           woozy from the blow on his head"; "a vertiginous climb up
+           the face of the cliff" [syn: {dizzy}, {giddy}, {woozy},
+           {vertiginous}]
+.
+250 ok [d/m/c = 1/0/29; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== vacuous
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <129250341.14853.1658485419@dict.dict.org>
+250 ok
+150 1 definitions retrieved
+151 "Vacuous" gcide "The Collaborative International Dictionary of English v.0.48"
+Vacuous \Vac"u*ous\ (v[a^]k"[-u]*[u^]s), a. [L. vacuus. See
+   {Vacant}.]
+   Empty; unfilled; void; vacant.
+   [1913 Webster]
+
+         Boundless the deep, because I am who fill
+         Infinitude; nor vacuous the space.       --Milton.
+   [1913 Webster]
+
+         That the few may lead selfish and vacuous days. --J.
+                                                  Morley.
+   [1913 Webster]
+.
+250 ok [d/m/c = 1/0/15; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== sleepy
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <129250342.14854.1658485420@dict.dict.org>
+250 ok
+150 1 definitions retrieved
+151 "Sleepy" gcide "The Collaborative International Dictionary of English v.0.48"
+Sleepy \Sleep"y\, a. [Compar. {Sleepier}; superl. {Sleepiest}.]
+   [AS. sl?pig. See {Sleep}, n.]
+   1. Drowsy; inclined to, or overcome by, sleep. --Shak.
+      [1913 Webster]
+
+            She waked her sleepy crew.            --Dryden.
+      [1913 Webster]
+
+   2. Tending to induce sleep; soporiferous; somniferous; as, a
+      sleepy drink or potion. --Chaucer.
+      [1913 Webster]
+
+   3. Dull; lazy; heavy; sluggish. --Shak.
+      [1913 Webster]
+
+            'Tis not sleepy business;
+            But must be looked to speedily and strongly. --Shak.
+      [1913 Webster]
+
+   4. Characterized by an absence of watchfulness; as, sleepy
+      security.
+      [1913 Webster]
+
+   {Sleepy duck} (Zool.), the ruddy duck.
+      [1913 Webster]
+.
+250 ok [d/m/c = 1/0/18; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== wide-awake
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <129250344.14856.1658485420@dict.dict.org>
+250 ok
+150 2 definitions retrieved
+151 "Wide-awake" gcide "The Collaborative International Dictionary of English v.0.48"
+Wide-awake \Wide`-a*wake"\ (w[imac]d`[.a]*w[=a]k"), a.
+   Fully awake; not drowsy or dull; hence, knowing; keen; alert.
+   --Dickens.
+   [1913 Webster]
+.
+151 "Wide-awake" gcide "The Collaborative International Dictionary of English v.0.48"
+Wide-awake \Wide`-a*wake"\, n.
+   A broad-brimmed, low-crowned felt hat.
+   [1913 Webster]
+.
+250 ok [d/m/c = 2/0/17; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]

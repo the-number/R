@@ -1,0 +1,8 @@
+cat-dict () 
+{ 
+    local D="cat the gathered definistions";
+    cat 105-${1:-01-01}-words.txt | while read a; do
+        echo == $a;
+        cat ~/.words/$a;
+    done >> 105-${1:-01-01}-dict.txt
+}
