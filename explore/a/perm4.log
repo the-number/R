@@ -1,4 +1,16 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  22 JUL 2022 12:00
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  22 JUL 2022 13:02
 **perm4.tex
-(./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group  [1] )
-Output written on perm4.dvi (1 page, 2312 bytes).
+(./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
+Underfull \hbox (badness 10000) in paragraph at lines 34--43
+[]\tenrm We re-think, re-word, and re-start with a set of at-tributes, el-e-ments or ob-jects, 
+
+\hbox(6.94444+1.94444)x480.0, glue set 5.6849
+.\hbox(0.0+0.0)x20.0
+.\tenrm W
+.\kern-0.83334
+.\tenrm e
+.\glue(\spaceskip) 3.33298
+.etc.
+
+[1] )
+Output written on perm4.dvi (1 page, 2728 bytes).
