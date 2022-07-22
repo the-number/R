@@ -1,4 +1,4 @@
-% 20220721 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220722 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix}
@@ -8,9 +8,27 @@
 \def\d{\footnote*{http://web.mit.edu/sp.268/www/rubik.pdf}}
 \def\f{\footnote*{https://www-cs-faculty.stanford.edu/\%7Eknuth/taocp.html}}
 \def\e{\bigskip}
+\def\R{{Rubik}}
+\def\*{\circ}
+
+% 595.28 841.89 a5: 419.53 595.28
+\vsize=300pt % trial and likely error
+\hsize=480pt % landscape to view on your screen
+\footline={\tenrm Permutations\quad\dotfill\quad \folio}
+
+\beginsection 1. Plain \TeX nology % and some Maths
 
 \e
 Creating all possible permutations.  TAoCP\f 1.2.5.
 Two methods are given.  Numbers of permutation are evaluated.
+
+\e
+First, the group's binary operation is named $composition$.
+Given two elements $\pi,\eta\in\R$, then
+$\pi\*\eta\in\R$.
+
+\e
+$\pi=(a_1 a_2 ... a_n),$ and $\eta=(b_1 b_2 ... b_n)$, then
+$\pi\*\eta\in\R$ and $\eta\*\pi\in\R.$
 
 \bye
