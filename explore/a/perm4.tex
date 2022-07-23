@@ -134,4 +134,31 @@ combined with $p_n=\sum_{k=1}^n p_{nk}$,
 we count the number of arrangements of $n$ objects to be
 $p_n=\sum_{k=1}^n {n!\over{(n-k)!}}$
 or some such like.
+\eject
+\beginsection 6. Making concrete Space
+
+\e
+We now look  at the set $W$ that we enumerated above and
+apply the method 1 to arrange things.
+
+\e {\def\i#1 {\noindent $\R_{#1}=\{$}\def\j{$\}$}%
+\def\h#1 {$($ #1 $)$}%
+\def\k#1 #2 {$($ #1, #2 $)$}%
+Given $W$ as above, we have\break
+\i41 \h woozy ,
+          \h vacuus ,
+          \h sleepy ,
+          \h wide-awake \j
+
+Then, taking one step at a time and with method 1,
+given the set
+
+\i21 \h sleepy ,
+     \h wide-away \j
+we make
+
+\i22 \k sleepy wide-awake ,
+       \k wide-awake sleepy \j.
+
+
 \bye

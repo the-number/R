@@ -1,4 +1,4 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  23 JUL 2022 12:47
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  23 JUL 2022 14:01
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
@@ -16,5 +16,34 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--49
 .\glue(\spaceskip) 3.33298
 .etc.
 
-[1] 4. Creating the Woozy set  5. Accounting for these Arrangements  [2] [3] )
-Output written on perm4.dvi (3 pages, 8276 bytes).
+[1] 4. Creating the Woozy set  5. Accounting for these Arrangements  [2]
+Underfull \vbox (badness 1688) has occurred while \output is active
+\vbox(300.0+3.5)x480.0, glue set 2.56673
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 284.75652fil
+..\tenbf 5
+..\tenbf .
+..\glue(\xspaceskip) 5.0
+..\tenbf A
+..\tenbf c
+..etc.
+.\penalty 10000
+.\glue 3.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0 plus 1.0
+.etc.
+
+ [3] 6. Making concrete Space 
+Underfull \hbox (badness 10000) in paragraph at lines 147--152
+[]\tenrm Given $\teni W$ \tenrm as above, we have 
+
+\hbox(6.94444+1.94444)x480.0, glue set 16.95213
+.\hbox(0.0+0.0)x20.0
+.\tenrm G
+.\tenrm i
+.\tenrm v
+.\kern-0.27779
+.etc.
+
+[4] )
+(\end occurred inside a group at level 1)
+Output written on perm4.dvi (4 pages, 9688 bytes).
