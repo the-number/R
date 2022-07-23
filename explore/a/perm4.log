@@ -1,11 +1,11 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  23 JUL 2022 16:33
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  23 JUL 2022 19:23
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
 Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^99 in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--49
+Underfull \hbox (badness 10000) in paragraph at lines 41--50
 []\tenrm We re-think*, re-word, and re-start with a set of at-tributes, el-e-ments or ob-jects, 
 
 \hbox(7.5+1.94444)x480.0, glue set 5.4349
@@ -33,7 +33,7 @@ Underfull \vbox (badness 1688) has occurred while \output is active
 .etc.
 
  [3] 6. Making concrete Space 
-Underfull \hbox (badness 10000) in paragraph at lines 151--156
+Underfull \hbox (badness 10000) in paragraph at lines 152--157
 []\tenrm Given $\teni W$ \tenrm as above, we have 
 
 \hbox(6.94444+1.94444)x480.0, glue set 16.95213
@@ -45,4 +45,4 @@ Underfull \hbox (badness 10000) in paragraph at lines 151--156
 .etc.
 
 [4] )
-Output written on perm4.dvi (4 pages, 9736 bytes).
+Output written on perm4.dvi (4 pages, 9768 bytes).
