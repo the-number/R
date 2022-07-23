@@ -166,5 +166,67 @@ and we get
 \i22 \k wide-awake sleepy ,
        \k sleepy wide-awake \j.
 }% this is the end, for here
+{
+\def\ee{\medskip}%
+\def\V#1#2#3 #4.{\noindent%
+     $#1_{#2#3}=\{$ #4 $\}$}%
+\def\W#1#2 #3.{\noindent%
+     $P_{#1#2}=\hbox{Woozy}_{#1#2}=\{$ #3 $ \}$}%
+\e Let's start counting now. We have
+\ee
+\W21 ( sleepy )., and another \V P21 ( wide-awake ).
+\ee
+\W22 ( sleepy, wide-awake ),
+     ( wide-awake, sleepy )..
+\e
+To sum up we get
+
+$p_2=(p_{21}+p_{21})+p_{22},$ with
+
+$p_{21}=1,$ the count for each set of one 1-tuple, and
+
+$p_{22}=2,$ the count for the one set of two 2-tuples that
+we have created so far.
+
+\e
+Compare things with the calculations that we made earlier,
+
+$p_{21}={2!\over(2-1+1)!}=1,$ and
+$p_{22}={2!\over(2-2+1)!}=2.$ and $p_2=2*p_{21}+p_{22}$
+
+$p_2=\sum_{k=1}^2{2!\over(2-k+1)!}$ which has two terms
+and evaluates to $p_2={2\over2}+{2\over1}$, and it looks
+like there is something wrong here!
+
+\e
+Let's take our result from section 5 and adjust.
+
+\e
+$p_n=\sum_{k=1}^n(n-k+1)*{n!\over(n-k+1)!}$ and since
+
+$(n-k+1)=(n-k+1)*(n-k)*(n-k-1)*...*1$ we can simplify and have
+
+$p_n=\sum_{k=1}^n{n!\over(n-k)!}$ which, for our state,
+
+yields the following sum in two terms, (given that $0!=1$)
+
+$p_2={2\over1}+{2\over1}=2+2=4,$ which agrees with our
+permutations' making.
+
+\e
+And while we are here we set a solid base by calculating the
+simple case for the set $P_1$ for which $p_1=1$, as we have
+counted just now.
+
+\e
+$p_n=\sum_{k=1}^n{n!\over(n-k)!}$
+with $n=1$ yields $p_1={1!\over(1-1)!}=1$
+and confirms the basic case.
+
+\e
+So, does our formula hold its stepping up.
+Assuming that $p_n=\sum_{k=1}^n{n!\over(n-k)!}$ is correct,
+we need to find the terms to make $p_{n+1}$ from that.
+(to be continued)
 
 \bye
