@@ -1,17 +1,21 @@
-% 20220722 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220723 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix}
 \def\b{\cr}
 \def\c{\right)}
 
-\def\d{\footnote*{http://web.mit.edu/sp.268/www/rubik.pdf}}
+\def\d{\footnote*{The Mathematics of the Rubik’s Cube,
+  http://web.mit.edu/sp.268/www/rubik.pdf}}
 \def\f{\footnote*{TAoCP chapter 1.2.5,
   https://www-cs-faculty.stanford.edu/\%7Eknuth/taocp.html}}
+\def\g{\footnote*{\TeX book, texbook.tex,
+  https://www.ctan.org/tex-archive/systems/knuth/dist/tex}}
+%
 \def\e{\bigskip}
 \def\R{Woozy}
 \def\*{\circ}
-
+%
 % 595.28 841.89 a5: 419.53 595.28
 \vsize=300pt % trial and likely error
 \hsize=480pt % landscape to view on your screen
@@ -20,7 +24,7 @@
 
 \beginsection 1. Plain \TeX nology % and some Maths
 
-\proclaim Theorem T. All things are not necessarily the same
+\proclaim Theorem T. All things are not necessarily the same\g
 
 \beginsection 2. Permutations
 
@@ -33,7 +37,7 @@ with relevance to computing efficiencies.
 \beginsection 3. The Wide-Awake example Group
 
 \e
-We re-think, re-word, and re-start
+We re-think\d, re-word, and re-start
 with a set of attributes, elements or objects,\break
 $W=\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 These elements are used to generate all possible
@@ -67,8 +71,8 @@ $\pi\*\eta\in\R$ and $\eta\*\pi\in\R.$
 \proclaim Theorem X. An ordered set of $n$ elements
 has $n!$~arrangements.
 
-This has been give a little consideration.  Here, we
-convey our current understanding of the Permutations and
+This had a little consideration.  Here, we
+convey our understanding of the Permutations and
 Factorials section.\f
 
 Given a set of objects $W=\{a_1,a_2,...,a_n\}$.
@@ -93,30 +97,41 @@ $$P_4=\{(a_na_1a_2a_3),
        (a_2a_1a_na_3),
        (a_2a_1a_3a_n)\}$$
 
+\beginsection 5. Accounting for these Arrangements
+
 \e
 Adding up all permutations that are so generated we have
-$p_n$ the number of all elements in $P_n$ to be
-$$p_n=\sum_{k=1}^np_k.$$
-With $p_k=k!$ for $1\le k\le n$ this equates to
-$$p_n=\sum_{k=1}^n k!$$.
+$p_n$ the number of all elements in $P_n$ % to be
+%$$p_n=\sum_{k=1}^np_k.$$.
 
 \e
-(To be reconsidered! We assume this to be incorrect. Either
-keep on reading TAoCP 1.2.5, or consider that with $n=4$ there
-are now $4-1$ additional 1-tuples, more 2-tuples,
-and other 3-tuples.)
+And again, after some re-view, we sense a need to re-word.
+$P_{nn}$ is the set of permuted $n$-tuples, and $P_n$ is
+the, probably bigger, set of all the $k$-tuples with
+$k\in\{1,2,..,n\}.$. In other words, $P_n$
+may mean different things, or sets of things. This also
+applies to quantities that could be denoted like $p_{nk},$
+and $p_{nn},$ and in case of our big wide-awake bean bag,
+which we sum up to $p_n;$  probably.
 
 \e
-(On the back of some scrap paper, we jot down
-$\{(1),(2),(3),(4)\}$ of which $\{(2),(3),(4)\}$ are
-not included in our sum, $\{(12),(21),(13),(31),(14),(41),$
-$(23),(32),(24),(42),(34),(43)\}$ with $10$ 2-tuples unaccounted
+First, we started with $p_n=\sum_{k=1}^n k!$
+to be the quantity
+$p_n$ that accounts for all the elements of
+arrangements in set $P_n$, 
+with $p_k=k!$ for $1\le k\le n$.
+
+However, on the back of some scrap paper, we jotted down
+$\{(1),(2),(3),(4)\}$ and saw that $\{(2),(3),(4)\}$ are
+not included in our sum, and
+$\{(12),(21),(13),(31),(14),(41),$
+$(23),(32),(24),(42),(34),(43)\}$ has $10$ 2-tuples unaccounted
 for, etc.)
 
 \e
-$p_{nk}=n(n-1)...(n-k+1)$
-and then this combined with $p_n=\sum_{k=1}^n p_{nk}$
-gives
-$$p_n=\sum_{k=1}^n {n!\over{(n-k)!}}$$
+So, for now, given that $p_{nk}=n(n-1)...(n-k+1)$\f,
+combined with $p_n=\sum_{k=1}^n p_{nk}$,
+we count the number of arrangements of $n$ objects to be
+$p_n=\sum_{k=1}^n {n!\over{(n-k)!}}$
 or some such like.
 \bye
