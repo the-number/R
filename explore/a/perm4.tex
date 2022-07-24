@@ -295,6 +295,11 @@ ${24\over1!}$&${24\over{0!}}$\cr}$$
                ( 412 ), ( 142 ), ( 124 ),
                ( 421 ), ( 241 ), ( 214 ).
 \eject
+We find a 3-tuple, take its inverse, then
+cycle down. These are order 3 cycles. Then, we
+find another 3-tuple that is not yet noted, and
+go back to the first step, until all cycle routes
+have been followed.
 
 $$\def\h #1 #2 { #1 & #2&&&\cr}%
 \def\hh #1 #2 {& #1 & #2&&\cr}%
@@ -315,11 +320,18 @@ $$\def\h #1 #2 { #1 & #2&&&\cr}%
 \hhhh             234 243
 }$$
 
-$$\def\h #1 #2 #3 { #1 & #2 & #3 &&\cr}%
+\eject
+We find four order three cycles and their respective
+inverse things (we may call, arbitrarily, the first
+in its row the $id$ of its cycle,
+while the other jumbles in the row follow their leader.
+Maybe $chief$ is a more appropriate designation than $id$.)
+
+{\def\h #1 #2 #3 { #1 & #2 & #3 &&\cr}%
 \def\hh #1 #2 #3 {& #1 & #2 & #3 &\cr}%
 \def\hhh #1 #2 #3 {&& #1 & #2 & #3\cr}%
 \def\hhhh #1 #2 #3 {&&& #1 & #2 & #3\cr}%
-\halign{\indent # & # & # & # & # & # \hfil\cr
+$$\halign{\indent # & # & # & # & # & # \hfil\cr
 \h    123 231 312
 \h    321 213 132
 \hh       124 241 412
@@ -328,8 +340,8 @@ $$\def\h #1 #2 #3 { #1 & #2 & #3 &&\cr}%
 \hhh          431 314 143
 \hhhh             234 342 423
 \hhhh             432 324 243
-}$$
-
+}$$}
+\eject
 %\e\hh ( 4123 ), ( 1423 ), ( 1243 ), ( 1234 ),
 %     ( 4321 ), ( 3421 ), ( 3241 ), ( 3214 ),
 %                ( 4132 ), ( 1432 ), ( 1342 ), ( 1324 ),

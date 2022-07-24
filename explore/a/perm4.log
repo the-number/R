@@ -1,4 +1,4 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  24 JUL 2022 15:42
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  24 JUL 2022 16:09
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
@@ -76,5 +76,49 @@ Underfull \vbox (badness 10000) has occurred while \output is active
 .\glue(\parskip) 0.0 plus 1.0
 .etc.
 
- [6] 8. The Series of Sequences  [7] [8] [9] )
-Output written on perm4.dvi (9 pages, 19404 bytes).
+ [6] 8. The Series of Sequences  [7]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+0.0)x480.0, glue set 14.0
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 0.88498
+..\hbox(0.0+0.0)x20.0
+..\tenrm W
+..\kern-0.83334
+..\tenrm e
+..\glue(\spaceskip) 3.33298
+..etc.
+.\penalty 300
+.\glue(\baselineskip) 3.11111
+.\hbox(6.94444+1.94444)x480.0, glue set 42.22816fil
+..\tenrm 3
+..\tenrm -
+..\discretionary
+..\tenrm t
+..\tenrm u
+..etc.
+.etc.
+
+ [8]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+0.0)x480.0, glue set 17.42857
+.\glue(\topskip) 2.5
+.\hbox(7.5+2.5)x480.0, glue set 0.54054
+..\hbox(0.0+0.0)x20.0
+..\tenrm W
+..\kern-0.83334
+..\tenrm e
+..\glue(\spaceskip) 3.33298
+..etc.
+.\penalty 150
+.\glue(\baselineskip) 2.55556
+.\hbox(6.94444+1.94444)x480.0, glue set 0.31247
+..\tenrm i
+..\tenrm t
+..\tenrm s
+..\glue(\spaceskip) 3.33298
+..\tenrm r
+..etc.
+.etc.
+
+ [9] [10] )
+Output written on perm4.dvi (10 pages, 20776 bytes).
