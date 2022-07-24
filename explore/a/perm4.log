@@ -1,11 +1,11 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  24 JUL 2022 21:26
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  25 JUL 2022 14:27
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
 Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^99 in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--50
+Underfull \hbox (badness 10000) in paragraph at lines 47--56
 []\tenrm We re-think*, re-word, and re-start with a set of at-tributes, el-e-ments or ob-jects, 
 
 \hbox(7.5+1.94444)x480.0, glue set 5.4349
@@ -33,7 +33,7 @@ Underfull \vbox (badness 1688) has occurred while \output is active
 .etc.
 
  [3] 6. Making concrete Space 
-Underfull \hbox (badness 10000) in paragraph at lines 152--157
+Underfull \hbox (badness 10000) in paragraph at lines 158--163
 []\tenrm Given $\teni W$ \tenrm as above, we have 
 
 \hbox(6.94444+1.94444)x480.0, glue set 16.95213
@@ -120,5 +120,26 @@ Underfull \vbox (badness 10000) has occurred while \output is active
 ..etc.
 .etc.
 
- [9] [10] )
-Output written on perm4.dvi (10 pages, 20892 bytes).
+ [9]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+2.5)x480.0
+.\glue(\topskip) 2.5
+.\hbox(7.5+2.5)x480.0, glue set 0.5558
+..\hbox(0.0+0.0)x20.0
+..\mathon
+..\tensy f
+..\mathoff
+..\glue(\spaceskip) 3.33298
+..etc.
+.\penalty 300
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x480.0, glue set 295.002fil
+..\tenrm 3
+..\tenrm 2
+..\tenrm 4
+..\tenrm 1
+..\tenrm ,
+..etc.
+
+ [10] [11] )
+Output written on perm4.dvi (11 pages, 23148 bytes).

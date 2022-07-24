@@ -1,4 +1,4 @@
-% 20220724 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220725 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix}
@@ -26,6 +26,12 @@
 \beginsection 1. Plain \TeX nology % and some Maths
 
 \proclaim Theorem T. All things are not necessarily the same\g
+
+\def\strutdepth{\dp\strutbox}
+\def\marginalstar{\strut\vadjust{\kern-\strutdepth\specialstar}}
+\def\specialstar{\vtop to \strutdepth{
+  \baselineskip\strutdepth
+  \vss\llap{* }\null}}
 
 \beginsection 2. Permutations
 
@@ -329,6 +335,10 @@ in its row the $id$ of its cycle,
 while the other jumbles in the row follow their leader.
 Maybe $chief$ is a more appropriate designation than $id$.)
 
+\def\specialstar{\vtop to\strutdepth{
+ \baselineskip\strutdepth
+ \vss\llap{3-cycles}\null}}%
+\marginalstar%
 {\def\h #1 #2 #3 { #1 & #2 & #3 &&\cr}%
 \def\hh #1 #2 #3 {& #1 & #2 & #3 &\cr}%
 \def\hhh #1 #2 #3 {&& #1 & #2 & #3\cr}%
@@ -358,8 +368,47 @@ $$\halign{\indent # & # & # & # & # & # \hfil\cr
             4312, 3124, 1243, 2431,
                   1324, 3241, 2413, 4132,
                   4231, 2314, 3142, 1423.
-
 }% end of section 8,here
+\eject
+{
+Again, we find three 4-cycles. We reverse to form their
+inverse. We follow the four permutation instances that
+are specified by these
+six order four canonical cycle permutations.
+
+As an additional step, here, in order to give some
+visual~clue as to the uniqueness of each 4-tuple,
+we have ordered the said permutation~cyles to list
+the canonical cycle~representation as the first element
+of its row. (As a permutation, each element
+in each of the six rows below
+will permute the standard permutation, say the
+4-tuple~1234, to the identical resulting arrangement.)
+
+How significant is this?  We aim to find an understanding
+of how we may abstract this in the context of group~theory.
+Given the 24 permutations listed, we have only
+six group elements. Each has four different representations.
+For example, the group's elements $3412$ and $4123$ are
+equal because the permutation $(1234)\*(3412)=(2341)$
+is equal to $(1234)\*(4123)=(2341).$
+
+{\def\h #1 #2 #3 #4 { #1 & #2 & #3 & #4 &&\cr}%
+\def\hh #1 #2 #3 #4 {& #1 & #2 & #3 & #4 &\cr}%
+\def\hhh #1 #2 #3 #4 {&& #1 & #2 & #3 & #4\cr}%
+$$\halign{\indent # & # & # & # & # & # \hfil\cr
+\h    1234 2341 3412 4123
+\h    1432 4321 3214 2143
+\hh        1342 3421 4213 2134
+\hh        1243 2431 4312 3124
+\hhh            1423 4231 2314 3142
+\hhh            1324 3241 2413 4132
+}$$}
+\def\specialstar{\vtop to\strutdepth{
+ \baselineskip\strutdepth
+ \vss\llap{4-cycles}\null}}%
+\marginalstar%
+}% the end of the three four-cycles and their inverses
 \bye
 
 
