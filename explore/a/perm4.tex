@@ -1,4 +1,4 @@
-% 20220723 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220724 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix}
@@ -228,11 +228,11 @@ So, does our formula hold its stepping up.
 Assuming that $p_n=\sum_{k=1}^n{n!\over(n-k)!}$ is correct,
 we need to find the terms to make $p_{n+1}$ from that.
 (to be continued)
+\hfil\eject
 
-\eject
 \beginsection 7. A few observations to count
 
-\e
+\indent%
 $p_{22}=p_{21}=2$
 
 $p_{33}=p_{32}$
@@ -254,4 +254,47 @@ $p_{n4}=4p_{n3}$, or some such like, if you get my drift.
 
 (well, maybe not)
 }
+\hfil\eject
+\beginsection 8. The Series of Sequences
+
+{% following a sequence, adding things up
+\def\i#1 {\noindent $\R_{#1}=\{$}%
+\def\j{$\}$}%
+\def\h#1.{$\{ \hbox{#1} \}$}%
+\def\hh#1.{$\{$ #1 $\}$}%
+\def\k#1 #2 {$($ #1, #2 $)$}%
+\def\ee{\medskip}%
+
+%\e
+%\h {4!\over{(4-1)!}},{4!\over{(4-2)!}},
+%   {4!\over{(4-3)!}},{4!\over{(4-4)!}}.
+
+\e
+\h ( sequence, series ), ( Folge, Reihe ).
+
+\e
+\h 1 2 3 4.
+
+\e
+\h ( woozy ), ( vacuous ), ( sleepy ), ( wide-awake ).
+
+\e\h ( 1 ),  ( 2 ),  ( 3 ),  ( 4 ).
+\e\h ( 12 ), ( 21 ),
+     ( 13 ), ( 31 ),
+     ( 14 ), ( 41 ),
+             ( 23 ), ( 32 ),
+             ( 24 ), ( 42 ),
+                     ( 34 ), ( 43 ).
+
+\e\hh ( 312 ), ( 132 ), ( 123 ),
+      ( 321 ), ( 231 ), ( 213 ),
+               ( 412 ), ( 142 ), ( 124 ),
+               ( 421 ), ( 241 ), ( 214 ).
+
+\e\hh ( 4123 ), ( 1423 ), ( 1243 ), ( 1234 ),
+      ( 4321 ), ( 3421 ), ( 3241 ), ( 3214 ),
+                ( 4132 ), ( 1432 ), ( 1342 ), ( 1324 ),
+                ( 4231 ), ( 2431 ), ( 2341 ), ( 2314 ).
+
+}% end of section 8,here
 \bye

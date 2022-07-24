@@ -1,4 +1,4 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  24 JUL 2022 02:55
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  24 JUL 2022 11:53
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
@@ -60,5 +60,21 @@ Underfull \vbox (badness 10000) has occurred while \output is active
 .\glue(\baselineskip) 1.25714
 .etc.
 
- [5] 7. A few observations to count  [6] )
-Output written on perm4.dvi (6 pages, 15268 bytes).
+ [5] 7. A few observations to count 
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+2.5)x480.0, glue set 18.36684
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+0.0)x480.0, glue set 323.54836fil
+..\tenbf 7
+..\tenbf .
+..\glue(\xspaceskip) 5.0
+..\tenbf A
+..\glue 3.33298
+..etc.
+.\penalty 10000
+.\glue 3.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0 plus 1.0
+.etc.
+
+ [6] 8. The Series of Sequences  [7] )
+Output written on perm4.dvi (7 pages, 16772 bytes).
