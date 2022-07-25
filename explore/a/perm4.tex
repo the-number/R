@@ -421,21 +421,30 @@ Next we make four sets of permutaions $P_{nk}$ with
 $k\in\{k|1\le k\le n\},$
 
 We have $P_{41}$
-{\def\h #1 { #1 \cr}%
-\def\hh #1 {& #1 \cr}%
-$$\halign{\indent # & # \hfil\cr
+{\def\h #1 { ( #1 ) \cr}%
+\def\hh #1 {& ( #1 ) \cr}%
+$$\halign{\indent # & # \hfil\cr%
 \h    woozy
 \h    vacuous
 \hh           sleepy
 \hh           wide-awake
 }$$}
 
-We have $P_{44}$
+We have $P_{42}$ (just not yet)
+{\def\h #1,#2.{( #1 ) & ( #2 ) &&\cr}%
+\def\hh #1,#2.{& #1 & #2 &\cr}%
+\def\hhh #1,#2.{&& #1 & #2\cr}%
+$$\halign{\indent # & # & # & #\hfil\cr%
+\h    woozy vacuous,     vacuous woozy.
+\h    sleepy wide-awake, wide-awake sleepy.
+\hhh  {}, {to be continued}.
+}$$}
 
+We have $P_{44}$ (not yet in progress)
 {\def\h #1 #2 #3 #4 { #1 & #2 & #3 & #4 &&\cr}%
 \def\hh #1 #2 #3 #4 {& #1 & #2 & #3 & #4 &\cr}%
 \def\hhh #1 #2 #3 #4 {&& #1 & #2 & #3 & #4\cr}%
-$$\halign{\indent # & # & # & # & # & # \hfil\cr
+$$\halign{\indent # & # & # & # & # & # \hfil\cr%
 \h    woozy b c d 
 \h    vacuous b c d
 \hh           sleepy b c d
