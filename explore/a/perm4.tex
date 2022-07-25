@@ -467,17 +467,37 @@ $$\halign{\ \ \ \ \ \ \ \ \ # & # & #\hfil\cr%
 \h    wide-awake sleepy vacuous, sleepy vacuous wide-awake,
         vacuous wide-awake sleepy.}$$}%
 \vfill
-\eject
-We have $P_{44}$ (not yet in progress)
-{\def\h #1 #2 #3 #4 { #1 & #2 & #3 & #4 &&\cr}%
-\def\hh #1 #2 #3 #4 {& #1 & #2 & #3 & #4 &\cr}%
-\def\hhh #1 #2 #3 #4 {&& #1 & #2 & #3 & #4\cr}%
-$$\halign{\indent # & # & # & # & # & # \hfil\cr%
-\h    woozy b c d 
-\h    vacuous b c d
-\hh           sleepy b c d
-\hh           wide-awake b c d
-}$$}
+\eject\vfill
+We have $P_{44}$ (now in progress)
+{\def\h #1,#2.{( #1 )&( #2 )\cr}%
+\def\hh #1,#2.{\ \ ( #1 )&( #2 )\cr}%
+$$\halign{# & #\hfil\cr%
+\h    woozy vacuous sleepy wide-awake,
+       vacuous sleepy wide-awake woozy.
+\hh      sleepy wide-awake woozy vacuous,
+          wide-awake woozy vacuos sleepy.
+\h    wide-awake sleepy vacuous woozy,
+       sleepy vacuous woozy wide-awake.
+\hh     vacuous woozy wide-awake sleepy,
+         woozy wide-awake sleepy vacuous.}$$%
+$$\halign{\ \ # & #\hfil\cr%
+\h    woozy vacuous sleepy wide-awake,
+       vacuous sleepy wide-awake woozy.
+\hh     sleepy wide-awake woozy vacuous,
+         wide-awake woozy vacuos sleepy.
+\h    wide-awake sleepy vacuous woozy,
+       sleepy vacuous woozy wide-awake.
+\hh     vacuous woozy wide-awake sleepy,
+         woozy wide-awake sleepy vacuous.}$$%
+$$\halign{\ \ \ \ # & #\hfil\cr%
+\h    woozy vacuous sleepy wide-awake,
+       vacuous sleepy wide-awake woozy.
+\hh     sleepy wide-awake woozy vacuous,
+         wide-awake woozy vacuos sleepy.
+\h    wide-awake sleepy vacuous woozy,
+       sleepy vacuous woozy wide-awake.
+\hh     vacuous woozy wide-awake sleepy,
+         woozy wide-awake sleepy vacuous.}$$%
 }% end of section nine
 \bye
 
