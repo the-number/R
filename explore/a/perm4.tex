@@ -420,9 +420,27 @@ $\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 Next we make four sets of permutaions $P_{nk}$ with
 $k\in\{k|1\le k\le n\},$
 
-\def\c#1 {\hbox{( #1 )}}
-%$P_{41}$=\{$ \c woozy , \c vacuous , \c sleepy , \c wide-awake $\}.$
+We have $P_{41}$
+{\def\h #1 { #1 \cr}%
+\def\hh #1 {& #1 \cr}%
+$$\halign{\indent # & # \hfil\cr
+\h    woozy
+\h    vacuous
+\hh           sleepy
+\hh           wide-awake
+}$$}
 
+We have $P_{44}$
+
+{\def\h #1 #2 #3 #4 { #1 & #2 & #3 & #4 &&\cr}%
+\def\hh #1 #2 #3 #4 {& #1 & #2 & #3 & #4 &\cr}%
+\def\hhh #1 #2 #3 #4 {&& #1 & #2 & #3 & #4\cr}%
+$$\halign{\indent # & # & # & # & # & # \hfil\cr
+\h    woozy b c d 
+\h    vacuous b c d
+\hh           sleepy b c d
+\hh           wide-awake b c d
+}$$}
 }% end of section nine
 \bye
 
