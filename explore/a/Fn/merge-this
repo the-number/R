@@ -1,0 +1,5 @@
+merge-this () 
+{ 
+    local D="git merge -S ... <next>";
+    git merge -S --no-ff --log --commit -m "$sprint_topic: things" ${1:-next}
+}
