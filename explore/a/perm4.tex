@@ -430,14 +430,17 @@ $$\halign{\indent # & # \hfil\cr%
 \hh           wide-awake
 }$$}
 
-We have $P_{42}$ (just not yet)
+We have $P_{42}$
 {\def\h #1,#2.{( #1 ) & ( #2 ) &&\cr}%
-\def\hh #1,#2.{& #1 & #2 &\cr}%
-\def\hhh #1,#2.{&& #1 & #2\cr}%
+\def\hh #1,#2.{&( #1 )&( #2 )&\cr}%
+\def\hhh #1,#2.{&&( #1 )&( #2 )\cr}%
 $$\halign{\indent # & # & # & #\hfil\cr%
 \h    woozy vacuous,     vacuous woozy.
-\h    sleepy wide-awake, wide-awake sleepy.
-\hhh  {}, {to be continued}.
+\h    woozy sleepy,      sleepy woozy.
+\h    woozy wide-awake,  wide-awake woozy.
+\hh         vacuous sleepy,     sleepy vacuous.
+\hh         vacuous wide-awake, wide-awake vacuous.
+\hhh                sleepy wide-awake,  wide-awake sleepy.      
 }$$}
 
 We have $P_{44}$ (not yet in progress)
