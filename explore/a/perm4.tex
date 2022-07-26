@@ -500,9 +500,10 @@ $$\halign{\hbox to28pt{}# & #\hfil\cr%
          sleepy vacuous wide-awake woozy.}$$%
 }% end of section nine
 \eject
-\beginsection 10. The example 2F 2R cycle
+\beginsection 10. The example 2F 2R cycle and its abstraction
 
-\e Spinning the cube.  Let $\pi\in S$ and $S\subseteq R$
+\def\R{\hbox{\bf R}}%
+\e Spinning the cube.  Let $\pi\in S$ and $S\subseteq \R$
 where $S=\{ F, R \}$. We apply the front face-rotation twice,
 followed by two right-face rotations, that is
 $\pi=F\*F\*R\*R$.
@@ -518,6 +519,19 @@ $FFRR FFRR FFRR FFRR FFRR,$ to revert the first move.
 We could, of course, also have done $-\pi$, that is the inverse
 permutation of $\pi$ (with $\pi\*-\pi=0$). $-\pi=-R\*-R\*-F\*-F,$
 which with $-F=f$ and $-R=r$, may be denoted as $rrff.$
+
+\e Now we will enumerate the three subsets,
+$F\subseteq \R,$ $R\subseteq \R,$ and $F\cup R\subseteq \R.$
+These subsets of permuations contribute to the abstraction of
+the Rubik's cube's front face $F$ and right face $R.$  The
+union of these sets $S=R\cup F$ aims to help the enumertion
+of permutations which we may call (not all that seriously)
+jumbles, ruffles, permutes, and sometimes but not always
+rotations or composites.  These subsets together with their
+operation $\*$ and their neutral element $0$ (maybe called $()$)
+form subroups of the Rubik group $\R.$
+
+}% end of example 2F 2R cycle
 \bye
 
 
