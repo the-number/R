@@ -409,6 +409,108 @@ $$\halign{\indent # & # & # & # & # & # \hfil\cr
  \vss\llap{4-cycles}\null}}%
 \marginalstar%
 }% the end of the three four-cycles and their inverses
+{\eject%  section nine start
+\beginsection 9. A Group of Permutations
+
+\e\noindent We fill the vacuous bag with four words to make a start.
+Let $W$ be the set that we made earlier,
+namely\break
+$\{$ woozy, vacuous, sleepy, wide-awake $\}.$
+
+Next we make four sets of permutaions $P_{nk}$ with
+$k\in\{k|1\le k\le n\},$
+
+We have $P_{41}$
+{\def\h #1 { ( #1 ) \cr}%
+\def\hh #1 {& ( #1 ) \cr}%
+$$\halign{\indent # & # \hfil\cr%
+\h    woozy
+\h    vacuous
+\hh           sleepy
+\hh           wide-awake
+}$$}
+
+We have $P_{42}$
+{\def\h #1,#2.{( #1 ) & ( #2 ) &&\cr}%
+\def\hh #1,#2.{&( #1 )&( #2 )&\cr}%
+\def\hhh #1,#2.{&&( #1 )&( #2 )\cr}%
+$$\halign{\indent # & # & # & #\hfil\cr%
+\h    woozy vacuous,     vacuous woozy.
+\h    woozy sleepy,      sleepy woozy.
+\h    woozy wide-awake,  wide-awake woozy.
+\hh         vacuous sleepy,     sleepy vacuous.
+\hh         vacuous wide-awake, wide-awake vacuous.
+\hhh                sleepy wide-awake,  wide-awake sleepy.      
+}$$}
+\eject
+\vfil
+We have $P_{43}$
+{\def\h #1,#2,#3.{( #1 )&( #2 )&( #3 )\cr}%
+$$\halign{# & # & #\hfil\cr%
+\h    woozy vacuous sleepy, vacuous sleepy woozy,
+        sleepy woozy vacuous.
+\h    sleepy vacuous woozy, vacuous woozy sleepy,
+        woozy sleepy vacuous.}$$%
+$$\halign{\ \ \ # & # & #\hfil\cr%
+\h    woozy vacuous wide-awake,  vacuous wide-awake woozy,
+        wide-awake woozy vacuous.
+\h    wide-awake vacuous woozy, vacuous woozy wide-awake,
+        woozy wide-awake vacuous.}$$%
+$$\halign{\ \ \ \ \ \ # & # & #\hfil\cr%
+\h    woozy sleepy wide-awake,  sleepy wide-awake woozy,
+        wide-awake woozy sleepy.
+\h    wide-awake sleepy woozy, sleepy woozy wide-awake,
+        woozy wide-awake sleepy.}$$
+$$\halign{\ \ \ \ \ \ \ \ \ # & # & #\hfil\cr%
+\h    vacuous sleepy wide-awake,  sleepy wide-awake vacuous,
+        wide-awake vacuous sleepy.
+\h    wide-awake sleepy vacuous, sleepy vacuous wide-awake,
+        vacuous wide-awake sleepy.}$$}%
+\vfill
+\eject\vfill
+We have $P_{44}$ (now in progress)
+{\def\h #1,#2.{( #1 )&( #2 )\cr}%
+\def\hh #1,#2.{\hbox to 16pt{}( #1 )&\hbox to 16pt{}( #2 )\cr}%
+$$\halign{# & #\hfil\cr%
+\h    woozy vacuous sleepy wide-awake,
+       vacuous sleepy wide-awake woozy.
+\hh      sleepy wide-awake woozy vacuous,
+          wide-awake woozy vacuos sleepy.
+\h    woozy wide-awake sleepy vacuous,
+       wide-awake sleepy vacuous woozy.
+\hh     sleepy vacuous woozy wide-awake,
+         vacuous woozy wide-awake sleepy.}$$%
+$$\halign{\hbox to14pt{} # & #\hfil\cr%
+\h    woozy sleepy wide-awake vacuous,
+       sleepy wide-awake vacuous woozy.
+\hh     wide-awake vacuous woozy sleepy,
+         vacuous woozy sleepy wide-awake.
+\h    woozy vacuous wide-awake sleepy,
+       sleepy woozy vacuous wide-awake. 
+\hh     wide-awake sleepy woozy vacuous,
+         vacuous wide-awake sleepy woozy.}$$%
+$$\halign{\hbox to28pt{}# & #\hfil\cr%
+\h    woozy wide-awake vacuous sleepy,
+       sleepy woozy wide-awake vacuous.
+\hh     vacuous sleepy woozy wide-awake,
+         wide-awake vacuous sleepy woozy.
+\h    woozy sleepy vacuous wide-awake,
+       wide-awake woozy sleepy vacuous.
+\hh     vacuous wide-awake woozy sleepy,
+         sleepy vacuous wide-awake woozy.}$$%
+}% end of section nine
+\eject
+\beginsection 10. The example 2F 2R cycle
+
+\e Spinning the cube.  Let $\pi\in S$ and $S\subseteq R$
+where $S=\{ F, R \}$. We apply the front face-rotation twice,
+followed by two right-face rotations, that is
+$\pi=F\*F\*R\*R$.
+
+We just did that on a Rubik's cube app, and counted
+6 instances until the initial permutation was reinstantiated.
+That indicates that $\pi$ may be of order $6$
+(that is $24$ quarter turns in total.)
 \bye
 
 
