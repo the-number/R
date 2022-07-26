@@ -1,6 +1,6 @@
 topic-here () 
 { 
-    local D="Group: Woozy";
+    local D="Rubik: a";
     local D1="$D";
     test -n "$*" && D1="$*";
     set_sprint_topic $D1

@@ -1,4 +1,4 @@
-% 20220725 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220726 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix}
@@ -511,6 +511,13 @@ We just did that on a Rubik's cube app, and counted
 6 instances until the initial permutation was reinstantiated.
 That indicates that $\pi$ may be of order $6$
 (that is $24$ quarter turns in total.)
+
+After one $FFRR$ we may do $5$ more $\pi$ composites, that is
+$FFRR FFRR FFRR FFRR FFRR,$ to revert the first move.
+
+We could, of course, also have done $-\pi$, that is the inverse
+permutation of $\pi$ (with $\pi\*-\pi=0$). $-\pi=-R\*-R\*-F\*-F,$
+which with $-F=f$ and $-R=r$, may be denoted as $rrff.$
 \bye
 
 
