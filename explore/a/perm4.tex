@@ -1,7 +1,7 @@
 % 20220726 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
-\def\a{\left(\matrix}
+\def\a{\left(\matrix }
 \def\b{\cr}
 \def\c{\right)}
 
@@ -40,7 +40,6 @@ TAoCP in chapter 1.2.5 gives two methods to generate
 all permutations of a given ordered set.
 Quantites of permutations are considered
 with relevance to computing efficiencies.
-
 \beginsection 3. The Wide-Awake example Group
 
 \e
@@ -561,8 +560,24 @@ and the right face re-arrangement by a clockwise quarter-turn
 is $R=($ RUF RUB RDB RDF $)\*($ RU RB RD RF $),$
 while the entaglements of the front and the right are
 already lurking and ready to intervene.
+
+\e Now we look at the FFRR permutation again.
+This composite jumble has two front face quarter-turns followed
+by two 90 degree turns of the right face and it gives the
+permutation $F\*F\*R\*R,$ or in other more detailed words
+$($ ( FUL FDR ) ( FUR FDL ) ( FU FD ) ( FR FL ) $\*$
+    ( RUF RDB ) ( RUB RDF ) ( RU RD ) ( RF RB ) $)$
+
+One way to verify this permutation (verb) is to express its
+effect as a two-line expression, first $F(F\*F)$, like so
+$$F(F\*F)=\left(\matrix{%
+ \hbox{FUL FU FUR FR ...}\cr
+ \hbox{FDR FD FDL FU ...}}\right),$$
+and the right face, entangled with the $FF$ application
+$R(F\*F)$ as
+$$R(F\*F)=\left(\matrix{%
+ \hbox{... RDF RF RUF ...}\cr
+ \hbox{... fdr fl fdl ...}}\right).$$
+(to be corrected)
 }% end of example 2F 2R cycle
 \bye
-
-
-
