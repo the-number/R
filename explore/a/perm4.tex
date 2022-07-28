@@ -1,4 +1,4 @@
-% 20220727 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220728 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -619,4 +619,74 @@ $(\a FR RF )=(\a RF FR ).$}
 \a FDL&&\c FRD &\b\c RDF &&RD\cr}}
 
 }% end of example 2F 2R cycle
+\eject
+{\beginsection 11. Let's look at the example RUru
+
+The move given in the example\d\ is
+$($ RUru $)$ which is said to be a ``commutator.''
+It is said to affect seven cubes of which two have
+no part in the up~face. In our abstraction we denote
+$\gamma\in G$ and $\gamma=(\hbox{ RUru }),$ with
+$G=U\cup R$ and $G\subseteq R.$
+
+Here, we start with the standard~permutation (noun)
+$\sigma$ with the edge~cubes of the up~face singled out
+with the expression
+$\sigma_U^e=(\hbox{ UB UR UF UL }).$
+
+We re-vise our view of the clockwise quarter turn
+of the right face's edges, and therefore write
+$R^e=( \hbox{ RU RF RD RB } ).$  We also appreciate, now,
+that the right face's up-edge, RU, is the
+same as the up face's right~edge, UR. In other words,
+$\hbox{RU}=\hbox{UR}.$ (Sounds trivial, but we find this
+important to keep in mind, for now.)
+
+So, just do it! That is, let's do the first component of
+or $\gamma$-move. Here it is, looking at two faces with
+two expressions.
+$R^2=R\*(\hbox{ RU RF RD RB }),$ giving
+$R^2=( \hbox{ RF RU RB RD } ).$
+Now, at the same time we have
+$U^R=U\*(\hbox{ UR RF }),$ being aware that
+$\hbox{UR}=\hbox{RU},$ and noting the effect that
+this $R$-move has on the $U$-face which we now call
+$U^R,$ and which is spelled out as
+$( \hbox{ UB RF UF UL } ).$
+
+\eject
+The second component of $\gamma$ being the top~face
+quarter turn, $U,$ and we may write
+$U^{RU}=R\*U.$ The, admittedly verbose expression reads
+$U_e^{RU}=U^R\*U,$ and then
+$U_e^{R}\*U=(\hbox{ UB RF UF UL })\*U$ and we get
+$U_e^{RU}=(\hbox{ UL UB RF UF }).$
+
+We also see the entanglement that this re-arrangement
+implies and we aim to express the effect is has on the $R$-face.
+$R_e^R\*U^{RU}$ which shows the end~effect, a ruffle of
+$(\hbox{ RF UB }),$ or some such like (for now unconfirmed.)
+This makes the $R$-face to read
+$R_e^{RU}=R^2\*U^{RU}$ and
+$R_e^{RU}=(\hbox{ UB RU RB RD }),$ (still under re-view;
+in particular our mis-conceptions, the ambiguities, and
+the mis-representation are creeping all over; however
+we will wittle things down just to pick up each one
+of these crawlies and re-permute things to form a set
+of chohesion; given time.)
+\vfil\eject
+Fast forward, pending completion, we have booted the Rubik
+cube to do the computation $\gamma$ for us, and just note
+it down in terms of edge~jumbles,
+$$\gamma_R^e=(\hbox{ RF RB RD BU })$$
+$$\gamma_U^e=(\hbox{ UR FR UF UL })$$
+
+Given the standard permutaion $\sigma$ with
+$\sigma_U^e=(\hbox{ UB UR UF UL }),$ and
+$\sigma_R^e=(\hbox{ RU RB RD RF }),$
+this allows us to calculate the components
+in terms of permutation cycles
+$$\gamma_R^e=(\hbox{RU RF})\*(\hbox{RB})\*(\hbox{RD})\*(\hbox{RF UL}),$$ and
+$$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
+}% end of section 11
 \bye
