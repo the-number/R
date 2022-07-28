@@ -4,3 +4,8 @@
   The elements
 ** Front and Right entanglement
 [[./f-and-r.jpeg]]
+* The faces of this cube
+** six faces
+[[./six-faces.png]]
+** front face and right face
+[[./front-and-right-face.png]]
