@@ -1,0 +1,6 @@
+# 20220727 (C) Gunter Liszewski -*- mode: org; -*-
+
+* In Pictures
+  The elements
+** Front and Right entanglement
+[[./f-and-r.jpeg]]

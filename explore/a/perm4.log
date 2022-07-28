@@ -1,11 +1,11 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  26 JUL 2022 01:53
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  28 JUL 2022 19:35
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
 Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^99 in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--56
+Underfull \hbox (badness 10000) in paragraph at lines 46--55
 []\tenrm We re-think*, re-word, and re-start with a set of at-tributes, el-e-ments or ob-jects, 
 
 \hbox(7.5+1.94444)x480.0, glue set 5.4349
@@ -33,7 +33,7 @@ Underfull \vbox (badness 1688) has occurred while \output is active
 .etc.
 
  [3] 6. Making concrete Space 
-Underfull \hbox (badness 10000) in paragraph at lines 158--163
+Underfull \hbox (badness 10000) in paragraph at lines 157--162
 []\tenrm Given $\teni W$ \tenrm as above, we have 
 
 \hbox(6.94444+1.94444)x480.0, glue set 16.95213
@@ -179,6 +179,108 @@ Underfull \vbox (badness 6252) has occurred while \output is active
 .\glue(\baselineskip) 2.0
 .etc.
 
- [14] 10. The example 2F 2R cycle  [15] )
+ [14] 10. The example 2F 2R cycle and its abstraction 
+Underfull \vbox (badness 1292) has occurred while \output is active
+\vbox(300.0+2.5)x480.0, glue set 2.35
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 233.69574fil
+..\tenbf 1
+..\tenbf 0
+..\tenbf .
+..\glue(\xspaceskip) 5.0
+..\tenbf T
+..etc.
+.\penalty 10000
+.\glue 3.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0 plus 1.0
+.etc.
+
+ [15]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+2.5)x480.0, glue set 11.09091
+.\glue(\topskip) 2.5
+.\hbox(7.5+2.5)x480.0, glue set 0.32823
+..\hbox(0.0+0.0)x20.0
+..\tenrm H
+..\tenrm e
+..\tenrm r
+..\tenrm e
+..etc.
+.\penalty 300
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x480.0, glue set 308.05818fil
+..\tenrm R
+..\kern-0.27779
+..\tenrm U
+..\glue 3.33298
+..\tenrm R
+..etc.
+.etc.
+
+ [16]
+Underfull \vbox (badness 2478) has occurred while \output is active
+\vbox(300.0+2.5)x480.0, glue set 2.91585
+.\glue(\topskip) 2.5
+.\hbox(7.5+2.5)x480.0, glue set 0.03961
+..\hbox(0.0+0.0)x20.0
+..\tenrm O
+..\tenrm n
+..\tenrm e
+..\glue(\spaceskip) 3.33298
+..etc.
+.\penalty 200
+.\glue(\baselineskip) 2.55556
+.\hbox(6.94444+0.0)x480.0, glue set 452.72253fil
+..\tenrm l
+..\tenrm i
+..\tenrm k
+..\kern-0.27779
+..\tenrm e
+..etc.
+.etc.
+
+ [17]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+0.0)x480.0, glue set 7.85715
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 0.55298
+..\hbox(0.0+0.0)x20.0
+..\tenrm W
+..\kern-0.83334
+..\tenrm e
+..\glue(\spaceskip) 3.33298
+..etc.
+.\penalty 300
+.\glue(\baselineskip) 3.11111
+.\hbox(6.94444+1.94444)x480.0, glue set 220.91977fil
+..\tenrm o
+..\tenrm f
+..\glue(\spaceskip) 3.33298
+..\tenrm t
+..\tenrm h
+..etc.
+.etc.
+
+ [18] 11. Let's look at the example RUru 
+Missing character: There is no ^^e2 in font cmr10!
+Missing character: There is no ^^80 in font cmr10!
+Missing character: There is no ^^99 in font cmr10!
+
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+3.5)x480.0, glue set 12.0
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 298.99466fil
+..\tenbf 1
+..\tenbf 1
+..\tenbf .
+..\glue(\xspaceskip) 5.0
+..\tenbf L
+..etc.
+.\penalty 10000
+.\glue 3.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0 plus 1.0
+.etc.
+
+ [19] [20] [21] )
 (\end occurred inside a group at level 1)
-Output written on perm4.dvi (15 pages, 31272 bytes).
+Output written on perm4.dvi (21 pages, 44080 bytes).

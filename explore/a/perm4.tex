@@ -1,7 +1,7 @@
-% 20220726 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220728 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
-\def\a{\left(\matrix}
+\def\a{\left(\matrix }
 \def\b{\cr}
 \def\c{\right)}
 
@@ -40,7 +40,6 @@ TAoCP in chapter 1.2.5 gives two methods to generate
 all permutations of a given ordered set.
 Quantites of permutations are considered
 with relevance to computing efficiencies.
-
 \beginsection 3. The Wide-Awake example Group
 
 \e
@@ -500,9 +499,10 @@ $$\halign{\hbox to28pt{}# & #\hfil\cr%
          sleepy vacuous wide-awake woozy.}$$%
 }% end of section nine
 \eject
-\beginsection 10. The example 2F 2R cycle
+\beginsection 10. The example 2F 2R cycle and its abstraction
 
-\e Spinning the cube.  Let $\pi\in S$ and $S\subseteq R$
+\def\R{\hbox{\bf R}}%
+\e Spinning the cube.  Let $\pi\in S$ and $S\subseteq \R$
 where $S=\{ F, R \}$. We apply the front face-rotation twice,
 followed by two right-face rotations, that is
 $\pi=F\*F\*R\*R$.
@@ -518,7 +518,175 @@ $FFRR FFRR FFRR FFRR FFRR,$ to revert the first move.
 We could, of course, also have done $-\pi$, that is the inverse
 permutation of $\pi$ (with $\pi\*-\pi=0$). $-\pi=-R\*-R\*-F\*-F,$
 which with $-F=f$ and $-R=r$, may be denoted as $rrff.$
+
+\e Now we will enumerate the three subsets,
+$F\subseteq \R,$ $R\subseteq \R,$ and $F\cup R\subseteq \R.$
+These subsets of permuations contribute to the abstraction of
+the Rubik's cube's front face $F$ and right face $R.$  The
+union of these sets $S=R\cup F$ aims to help the enumertion
+of permutations which we may call (not all that seriously)
+jumbles, ruffles, permutes, and sometimes but not always
+rotations or composites.  These subsets together with their
+operation $\*$ and their neutral element $0$ (maybe called $()$)
+form subroups of the Rubik group $\R.$
+
+\e The front face is represented by set $F,$ and set $R$
+is the right face of the cube. (There is already some
+ambiguity creeping and ready to interfere.
+There are nouns like set, permutation, arrangement, and face;
+then we see verbs such as permute, arrange, or jumble,
+ruffle, or just rotate by a quarter turn; or some such
+like.)
+
+\eject
+Here is the front face
+$F=\{$ FUL FU FUR FR FDR FD FDL FL FC $\},$
+and the right face
+$R=\{$~RUF RU RUB RB RDB RD RDF RF RC $\}.$
+
+We also see some entanglements, namely
+$\{$ ( FUR RUF ), ( FDR RDF ), ( FR RF ) $\}.$
+For example, FUR is the cube of cubes on the
+front face in set $F,$
+while RUF is the same cube (maybe called cuby)
+on the right face in set $R.$
+The elements FUR and RUF are also part of the
+permutation (here, the action of rotating the face)
+$F,$ and $R$ respectively.
+
+\e The rotation of the front face as a permutation cycle is
+$F=($ FUL FUR FDR FDL $)\*($ FU FR FD FL~$),$
+and the right face re-arrangement by a clockwise quarter-turn
+is $R=($ RUF RUB RDB RDF $)\*($ RU RB RD RF $),$
+while the entaglements of the front and the right are
+already lurking and ready to intervene.
+
+\e Now we look at the FFRR permutation again.
+This composite jumble has two front face quarter-turns followed
+by two 90 degree turns of the right face and it gives the
+permutation $F\*F\*R\*R,$ or in other more detailed words
+$($ ( FUL FDR ) ( FUR FDL ) ( FU FD ) ( FR FL ) $\*$
+    ( RUF RDB ) ( RUB RDF ) ( RU RD ) ( RF RB ) $)$
+\eject
+One way to verify this permutation (verb) is to express its
+effect as a two-line expression, first $F(F\*F)$, like so
+$$F(F\*F)=\left(\matrix{%
+ \hbox{FUL FU FUR FR FDR FD FDL FL}\cr
+ \hbox{FDR FD FDL FL FUL FU FUR FR}}\right),$$
+
+\e %
+Or in a more verbose way the right~face 180 degree
+turn might look like this:
+
+$$R(R\*R)=\left(\matrix{%
+ \hbox{RFU RU RUB RB RBD RD RDF RF RC}\cr
+ \hbox{RFU RU RUB RB RBD RD RDF RF RC}}\right)$$
+{\def\*(#1){\circ\hbox{(#1)}}%
+$$\*(RFU RBD)\*(RUB RDF)\*(RU RD)\*(RF RB)\*(RC)=$$}
+$$\left(\matrix{%
+ \hbox{RFU RU RUB RB RBD RD RDF RF RC}\cr
+ \hbox{RBD RD RFD RF RFU RU RBU RB RC}}\right).$$
+ 
+\e(to be corrected, still)
+
+\eject
+\e We try to visualise a particular face-to-face entanglement
+which could be expressed within the context of the
+respective edge-cubes of the front and the right~face.
+
+\e {\def\a{\hskip 3cm}%
+\def\b{\hskip 24pt}%
+\def\c#1 {{\bf #1 }}%
+\vskip 12pt%
+\halign{#&#&#&#&#&#\cr
+        &FU&&           &RU\cr
+\a  FL&&\c FR &\b\c RF &&RB\cr
+        &FD&&           &RD\cr}
+
+\e {\def\a#1 #2 {\hbox{#1 #2}}%
+In terms of the set of permutation cycles the entaglement may read
+$\{(\a FR RF ),(\a RF FR )\},$ and again we note that
+$(\a FR RF )=(\a RF FR ).$}
+
+\e The corner-cubes have a similar entanglement. (re-thing, re-word)
+{\def\a{\hskip 3cm}%
+\def\b{\hskip 24pt}%
+\def\c#1 {{\bf #1 }}%
+\vskip 12pt%
+\halign{#&#&#&#&#&#\cr
+\a FLU&&\c FUR &\b\c RFU &&RUB\cr
+     &Front&&&       Right\cr
+\a FDL&&\c FRD &\b\c RDF &&RD\cr}}
+
+}% end of example 2F 2R cycle
+\eject
+{\beginsection 11. Let's look at the example RUru
+
+The move given in the example\d\ is
+$($ RUru $)$ which is said to be a ``commutator.''
+It is said to affect seven cubes of which two have
+no part in the up~face. In our abstraction we denote
+$\gamma\in G$ and $\gamma=(\hbox{ RUru }),$ with
+$G=U\cup R$ and $G\subseteq R.$
+
+Here, we start with the standard~permutation (noun)
+$\sigma$ with the edge~cubes of the up~face singled out
+with the expression
+$\sigma_U^e=(\hbox{ UB UR UF UL }).$
+
+We re-vise our view of the clockwise quarter turn
+of the right face's edges, and therefore write
+$R^e=( \hbox{ RU RF RD RB } ).$  We also appreciate, now,
+that the right face's up-edge, RU, is the
+same as the up face's right~edge, UR. In other words,
+$\hbox{RU}=\hbox{UR}.$ (Sounds trivial, but we find this
+important to keep in mind, for now.)
+
+So, just do it! That is, let's do the first component of
+or $\gamma$-move. Here it is, looking at two faces with
+two expressions.
+$R^2=R\*(\hbox{ RU RF RD RB }),$ giving
+$R^2=( \hbox{ RF RU RB RD } ).$
+Now, at the same time we have
+$U^R=U\*(\hbox{ UR RF }),$ being aware that
+$\hbox{UR}=\hbox{RU},$ and noting the effect that
+this $R$-move has on the $U$-face which we now call
+$U^R,$ and which is spelled out as
+$( \hbox{ UB RF UF UL } ).$
+
+\eject
+The second component of $\gamma$ being the top~face
+quarter turn, $U,$ and we may write
+$U^{RU}=R\*U.$ The, admittedly verbose expression reads
+$U_e^{RU}=U^R\*U,$ and then
+$U_e^{R}\*U=(\hbox{ UB RF UF UL })\*U$ and we get
+$U_e^{RU}=(\hbox{ UL UB RF UF }).$
+
+We also see the entanglement that this re-arrangement
+implies and we aim to express the effect is has on the $R$-face.
+$R_e^R\*U^{RU}$ which shows the end~effect, a ruffle of
+$(\hbox{ RF UB }),$ or some such like (for now unconfirmed.)
+This makes the $R$-face to read
+$R_e^{RU}=R^2\*U^{RU}$ and
+$R_e^{RU}=(\hbox{ UB RU RB RD }),$ (still under re-view;
+in particular our mis-conceptions, the ambiguities, and
+the mis-representation are creeping all over; however
+we will wittle things down just to pick up each one
+of these crawlies and re-permute things to form a set
+of cohesion; given time.)
+\vfil\eject
+Fast forward, pending completion, we have booted the Rubik
+cube to do the computation $\gamma$ for us, and just note
+it down in terms of edge~jumbles,
+$$\gamma_R^e=(\hbox{ RF RB RD BU })$$
+$$\gamma_U^e=(\hbox{ UR FR UF UL })$$
+
+Given the standard permutaion $\sigma$ with
+$\sigma_U^e=(\hbox{ UB UR UF UL }),$ and
+$\sigma_R^e=(\hbox{ RU RB RD RF }),$
+this allows us to calculate the components
+in terms of permutation cycles
+$$\gamma_R^e=(\hbox{RU RF})\*(\hbox{RB})\*(\hbox{RD})\*(\hbox{RF UL}),$$ and
+$$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
+}% end of section 11
 \bye
-
-
-
