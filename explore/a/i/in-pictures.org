@@ -9,3 +9,6 @@
 [[./six-faces.png]]
 ** front face and right face
 [[./front-and-right-face.png]]
+* Effects on the faces of it
+** F move effects five faces
+[[./F-effect.png]]
