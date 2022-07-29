@@ -1,4 +1,4 @@
-% 20220728 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220729 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -689,4 +689,18 @@ in terms of permutation cycles
 $$\gamma_R^e=(\hbox{RU RF})\*(\hbox{RB})\*(\hbox{RD})\*(\hbox{RF UL}),$$ and
 $$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
 }% end of section 11
+\eject
+{\beginsection 12. Direction of a permutaion cycle
+
+\def\a#1{\hbox{ #1 }}% one cube
+\def\c{\hbox{ \  }}% vacuousness
+\def\d{$\*$ (clock-wise 1/4 face-turn)}% permute
+\def\b#1 #2 #3 #4.{% b=left 4-typle, like  1 2 3 4.
+         &\a  #1 &&         &\a  #4 \cr
+\c\c\c \a #4 &\c&\a #2 &\d\a #3 &\c&\a #1\cr
+         &\a  #3 &&         &\a  #2 \cr}%
+\e\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b 1 2 3 4.}% clock-wise rotation of a face
+}% end of section 12
 \bye

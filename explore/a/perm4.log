@@ -1,4 +1,4 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  28 JUL 2022 19:35
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  29 JUL 2022 17:32
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
@@ -281,6 +281,28 @@ Underfull \vbox (badness 10000) has occurred while \output is active
 .\glue(\parskip) 0.0 plus 1.0
 .etc.
 
- [19] [20] [21] )
+ [19] [20]
+Underfull \vbox (badness 10000) has occurred while \output is active
+\vbox(300.0+0.0)x480.0, glue set 5.18
+.\glue(\topskip) 3.05556
+.\hbox(6.94444+1.94444)x480.0, glue set 0.35667
+..\hbox(0.0+0.0)x20.0
+..\tenrm F
+..\kern-0.83334
+..\tenrm a
+..\tenrm s
+..etc.
+.\penalty 200
+.\glue(\baselineskip) 3.11111
+.\hbox(6.94444+1.94444)x480.0, glue set 291.75249fil
+..\tenrm j
+..\tenrm u
+..\tenrm s
+..\tenrm t
+..\glue(\spaceskip) 3.33298
+..etc.
+.etc.
+
+ [21] 12. Direction of a permutaion cycle  [22] )
 (\end occurred inside a group at level 1)
-Output written on perm4.dvi (21 pages, 44080 bytes).
+Output written on perm4.dvi (22 pages, 45076 bytes).
