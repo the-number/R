@@ -1,3 +1,43 @@
+commit 9dcb78e1794b19a7da11d2c283354d7abdccde50
+Author: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
+Date:   Fri Jul 29 13:20:17 2022 +0100
+
+    Rubik: a: clock-wise: direction
+    
+    1234-> 2341
+    
+    (1234) permutes to (2342) in aclock-wise
+    direction; right?
+    
+    Yes and no! Because here, in the game of Rubik's cube,
+    we rotate _the clock_ instead of
+    _the dial of its clock_; so to speak.
+    
+    So, if we look at the front face,
+    we will see the edge cubes in its standard perm,
+    (FU FR FD FL).
+    
+        FU
+      FL  FR
+        FD
+    
+    Now, if we turn the cube (analoguous to the clock itself)
+    clock-wise, then _time_ goes back-wards and we might see
+    
+        FL
+      FD  FU
+        FR
+    
+    Hmmm; time to re-consider the Woozy group and turn it
+    back also.  Maybe we will be wide-awake; eventually.
+    
+           woozy                   wide-awake
+    wide-awake  vacuous  ->  sleepy       woozy
+           sleepy                  vacuous
+    
+    (Now in progress; vucuous---for now---it seems.)
+    
+    Signed-off-by: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
 commit 744a071b7388a5eb431b88099660d25c74cd8882
 Author: Gunter Liszewski (@S10) <gunter.liszewski@gmail.com>
 Date:   Wed Jul 20 11:50:27 2022 +0100
