@@ -690,7 +690,8 @@ $$\gamma_R^e=(\hbox{RU RF})\*(\hbox{RB})\*(\hbox{RD})\*(\hbox{RF UL}),$$ and
 $$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
 }% end of section 11
 \eject
-{\beginsection 12. Direction of a permutaion cycle
+{\beginsection 12. Direction of the permutation
+which cycles one face
 
 \def\a#1{\hbox{ #1 }}% one cube
 \def\c{\hbox{ \  }}% vacuousness
@@ -702,5 +703,18 @@ $$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
 \e\halign{#&#&#%
          &#&#&#\cr% a=prefix
 \b 1 2 3 4.}% clock-wise rotation of a face
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(FU FL FD FR)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb FU \bb FR \bb FD \bb FL .}}%
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(1432)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb FU$_1$ \bb FR$_2$ \bb FD$_3$ \bb FL$_4$ .}}%
+
 }% end of section 12
 \bye
