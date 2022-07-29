@@ -1,5 +1,5 @@
 guix-shell-here () 
 { 
-    local D="guix shell gnubik ...";
-    guix shell gnubik info-reader man-db texlive-base noweb lilypond $@ -D gnubik
+    local D="guix shell gnubik lilypond timidity++ ...";
+    guix shell gnubik info-reader man-db texlive-base noweb lilypond timidity++ $@ -D gnubik
 }

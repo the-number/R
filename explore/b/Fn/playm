@@ -1,0 +1,5 @@
+playm () 
+{ 
+    local D="play this midi thing <0.midi>";
+    timidity ${1:-0}${2:-.midi}
+}
