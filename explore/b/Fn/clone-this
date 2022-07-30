@@ -1,0 +1,5 @@
+clone-this () 
+{ 
+    local D="clone this single branch from <gl:the-number/R>";
+    git clone ${1:-ssh://git@github.com/the-number/R} -o github -b ${2:-explore/0002/sounds-like} --single-branch
+}
