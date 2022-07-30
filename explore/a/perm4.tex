@@ -806,25 +806,72 @@ our writing finger non-fossil, no-no-nothing fuel.
 
 {\a 01 03 04 05.}
 
-Or, maybe going back a step
+Now, then! we backup a few steps and just move staight ahead.
 
-{\def\a{$$\halign{##&##&##\cr%
- & $U_1$\cr%
-$L_4$ && $R_2$\cr%
-& $D_3$\cr}$$}
-\a}
+\e
+{% \vcenter, \hbox and \vbox
+$\vcenter{\halign{#&#&#\cr
+&$B_1$\cr
+$L_4$&&$R_2$\cr
+&$F_3$\cr}}$
 
-{% chapter 21 \boxit exercise
-\def\boxit#1{%
-  \vbox{\hrule\hbox{\vrule\kern3pt
-  \vbox{\kern3pt#1\kern3pt}\kern3pt\vrule}\hrule}}
-\setbox4=\vbox{\hsize 36pt\noindent\strut This\strut}
-\setbox5=\vbox{\hsize 36pt\noindent\strut
-\a U R D L.
-\strut}
-\boxit{\box4}\boxit{\box5}
-}% end of boxit thing
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$L_4$&&$R_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$F_4$&&$B_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$R_4$&&$L_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$B_4$&&$F_2$\cr
+&$D_3$\cr}}$
 
-}% end of these  particular TeX nicalities
+$\vcenter{\halign{#&#&#\cr
+&$F_1$\cr
+$L_4$&&$R_2$\cr
+&$B_3$\cr}}$
+}% end of vcenter
+
+\eject
+{% \vcenter, \hbox and \vbox
+\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+
+\e We show the edges as number pairs where the first digit of each two-digit number
+gives the cube's face visible on this cube of cubes' face.  The second such
+digit gives the adjoining face of the standard permutation $\sigma,$ where the
+faces are: $0$ to represent the front face,
+$1$ its back, $2$ to the left, $3$ on the right, $4$ faces up, and $5$ looks down.
+
+We break down $\sigma$ and show just its edges, with
+
+\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$, $\sigma_B^e=(12,14,13,15){}_B^e$,
+
+$\sigma_U^e=(21,25,20,23){}_U^e$, $\sigma_D^e=(30,35,31,32){}_D^e$,
+
+$\sigma_L^e=(42,40,43,41){}_L^e$, and $\sigma_R^e=(52,51,53,50){}_R^e$.
+{\sl(this is unchecked and unfinished)}
+
+\e\edges 21 25 20 23.\par\thinspace
+\edges 02 05 03 04.
+\qquad 
+\edges 52 51 53 50.
+\qquad
+\edges 12 14 13 15.
+\qquad
+\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 32.}% end of vcenter
+
 }% end of section 12
 \bye
