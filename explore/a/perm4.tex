@@ -801,7 +801,30 @@ us. Yes! we are face $0.$
 
 And here we take a break to reflect, and to replenish
 our writing finger non-fossil, no-no-nothing fuel.
-}% end of these  particular TeX nicalities
 
+\vfil\eject\e Another approach to get these faces to show themselves side~by~side.
+
+{\a 01 03 04 05.}
+
+Or, maybe going back a step
+
+{\def\a{$$\halign{##&##&##\cr%
+ & $U_1$\cr%
+$L_4$ && $R_2$\cr%
+& $D_3$\cr}$$}
+\a}
+
+{% chapter 21 \boxit exercise
+\def\boxit#1{%
+  \vbox{\hrule\hbox{\vrule\kern3pt
+  \vbox{\kern3pt#1\kern3pt}\kern3pt\vrule}\hrule}}
+\setbox4=\vbox{\hsize 36pt\noindent\strut This\strut}
+\setbox5=\vbox{\hsize 36pt\noindent\strut
+\a U R D L.
+\strut}
+\boxit{\box4}\boxit{\box5}
+}% end of boxit thing
+
+}% end of these  particular TeX nicalities
 }% end of section 12
 \bye

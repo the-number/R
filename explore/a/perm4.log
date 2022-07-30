@@ -1,4 +1,4 @@
-This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  30 JUL 2022 17:26
+This is TeX, Version 3.141592653 (TeX Live 2021/GNU Guix) (preloaded format=tex 2022.5.8)  30 JUL 2022 21:59
 **perm4.tex
 (./perm4.tex 1. Plain T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnology  2. Permutations  3. The Wide-Awake example Group 
 Missing character: There is no ^^e2 in font cmr10!
@@ -303,6 +303,6 @@ Underfull \vbox (badness 10000) has occurred while \output is active
 ..etc.
 .etc.
 
- [21] 12. Direction of the permutation which cycles one face  [22] [23] [24] [25] [26] )
+ [21] 12. Direction of the permutation which cycles one face  [22] [23] [24] [25] [26] [27] )
 (\end occurred inside a group at level 1)
-Output written on perm4.dvi (26 pages, 51728 bytes).
+Output written on perm4.dvi (27 pages, 53040 bytes).
