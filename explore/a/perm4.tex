@@ -1,4 +1,4 @@
-% 20220729 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220730 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -739,6 +739,69 @@ which cycles one face
          &#&#&#\cr% a=prefix
 \b \bb FU$_1$ \bb FR$_2$ %
 \bb FD$_3$ \bb FL$_4$ .}}%
+
+\vfil\eject\e Now, we look at some \TeX nicalities\g\/
+in order to show these ruffles.
+We want to utilize the $\backslash$halign
+control sequence to layout our cube-faces.
+We also want to use \TeX~definitions
+to ease the writing of this \TeX-text.
+We aim for some
+yield of visual clues as to the Rubik group
+model for these permutations. (re-word)
+
+Here is the basic idea. We draw, using \TeX~text, the
+four edge cubes: Up $U_1,$ Right $R_2,$ Down $D_3,$
+and Left $L_4.$
+{{$$\halign{#&#&#\cr%
+ & $U_1$\cr%
+$L_4$ && $R_2$\cr%
+& $D_3$\cr}$$}}
+
+Then with the help of \TeX\/ and its $\backslash$halign
+control sequence, we abstract the drawing of this
+particular face.
+{\def\a{$$\halign{##&##&##\cr%
+ & $U_1$\cr%
+$L_4$ && $R_2$\cr%
+& $D_3$\cr}$$}
+\a}
+
+\vfil\eject
+Now we parameterize the four edge cubes that we see
+on this face.
+{\def\a#1 #2 #3 #4.{$$\halign{##&##&##\cr%
+ & $#1_1$\cr%
+$#4_4$ && $#2_2$\cr%
+& $#3_3$\cr}$$}
+\a U R D L.
+
+This allows us, now, to facilitate these abstraction
+and apply things to our favourite set.
+\a \hbox{woozy} \hbox{vacuous} \hbox{sleepy} \hbox{wide-awake}.
+
+And we may even show a plain and clear view of
+these face rotations, in our own perception,
+by using the set $\{1,2,3,4\}$ as the Group's set.
+\a 1 2 3 4.
+
+Let's see a representation of our adjoining
+faces. These are the four faces that adjoin this one.
+This one is face $(1,2,3,4).$  We say
+that the face in front of us is face $0$ and
+substitution yields $(01,02,03,04).$
+
+\a 01 03 04 05.
+
+Our edge cube $01$ is adjoined to face $1.$ (language)
+and face one sees its edge~cube $10$ to be adjoined to
+us. Yes! we are face $0.$
+
+\a 12 13 10 15.
+
+And here we take a break to reflect, and to replenish
+our writing finger non-fossil, no-no-nothing fuel.
+}% end of these  particular TeX nicalities
 
 }% end of section 12
 \bye
