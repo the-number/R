@@ -1,4 +1,4 @@
-% 20220730 (C) Gunter Liszewski -*- mode: tex; -*-
+% 202207301(C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -841,7 +841,6 @@ $L_4$&&$R_2$\cr
 &$B_3$\cr}}$
 }% end of vcenter
 
-\eject
 {% \vcenter, \hbox and \vbox
 \def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
 &{#1}$_1$\cr
@@ -854,6 +853,7 @@ digit gives the adjoining face of the standard permutation $\sigma,$ where the
 faces are: $0$ to represent the front face,
 $1$ its back, $2$ to the left, $3$ on the right, $4$ faces up, and $5$ looks down.
 
+\vfil\eject
 We break down $\sigma$ and show just its edges, with
 
 \smallskip$\sigma_F^e=(02,05,03,04){}_F^e$, $\sigma_B^e=(12,14,13,15){}_B^e$,
@@ -863,15 +863,62 @@ $\sigma_U^e=(21,25,20,23){}_U^e$, $\sigma_D^e=(30,35,31,32){}_D^e$,
 $\sigma_L^e=(42,40,43,41){}_L^e$, and $\sigma_R^e=(52,51,53,50){}_R^e$.
 {\sl(this is unchecked and unfinished)}
 
-\e\edges 21 25 20 23.\par\thinspace
-\edges 02 05 03 04.
-\qquad 
-\edges 52 51 53 50.
-\qquad
-\edges 12 14 13 15.
-\qquad
-\edges 42 40 43 41.\par\thinspace
-\edges 30 35 31 32.}% end of vcenter
+\e% standard permutaion of Rubik's cube, in our view
+\edges 21 25 20 23.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 32.}% end of standard permutation
+
+\e How can we see that this resembles some kind of reality?
+First, since this is the standard permutation we have
+all the edge cubes show their face in one colour, the
+colour of the front~face being $0$, for example.
+
+Second, one edge joins two faces and therefore,
+for example the front face $0$ and the right face $5$
+have a shared edge-cube. This shared edge appears on
+the front-face on the right {\sl front}$_2$, here denoted
+as $05{}_2.$
+On the adjoining face, the right one in our example,
+this shared edge is wirtten as $50{}_4$ being on the
+left, {\sl right}$_4$, of the right Rubik's cube face.
+
+Third, we spot an error, as we experience just how to go
+about error spotting. The left face ($4$) has in its
+{\sl down} position ({\sl left}$_3$) a cube $43_3;$
+and this feels correct.
+
+But which edge is shared by the down cube ($3$)
+and the left cube ($4$)? Answer: there should be a cube
+$34_?$ on the {\sl down} face. We see that $30_1$ joins
+with {\sl front} ($0$) correctly, and we  deduce that $34_4$ must replace $32_4$.
+
+{\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+\e Again, with one correction to read $34_4.$
+
+\e% standard permutaion, corrected
+\edges 21 25 20 23.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.
+
+\e Thanks, yes we see another error and we substitute
+$24_4$ for the erroneous $23_4.$
+This error hints at another tell-tale sign.
+Each face should have exactly two even and two odd edges,
+as a consequence of how our faces are numberd.
+{\sl(This applies to the standard permutation
+$\sigma^e$ and of course, after a jumble we might
+see flipped edges.)}
+
+\e% standard permutaion, s/23_4/24_4/
+\edges 21 25 20 24.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.}% end of edges defined space
 
 }% end of section 12
 \bye
