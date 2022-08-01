@@ -923,6 +923,57 @@ see flipped edges.)}
 \edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
 \edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
 \edges 30 35 31 34.}% end of edges defined space
+}}% end of section 12
+\hfil\eject
+\beginsection 13. The concrete move RUru
 
-}% end of section 12
+{\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+
+We start with the representation of the
+standard permutation $\sigma^e$ in the context of
+edge cubelets.
+
+\e
+\edges 21 25 20 24.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.
+
+And we re-write in a somewhat narrative style (as we
+perceive it so to be.)
+
+\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$, $\sigma_B^e=(12,14,13,15){}_B^e$,
+
+$\sigma_U^e=(21,25,20,24){}_U^e$, $\sigma_D^e=(30,35,31,34){}_D^e$,
+
+$\sigma_L^e=(42,40,43,41){}_L^e$, and $\sigma_R^e=(52,51,53,50){}_R^e$.
+
+\hfil\eject
+Now we apply the move $R,$ which spells out to be
+$(1432)_R^e$, if you know what this means.  We perceive
+the meaning to be $R_1\to R_4$, $R_2\to R_1$,
+$R_3\to R_2$, and $R_4\to R_3$, and we think this to
+be a clockwise $1/4$ turn around the $x$ axis, that
+is the axis from left to right. {\it(We admid that the
+concept of direction such as left and right is a
+woozy one; but it's not vacuous.)}
+
+\e
+\edges 21 25 20 24.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 50 52 51 53.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.
+
+\smallskip
+We note that with the move of the right facelets we
+also see changes on the adjoining faces, namely
+$F_2$ sees $05\to 25$, $B_4$ moves $15\to 35$,
+$U_2$ substitues $25\to 15$, and finally $D_2$
+transposes its edge $35\to 05$. (to verify)
+
+}% end of section 13
+
 \bye
