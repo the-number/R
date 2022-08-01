@@ -945,11 +945,14 @@ edge cubelets.
 And we re-write in a somewhat narrative style (as we
 perceive it so to be.)
 
-\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$, $\sigma_B^e=(12,14,13,15){}_B^e$,
+\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$,
+$\sigma_B^e=(12,14,13,15){}_B^e$,
 
-$\sigma_U^e=(21,25,20,24){}_U^e$, $\sigma_D^e=(30,35,31,34){}_D^e$,
+$\sigma_U^e=(21,25,20,24){}_U^e$,
+$\sigma_D^e=(30,35,31,34){}_D^e$,
 
-$\sigma_L^e=(42,40,43,41){}_L^e$, and $\sigma_R^e=(52,51,53,50){}_R^e$.
+$\sigma_L^e=(42,40,43,41){}_L^e$,
+and $\sigma_R^e=(52,51,53,50){}_R^e$.
 
 \hfil\eject
 Now we apply the move $R,$ which spells out to be
@@ -961,19 +964,67 @@ is the axis from left to right. {\it(We admid that the
 concept of direction such as left and right is a
 woozy one; but it's not vacuous.)}
 
-\e
-\edges 21 25 20 24.\par\thinspace
-\edges 02 05 03 04.\qquad\edges 50 52 51 53.\qquad
-\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
-\edges 30 35 31 34.
+\smallskip
+\edges 21 05 20 24.\par\thinspace
+\edges 02 35 03 04.\qquad\edges 50 52 51 53.\qquad
+\edges 12 14 13 25.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 15 31 34.
 
 \smallskip
 We note that with the move of the right facelets we
 also see changes on the adjoining faces, namely
-$F_2$ sees $05\to 25$, $B_4$ moves $15\to 35$,
-$U_2$ substitues $25\to 15$, and finally $D_2$
-transposes its edge $35\to 05$. (to verify)
+$F_2$ sees $05\to 35$, $B_4$ moves $15\to 25$,
+$U_2$ substitues $25\to 05$, and finally $D_2$
+transposes its edge $35\to 15$. (to verify)
 
+\smallskip
+Wittling things down, we see things scattered around us,
+such as
+
+\e$\{$( set, coset ), ( Definitionsmenge, Wertemenge )$\}$,
+
+$\{$ injective, surjective, bijective $\}$.
+
+\vfil\eject
+We observe the effects of this rotation, $R^e$ as it
+produces five permutaion cycles of order four, namely
+
+\smallskip
+$R_R^e=(50, 53, 51, 52)_R^e$
+
+$R_F^e=(05, 35, 15, 25)_F^e$
+
+$R_U^e=(15, 25, 05, 35)_U^e$
+
+$R_B^e=(25, 05, 35, 15)_B^e$
+
+$R_D^e=(35, 15, 25, 05)_R^e$
+
+\e
+From a different view we see how the two-faced facelet $05$
+will cycle through its positions in five
+different faces.
+
+\smallskip$05_F^e=F_2^e$
+
+$05_U^e=U_2^e$
+
+$05_B^e=B_4^e$
+
+$05_D^e=D_2^e$
+
+$50_R^e=(R_e^1, R_e^4, R_e^3, R_e^2)$.
+
+\e {\it(We also appreciate, from our position, how the
+abstractions may stay just abstract until we actually
+follow things through, and maybe
+even consider their views in their own surroundings.)}
+
+\e In summary, we have
+
+$05^e=(F_2^e, D_2^e, B_2^e, U_2^e)^e$ and
+
+$50_R^e=(R_e^1, R_e^4, R_e^3, R_e^2)$.
 }% end of section 13
 
 \bye
