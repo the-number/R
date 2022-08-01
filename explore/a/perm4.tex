@@ -12,6 +12,9 @@
 \def\g{\footnote*{\TeX book, texbook.tex,
   https://www.ctan.org/tex-archive/systems/knuth/dist/tex}}
 % https://books.google.co.uk/books?id=_n1vr0_RbXoC&lpg=PA786&pg=PA786#v=onepage&q&f=false
+% https://en.wikipedia.org/wiki/List_of_Unicode_characters
+% escaped #=\%23 (do not escape &=\%26) _=\%5f
+\def\gg{\footnote*{https://books.google.co.uk/books?id=\%5fn1vr0\%5fRbXoC\&lpg=PA786\&pg=PA786}}
 % Singmaster, David, Moral and mathematical lessons from
 % a Rubik cube, New Scientist 23/30 Dec 1982, page 786
 % https://en.wikipedia.org/wiki/Rubik's_Cube_group
@@ -1026,5 +1029,38 @@ $05^e=(F_2^e, D_2^e, B_2^e, U_2^e)^e$ and
 
 $50_R^e=(R_e^1, R_e^4, R_e^3, R_e^2)$.
 }% end of section 13
+\hfil\eject
+\beginsection 14. The group of three slices
+
+% https://books.google.co.uk/books?id=_n1vr0_RbXoC&lpg=PA786&pg=PA786
+So called slices are sandwiched between opposing faces.
+The group, so generated from the set of moves\break
+$\{$~2R2l, 2F2b, 2U2d $\}$
+is said to have 12 elements\gg.
+
+Maybe we need a reminder of the group abstraction, and
+maybe we should convince ourselves that this is a
+group, and maybe we should account for all the elements,
+the completeness, the associativities of the compositions,
+the identiy element, and the existence of inverse elements.
+
+\e First, we count the basic generating elements:
+1. $FFbb$, 2. $RRll$, 3. $UUdd$.
+
+Next, we compose with two basics:
+4. $FFbb\*RRll$, 5. $FFbb\*UUdd$, 6. $RRll\*UUdd$
+
+Last come compsitions from three basic generating elements:
+
+7. $(FFbb\*RRll)\*UUdd$,
+8. $(RRll\*FFbb)\*UUdd$,
+9. $(FFbb\*UUdd)\*RRll$,
+
+10.$(UUdd\*FFbb)\*RRll$,
+11.$(RRll\*UUdd)\*FFbb$,
+12.$(UUdd\*RRll)\*FFbb$.
+
+{\it(This is the first attempt of enumerating this group
+and the result is unverified.)}
 
 \bye
