@@ -1,0 +1,18 @@
+# 20220802 (C) Gunter Liszewski -*- mode: org; -*-
+
+* In Pictures
+  The group S that is generated from {RRll, UUdd, FFbb}
+** The S+ group
+  Our first sub-challenge it to look at centre-cubelets.
+  The upper suffices we consider here are:
+  ^c the corners, ^e for edges, and ^+ are centres.
+  The permuter S_F^+=(FFbb)^+ is of order 1.
+** The standard permutation
+[[./sigma.png]]
+** Basic permuter elements of this group
+** S_F
+[[./sigma-S_F^+.png]]
+** S_F+S_R
+[[./sigma-S_F-S_R.png]]
+** S_F+R_U+S_U
+[[./sigma-S_F-S_R-S_U.png]]
