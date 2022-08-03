@@ -1,4 +1,4 @@
-% 20220801 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220802 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -1060,7 +1060,105 @@ Last come compsitions from three basic generating elements:
 11.$(RRll\*UUdd)\*FFbb$,
 12.$(UUdd\*RRll)\*FFbb$.
 
-{\it(This is the first attempt of enumerating this group
+\e{\it(This is the first attempt of enumerating this group
 and the result is unverified.)}
+
+\e We have, just now, taken some pictures of this group and
+explored what we want to take forward.  We will look at
+a subgroup of the three slices subgroup of the Rubik group.
+We will just consider the centre-cubelets, their
+permutation cycles, including their orientation.
+We will also try to find the different aspects, or
+view~points that will help us to understand what happens
+with this group, how we denote things, and how this
+simple example is possibly abstracted.
+
+\e We already have seen different view points of the cube,
+such as the view from the outside, and the view from a
+particular edge-cubelet.  In the case of the $S^+$
+group of three slices with only centre-cubelets we attempt
+to describe the twelve elements, as given above, from
+a view of a corner~cube, FUR that is not a part of
+the underlaying set of cubelets (only centre~facelets, now),
+of our observations.
+
+We are observing, sitting on the FUR corner, as the
+elementary permuters effect the rotational moves,
+in 180 degree quantities.  Sitting where we are sitting,
+we see the slices rotate (while in effect we, that is
+the FUR$=025=250=520$ face that we sit on,
+will rotate in pairs with
+our opposite face.)
+
+Let's spell out, from an outside view, the move
+$S_F^+$, with $S_F^+=(FFbb)$.
+
+{\def\centres#1 #2 #3 #4 #5 #6.{$\vcenter{\halign{##&##&##\cr
+{}$_1${#3}&&{}$_2${#4}\cr
+&{}${}_{#2}{#1}^+$\cr
+{}$_4${#6}&&{}$_3${#5}\cr}}$}
+
+We start with the representation of the
+standard permutation $\sigma^+$ in the context of
+centre cubelets and the observer's, our cubelet FUR.
+Yes, we add the orientation of the centre facelet, its spin,
+as a sub-prefix, one of $\{0,1,2,3\}$ for $0$ degrees,
+$90$ degress, $180$ degress, or $270$ degress, or
+$0,1/4,1/2,$ and $3/4$ facelet turns.
+
+\e $\sigma^+_{025}$, at the start is
+
+\e
+\centres 2 0 {} {} 250 {}.\par\thinspace
+\centres 0 0 {} 025 {} {}.\qquad\centres 5 0 502 {} {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} {} {} .\par\thinspace
+\centres 3 0 {} {} {} {}.
+
+\vfill\eject
+$\sigma^+_{025}\*F^+$, and the centre facelet of our front face spins
+by a $1/4$-turn, and we, the observer, spin likewise
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 1 {} {} 025 {}.\qquad\centres 5 0 {} 250 {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} {} {} .\par\thinspace
+\centres 3 0 {} 502 {} {}.
+
+\e And again we apply $F^+$,
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+(The observer feels woozy---are we lost?)
+
+\vfill\eject
+\e Now an inverse $B$ face turn, in our group this is
+denoted $b^+$, and note the anti-clockwise spin of
+centre-facelet from ${}_01^+\to{}_31^+$
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 3 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+(The observer is down, left in front---resting vacuously.)
+
+\e And another $b^+$ $1/4$ anti-clock-wise turn with its respective
+spin of facelet ${}_31^+\to{}_21^+$
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 2 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+\e (The observer feels like having been taking for a ride---%
+industrial action imminent?)
+
+}% end of centre cubelets
 
 \bye
