@@ -1,0 +1,5 @@
+guix-shell-here () 
+{ 
+    local D="guix shell gnubik lilypond timidity++ ...";
+    guix shell gnubik info-reader man-db texlive-base noweb lilypond timidity++ grim slurp jq gimp aspell aspell-dict-en aspell-dict-uk aspell-dict-de povray-here $@ -D gnubik
+}

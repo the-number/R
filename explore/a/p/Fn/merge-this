@@ -1,0 +1,5 @@
+merge-this () 
+{ 
+    local D="git merge -S ... <1:explore/a/rubik-group> <2:narrative>";
+    git merge -S --no-ff --log --commit -m "$sprint_topic: ${2:-merged things}" ${1:-explore/a/rubik-group}
+}

@@ -1,0 +1,7 @@
+tex-this () 
+{ 
+    local D="back to basics";
+    local a=${1:-perm0};
+    tex $a.tex;
+    dvipdfm $a.dvi
+}
