@@ -1,4 +1,4 @@
-% 20220802 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220804 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -45,7 +45,7 @@
 \e
 TAoCP in chapter 1.2.5 gives two methods to generate
 all permutations of a given ordered set.
-Quantites of permutations are considered
+Quantities of permutations are considered
 with relevance to computing efficiencies.
 \beginsection 3. The Wide-Awake example Group
 
@@ -54,7 +54,7 @@ We re-think\d, re-word, and re-start
 with a set of attributes, elements or objects,\break
 $W=\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 These elements are used to generate all possible
-arrangements $\eta$ which are orderd $n$-tuples with
+arrangements $\eta$ which are ordered $n$-tuples with
 $1\le n\le4.$
 For example, $\eta=($ woozy, wide-awake $)$ is a $2$-tuple.
 Now the set $\R$ is the set of all permutations that jumble
@@ -62,7 +62,7 @@ such elements like $\eta.$
 
 \e
 Let $(\R,\*,0,-)$ be the group with the set $\R$, a binary
-operation $\*$, a neutral elment $0$, and
+operation $\*$, a neutral element $0$, and
 for each element $\pi\in\R$ there is an inverse element
 $-\pi\in\R$ such that $\pi\*-\pi=0.$
 
@@ -163,7 +163,7 @@ apply method 1 to arrange things.
 \e
 Given $W$ as above, we have\break
 \i41 \h woozy ,
-          \h vacuus ,
+          \h vacuous ,
           \h sleepy ,
           \h wide-awake \j
 
@@ -384,7 +384,7 @@ six order four canonical cycle permutations.
 
 As an additional step, here, in order to give some
 visual~clue as to the uniqueness of each 4-tuple,
-we have ordered the said permutation~cyles to list
+we have ordered the said permutation~cycles to list
 the canonical cycle~representation as the first element
 of its row. (As a permutation, each element
 in each of the six rows below
@@ -423,7 +423,7 @@ Let $W$ be the set that we made earlier,
 namely\break
 $\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 
-Next we make four sets of permutaions $P_{nk}$ with
+Next we make four sets of permutations $P_{nk}$ with
 $k\in\{k|1\le k\le n\},$
 
 We have $P_{41}$
@@ -481,7 +481,7 @@ $$\halign{# & #\hfil\cr%
 \h    woozy vacuous sleepy wide-awake,
        vacuous sleepy wide-awake woozy.
 \hh      sleepy wide-awake woozy vacuous,
-          wide-awake woozy vacuos sleepy.
+          wide-awake woozy vacuous sleepy.
 \h    woozy wide-awake sleepy vacuous,
        wide-awake sleepy vacuous woozy.
 \hh     sleepy vacuous woozy wide-awake,
@@ -528,14 +528,14 @@ which with $-F=f$ and $-R=r$, may be denoted as $rrff.$
 
 \e Now we will enumerate the three subsets,
 $F\subseteq \R,$ $R\subseteq \R,$ and $F\cup R\subseteq \R.$
-These subsets of permuations contribute to the abstraction of
+These subsets of permutations contribute to the abstraction of
 the Rubik's cube's front face $F$ and right face $R.$  The
-union of these sets $S=R\cup F$ aims to help the enumertion
+union of these sets $S=R\cup F$ aims to help the enumeration
 of permutations which we may call (not all that seriously)
 jumbles, ruffles, permutes, and sometimes but not always
 rotations or composites.  These subsets together with their
 operation $\*$ and their neutral element $0$ (maybe called $()$)
-form subroups of the Rubik group $\R.$
+form subgroups of the Rubik group $\R.$
 
 \e The front face is represented by set $F,$ and set $R$
 is the right face of the cube. (There is already some
@@ -565,7 +565,7 @@ $F,$ and $R$ respectively.
 $F=($ FUL FUR FDR FDL $)\*($ FU FR FD FL~$),$
 and the right face re-arrangement by a clockwise quarter-turn
 is $R=($ RUF RUB RDB RDF $)\*($ RU RB RD RF $),$
-while the entaglements of the front and the right are
+while the entanglements of the front and the right are
 already lurking and ready to intervene.
 
 \e Now we look at the FFRR permutation again.
@@ -611,7 +611,7 @@ respective edge-cubes of the front and the right~face.
         &FD&&           &RD\cr}
 
 \e {\def\a#1 #2 {\hbox{#1 #2}}%
-In terms of the set of permutation cycles the entaglement may read
+In terms of the set of permutation cycles the entanglement may read
 $\{(\a FR RF ),(\a RF FR )\},$ and again we note that
 $(\a FR RF )=(\a RF FR ).$}
 
@@ -678,7 +678,7 @@ $R_e^{RU}=R^2\*U^{RU}$ and
 $R_e^{RU}=(\hbox{ UB RU RB RD }),$ (still under re-view;
 in particular our mis-conceptions, the ambiguities, and
 the mis-representation are creeping all over; however
-we will wittle things down just to pick up each one
+we will whittle things down just to pick up each one
 of these crawlies and re-permute things to form a set
 of cohesion; given time.)
 \vfil\eject
@@ -688,7 +688,7 @@ it down in terms of edge~jumbles,
 $$\gamma_R^e=(\hbox{ RF RB RD BU })$$
 $$\gamma_U^e=(\hbox{ UR FR UF UL })$$
 
-Given the standard permutaion $\sigma$ with
+Given the standard permutation $\sigma$ with
 $\sigma_U^e=(\hbox{ UB UR UF UL }),$ and
 $\sigma_R^e=(\hbox{ RU RB RD RF }),$
 this allows us to calculate the components
@@ -749,7 +749,7 @@ which cycles one face
 
 \vfil\eject\e Now, we look at some \TeX nicalities\g\/
 in order to show these ruffles.
-We want to utilize the $\backslash$halign
+We want to utilise the $\backslash$halign
 control sequence to layout our cube-faces.
 We also want to use \TeX~definitions
 to ease the writing of this \TeX-text.
@@ -775,7 +775,7 @@ $L_4$ && $R_2$\cr%
 \a}
 
 \vfil\eject
-Now we parameterize the four edge cubes that we see
+Now we parameterise the four edge cubes that we see
 on this face.
 {\def\a#1 #2 #3 #4.{$$\halign{##&##&##\cr%
  & $#1_1$\cr%
@@ -813,7 +813,7 @@ our writing finger non-fossil, no-no-nothing fuel.
 
 {\a 01 03 04 05.}
 
-Now, then! we backup a few steps and just move staight ahead.
+Now, then! we backup a few steps and just move straight ahead.
 
 \e
 {% \vcenter, \hbox and \vbox
@@ -887,7 +887,7 @@ have a shared edge-cube. This shared edge appears on
 the front-face on the right {\sl front}$_2$, here denoted
 as $05{}_2.$
 On the adjoining face, the right one in our example,
-this shared edge is wirtten as $50{}_4$ being on the
+this shared edge is written as $50{}_4$ being on the
 left, {\sl right}$_4$, of the right Rubik's cube face.
 
 Third, we spot an error, as we experience just how to go
@@ -916,7 +916,7 @@ with {\sl front} ($0$) correctly, and we  deduce that $34_4$ must replace $32_4$
 $24_4$ for the erroneous $23_4.$
 This error hints at another tell-tale sign.
 Each face should have exactly two even and two odd edges,
-as a consequence of how our faces are numberd.
+as a consequence of how our faces are numbered.
 {\sl(This applies to the standard permutation
 $\sigma^e$ and of course, after a jumble we might
 see flipped edges.)}
@@ -963,7 +963,7 @@ $(1432)_R^e$, if you know what this means.  We perceive
 the meaning to be $R_1\to R_4$, $R_2\to R_1$,
 $R_3\to R_2$, and $R_4\to R_3$, and we think this to
 be a clockwise $1/4$ turn around the $x$ axis, that
-is the axis from left to right. {\it(We admid that the
+is the axis from left to right. {\it(We admit that the
 concept of direction such as left and right is a
 woozy one; but it's not vacuous.)}
 
@@ -977,11 +977,11 @@ woozy one; but it's not vacuous.)}
 We note that with the move of the right facelets we
 also see changes on the adjoining faces, namely
 $F_2$ sees $05\to 35$, $B_4$ moves $15\to 25$,
-$U_2$ substitues $25\to 05$, and finally $D_2$
+$U_2$ substitutes $25\to 05$, and finally $D_2$
 transposes its edge $35\to 15$. (to verify)
 
 \smallskip
-Wittling things down, we see things scattered around us,
+Whittling things down, we see things scattered around us,
 such as
 
 \e$\{$( set, coset ), ( Definitionsmenge, Wertemenge )$\}$,
@@ -990,7 +990,7 @@ $\{$ injective, surjective, bijective $\}$.
 
 \vfil\eject
 We observe the effects of this rotation, $R^e$ as it
-produces five permutaion cycles of order four, namely
+produces five permutation cycles of order four, namely
 
 \smallskip
 $R_R^e=(50, 53, 51, 52)_R^e$
@@ -1042,7 +1042,7 @@ Maybe we need a reminder of the group abstraction, and
 maybe we should convince ourselves that this is a
 group, and maybe we should account for all the elements,
 the completeness, the associativities of the compositions,
-the identiy element, and the existence of inverse elements.
+the identity element, and the existence of inverse elements.
 
 \e First, we count the basic generating elements:
 1. $FFbb$, 2. $RRll$, 3. $UUdd$.
@@ -1050,7 +1050,7 @@ the identiy element, and the existence of inverse elements.
 Next, we compose with two basics:
 4. $FFbb\*RRll$, 5. $FFbb\*UUdd$, 6. $RRll\*UUdd$
 
-Last come compsitions from three basic generating elements:
+Last come compositions from three basic generating elements:
 
 7. $(FFbb\*RRll)\*UUdd$,
 8. $(RRll\*FFbb)\*UUdd$,
@@ -1079,7 +1079,7 @@ particular edge-cubelet.  In the case of the $S^+$
 group of three slices with only centre-cubelets we attempt
 to describe the twelve elements, as given above, from
 a view of a corner~cube, FUR that is not a part of
-the underlaying set of cubelets (only centre~facelets, now),
+the underlying set of cubelets (only centre~facelets, now),
 of our observations.
 
 We are observing, sitting on the FUR corner, as the
@@ -1103,7 +1103,7 @@ standard permutation $\sigma^+$ in the context of
 centre cubelets and the observer's, our cubelet FUR.
 Yes, we add the orientation of the centre facelet, its spin,
 as a sub-prefix, one of $\{0,1,2,3\}$ for $0$ degrees,
-$90$ degress, $180$ degress, or $270$ degress, or
+$90$ degrees, $180$ degrees, or $270$ degrees, or
 $0,1/4,1/2,$ and $3/4$ facelet turns.
 
 \e $\sigma^+_{025}$, at the start is
