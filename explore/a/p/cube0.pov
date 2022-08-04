@@ -1,16 +1,16 @@
- #version 3.6;
+ #version 3.6; // 20220805 based on https://en.wikipedia.org/wiki/POV-Ray
 // Includes a separate file defining a number of common colours
  #include "colors.inc"
  global_settings { assumed_gamma 1.0 }
 
 // Sets a background colour for the image (dark grey)
- background   { color rgb <0.25, 0.25, 0.25> }
+ background   { color rgb <0.0025, 0.0025, 0.0025> }
 
 // Places a camera
 // direction: Sets, among other things, the field of view of the camera
 // right: Sets the aspect ratio of the image
 // look_at: Tells the camera where to look
- camera       { location  <0.0, 0.5, -4.0>
+ camera       { location  <0.0, 0.5, -5.0>
                 direction 1.5*z
                 right     x*image_width/image_height
                 look_at   <0.0, 0.0, 0.0> }
@@ -47,7 +47,7 @@
                           finish  { specular 0.6 }
                           normal  { agate 0.25 scale 1/2 }
                         }
-		translate z
+		translate 2*z
                 rotate <45,46,47> }
 box          { <-0.5, -0.5, -0.5>,
                 <0.5, 0.5, 0.5>
@@ -55,7 +55,7 @@ box          { <-0.5, -0.5, -0.5>,
                           finish  { specular 0.6 }
                           normal  { agate 0.25 scale 1/2 }
                         }
-		translate -y
+		translate y
                 rotate <45,46,47> }
 box          { <-0.5, -0.5, -0.5>,
                 <0.5, 0.5, 0.5>
@@ -63,7 +63,6 @@ box          { <-0.5, -0.5, -0.5>,
                           finish  { specular 0.6 }
                           normal  { agate 0.25 scale 1/2 }
                         }
-		translate -z
 		translate -y
                 rotate <45,46,47> }
 box          { <-0.5, -0.5, -0.5>,
@@ -72,7 +71,7 @@ box          { <-0.5, -0.5, -0.5>,
                           finish  { specular 0.6 }
                           normal  { agate 0.25 scale 1/2 }
                         }
-		translate y
+		translate z
                 rotate <45,46,47> }
 box          { <-0.5, -0.5, -0.5>,
                 <0.5, 0.5, 0.5>
@@ -80,6 +79,5 @@ box          { <-0.5, -0.5, -0.5>,
                           finish  { specular 0.6 }
                           normal  { agate 0.25 scale 1/2 }
                         }
-		translate y
 		translate -z
                 rotate <45,46,47> }
