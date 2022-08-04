@@ -1,0 +1,16 @@
+# 20220804 (C) Gunter Liszewski -*- mode: org; -*-
+
+* In Pictures
+  The S+ group with the basic move F^+=(FFbb)
+** The standard permutation sigma^+_025
+   This group has centre cublets.
+   As seen from the one observer, the FUR cubelet.
+[[./sigma^+_025-S+_0.png]]
+** the first particle F+_025
+[[./sigma^+_025-S+_1.png]]
+** the second particle F+_025
+[[./sigma^+_025-S+_2.png]]
+** the third particle b+_025
+[[./sigma^+_025-S+_3.png]]
+** the fourth particle b+_025
+[[./sigma^+_025-S+_4-crop.png]]
