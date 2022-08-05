@@ -1,4 +1,5 @@
-#version 3.6; // 20220805 based on https://en.wikipedia.org/wiki/POV-Ray
+#version 3.6; // 20220805 (C) Gunter Liszewski -*- mode: povray; -*-
+// based on https://en.wikipedia.org/wiki/POV-Ray
 // Includes a separate file defining a number of common colours
  #include "colors.inc"
  global_settings { assumed_gamma 1.0 }
@@ -28,20 +29,6 @@
                 color rgb <0.25, 0.25, 0.25>
                 translate <6, -6, -6> }
 
-// Sets a box
-// pigment: Sets a color for the box ("Red" as defined in "colors.inc")
-// finish: Sets how the surface of the box reflects light
-// normal: Sets a bumpiness for the box using the "agate" in-built model
-// rotate: Rotates the box
-// box          { <-0.5, -0.5, -0.5>,
-//                <0.5, 0.5, 0.5>
-//                texture { pigment { color Red }
-//                          finish  { specular 0.6 }
-//                          normal  { agate 0.25 scale 1/2 }
-//                        }
-//		
-//                rotate <45,46,47> }
-
 // Sets a thing, just
 #declare F = polygon {
   4,
@@ -58,7 +45,6 @@
   	   pigment { colour Green }
 	   normal  { agate 0.25 scale 1/2 }
 	   }
-//	   translate z
   }
 #declare U = polygon {
   4,
@@ -91,18 +77,15 @@
   	   pigment { colour Yellow }
 	   normal  { agate 0.25 scale 1/2 }
 	   }
-//	   translate x
   }
 union {
- object { F }
- object { B }
- object { L }
- object { R }
- object { D }
- object { U }
- translate <-0.5, -0.5, -0.5>
- rotate <131,144,133>
-// rotate y*180
-
+  object { F }
+  object { U }
+  object { R }
+  object { B }
+  object { D }
+  object { L }
+  translate <-0.5, -0.5, -0.5>
+  rotate <131,144,133>
 }
   

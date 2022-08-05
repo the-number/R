@@ -5,4 +5,6 @@
   taken five more to resemble our view of Rubik's cube,
   somewhat.
 ** Our view of the cube faces' colours
+  [[./cube0.png]]
+** Then towards the cubelets, but starting with polygons
   [[./cube1.png]]
