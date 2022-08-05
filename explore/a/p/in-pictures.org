@@ -10,6 +10,7 @@
   [[./cube0.png]]
 ** [[./cube1.pov][Then]] we go towards cubelets and start with polygons
   [[./cube1.png]]
-** [[./_cube4.pov][At last,]] the S_F move is applied, S_F=(FFbb)
-  [[./_cube4.png]]
+** [[./_cube5.pov][At last,]] the S_F move is applied, S_F=(FFbb)
+   and we use a POV-ray macro to make each side of these cubelets.
+  [[./_cube5.png]]
 
