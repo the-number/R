@@ -10,3 +10,6 @@
   [[./cube0.png]]
 ** [[./cube1.pov][Then]] we go towards cubelets and start with polygons
   [[./cube1.png]]
+** [[./_cube4.pov][At last,]] the S_F move is applied, S_F=(FFbb)
+  [[./_cube4.png]]
+
