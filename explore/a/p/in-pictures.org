@@ -2,6 +2,8 @@
 
 * Taking pictures
   [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] gives an example of how to make a box.
+** [[./_cube3.pov][(standard perm)*F]] has its front rotated 90 degrees
+   [[./_cube3.png]]
 ** [[./_cube2.pov][This cube]] is a standard arrangement of 3x3x3 cubelets
    [[./_cube2.png]]
 ** [[./cube0.pov][First]] we look at the faces' colours
