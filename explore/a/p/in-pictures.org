@@ -1,10 +1,10 @@
 # 20220805 (C) Gunter Liszewski -*- mode: org; -*-
 
 * Taking pictures
-  [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] gives an example of how to make a box. We have
-  taken five more to resemble our view of Rubik's cube,
-  somewhat.
-** Our view of the cube faces' colours
+  [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] gives an example of how to make a box.
+** [[./_cube2.pov][This cube]] is a standard arrangement of 3x3x3 cubelets
+   [[./_cube2.png]]
+** [[./cube0.pov][First]] we look at the faces' colours
   [[./cube0.png]]
-** Then towards the cubelets, but starting with polygons
+** [[./cube1.pov][Then]] we go towards cubelets and start with polygons
   [[./cube1.png]]
