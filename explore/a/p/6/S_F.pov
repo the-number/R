@@ -72,7 +72,20 @@ polygon {  4, P1, P2, P3, P4
 /* Start another, aiming to permute the cublets of a face,
    for example to do move F we rotate each of F's cubelets
 */
-#declare that_cube = union { cubelet }
+#declare that_cube = union { 
+  object { cubelet translate <0,1.05,-1.05> } // up, front
+  object { cubelet translate <0,1.05,0> }
+  object { cubelet translate <0,1.05,1.05> }
+
+  object { cubelet translate <0,0,-1.05> } // centre, front
+  object { cubelet }
+  object { cubelet translate <0,0,1.05> }
+
+  object { cubelet translate <0,-1.05,-1.05> } // down, front
+  object { cubelet translate <0,-1.05,0> }
+  object { cubelet translate <0,-1.05,1.05> }
+  
+}
 
 // The things in this picture
 union {
