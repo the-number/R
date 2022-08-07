@@ -73,32 +73,33 @@ polygon {  4, P1, P2, P3, P4
    for example to do move F we rotate each of F's cubelets
 */
 #declare that_cube = union { 
-  object { cubelet translate <0,1.05,-1.05> } // up, front
-  object { cubelet translate <0,1.05,0> }
-  object { cubelet translate <0,1.05,1.05> }
+  // the front slice
+  object { cubelet translate <1.05,1.05,-1.05> } // up, front
+  object { cubelet translate <1.05,1.05,0> }
+  object { cubelet translate <1.05,1.05,1.05> }
 
-  object { cubelet translate <0,0,-1.05> } // centre, front
-  object { cubelet translate x*1.05 }
-  object { cubelet translate <0,0,1.05> }
+  object { cubelet translate <1.05,0,-1.05> } // centre, front
+  object { cubelet translate x*-1.05 }
+  object { cubelet translate <1.05,0,1.05> }
 
-  object { cubelet translate <0,-1.05,-1.05> } // down, front
-  object { cubelet translate <0,-1.05,0> }
-  object { cubelet translate <0,-1.05,1.05> }
-
+  object { cubelet translate <1.05,-1.05,-1.05> } // down,front
+  object { cubelet translate <1.05,-1.05,0> }
+  object { cubelet translate <1.05,-1.05,1.05> }
+  
   
   // the back slice
   
-  object { cubelet translate <-1.05,1.05,-1.05> } // up, front
+  object { cubelet translate <-1.05,1.05,-1.05> } // up, back
   object { cubelet translate <-1.05,1.05,0> }
   object { cubelet translate <-1.05,1.05,1.05> }
 
-  object { cubelet translate <-1.05,0,-1.05> } // centre, front
+  object { cubelet translate <-1.05,0,-1.05> } // centre, back
   object { cubelet translate x*-1.05 }
   object { cubelet translate <-1.05,0,1.05> }
 
-  object { cubelet translate <0,-1.05,-1.05> } // down, front
-  object { cubelet translate <0,-1.05,0> }
-  object { cubelet translate <0,-1.05,1.05> }
+  object { cubelet translate <-1.05,-1.05,-1.05> } // down,back
+  object { cubelet translate <-1.05,-1.05,0> }
+  object { cubelet translate <-1.05,-1.05,1.05> }
   
 }
 
