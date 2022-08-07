@@ -1,0 +1,13 @@
+# 20220807 (C) Gunter Liszewski -*- mode: org; -*-
+
+* Taking pictures
+  [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] has an example of the box.
+** [[./S_F.pov][Now, again]] we started with a single cubelet at the centre
+   and filled the surrounding twelve edges, eight corners, and
+   six centres. (That's what we thought we did.  However, turning
+   this cube of nine cubelets reveals a hole in the centre of
+   the front face.)
+   [[./S_F.png]]
+** [[./S_F0.pov][So, what if]] we turn this around the Y-axis
+   [[./S_F0.png]]
+

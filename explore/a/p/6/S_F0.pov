@@ -128,4 +128,7 @@ union {
            translate <10,0,-10> }
   object { that_cube rotate x*90
            translate <15,0,-13> }
+  object { that_cube rotate x*90 rotate y*180
+           translate <18,-3,-9> }
+
   translate <-3,-4,2> rotate <131,144,133> }
