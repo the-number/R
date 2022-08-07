@@ -86,6 +86,19 @@ polygon {  4, P1, P2, P3, P4
   object { cubelet translate <1.05,-1.05,0> }
   object { cubelet translate <1.05,-1.05,1.05> }
   
+  // in the middle
+  
+  object { cubelet translate <0,1.05,-1.05> } // up,middle
+  object { cubelet translate <0,1.05,0> }
+  object { cubelet translate <0,1.05,1.05> }
+
+  object { cubelet translate <0,0,-1.05> } // centre,middle
+  object { cubelet }
+  object { cubelet translate <0,0,1.05> }
+
+  object { cubelet translate <0,-1.05,-1.05> } // down,middle
+  object { cubelet translate <0,-1.05,0> }
+  object { cubelet translate <0,-1.05,1.05> }
   
   // the back slice
   
