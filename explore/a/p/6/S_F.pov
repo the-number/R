@@ -78,8 +78,23 @@ polygon {  4, P1, P2, P3, P4
   object { cubelet translate <0,1.05,1.05> }
 
   object { cubelet translate <0,0,-1.05> } // centre, front
-  object { cubelet }
+  object { cubelet translate x*1.05 }
   object { cubelet translate <0,0,1.05> }
+
+  object { cubelet translate <0,-1.05,-1.05> } // down, front
+  object { cubelet translate <0,-1.05,0> }
+  object { cubelet translate <0,-1.05,1.05> }
+
+  
+  // the back slice
+  
+  object { cubelet translate <-1.05,1.05,-1.05> } // up, front
+  object { cubelet translate <-1.05,1.05,0> }
+  object { cubelet translate <-1.05,1.05,1.05> }
+
+  object { cubelet translate <-1.05,0,-1.05> } // centre, front
+  object { cubelet translate x*-1.05 }
+  object { cubelet translate <-1.05,0,1.05> }
 
   object { cubelet translate <0,-1.05,-1.05> } // down, front
   object { cubelet translate <0,-1.05,0> }
