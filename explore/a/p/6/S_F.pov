@@ -5,10 +5,11 @@
  #include "colors.inc"
  global_settings { assumed_gamma 1.0 }
  background   { color rgb <0.0025, 0.0025, 0.0025> }
- camera       { location  <0.0, 0.5, -5.0>
+ camera       { location  <50.0, 0.5, -3.0>
                 direction 1.5*z
                 right     x*image_width/image_height
-                look_at   <0.0, 0.0, 0.0> }
+                // look_at   <0.0, 0.0, 0.0>
+                look_at   <0.0, -8.0, -6.0> }
  light_source { <0, 0, 0>
                 color rgb <1, 1, 1>
                 translate <-5, 5, -5> }
@@ -68,7 +69,12 @@ polygon {  4, P1, P2, P3, P4
 }
 #declare this_cube = union { standard_permutation }
 #declare this_cube_S_F = union { standard_permutation_S_F }
+/* Start another, aiming to permute the cublets of a face,
+   for example to do move F we rotate each of F's cubelets
+*/
+#declare that_cube = union { standard_permutation }
 
+// The things in this picture
 union {
   object { this_cube_S_F translate <0,0,-1> }
   object { this_cube rotate z*90
@@ -76,4 +82,5 @@ union {
            translate <-1.9,0,4> }
   object { this_cube rotate x*-90 rotate z*-90
 	   rotate y*-31 translate <-4,0,-1> }
+  object { that_cube rotate y*90 translate <10,0,-10> }
   translate <-3,-4,2> rotate <131,144,133> }
