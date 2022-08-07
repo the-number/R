@@ -1,5 +1,4 @@
-# 20220807 (C) Gunter Liszewski -*- mode: org; -*-
-
+# 20220808 (C) Gunter Liszewski -*- mode: org; -*-
 * Taking pictures
   [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] has an example of the box.
 ** [[./S_F.pov][Now, again]] we started with a single cubelet at the centre
@@ -9,5 +8,11 @@
    the front face.)
    [[./S_F.png]]
 ** [[./S_F0.pov][So, what if]] we turn this around the Y-axis
+   So, after all, we have identified the wrongs; and now we can
+   move on.
    [[./S_F0.png]]
-
+** [[./S_F1.pov][The front face]] is to be rotated clockwise
+   Here, in our perception only, we rotate the front face.  We do
+   this by rotating the nine front face cubelets. (Just another
+   approach)
+   [[./S_F1.png]]
