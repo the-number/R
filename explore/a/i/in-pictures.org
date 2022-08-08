@@ -9,3 +9,14 @@
 [[./six-faces.png]]
 ** front face and right face
 [[./front-and-right-face.png]]
+* Effects on the faces of it
+** F move effects five faces
+[[./F-effect.png]]
+* the numbers of this cube
+** five adjoining faces with four adjoining edges
+   (02 20) (front left) (left front), 
+   (04 40) (front up) (up front),
+   (03 30) (front right) (right front),
+   (05 50) (front down) (down front),
+   (41 14) (up back)(back up)
+[[./edge-cubes.png]]

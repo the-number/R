@@ -1,4 +1,4 @@
-% 20220728 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220808 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -11,7 +11,15 @@
   https://www-cs-faculty.stanford.edu/\%7Eknuth/taocp.html}}
 \def\g{\footnote*{\TeX book, texbook.tex,
   https://www.ctan.org/tex-archive/systems/knuth/dist/tex}}
+% https://books.google.co.uk/books?id=_n1vr0_RbXoC&lpg=PA786&pg=PA786#v=onepage&q&f=false
+% https://en.wikipedia.org/wiki/List_of_Unicode_characters
+% escaped #=\%23 (do not escape &=\%26) _=\%5f
+\def\gg{\footnote*{https://books.google.co.uk/books?id=\%5fn1vr0\%5fRbXoC\&lpg=PA786\&pg=PA786}}
+% Singmaster, David, Moral and mathematical lessons from
+% a Rubik cube, New Scientist 23/30 Dec 1982, page 786
+% https://en.wikipedia.org/wiki/Rubik's_Cube_group
 %
+\def\dd{\footnote*{https://github.com/the-number/R/blob/explore/0003/looks-like/explore/a/p/6/in-pictures.org}}
 \def\e{\bigskip}
 \def\R{\hbox{Woozy}}
 \def\*{\circ}
@@ -38,7 +46,7 @@
 \e
 TAoCP in chapter 1.2.5 gives two methods to generate
 all permutations of a given ordered set.
-Quantites of permutations are considered
+Quantities of permutations are considered
 with relevance to computing efficiencies.
 \beginsection 3. The Wide-Awake example Group
 
@@ -47,7 +55,7 @@ We re-think\d, re-word, and re-start
 with a set of attributes, elements or objects,\break
 $W=\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 These elements are used to generate all possible
-arrangements $\eta$ which are orderd $n$-tuples with
+arrangements $\eta$ which are ordered $n$-tuples with
 $1\le n\le4.$
 For example, $\eta=($ woozy, wide-awake $)$ is a $2$-tuple.
 Now the set $\R$ is the set of all permutations that jumble
@@ -55,7 +63,7 @@ such elements like $\eta.$
 
 \e
 Let $(\R,\*,0,-)$ be the group with the set $\R$, a binary
-operation $\*$, a neutral elment $0$, and
+operation $\*$, a neutral element $0$, and
 for each element $\pi\in\R$ there is an inverse element
 $-\pi\in\R$ such that $\pi\*-\pi=0.$
 
@@ -156,7 +164,7 @@ apply method 1 to arrange things.
 \e
 Given $W$ as above, we have\break
 \i41 \h woozy ,
-          \h vacuus ,
+          \h vacuous ,
           \h sleepy ,
           \h wide-awake \j
 
@@ -377,7 +385,7 @@ six order four canonical cycle permutations.
 
 As an additional step, here, in order to give some
 visual~clue as to the uniqueness of each 4-tuple,
-we have ordered the said permutation~cyles to list
+we have ordered the said permutation~cycles to list
 the canonical cycle~representation as the first element
 of its row. (As a permutation, each element
 in each of the six rows below
@@ -416,7 +424,7 @@ Let $W$ be the set that we made earlier,
 namely\break
 $\{$ woozy, vacuous, sleepy, wide-awake $\}.$
 
-Next we make four sets of permutaions $P_{nk}$ with
+Next we make four sets of permutations $P_{nk}$ with
 $k\in\{k|1\le k\le n\},$
 
 We have $P_{41}$
@@ -474,7 +482,7 @@ $$\halign{# & #\hfil\cr%
 \h    woozy vacuous sleepy wide-awake,
        vacuous sleepy wide-awake woozy.
 \hh      sleepy wide-awake woozy vacuous,
-          wide-awake woozy vacuos sleepy.
+          wide-awake woozy vacuous sleepy.
 \h    woozy wide-awake sleepy vacuous,
        wide-awake sleepy vacuous woozy.
 \hh     sleepy vacuous woozy wide-awake,
@@ -521,14 +529,14 @@ which with $-F=f$ and $-R=r$, may be denoted as $rrff.$
 
 \e Now we will enumerate the three subsets,
 $F\subseteq \R,$ $R\subseteq \R,$ and $F\cup R\subseteq \R.$
-These subsets of permuations contribute to the abstraction of
+These subsets of permutations contribute to the abstraction of
 the Rubik's cube's front face $F$ and right face $R.$  The
-union of these sets $S=R\cup F$ aims to help the enumertion
+union of these sets $S=R\cup F$ aims to help the enumeration
 of permutations which we may call (not all that seriously)
 jumbles, ruffles, permutes, and sometimes but not always
 rotations or composites.  These subsets together with their
 operation $\*$ and their neutral element $0$ (maybe called $()$)
-form subroups of the Rubik group $\R.$
+form subgroups of the Rubik group $\R.$
 
 \e The front face is represented by set $F,$ and set $R$
 is the right face of the cube. (There is already some
@@ -558,7 +566,7 @@ $F,$ and $R$ respectively.
 $F=($ FUL FUR FDR FDL $)\*($ FU FR FD FL~$),$
 and the right face re-arrangement by a clockwise quarter-turn
 is $R=($ RUF RUB RDB RDF $)\*($ RU RB RD RF $),$
-while the entaglements of the front and the right are
+while the entanglements of the front and the right are
 already lurking and ready to intervene.
 
 \e Now we look at the FFRR permutation again.
@@ -604,11 +612,11 @@ respective edge-cubes of the front and the right~face.
         &FD&&           &RD\cr}
 
 \e {\def\a#1 #2 {\hbox{#1 #2}}%
-In terms of the set of permutation cycles the entaglement may read
+In terms of the set of permutation cycles the entanglement may read
 $\{(\a FR RF ),(\a RF FR )\},$ and again we note that
 $(\a FR RF )=(\a RF FR ).$}
 
-\e The corner-cubes have a similar entanglement. (re-thing, re-word)
+\e The corner-cubes have a similar entanglement. (re-think, re-word)
 {\def\a{\hskip 3cm}%
 \def\b{\hskip 24pt}%
 \def\c#1 {{\bf #1 }}%
@@ -671,7 +679,7 @@ $R_e^{RU}=R^2\*U^{RU}$ and
 $R_e^{RU}=(\hbox{ UB RU RB RD }),$ (still under re-view;
 in particular our mis-conceptions, the ambiguities, and
 the mis-representation are creeping all over; however
-we will wittle things down just to pick up each one
+we will whittle things down just to pick up each one
 of these crawlies and re-permute things to form a set
 of cohesion; given time.)
 \vfil\eject
@@ -681,7 +689,7 @@ it down in terms of edge~jumbles,
 $$\gamma_R^e=(\hbox{ RF RB RD BU })$$
 $$\gamma_U^e=(\hbox{ UR FR UF UL })$$
 
-Given the standard permutaion $\sigma$ with
+Given the standard permutation $\sigma$ with
 $\sigma_U^e=(\hbox{ UB UR UF UL }),$ and
 $\sigma_R^e=(\hbox{ RU RB RD RF }),$
 this allows us to calculate the components
@@ -689,4 +697,508 @@ in terms of permutation cycles
 $$\gamma_R^e=(\hbox{RU RF})\*(\hbox{RB})\*(\hbox{RD})\*(\hbox{RF UL}),$$ and
 $$\gamma_U^e=(\hbox{UB})\*(\hbox{UR FR})\*(\hbox{UF})\*(\hbox{UL}).$$
 }% end of section 11
+\eject
+{\beginsection 12. Direction of the permutation
+which cycles one face
+
+\def\a#1{\hbox{ #1 }}% one cube
+\def\c{\hbox{ \  }}% vacuousness
+\def\d{$\*$ (clock-wise 1/4 face-turn)}% permute
+\def\b#1 #2 #3 #4.{% b=left 4-typle, like  1 2 3 4.
+         &\a  #1 &&         &\a  #4 \cr
+\c\c\c \a #4 &\c&\a #2 &\d\a #3 &\c&\a #1\cr
+         &\a  #3 &&         &\a  #2 \cr}%
+\e\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b 1 2 3 4.}% clock-wise rotation of a face
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(FU FL FD FR)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb FU \bb FR \bb FD \bb FL .}}%
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(1432)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb FU$_1$ \bb FR$_2$ \bb FD$_3$ \bb FL$_4$ .}}%
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(1432)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb woozy$_1$ \bb vacuous$_2$ %
+\bb sleepy$_3$ \bb wide-awake$_4$ .}}%
+
+\vfil\eject
+\e The move $F$ again, with its effect on five faces.
+
+\e{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*\hbox{(1432)}=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb woozy$_1$ \bb vacuous$_2$ %
+\bb sleepy$_3$ \bb wide-awake$_4$ .}}%
+
+{\def\bb#1 {\hbox{#1}}%
+\def\d {$\*F=$}%
+\halign{#&#&#%
+         &#&#&#\cr% a=prefix
+\b \bb FU$_1$ \bb FR$_2$ %
+\bb FD$_3$ \bb FL$_4$ .}}%
+
+\vfil\eject\e Now, we look at some \TeX nicalities\g\/
+in order to show these ruffles.
+We want to utilise the $\backslash$halign
+control sequence to layout our cube-faces.
+We also want to use \TeX~definitions
+to ease the writing of this \TeX-text.
+We aim for some
+yield of visual clues as to the Rubik group
+model for these permutations. (re-word)
+
+Here is the basic idea. We draw, using \TeX~text, the
+four edge cubes: Up $U_1,$ Right $R_2,$ Down $D_3,$
+and Left $L_4.$
+{{$$\halign{#&#&#\cr%
+ & $U_1$\cr%
+$L_4$ && $R_2$\cr%
+& $D_3$\cr}$$}}
+
+Then with the help of \TeX\/ and its $\backslash$halign
+control sequence, we abstract the drawing of this
+particular face.
+{\def\a{$$\halign{##&##&##\cr%
+ & $U_1$\cr%
+$L_4$ && $R_2$\cr%
+& $D_3$\cr}$$}
+\a}
+
+\vfil\eject
+Now we parameterise the four edge cubes that we see
+on this face.
+{\def\a#1 #2 #3 #4.{$$\halign{##&##&##\cr%
+ & $#1_1$\cr%
+$#4_4$ && $#2_2$\cr%
+& $#3_3$\cr}$$}
+\a U R D L.
+
+This allows us, now, to facilitate these abstraction
+and apply things to our favourite set.
+\a \hbox{woozy} \hbox{vacuous} \hbox{sleepy} \hbox{wide-awake}.
+
+And we may even show a plain and clear view of
+these face rotations, in our own perception,
+by using the set $\{1,2,3,4\}$ as the Group's set.
+\a 1 2 3 4.
+
+Let's see a representation of our adjoining
+faces. These are the four faces that adjoin this one.
+This one is face $(1,2,3,4).$  We say
+that the face in front of us is face $0$ and
+substitution yields $(01,02,03,04).$
+
+\a 01 03 04 05.
+
+Our edge cube $01$ is adjoined to face $1.$ (language)
+and face one sees its edge~cube $10$ to be adjoined to
+us. Yes! we are face $0.$
+
+\a 12 13 10 15.
+
+And here we take a break to reflect, and to replenish
+our writing finger non-fossil, no-no-nothing fuel.
+
+\vfil\eject\e Another approach to get these faces to show themselves side~by~side.
+
+{\a 01 03 04 05.}
+
+Now, then! we backup a few steps and just move straight ahead.
+
+\e
+{% \vcenter, \hbox and \vbox
+$\vcenter{\halign{#&#&#\cr
+&$B_1$\cr
+$L_4$&&$R_2$\cr
+&$F_3$\cr}}$
+
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$L_4$&&$R_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$F_4$&&$B_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$R_4$&&$L_2$\cr
+&$D_3$\cr}}$
+\qquad
+$\vcenter{\halign{#&#&#\cr
+&$U_1$\cr
+$B_4$&&$F_2$\cr
+&$D_3$\cr}}$
+
+$\vcenter{\halign{#&#&#\cr
+&$F_1$\cr
+$L_4$&&$R_2$\cr
+&$B_3$\cr}}$
+}% end of vcenter
+
+{% \vcenter, \hbox and \vbox
+\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+
+\e We show the edges as number pairs where the first digit of each two-digit number
+gives the cube's face visible on this cube of cubes' face.  The second such
+digit gives the adjoining face of the standard permutation $\sigma,$ where the
+faces are: $0$ to represent the front face,
+$1$ its back, $2$ to the left, $3$ on the right, $4$ faces up, and $5$ looks down.
+
+\vfil\eject
+We break down $\sigma$ and show just its edges, with
+
+\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$, $\sigma_B^e=(12,14,13,15){}_B^e$,
+
+$\sigma_U^e=(21,25,20,23){}_U^e$, $\sigma_D^e=(30,35,31,32){}_D^e$,
+
+$\sigma_L^e=(42,40,43,41){}_L^e$, and $\sigma_R^e=(52,51,53,50){}_R^e$.
+{\sl(this is unchecked and unfinished)}
+
+\e% standard permutaion of Rubik's cube, in our view
+\edges 21 25 20 23.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 32.}% end of standard permutation
+
+\e How can we see that this resembles some kind of reality?
+First, since this is the standard permutation we have
+all the edge cubes show their face in one colour, the
+colour of the front~face being $0$, for example.
+
+Second, one edge joins two faces and therefore,
+for example the front face $0$ and the right face $5$
+have a shared edge-cube. This shared edge appears on
+the front-face on the right {\sl front}$_2$, here denoted
+as $05{}_2.$
+On the adjoining face, the right one in our example,
+this shared edge is written as $50{}_4$ being on the
+left, {\sl right}$_4$, of the right Rubik's cube face.
+
+Third, we spot an error, as we experience just how to go
+about error spotting. The left face ($4$) has in its
+{\sl down} position ({\sl left}$_3$) a cube $43_3;$
+and this feels correct.
+
+But which edge is shared by the down cube ($3$)
+and the left cube ($4$)? Answer: there should be a cube
+$34_?$ on the {\sl down} face. We see that $30_1$ joins
+with {\sl front} ($0$) correctly, and we  deduce that $34_4$ must replace $32_4$.
+
+{\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+\e Again, with one correction to read $34_4.$
+
+\e% standard permutaion, corrected
+\edges 21 25 20 23.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.
+
+\e Thanks, yes we see another error and we substitute
+$24_4$ for the erroneous $23_4.$
+This error hints at another tell-tale sign.
+Each face should have exactly two even and two odd edges,
+as a consequence of how our faces are numbered.
+{\sl(This applies to the standard permutation
+$\sigma^e$ and of course, after a jumble we might
+see flipped edges.)}
+
+\e% standard permutaion, s/23_4/24_4/
+\edges 21 25 20 24.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.}% end of edges defined space
+}}% end of section 12
+\hfil\eject
+\beginsection 13. The concrete move RUru
+
+{\def\edges#1 #2 #3 #4.{$\vcenter{\halign{##&##&##\cr
+&{#1}$_1$\cr
+{#4}$_4$&&{#2}$_2$\cr
+&{#3}$_3$\cr}}$}
+
+We start with the representation of the
+standard permutation $\sigma^e$ in the context of
+edge cubelets.
+
+\e
+\edges 21 25 20 24.\par\thinspace
+\edges 02 05 03 04.\qquad\edges 52 51 53 50.\qquad
+\edges 12 14 13 15.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 35 31 34.
+
+And we re-write in a somewhat narrative style (as we
+perceive it so to be.)
+
+\smallskip$\sigma_F^e=(02,05,03,04){}_F^e$,
+$\sigma_B^e=(12,14,13,15){}_B^e$,
+
+$\sigma_U^e=(21,25,20,24){}_U^e$,
+$\sigma_D^e=(30,35,31,34){}_D^e$,
+
+$\sigma_L^e=(42,40,43,41){}_L^e$,
+and $\sigma_R^e=(52,51,53,50){}_R^e$.
+
+\hfil\eject
+Now we apply the move $R,$ which spells out to be
+$(1432)_R^e$, if you know what this means.  We perceive
+the meaning to be $R_1\to R_4$, $R_2\to R_1$,
+$R_3\to R_2$, and $R_4\to R_3$, and we think this to
+be a clockwise $1/4$ turn around the $x$ axis, that
+is the axis from left to right. {\it(We admit that the
+concept of direction such as left and right is a
+woozy one; but it's not vacuous.)}
+
+\smallskip
+\edges 21 05 20 24.\par\thinspace
+\edges 02 35 03 04.\qquad\edges 50 52 51 53.\qquad
+\edges 12 14 13 25.\qquad\edges 42 40 43 41.\par\thinspace
+\edges 30 15 31 34.
+
+\smallskip
+We note that with the move of the right facelets we
+also see changes on the adjoining faces, namely
+$F_2$ sees $05\to 35$, $B_4$ moves $15\to 25$,
+$U_2$ substitutes $25\to 05$, and finally $D_2$
+transposes its edge $35\to 15$. (to verify)
+
+\smallskip
+Whittling things down, we see things scattered around us,
+such as
+
+\e$\{$( set, coset ), ( Definitionsmenge, Wertemenge )$\}$,
+
+$\{$ injective, surjective, bijective $\}$.
+
+\vfil\eject
+We observe the effects of this rotation, $R^e$ as it
+produces five permutation cycles of order four, namely
+
+\smallskip
+$R_R^e=(50, 53, 51, 52)_R^e$
+
+$R_F^e=(05, 35, 15, 25)_F^e$
+
+$R_U^e=(15, 25, 05, 35)_U^e$
+
+$R_B^e=(25, 05, 35, 15)_B^e$
+
+$R_D^e=(35, 15, 25, 05)_R^e$
+
+\e
+From a different view we see how the two-faced facelet $05$
+will cycle through its positions in five
+different faces.
+
+\smallskip$05_F^e=F_2^e$
+
+$05_U^e=U_2^e$
+
+$05_B^e=B_4^e$
+
+$05_D^e=D_2^e$
+
+$50_R^e=(R_e^1, R_e^4, R_e^3, R_e^2)$.
+
+\e {\it(We also appreciate, from our position, how the
+abstractions may stay just abstract until we actually
+follow things through, and maybe
+even consider their views in their own surroundings.)}
+
+\e In summary, we have
+
+$05^e=(F_2^e, D_2^e, B_2^e, U_2^e)^e$ and
+
+$50_R^e=(R_e^1, R_e^4, R_e^3, R_e^2)$.
+}% end of section 13
+\hfil\eject
+\beginsection 14. The group of three slices
+
+% https://books.google.co.uk/books?id=_n1vr0_RbXoC&lpg=PA786&pg=PA786
+So called slices are sandwiched between opposing faces.
+The group, so generated from the set of moves\break
+$\{$~2R2l, 2F2b, 2U2d $\}$
+is said to have 12 elements\gg.
+
+Maybe we need a reminder of the group abstraction, and
+maybe we should convince ourselves that this is a
+group, and maybe we should account for all the elements,
+the completeness, the associativities of the compositions,
+the identity element, and the existence of inverse elements.
+
+\e First, we count the basic generating elements:
+1. $FFbb$, 2. $RRll$, 3. $UUdd$.
+
+Next, we compose with two basics:
+4. $FFbb\*RRll$, 5. $FFbb\*UUdd$, 6. $RRll\*UUdd$
+
+Last come compositions from three basic generating elements:
+
+7. $(FFbb\*RRll)\*UUdd$,
+8. $(RRll\*FFbb)\*UUdd$,
+9. $(FFbb\*UUdd)\*RRll$,
+
+10.$(UUdd\*FFbb)\*RRll$,
+11.$(RRll\*UUdd)\*FFbb$,
+12.$(UUdd\*RRll)\*FFbb$.
+
+\e{\it(This is the first attempt of enumerating this group
+and the result is unverified.)}
+
+\e We have, just now, taken some pictures of this group and
+explored what we want to take forward.  We will look at
+a subgroup of the three slices subgroup of the Rubik group.
+We will just consider the centre-cubelets, their
+permutation cycles, including their orientation.
+We will also try to find the different aspects, or
+view~points that will help us to understand what happens
+with this group, how we denote things, and how this
+simple example is possibly abstracted.
+
+\e We already have seen different view points of the cube,
+such as the view from the outside, and the view from a
+particular edge-cubelet.  In the case of the $S^+$
+group of three slices with only centre-cubelets we attempt
+to describe the twelve elements, as given above, from
+a view of a corner~cube, FUR that is not a part of
+the underlying set of cubelets (only centre~facelets, now),
+of our observations.
+
+We are observing, sitting on the FUR corner, as the
+elementary permuters effect the rotational moves,
+in 180 degree quantities.  Sitting where we are sitting,
+we see the slices rotate (while in effect we, that is
+the FUR$=025=250=520$ face that we sit on,
+will rotate in pairs with
+our opposite face.)
+
+Let's spell out, from an outside view, the move
+$S_F^+$, with $S_F^+=(FFbb)$.
+
+{\def\centres#1 #2 #3 #4 #5 #6.{$\vcenter{\halign{##&##&##\cr
+{}$_1${#3}&&{}$_2${#4}\cr
+&{}${}_{#2}{#1}^+$\cr
+{}$_4${#6}&&{}$_3${#5}\cr}}$}
+
+We start with the representation of the
+standard permutation $\sigma^+$ in the context of
+centre cubelets and the observer's, our cubelet FUR.
+Yes, we add the orientation of the centre facelet, its spin,
+as a sub-prefix, one of $\{0,1,2,3\}$ for $0$ degrees,
+$90$ degrees, $180$ degrees, or $270$ degrees, or
+$0,1/4,1/2,$ and $3/4$ facelet turns.
+
+\e $\sigma^+_{025}$, at the start is
+
+\e
+\centres 2 0 {} {} 250 {}.\par\thinspace
+\centres 0 0 {} 025 {} {}.\qquad\centres 5 0 502 {} {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} {} {} .\par\thinspace
+\centres 3 0 {} {} {} {}.
+
+\vfill\eject
+$\sigma^+_{025}\*F^+$, and the centre facelet of our front face spins
+by a $1/4$-turn, and we, the observer, spin likewise
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 1 {} {} 025 {}.\qquad\centres 5 0 {} 250 {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} {} {} .\par\thinspace
+\centres 3 0 {} 502 {} {}.
+
+\e And again we apply $F^+$,
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 0 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+(The observer feels woozy---are we lost?)
+
+\vfill\eject
+\e Now an inverse $B$ face turn, in our group this is
+denoted $b^+$, and note the anti-clockwise spin of
+centre-facelet from ${}_01^+\to{}_31^+$
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 3 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+(The observer is down, left in front---resting vacuously.)
+
+\e And another $b^+$ $1/4$ anti-clock-wise turn with its respective
+spin of facelet ${}_31^+\to{}_21^+$
+
+\e
+\centres 2 0 {} {} {} {}.\par\thinspace
+\centres 0 2 {} {} {} 025.\qquad\centres 5 0 {} {} {} {}.\qquad
+\centres 1 2 {} {} {} {}.\qquad\centres 4 0 {} {} 250 {} .\par\thinspace
+\centres 3 0  502 {} {} {}.
+
+\e (The observer feels like having been taking for a ride---%
+industrial action imminent?)
+
+}% end of centre cubelets
+\vfil\eject
+\beginsection 15. Taking a more visual approach the these cubelets
+
+{% about our excursion into the POV-ray world
+A visual approach to the mathematics of the Rubik cube has been started.\dd
+The {\sl Persistence of Vision Ray Tracer} allows to specify objects, such as
+the cubelets, and the cube in a programming language with an appropriate
+vocabulary.  A fundamental connection between the mathematics of the cube and
+of its\break
+visual model is achieved with the help of the application {\sl POV-ray.}
+
+This is a very basic use of the {\sl POV-ray language.}  We define a square polygon
+for each of our six faces.  We have $0$, $1$ for front and back; $2$, $3$ are up and down;
+and $4$ and $5$ face left and right. In other words these faces are $F$, $B$, $U$,
+$D$,$L$, and $R$.
+
+Then the six facelets are cubed together and a particle, a cublete is constructed.
+With these particles, or cubelets, we assemble a $3x3x3$ cube that represents and
+allows us to model the Rubik cube's permutation groups.
+
+We have tried two approaches to modify the rotation of one of the Rubik cube's faces.
+First, the obvious route is to define a graphic representation,
+in POV-ray language, of the front face, the back face, together with the middle slice.
+Given this model we can apply the $F$-permutation by simply rotating
+the $F$ face of the cube.
+
+\e A different approach, which may be more practical, is to rotate each respective
+cubelet of the front face to achieve the same desired result, which is to rotate the
+front face of the Rubik cube.
+
+In terms of possible permutations, this consideration shows that it is obvious that
+we have many more possible arrangements; for example, we may now have more than one
+edge cube of the same colours.  This is, of course, not possible with the
+real Rubik cube.
+
+It also opens up more views onto the mathematical models of the cube.  For example,
+we could devise a metric of the distance between different cube arrangements.
+(re-think, re-word, re-write)
+
+}% end of this excursion
 \bye

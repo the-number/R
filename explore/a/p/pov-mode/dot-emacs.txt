@@ -1,0 +1,12 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(pov-documentation-directory
+   "/gnu/store/v6x7hjw5519ngqxglqr4gd43g457m9i7-povray-here-3.7.0.10/share/doc/povray-3.7/html/")
+ '(pov-documentation-index "index.html")
+ '(pov-documentation-keyword-index "/home/gunter/.config/pov-mode/keywords_identifiers.html")
+ '(pov-external-viewer-command "eog")
+ '(pov-include-dir
+   "/gnu/store/v6x7hjw5519ngqxglqr4gd43g457m9i7-povray-here-3.7.0.10/share/povray-3.7/include"))

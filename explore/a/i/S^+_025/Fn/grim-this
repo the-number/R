@@ -1,0 +1,6 @@
+grim-this () 
+{ 
+    local D="grim -o <sigma^+_025-F+.png>";
+    sleep 3;
+    grim "sigma^+_025-S+_${1:-0}.png"
+}
