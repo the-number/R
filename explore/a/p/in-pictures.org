@@ -1,0 +1,16 @@
+# 20220805 (C) Gunter Liszewski -*- mode: org; -*-
+
+* Taking pictures
+  [[https://en.wikipedia.org/wiki/POV-Ray][POV-ray]] gives an example of how to make a box.
+** [[./_cube3.pov][(standard perm)*F]] has its front rotated 90 degrees
+   [[./_cube3.png]]
+** [[./_cube2.pov][This cube]] is a standard arrangement of 3x3x3 cubelets
+   [[./_cube2.png]]
+** [[./cube0.pov][First]] we look at the faces' colours
+  [[./cube0.png]]
+** [[./cube1.pov][Then]] we go towards cubelets and start with polygons
+  [[./cube1.png]]
+** [[./_cube5.pov][At last,]] the S_F move is applied, S_F=(FFbb)
+   and we use a POV-ray macro to make each side of these cubelets.
+  [[./_cube5.png]]
+

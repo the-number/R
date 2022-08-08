@@ -1,0 +1,1 @@
+/gnu/store/v6x7hjw5519ngqxglqr4gd43g457m9i7-povray-here-3.7.0.10/share/povray-3.7/include

@@ -1,4 +1,4 @@
-% 20220804 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220808 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -19,6 +19,7 @@
 % a Rubik cube, New Scientist 23/30 Dec 1982, page 786
 % https://en.wikipedia.org/wiki/Rubik's_Cube_group
 %
+\def\dd{\footnote*{https://github.com/the-number/R/blob/explore/0003/looks-like/explore/a/p/6/in-pictures.org}}
 \def\e{\bigskip}
 \def\R{\hbox{Woozy}}
 \def\*{\circ}
@@ -1160,5 +1161,44 @@ spin of facelet ${}_31^+\to{}_21^+$
 industrial action imminent?)
 
 }% end of centre cubelets
+\vfil\eject
+\beginsection 15. Taking a more visual approach the these cubelets
 
+{% about our excursion into the POV-ray world
+A visual approach to the mathematics of the Rubik cube has been started.\dd
+The {\sl Persistence of Vision Ray Tracer} allows to specify objects, such as
+the cubelets, and the cube in a programming language with an appropriate
+vocabulary.  A fundamental connection between the mathematics of the cube and
+of its\break
+visual model is achieved with the help of the application {\sl POV-ray.}
+
+This is a very basic use of the {\sl POV-ray language.}  We define a square polygon
+for each of our six faces.  We have $0$, $1$ for front and back; $2$, $3$ are up and down;
+and $4$ and $5$ face left and right. In other words these faces are $F$, $B$, $U$,
+$D$,$L$, and $R$.
+
+Then the six facelets are cubed together and a particle, a cublete is constructed.
+With these particles, or cubelets, we assemble a $3x3x3$ cube that represents and
+allows us to model the Rubik cube's permutation groups.
+
+We have tried two approaches to modify the rotation of one of the Rubik cube's faces.
+First, the obvious route is to define a graphic representation,
+in POV-ray language, of the front face, the back face, together with the middle slice.
+Given this model we can apply the $F$-permutation by simply rotating
+the $F$ face of the cube.
+
+\e A different approach, which may be more practical, is to rotate each respective
+cubelet of the front face to achieve the same desired result, which is to rotate the
+front face of the Rubik cube.
+
+In terms of possible permutations, this consideration shows that it is obvious that
+we have many more possible arrangements; for example, we may now have more than one
+edge cube of the same colours.  This is, of course, not possible with the
+real Rubik cube.
+
+It also opens up more views onto the mathematical models of the cube.  For example,
+we could devise a metric of the distance between different cube arrangements.
+(re-think, re-word, re-write)
+
+}% end of this excursion
 \bye

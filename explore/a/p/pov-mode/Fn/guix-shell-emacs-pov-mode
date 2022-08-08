@@ -1,0 +1,5 @@
+guix-shell-emacs-pov-mode () 
+{ 
+    local D="emacs-pov-mode (development testing) <1:-package location>";
+    guix shell -L${1:-.} emacs-pov-mode emacs info-reader man-db povray-here
+}
