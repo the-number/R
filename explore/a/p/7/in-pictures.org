@@ -1,0 +1,8 @@
+# 20220808 (C) Gunter Liszewski -*- mode: org; -*-
+* Taking pictures
+  [[http://xahlee.info/3d/povray-shiny.html][Shiny Balls]] gives an example of how to use a mirror.
+** [[./S_F1.pov][Our last bit, number six]] explored two ways of permute the Rubik cube
+   We aim to pick up from there.
+   [[./S_F1.png][Number six]]
+** [[./S_F2.pov][With mirror]] maybe
+   [[./S_F2.png]]

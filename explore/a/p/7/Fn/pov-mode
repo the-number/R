@@ -1,0 +1,5 @@
+pov-mode () 
+{ 
+    local D="pov-mode.el";
+    echo $( dirname $( dirname $( which emacs )))/share/emacs/site-lisp/pov-mode-v3.3/pov-mode.el
+}

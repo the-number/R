@@ -1,0 +1,7 @@
+topic-here () 
+{ 
+    local D="reflections: S_F2";
+    local D1="$D";
+    test -n "$*" && D1="$*";
+    set_sprint_topic $D1
+}
