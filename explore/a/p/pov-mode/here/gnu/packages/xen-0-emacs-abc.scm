@@ -45,6 +45,13 @@
                (for-each (lambda (f)
                            (rename-file f (basename f)))
                          el-files))))
+	 (add-after 'move-source-files 'emacs-defcustom
+	   (lambda* (#:key inputs #:allow-other-keys)
+	     (make-file-writable "pov-mode.el")
+	     (emacs-substitute-sexps "pov-mode.el"
+	       ("defcustom pov-include-dir"
+                 (string-append (assoc-ref inputs "povray-here")
+		      "/include")))))
          (add-before 'install 'make-info
            (lambda _
              (with-directory-excursion "info"
