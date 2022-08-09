@@ -51,7 +51,7 @@
 	     (emacs-substitute-sexps "pov-mode.el"
 	       ("defcustom pov-include-dir"
                  (string-append (assoc-ref inputs "povray-here")
-		      "/include")))))
+		      "/share/povray-3.7/include")))))
          (add-before 'install 'make-info
            (lambda _
              (with-directory-excursion "info"
