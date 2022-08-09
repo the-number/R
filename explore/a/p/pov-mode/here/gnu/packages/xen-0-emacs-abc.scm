@@ -65,8 +65,8 @@
     (synopsis "Major mode for editing POV-Ray scene files")
     (description
      "This major mode for GNU Emacs provides support for editing Povray
-;; scene files, rendering and viewing them.  It automatically indents
-;; blocks, both {} and #if #end.  It also provides context-sensitive
-;; keyword completion and font-lock highlighting, as well as the
-;; ability to look up those keywords in the povray documentation.")
+ scene files, rendering and viewing them.  It automatically indents
+ blocks, both {} and #if #end.  It also provides context-sensitive
+ keyword completion and font-lock highlighting, as well as the
+ ability to look up those keywords in the povray documentation.")
     (license license:gpl3)))

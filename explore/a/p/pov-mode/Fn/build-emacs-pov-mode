@@ -1,5 +1,5 @@
 build-emacs-pov-mode () 
 { 
     local D="emacs-pov-mode for here";
-    zless $( guix build -L here emacs-pov-mode --log-file )
+    guix build -L here emacs-pov-mode
 }
