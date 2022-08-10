@@ -11,7 +11,9 @@ light_source { <-5,30,-10> 1 }
 polygon {  4, P1, P2, P3, P4
   texture{ finish  { specular 0.6 }
   	   pigment { colour Colour }
-	   normal  { agate 0.25 scale 1/2 } } }
+	   normal  { agate 0.25 scale 1/2 }
+  }
+}
 #end
 #declare F = Side(Red,     <0,0,0>, <0,1,0>, <1,1,0>, <1,0,0>)
 #declare B = Side(Green,   <0,0,1>, <0,1,1>, <1,1,1>, <1,0,1>)
