@@ -5,4 +5,8 @@
    We aim to pick up from there.
    [[./S_F1.png][Number six]]
 ** [[./S_F2.pov][With mirror]] maybe
+   going from here (6) to take another step
    [[./S_F2.png]]
+** [[./cubelets_0.pov][To a cubelet]] and a particle and a mirror
+   [[./cubelets_0.png]]
+   (7) being reduced to the basic idea.
