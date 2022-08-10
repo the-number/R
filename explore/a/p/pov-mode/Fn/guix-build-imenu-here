@@ -1,0 +1,5 @@
+guix-build-imenu-here () 
+{ 
+    local D="install package povray-imenu-here";
+    guix build -L here povray-imenu-here
+}
