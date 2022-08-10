@@ -12,3 +12,5 @@
    [[./cubelets_0.png]]
 
    with (7) now reduced to just the basic idea
+** [[./cubelets_1.pov][Abstracting]] a cube of cubelets
+   [[./cubelets_1.png]]
