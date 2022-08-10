@@ -136,7 +136,7 @@ light_source { <-5,30,-10> 1 }
 
 // The things in this picture
 union {
-  object { Mirror( Blue ) rotate y*87 translate <-10,0,0> }
+  object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
   object { standard_cube translate <-7,0,4> }
   object { that_cube }
   object { cubelet rotate y*-30 translate <-4,0,-4> }
