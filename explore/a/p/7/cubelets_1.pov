@@ -69,7 +69,7 @@ light_source { <-5,30,-10> 1 }
   corner(1,2,4) //      up left
   corner(1,4,3) //      left down
   corner(1,3,5) //      down right
-}
+} // standard_cube
 
 
 #declare that_cube = union { 
