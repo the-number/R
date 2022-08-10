@@ -1,5 +1,5 @@
 // 20220810 (C) Gunter Liszewski -*- mode: pov; -*-
-// spline example
+// cube and its cubelets, for  example
 #version 3.7;
 #include "colors.inc"
  global_settings { assumed_gamma 1.0 }
