@@ -1,4 +1,4 @@
-;;; 20220809 (C) Gunter Liszewski, Emacs pov-mode package for Guix -*- mode: scheme; -*-
+;;; 20220810 (C) Gunter Liszewski, Emacs pov-mode package for Guix -*- mode: scheme; -*-
 
 (define-module (gnu packages xen-0-emacs-abc)
   #:use-module ((guix licenses) #:prefix license:)
@@ -6,8 +6,10 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages)
+  #:use-module (gnu packages compression)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages xen-0-povray)
@@ -51,7 +53,13 @@
 	     (emacs-substitute-sexps "pov-mode.el"
 	       ("defcustom pov-include-dir"
                  (string-append (assoc-ref inputs "povray-here")
-		      "/share/povray-3.7/include")))))
+				"/share/povray-3.7/include"))
+	     ;;  ("defcustom pov-documentation-directory"
+	     ;;    (string-append (assoc-ref inputs "povray-here")
+	     ;;		"/share/doc/povray-3.7/html"))
+	       ("defcustom pov-insertmenu-location"
+                 (string-append (assoc-ref inputs "povray-imenu-here")
+			       "/share/povray-imenu-3.6/InsertMenu")))))
          (add-before 'install 'make-info
            (lambda _
              (with-directory-excursion "info"
@@ -60,7 +68,7 @@
     (native-inputs
      (list texinfo))
     (propagated-inputs
-     (list povray-here))
+     (list povray-here povray-imenu-here))
     (home-page "https://github.com/emacsmirror/pov-mode")
     (synopsis "Major mode for editing POV-Ray scene files")
     (description
@@ -70,3 +78,35 @@
  keyword completion and font-lock highlighting, as well as the
  ability to look up those keywords in the povray documentation.")
     (license license:gpl3)))
+
+(define-public povray-imenu-here
+  (package
+    (name "povray-imenu-here")
+    (version "3.6")
+    (source
+     (origin
+      (method url-fetch)
+      (uri
+       (string-append
+	"http://xahlee.info/3d/i/povray-imenu-" version ".zip"))
+      (sha256
+       (base32
+        "0j79xrs4cs5awyi5zdq7kil7i9wr95blasnj1kqbzac9b62rhdsx"))))
+    (build-system copy-build-system)
+    (arguments
+     '(#:install-plan
+       '(("." "share/povray-imenu-3.6" #:exclude ("COPYING")))))
+    (native-inputs (list unzip))
+    (synopsis "POV-ray templates for emacs-pov-mode")
+    (description
+     "The content of this package has been created from the 
+POV-Ray 3.6 insert menu that is included with the Windows 
+and Mac versions of POV-Ray.
+
+This package is provided to simplify access to the insert 
+menu without the need to obtain and extract the Windows 
+binary package.  It is covered by the POV-Ray license and
+may be used by anyone eligible to use POV-Ray according to 
+this license.")
+    (home-page "http://www.imagico.de/imenu")
+    (license license:agpl3+)))
