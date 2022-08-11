@@ -1,4 +1,4 @@
-# 20220808 (C) Gunter Liszewski -*- mode: org; -*-
+# 20220812 (C) Gunter Liszewski -*- mode: org; -*-
 * Taking pictures
   [[http://xahlee.info/3d/povray-shiny.html][Shiny Balls]] gives an example of how to use a mirror.
 ** [[./S_F1.pov][Our last bit, number six]] had two different methods to see this
@@ -14,3 +14,23 @@
    with (7) now reduced to just the basic idea
 ** [[./cubelets_1.pov][Abstracting]] a cube of cubelets
    [[./cubelets_1.png]]
+** [[./cubelets_2.pov][Edges A and B]], twelve of them for a cube on edge
+   [[./cubelets_2.png]]
+* Emacs-pov-mode pov-online-search
+#+NAME: pov-online-search
+#+BEGIN_SRC emacs-list
+(defun pov-online-search nil
+  "Search the POV-Ray site and on-line documentation for a keyword"
+  (interactive)
+  (let* ((default (current-word))
+	 (input (completing-read
+		 (format "lookup keyword (default %s): " default)
+		 pov-keyword-completion-alist))
+	 (kw (if (equal input "")
+		 default
+	       input)))
+    (browse-url (concat "http://www.google.com/custom?q=" 
+			(browse-url-url-encode-chars kw "[#?&/]")
+			"&sa=Google+Search&domains=povray.org%3B+news.povray.org%3B+"
+			"www.povray.org&sitesearch=www.povray.org"))))
+#+END_SRC
