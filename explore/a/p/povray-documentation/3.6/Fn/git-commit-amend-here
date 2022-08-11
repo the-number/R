@@ -1,0 +1,6 @@
+git-commit-amend-here () 
+{ 
+    local D="git commit -S --amend";
+    export EDITOR='emacs -nw';
+    git commit -S --amend
+}
