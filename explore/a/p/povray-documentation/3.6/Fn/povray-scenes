@@ -1,5 +1,5 @@
 povray-scenes () 
 { 
-    local D="POV-ray scenes folder";
-    ${1:-epiphany} $( dirname $( dirname $( realpath $( which povray ))))/share/povray-3.7/scenes/
+    local D="POV-ray 3.6 scenes";
+    ${1:-epiphany} $( guix build -L here povray-docs-here )/share/povray-docs-3.6/scenes
 }

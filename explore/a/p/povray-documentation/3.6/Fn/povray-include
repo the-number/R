@@ -1,5 +1,5 @@
 povray-include () 
 { 
-    local D="POV-ray include folder";
-    echo $( dirname $( dirname $( realpath $( which povray ))))/share/povray-3.7/include/
+    local D="POV-ray 3.6 include";
+    ${1:-epiphany} $( guix build -L here povray-docs-here )/share/povray-docs-3.6/include
 }
