@@ -1,0 +1,5 @@
+povray-docs () 
+{ 
+    local D="POV-ray 3.6 docs";
+    ${1:-epiphany} $( guix build -L here povray-docs-here )/share/povray-docs-3.6/doc
+}

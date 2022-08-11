@@ -55,12 +55,12 @@
                  (string-append (assoc-ref inputs "povray-here")
 				"/share/povray-3.7/include"))
 	       ("defcustom  pov-documentation-directory"
-	        (string-append (assoc-ref inputs "povray-here")
-	     		"/share/doc/povray-3.7/html"))
-	       ("defcustom pov-documentation-keyword-index"
-				"r3_3.html")
-	       ("defcustom pov-documentation-index"
-				"index.html")
+	        (string-append (assoc-ref inputs "povray-docs-here")
+	     		       "/share/povray-docs-3.6/doc/html"))
+	     ;;  ("defcustom pov-documentation-keyword-index"
+	     ;;		"r3_3.html")
+	     ;;("defcustom pov-documentation-index"
+	     ;;			"index.html")
 	       ("defcustom pov-insertmenu-location"
                  (string-append (assoc-ref inputs "povray-imenu-here")
 			       "/share/povray-imenu-3.6/InsertMenu")))))
@@ -72,7 +72,7 @@
     (native-inputs
      (list texinfo))
     (propagated-inputs
-     (list povray-here povray-imenu-here))
+     (list povray-here povray-imenu-here povray-docs-here))
     (home-page "https://github.com/emacsmirror/pov-mode")
     (synopsis "Major mode for editing POV-Ray scene files")
     (description
