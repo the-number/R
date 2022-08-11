@@ -54,9 +54,13 @@
 	       ("defcustom pov-include-dir"
                  (string-append (assoc-ref inputs "povray-here")
 				"/share/povray-3.7/include"))
-	     ;;  ("defcustom pov-documentation-directory"
-	     ;;    (string-append (assoc-ref inputs "povray-here")
-	     ;;		"/share/doc/povray-3.7/html"))
+	       ("defcustom  pov-documentation-directory"
+	        (string-append (assoc-ref inputs "povray-here")
+	     		"/share/doc/povray-3.7/html"))
+	       ("defcustom pov-documentation-keyword-index"
+				"r3_3.html")
+	       ("defcustom pov-documentation-index"
+				"index.html")
 	       ("defcustom pov-insertmenu-location"
                  (string-append (assoc-ref inputs "povray-imenu-here")
 			       "/share/povray-imenu-3.6/InsertMenu")))))
