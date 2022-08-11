@@ -1,0 +1,5 @@
+povray-ftp () 
+{ 
+    local D="Old-Versions: Official-3.62";
+    ${1:-epiphany http://www.povray.org/ftp/pub/povray/Old-Versions/Official-3.62/}
+}
