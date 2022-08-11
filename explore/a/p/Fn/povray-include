@@ -1,4 +1,4 @@
-povray-inclde () 
+povray-include () 
 { 
     local D="POV-ray include folder";
     echo $( dirname $( dirname $( realpath $( which povray ))))/share/povray-3.7/include/
