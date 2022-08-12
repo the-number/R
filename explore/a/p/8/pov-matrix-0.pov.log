@@ -1,0 +1,71 @@
+Persistence of Vision(tm) Ray Tracer Version 3.7.0.10.unofficial (g++ 10.3.0 @
+ x86_64-unknown-linux-gnu)
+This is an unofficial version compiled by:
+ Guix-S10
+ The POV-Ray Team is not responsible for supporting this version.
+
+POV-Ray is based on DKBTrace 2.12 by David K. Buck & Aaron A. Collins
+Copyright 1991-2013 Persistence of Vision Raytracer Pty. Ltd.
+
+Primary POV-Ray 3.7 Architects/Developers: (Alphabetically)
+  Chris Cason         Thorsten Froehlich  Christoph Lipka   
+
+With Assistance From: (Alphabetically)
+  Ton van den Broek   Nicolas Calimet     Jerome Grimbert     James Holsenback  
+  Christoph Hormann   Nathan Kopp         Juha Nieminen     
+
+Past Contributors: (Alphabetically)
+  Steve Anger         Eric Barish         Dieter Bayer        David K. Buck     
+  Nicolas Calimet     Chris Cason         Aaron A. Collins    Chris Dailey      
+  Steve Demlow        Andreas Dilger      Alexander Enzmann   Dan Farmer        
+  Thorsten Froehlich  Mark Gordon         James Holsenback    Christoph Hormann 
+  Mike Hough          Chris Huff          Kari Kivisalo       Nathan Kopp       
+  Lutz Kretzschmar    Christoph Lipka     Jochen Lippert      Pascal Massimino  
+  Jim McElhiney       Douglas Muir        Juha Nieminen       Ron Parker        
+  Bill Pulver         Eduard Schwan       Wlodzimierz Skiba   Robert Skinner    
+  Yvo Smellenbergh    Zsolt Szalavari     Scott Taylor        Massimo Valentini 
+  Timothy Wegner      Drew Wells          Chris Young       
+
+Other contributors are listed in the documentation.
+
+Support libraries used by POV-Ray:
+  ZLib 1.2.11, Copyright 1995-2012 Jean-loup Gailly and Mark Adler
+  LibPNG 1.6.37, Copyright 1998-2012 Glenn Randers-Pehrson
+  LibJPEG 62, Copyright 1991-2013 Thomas G. Lane, Guido Vollbeding
+  LibTIFF 4.3.0, Copyright 1988-1997 Sam Leffler, 1991-1997 SGI
+  Boost 1.79, http://www.boost.org/
+  OpenEXR 2.5.7 and IlmBase 2.5.7, Copyright (c) 2002-2011 Industrial Light &
+ Magic.
+
+Parser Options
+  Input file: pov-matrix-0.pov
+  Remove bounds........On 
+  Split unions.........Off
+  Library paths:
+    /gnu/store/wxjhjkxii35ic6cc6092san481k2qkqd-povray-here-3.7.0.10/share/povra
+y-3.7
+    /gnu/store/wxjhjkxii35ic6cc6092san481k2qkqd-povray-here-3.7.0.10/share/povra
+y-3.7/ini
+    /gnu/store/wxjhjkxii35ic6cc6092san481k2qkqd-povray-here-3.7.0.10/share/povra
+y-3.7/include
+  Clock value:    0.000  (Animation off)
+Image Output Options
+  Image resolution.....800 by 600 (rows 1 to 600, columns 1 to 800).
+  Output file..........pov-matrix-0.png, 24 bpp PNG
+  Dithering............Off
+  Graphic display......On  (gamma: sRGB)
+  Mosaic preview.......Off
+  Continued trace......Off
+Information Output Options
+  All Streams to console..........On 
+  Debug Stream to console.........On 
+  Fatal Stream to console.........On 
+  Render Stream to console........On 
+  Statistics Stream to console....On 
+  Warning Stream to console.......On 
+==== [Parsing...] ==========================================================
+File 'pov-matrix-0.pov' line 5: Parse Error: Expected 'object or directive',
+ matrix found instead
+Fatal error in parser: Cannot parse input.
+Render failed
+

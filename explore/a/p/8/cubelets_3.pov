@@ -69,7 +69,7 @@ light_source { <-5,30,-10> 1 }
   object { cubelet }
 #end
 
-#declare standard_cube = union {
+#declare standard_edges = union {
 // y*0 x*0
   edge(0,2) // front up
   edge(0,3) //       down
@@ -164,7 +164,10 @@ light_source { <-5,30,-10> 1 }
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-  object { standard_cube translate <-7,0,4> }
-  object { that_cube }
+  object { standard_edges
+    matrix <1.3,0.6,0,  0,1,0, 0,0,1, -1,0,0>
+    // https://www.povray.org/documentation/3.7.0/r3_3.html#r3_3_1_12_4
+  }
+  // object { that_cube }
   object { cubelet rotate y*-30 translate <-4,0,-4> }
   translate <3,0,1> rotate <131,122,133> }
