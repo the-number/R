@@ -1,0 +1,5 @@
+povray-source () 
+{ 
+    local D="ls \$( guix build --source povray )";
+    guix build --source povray-here
+}

@@ -1,6 +1,6 @@
 topic-here () 
 { 
-    local D="package: emacs-pov-mode";
+    local D="POV-ray: povray-imenu-here";
     local D1="$D";
     test -n "$*" && D1="$*";
     set_sprint_topic $D1

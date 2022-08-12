@@ -1,0 +1,7 @@
+topic-here () 
+{ 
+    local D="POV-ray: documentation: 3.7";
+    local D1="$D";
+    test -n "$*" && D1="$*";
+    set_sprint_topic $D1
+}

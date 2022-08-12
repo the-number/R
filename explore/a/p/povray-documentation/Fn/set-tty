@@ -1,0 +1,4 @@
+set-tty () 
+{ 
+    export GPG_TTY=$( tty )
+}

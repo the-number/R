@@ -1,0 +1,5 @@
+povray-docs () 
+{ 
+    local D="POV-ray documentation <1:-epiphany>";
+    ${1:-epiphany} $( dirname $( dirname $( realpath $( which povray ))))/share/doc/povray-3.7/html/index.html
+}

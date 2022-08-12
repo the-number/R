@@ -1,0 +1,8 @@
+pov-these () 
+{ 
+    local D="POV-ray convenience: povray <1:-*>";
+    for a in ${1:-*}.pov;
+    do
+        echo povray ${a} && povray ${a} 2>&1 | tee ${a}.log;
+    done
+}

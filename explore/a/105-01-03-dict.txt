@@ -1,0 +1,263 @@
+== The-cube-and-its-cubelets-03
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133859670.30949.1660138802@dict.dict.org>
+250 ok
+552 no match [d/m/c = 0/0/133; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== opposite
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133859671.30950.1660138802@dict.dict.org>
+250 ok
+150 2 definitions retrieved
+151 "opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+opposite \op"po*site\ ([o^]p"p[-o]*z[i^]t or
+   [o^]p"p[-o]*s[i^]t), a. [F., fr. L. oppositus, p. p. of
+   opponere. See {Opponent}.]
+   1. Placed over against; standing or situated over against or
+      in front; facing; -- often with to; as, a house opposite
+      to the Exchange; the concert hall and the state theater
+      stood opposite each other on the plaza.
+      [1913 Webster]
+
+   2. Situated on the other end of an imaginary line passing
+      through or near the middle of an intervening space or
+      object; -- of one object with respect to another; as, the
+      office is on the opposite side of town; -- also used both
+      to describe two objects with respect to each other; as,
+      the stores were on opposite ends of the mall.
+      [PJC]
+
+   3. Applied to the other of two things which are entirely
+      different; other; as, the opposite sex; the opposite
+      extreme; antonyms have opposite meanings.
+      [1913 Webster +PJC]
+
+   4. Extremely different; inconsistent; contrary; repugnant;
+      antagonistic.
+      [1913 Webster]
+
+            Novels, by which the reader is misled into another
+            sort of pleasure opposite to that which is designed
+            in an epic poem.                      --Dryden.
+      [1913 Webster]
+
+            Particles of speech have divers, and sometimes
+            almost opposite, significations.      --Locke.
+      [1913 Webster]
+
+   5. (Bot.)
+      (a) Set over against each other, but separated by the
+          whole diameter of the stem, as two leaves at the same
+          node.
+      (b) Placed directly in front of another part or organ, as
+          a stamen which stands before a petal.
+          [1913 Webster]
+.
+151 "Opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+Opposite \Op"po*site\, n.
+   1. One who opposes; an opponent; an antagonist. [Obs.]
+      [1913 Webster]
+
+            The opposites of this day's strife.   --Shak.
+      [1913 Webster]
+
+   2. That which is opposed or contrary in character or meaning;
+      as, sweetness and its opposite; up is the opposite of
+      down.
+      [1913 Webster +PJC]
+
+            The virtuous man meets with more opposites and
+            opponents than any other.             --Landor.
+      [1913 Webster]
+
+   {polar opposite} that which is conspicuously different in
+      most important respects.
+      [PJC]
+.
+250 ok [d/m/c = 2/0/16; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== orthagonal
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133859672.30951.1660138802@dict.dict.org>
+250 ok
+552 no match [d/m/c = 0/0/115; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== The-cube-and-its-cubelets-03
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133859670.30949.1660138802@dict.dict.org>
+250 ok
+552 no match [d/m/c = 0/0/133; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== opposite
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133859671.30950.1660138802@dict.dict.org>
+250 ok
+150 2 definitions retrieved
+151 "opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+opposite \op"po*site\ ([o^]p"p[-o]*z[i^]t or
+   [o^]p"p[-o]*s[i^]t), a. [F., fr. L. oppositus, p. p. of
+   opponere. See {Opponent}.]
+   1. Placed over against; standing or situated over against or
+      in front; facing; -- often with to; as, a house opposite
+      to the Exchange; the concert hall and the state theater
+      stood opposite each other on the plaza.
+      [1913 Webster]
+
+   2. Situated on the other end of an imaginary line passing
+      through or near the middle of an intervening space or
+      object; -- of one object with respect to another; as, the
+      office is on the opposite side of town; -- also used both
+      to describe two objects with respect to each other; as,
+      the stores were on opposite ends of the mall.
+      [PJC]
+
+   3. Applied to the other of two things which are entirely
+      different; other; as, the opposite sex; the opposite
+      extreme; antonyms have opposite meanings.
+      [1913 Webster +PJC]
+
+   4. Extremely different; inconsistent; contrary; repugnant;
+      antagonistic.
+      [1913 Webster]
+
+            Novels, by which the reader is misled into another
+            sort of pleasure opposite to that which is designed
+            in an epic poem.                      --Dryden.
+      [1913 Webster]
+
+            Particles of speech have divers, and sometimes
+            almost opposite, significations.      --Locke.
+      [1913 Webster]
+
+   5. (Bot.)
+      (a) Set over against each other, but separated by the
+          whole diameter of the stem, as two leaves at the same
+          node.
+      (b) Placed directly in front of another part or organ, as
+          a stamen which stands before a petal.
+          [1913 Webster]
+.
+151 "Opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+Opposite \Op"po*site\, n.
+   1. One who opposes; an opponent; an antagonist. [Obs.]
+      [1913 Webster]
+
+            The opposites of this day's strife.   --Shak.
+      [1913 Webster]
+
+   2. That which is opposed or contrary in character or meaning;
+      as, sweetness and its opposite; up is the opposite of
+      down.
+      [1913 Webster +PJC]
+
+            The virtuous man meets with more opposites and
+            opponents than any other.             --Landor.
+      [1913 Webster]
+
+   {polar opposite} that which is conspicuously different in
+      most important respects.
+      [PJC]
+.
+250 ok [d/m/c = 2/0/16; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== orthogonal
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133860205.31740.1660139078@dict.dict.org>
+250 ok
+150 1 definitions retrieved
+151 "Orthogonal" gcide "The Collaborative International Dictionary of English v.0.48"
+Orthogonal \Or*thog"o*nal\, a. [Cf. F. orthogonal.]
+   Right-angled; rectangular; as, an orthogonal intersection of
+   one curve with another.
+   [1913 Webster]
+
+   {Orthogonal projection}. See under {Orthographic}.
+      [1913 Webster]
+.
+250 ok [d/m/c = 1/0/16; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== The-cube-and-its-cubelets-03
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133860314.31915.1660139132@dict.dict.org>
+250 ok
+552 no match [d/m/c = 0/0/133; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== opposite
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133860315.31916.1660139133@dict.dict.org>
+250 ok
+150 2 definitions retrieved
+151 "opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+opposite \op"po*site\ ([o^]p"p[-o]*z[i^]t or
+   [o^]p"p[-o]*s[i^]t), a. [F., fr. L. oppositus, p. p. of
+   opponere. See {Opponent}.]
+   1. Placed over against; standing or situated over against or
+      in front; facing; -- often with to; as, a house opposite
+      to the Exchange; the concert hall and the state theater
+      stood opposite each other on the plaza.
+      [1913 Webster]
+
+   2. Situated on the other end of an imaginary line passing
+      through or near the middle of an intervening space or
+      object; -- of one object with respect to another; as, the
+      office is on the opposite side of town; -- also used both
+      to describe two objects with respect to each other; as,
+      the stores were on opposite ends of the mall.
+      [PJC]
+
+   3. Applied to the other of two things which are entirely
+      different; other; as, the opposite sex; the opposite
+      extreme; antonyms have opposite meanings.
+      [1913 Webster +PJC]
+
+   4. Extremely different; inconsistent; contrary; repugnant;
+      antagonistic.
+      [1913 Webster]
+
+            Novels, by which the reader is misled into another
+            sort of pleasure opposite to that which is designed
+            in an epic poem.                      --Dryden.
+      [1913 Webster]
+
+            Particles of speech have divers, and sometimes
+            almost opposite, significations.      --Locke.
+      [1913 Webster]
+
+   5. (Bot.)
+      (a) Set over against each other, but separated by the
+          whole diameter of the stem, as two leaves at the same
+          node.
+      (b) Placed directly in front of another part or organ, as
+          a stamen which stands before a petal.
+          [1913 Webster]
+.
+151 "Opposite" gcide "The Collaborative International Dictionary of English v.0.48"
+Opposite \Op"po*site\, n.
+   1. One who opposes; an opponent; an antagonist. [Obs.]
+      [1913 Webster]
+
+            The opposites of this day's strife.   --Shak.
+      [1913 Webster]
+
+   2. That which is opposed or contrary in character or meaning;
+      as, sweetness and its opposite; up is the opposite of
+      down.
+      [1913 Webster +PJC]
+
+            The virtuous man meets with more opposites and
+            opponents than any other.             --Landor.
+      [1913 Webster]
+
+   {polar opposite} that which is conspicuously different in
+      most important respects.
+      [PJC]
+.
+250 ok [d/m/c = 2/0/16; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
+== orthogonal
+220 dict.dict.org dictd 1.12.1/rf on Linux 4.19.0-10-amd64 <auth.mime> <133860318.31923.1660139133@dict.dict.org>
+250 ok
+150 1 definitions retrieved
+151 "Orthogonal" gcide "The Collaborative International Dictionary of English v.0.48"
+Orthogonal \Or*thog"o*nal\, a. [Cf. F. orthogonal.]
+   Right-angled; rectangular; as, an orthogonal intersection of
+   one curve with another.
+   [1913 Webster]
+
+   {Orthogonal projection}. See under {Orthographic}.
+      [1913 Webster]
+.
+250 ok [d/m/c = 1/0/16; 0.000r 0.000u 0.000s]
+221 bye [d/m/c = 0/0/0; 0.000r 0.000u 0.000s]
