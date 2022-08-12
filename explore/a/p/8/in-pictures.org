@@ -1,0 +1,10 @@
+# 20220812 (C) Gunter Liszewski -*- mode: org; -*-
+* Taking pictures
+  [[../../perm4.tex]] describes our time of these views and some reflections
+** [[./cubelets_3.pov]] picks up our experience of the edges
+   and this picture will change during its time here
+
+[[./cubelets_3.png]]
+
+   (in view)
+
