@@ -161,15 +161,41 @@ light_source { <-5,30,-10> 1 }
     pigment { colour Colour } finish { reflection 1 } }
 #end
 
+#macro Matrix()
+  matrix
+<   
+//  1,0,0, 0,1,0, 0,0,1, 0,0,0 // additive zero matrix-transform (implied column 0,0,0,1)
+// from the 3.7 scenes
+// 0.886, 0.5, 0.5,         // the first 3 lines form a rotation matrix
+//   0,     1,   0,         // since it is not orthogonal, shearing occurs
+// 0.5,     0,  -0.886,
+//  -1,     0,   0          // the last 3 values contain the translation
+    // our experiments
+    // 1.3,0.6,0,    0,1,0, 0,0,1,   -1,0,0
+       1.4,0.6,0, -1.3,1,0, 0,0,1.6, -1,0,0
+    // POV-ray on the calculation of the matrix-transformed object
+    // https://www.povray.org/documentation/3.7.0/r3_3.html#r3_3_1_12_4
+>
+#end
+
+//--------------------------------------------
+// reorientation macro, abyss.pov
+//--------------------------------------------
+#macro mOrient(P1,P2)
+#local yV1=vnormalize(P2-P1);
+#local xV1=vnormalize(vcross(yV1,z));
+#local zV1=vcross(xV1,yV1);
+                matrix <xV1.x,xV1.y,xV1.z,yV1.x,yV1.y,yV1.z,zV1.x,zV1.y,zV1.z,P1.x,P1.y,P1.z>
+#end
+
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-  object { standard_edges
-    // matrix <1.3,0.6,0,    0,1,0, 0,0,1,   -1,0,0>
-       matrix <1.4,0.6,0, -1.3,1,0, 0,0,1.6, -1,0,0>
-    // https://www.povray.org/documentation/3.7.0/r3_3.html#r3_3_1_12_4
+  object { standard_edges Matrix()
   }
   // object { that_cube }
-  object { cubelet rotate y*-30 translate <-4,0,-4> }
+  object { cubelet
+    rotate y*-30 translate <-4,0,-4>
+  }
   translate <3,0,1> rotate <131,122,133> }
 
