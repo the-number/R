@@ -256,22 +256,27 @@ light_source { <-5,30,-10> 1 }
 #macro Spin(a,b)
   #switch (a)
     #case (0) 
-      matrix < 1,0,0, 0,1,0, 0,0,1, 0,0,0 >
+//      matrix < 1,0,0, 0,1,0, 0,0,1, 0,0,0 >
     #break
     #case (1)
-      matrix < -1,0,0, 0,-1,0, 0,0,1 0,0,0 >
+//      matrix < 1,1,0, 1,0,0, 0,0,1 0,0,0 >
+      rotate z*180
     #break
     #case (2) 
-      matrix < 1,0,0, 0,-1,0 0,0,-1, 0,0,0 >
+//      matrix < 1,0,0, 0,-1,0 0,0,-1, 0,0,0 >
+      rotate y*90
     #break
     #case (3) 
-      matrix < -1,0,0, 0,1,0 0,0,-1, 0,0,0 >
+//      matrix < -1,0,0, 0,1,0 0,0,-1, 0,0,0 >
+      rotate y*180
     #break
     #case (4) 
-      matrix < 1,0,0, 0,-1,0, 0,0,-1 0,0,0 >
+//      matrix < 1,0,0, 0,-1,0, 0,0,-1 0,0,0 >
+      rotate y*-90
     #break
     #case (5) 
-      matrix < -1,0,0, 0,-1,0, 0,0,-1, 0,0,0 >      
+//      matrix < -1,0,0, 0,-1,0, 0,0,-1, 0,0,0 >      
+      rotate z*90
     #break
   #end
 #end
@@ -283,13 +288,16 @@ union {
 //  object { standard_centres Matrix() }
   // object { that_cube }
 //  object { cubelet rotate y*-30 translate <-4,0,-4> }
-  object { cubelet Spin(0,2) translate <-3,0,-6.3> }
-  object { cubelet Spin(1,3) translate <-3,0,-4.8> }  
-  object { cubelet Spin(2,4) translate <-3,0,-3.3> }
-  object { cubelet Spin(3,5) translate <-3,0,-1.8> }
-  object { cubelet Spin(4,2) translate <-3,0,-0.3> }
-  object { cubelet Spin(5,3) translate <-3,0,1.2> }
+  object { cubelet Spin(0,2) translate <-4,0,-6.3> }
+  object { cubelet Spin(1,3) translate <-3.9,0,-4.8> }  
+  object { cubelet Spin(2,4) translate <-3.7,0,-3.3> }
+  object { cubelet Spin(3,5) translate <-2.8,0,-1.8> }
+  object { cubelet Spin(4,2) translate <-1.4,0,-0.3> }
+  object { cubelet Spin(5,3) translate <0,0,1.2> }
 
-  translate <3,0,1> rotate <131,122,133> }  
+  translate <3,0,1> 
+  rotate <131,122,133> 
+//    rotate <0,22,0> 
+}  
 
 
