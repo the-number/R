@@ -167,11 +167,26 @@ light_source { <-5,30,-10> 1 }
 // y*0 x*0
   centre(0) // front
   centre(1) // back
-  object { centre(2) rotate <0,180,0> } // up
+  centre(2) // up
   centre(3) // down
   centre(4) // left
   centre(5) // right
 } // standard_centres
+
+#macro centres(a)
+  union {
+  #local TX=a.x;
+  #local TY=a.y;
+  #local TZ=a.z;
+// y*0 x*0
+  centre(0) // front
+  centre(1) // back
+  object { centre(2) rotate <TX,TY,TZ> } // up
+  centre(3) // down
+  centre(4) // left
+  centre(5) // right
+} // centres
+#end
 
 #macro Mirror( Colour )
   box { <0,0,0>, <10,4,4>
@@ -234,8 +249,7 @@ light_source { <-5,30,-10> 1 }
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-   object { standard_centres //Matrix()
-   }
+  object { centres( <0,45,0> ) } // rotate x*0 //Matrix()
   // object { standard_corners Matrix() }
   //  object { standard_centres Matrix() }
   // object { that_cube }
