@@ -167,7 +167,7 @@ light_source { <-5,30,-10> 1 }
 // y*0 x*0
   centre(0) // front
   centre(1) // back
-  centre(2) // up
+  object { centre(2) rotate <0,180,0> } // up
   centre(3) // down
   centre(4) // left
   centre(5) // right
