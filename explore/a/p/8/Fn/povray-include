@@ -1,0 +1,5 @@
+povray-include () 
+{ 
+    local D="POV-ray include folder";
+    ${1:-epiphany} $( dirname $( dirname $( realpath $( which povray ))))/share/povray-3.7/include/
+}

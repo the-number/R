@@ -1,0 +1,7 @@
+tex-slide () 
+{ 
+    local D="landscape";
+    local a=${1:-perm3};
+    tex $a.tex;
+    dvipdfm -l -pa5 $a.dvi
+}
