@@ -20,7 +20,14 @@
    Elsewhere, in [[../../perm4.pdf][perm4]], we have already taken different approaches
    to the same issues.
 
-   Anyway, this is the picture here, for now,
-   and this is in a process of change.
+   Anyway, this is the picture that we start with.
    
-   [[./orientation_3.png]] 
+   [[./orientation_3.png]]
+   
+** [[./orientation_4.pov][The changing picture]] is here
+
+   this is the one that tries to show our progress
+
+[[./orientation_4.png]]
+
+  [[./orientation_4.pov.log]] should show us the errors we made
