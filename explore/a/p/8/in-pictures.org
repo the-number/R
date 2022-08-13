@@ -1,10 +1,15 @@
 # 20220812 (C) Gunter Liszewski -*- mode: org; -*-
 * Taking pictures
   [[../../perm4.tex]] describes our time of these views and some reflections
-** [[./cubelets_3.pov]] picks up our experience of the edges
-   and this picture will change during its time here
+** [[./cubelets_3.pov][Edges]] in our previous experience
+   this picture might change in time
 
 [[./cubelets_3.png]]
 
-   (in view)
+** [[./corners_3.pov][Only the corners]] are featured in this picture
 
+[[./corners_3.png]]
+
+** [[./centres_3.pov][Centres]] are here, at last
+
+[[./centres_3.png]]
