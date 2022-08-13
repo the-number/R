@@ -109,7 +109,7 @@ light_source { <-5,30,-10> 1 }
   object { cubelet translate <X,Y,Z> }
 #end
 
-#macro centre(a)
+#macro centre(a,b)
   #local X=0;
   #local Y=0;
   #local Z=0;
@@ -129,7 +129,9 @@ light_source { <-5,30,-10> 1 }
   #else
     #debug "What is it on this edge A?"
   #end
-  object { cubelet translate <X*2,Y*2,Z*2> }  
+  object { cubelet 
+    rotate x*b.x rotate z*b.z rotate y*b.y
+    translate <X*2,Y*2,Z*2> }  
 #end
 
 #declare standard_edges = union {
@@ -164,27 +166,26 @@ light_source { <-5,30,-10> 1 }
 } // standard_corners
 
 #declare standard_centres = union {
+  #local a=0;
+  #local b=<0,0,0>;
 // y*0 x*0
-  centre(0) // front
-  centre(1) // back
-  centre(2) // up
-  centre(3) // down
-  centre(4) // left
-  centre(5) // right
+  centre(0,a) // front
+  centre(1,a) // back
+  centre(2,a) // up
+  centre(3,a) // down
+  centre(4,a) // left
+  centre(5,a) // right
 } // standard_centres
 
-#macro centres(a)
+#macro centres(a,b)
   union {
-  #local TX=a.x;
-  #local TY=a.y;
-  #local TZ=a.z;
 // y*0 x*0
-  centre(0) // front
-  centre(1) // back
-  object { centre(2) rotate <TX,TY,TZ> } // up
-  centre(3) // down
-  centre(4) // left
-  centre(5) // right
+  centre(0,0) // front
+  centre(1,0) // back
+  centre(2,b) // up
+  centre(3,0) // down
+  centre(4,0) // left
+  centre(5,0) // right
 } // centres
 #end
 
@@ -249,7 +250,7 @@ light_source { <-5,30,-10> 1 }
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-  object { centres( <0,45,0> ) } // rotate x*0 //Matrix()
+  object { centres( 2, <33,0,90> ) } // rotate x*0 //Matrix()
   // object { standard_corners Matrix() }
   //  object { standard_centres Matrix() }
   // object { that_cube }
