@@ -1,0 +1,26 @@
+# 20220813 (C) Gunter Liszewski -*- mode: org; -*-
+* Taking pictures
+  [[../../perm4.tex]] is our view on Rubik's cube.
+** [[./orientation_3.pov][POV-ray]] helps to imagine things
+   The current challenge is to find all possible orientations of
+   the cube and its different cubelets.
+   We saw how to address the different particles, the cubelets of
+   the cube.  Now we want explore how to spin those cubelets.
+   We estimate to find 24 such orientations. By orientation we
+   mean the arrangement of the six faces of the cubelet and just
+   looking at two adjacent facelets specifies such an arrangement.
+
+   There are six faces. Each may be in the front position.
+   Then there are four faces that may assume the up position, say.
+   $6*4=24$ guides our estimate that there are $24$
+   such orientations. $24$ ways to spin it.
+   
+   We have seen different ways of how to make this visible.
+   Here, we use the POV-ray language to model this.
+   Elsewhere, in [[../../perm4.pdf][perm4]], we have already taken different approaches
+   to the same issues.
+
+   Anyway, this is the picture here, for now,
+   and this is in a process of change.
+   
+   [[./orientation_3.png]] 
