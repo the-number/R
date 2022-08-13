@@ -13,12 +13,21 @@ light_source { <-5,30,-10> 1 }
       pigment { colour Colour }
       normal  { agate 0.25 scale 1/2 }}}
 #end
-#declare F = Side(Red,     <0,0,0>, <0,1,0>, <1,1,0>, <1,0,0>)
-#declare B = Side(Green,   <0,0,1>, <0,1,1>, <1,1,1>, <1,0,1>)
-#declare U = Side(Blue,    <0,1,0>, <0,1,1>, <1,1,1>, <1,1,0>)
-#declare D = Side(Cyan,    <0,0,0>, <0,0,1>, <1,0,1>, <1,0,0>)
-#declare L = Side(Magenta, <0,0,0>, <0,0,1>, <0,1,1>, <0,1,0>)
-#declare R = Side(Yellow,  <1,0,0>, <1,1,0>, <1,1,1>, <1,0,1>)
+// We want a cubelet of unit square facelets
+#declare F = Side(Red,     <-1,-1,-1>, <-1,1,-1>, <1,1,-1>, <1,-1,-1>)
+#declare B = Side(Green,   <-1,-1,1>, <-1,1,1>, <1,1,1>, <1,-1,1>)
+#declare U = Side(Blue,    <-1,1,-1>, <-1,1,1>, <1,1,1>, <1,1,-1-1>)
+#declare D = Side(Cyan,    <-1,-1,-1>, <-1,-1,1>, <1,-1,1>, <1,-1,-1>)
+#declare L = Side(Magenta, <-1,-1,-1>, <-1,-1,1>, <-1,1,1>, <-1,1,-1>)
+#declare R = Side(Yellow,  <1,-1,-1>, <1,1,-1>, <1,1,1>, <1,-1,1>)
+
+// The way that worked with the cublets of the cube
+// #declare F = Side(Red,     <0,0,0>, <0,1,0>, <1,1,0>, <1,0,0>)
+// #declare B = Side(Green,   <0,0,1>, <0,1,1>, <1,1,1>, <1,0,1>)
+// #declare U = Side(Blue,    <0,1,0>, <0,1,1>, <1,1,1>, <1,1,0>)
+// #declare D = Side(Cyan,    <0,0,0>, <0,0,1>, <1,0,1>, <1,0,0>)
+// #declare L = Side(Magenta, <0,0,0>, <0,0,1>, <0,1,1>, <0,1,0>)
+// #declare R = Side(Yellow,  <1,0,0>, <1,1,0>, <1,1,1>, <1,0,1>)
 
 #declare cubelet = union {
   object { F }
@@ -225,7 +234,7 @@ light_source { <-5,30,-10> 1 }
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-  // object { standard_edges Matrix() }
+   object { standard_edges Matrix() }
   // object { standard_corners Matrix() }
   //  object { standard_centres Matrix() }
   // object { that_cube }
