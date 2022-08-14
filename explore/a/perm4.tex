@@ -1234,5 +1234,27 @@ Also we have $B_n\cup C_n=A.$  We also have $B_k=B_{k+1}$ for $k\in\{0,2,4\},$ a
 furthermore this holds for the sets of adjacent faces where
 $C_k=C_{k+1}$ for $k\in\{0,2,4\}.$
 
+\e Now we can enumerate the set of adjacent faces.  Given $k\in\{0,2,4\},$ we can
+let $b\in B_k$ and $c\in C_k,$ and then enumerte the adjacent pairs $(b,c)$ that
+are the elements of our group $(A,\*).$  {(\it It is unclear, at this stage of
+considerations, that we have a group here.)}
+
+We enumerate $B_0\*C_0,$ with $B=\{0,1\}$ and $C=\{2,3,4,5\}$ to have
+$\{02,03,04,05\}\cup\{12,13,14,15\}.$
+Similarly we have $B_2\*C_2\cup B_3\*C_3$ to be
+$\{20,21,24,25,30,31,34,35\},$ and finally
+$\{40,41,42,43,50,51,52,53\}.$
+
+\e We may also consider how to measure the distance between such arrangements.
+We assign a metric of $2$ to $(b_k,b_{k+1}),$ that is the permutation between
+opposite faces.
+Conversely the corresponding permuteration element
+$(c_0,c_4,c_3,c_2)$ cycles at a unit of $1.$
+
+The opposing cycles are of order $2,$ while the adjacent cycles are of order $4.$
+
+Since $(c_0,c_4,c_3,c_2)=(c_0,c_4)\*(c_0,c_3)\*(c_0,c_2)$ the parity of the
+adjacents' cycles is $3.$
+
 }% end of orientation
 \bye
