@@ -1,4 +1,4 @@
-% 20220810 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220814 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -1209,4 +1209,30 @@ we could devise a metric of the distance between different cube arrangements.
 (re-think, re-word, re-write)
 
 }% end of this excursion
+\vfill\eject
+\beginsection 16. Persistence of Vision and each cubelets' orientation
+
+{% about orientation and a start with expressing things such like
+We start with the face.  The cube has six faces.  The cube is made up of $3x3x3$ smaller
+cubes, little cubes, cubelets.  In the approach we take at the moment, each little cube,
+each cubelet, has also six faces. (However, the real Rubik cube is not like that: there
+edge cubelets have two small faces, facelets we say, corners show three, and each of
+the six faces' centre cublets has just one face, its centre cubelet's facelet)
+
+We start with a set $A=\{0,1,2,3,4,5\}$ as we continue to abstract
+things within the concepts of the set and the group.
+
+We have $3$ subsets $B_0,B_2,B_4\subset A,$ with $B_0=\{0,1\}$, $B_2=\{2,3\}$, and
+$B_4=\{4,5\}.$  These subsetes model our opposing faces and facelets such as
+the front is opposite the back, up is opposite down, and left opposes right.
+
+We have another three subsets $C_0=\{3,4,5,6\}=C_1,$ $C_2=\{0,1,4,5\}=C_3,$ and
+$C_4=\{0,1,2,3\}=C_5.$ These are ajacent faces and facelets.
+
+There is a relation between these sets, $B_n=A\backslash C_n$ and $C_n=A\backslash B_n.$
+Also we have $B_n\cup C_n=A.$  We also have $B_k=B_{k+1}$ for $k\in\{0,2,4\},$ and
+furthermore this holds for the sets of adjacent faces where
+$C_k=C_{k+1}$ for $k\in\{0,2,4\}.$
+
+}% end of orientation
 \bye
