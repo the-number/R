@@ -7,6 +7,29 @@
 camera { location <0,2,-19> look_at <0,0,-10> }
 light_source { <-30,30,-10> 1 }
 
+#macro Side( Colour, P1, P2, P3, P4)
+  polygon {  5, P1 P2 P3 P4 P1
+    texture{ finish  { specular 0.6 }
+      pigment { colour Colour }
+      normal  { agate 0.25 scale 1/2 }}}
+#end
+// We want a cubelet of unit square facelets
+#declare F = Side(Red,     <-1,-1,-1>, <-1,1,-1>, <1,1,-1>, <1,-1,-1>)
+#declare B = Side(Green,   <-1,-1,1>, <-1,1,1>, <1,1,1>, <1,-1,1>)
+#declare U = Side(Blue,    <-1,1,-1>, <-1,1,1>, <1,1,1>, <1,1,-1>)
+#declare D = Side(Cyan,    <-1,-1,-1>, <-1,-1,1>, <1,-1,1>, <1,-1,-1>)
+#declare L = Side(Magenta, <-1,-1,-1>, <-1,-1,1>, <-1,1,1>, <-1,1,-1>)
+#declare R = Side(Yellow,  <1,-1,-1>, <1,1,-1>, <1,1,1>, <1,-1,1>)
+
+// #declare cubelet = union {
+//   object { F }
+//   object { U }
+//   object { R }
+//   object { B }
+//   object { D }
+//   object { L }
+// }
+
 #macro Spin(a,b)
   #switch (a)
     #case (0) 
@@ -35,36 +58,6 @@ light_source { <-30,30,-10> 1 }
   #end
 #end
 
-#macro Side( Colour, P1, P2, P3, P4)
-  polygon {  5, P1 P2 P3 P4 P1
-    texture{ finish  { specular 0.6 }
-      pigment { colour Colour }
-      normal  { agate 0.25 scale 1/2 }}}
-#end
-// We want a cubelet of unit square facelets
-#declare F = Side(Red,     <-1,-1,-1>, <-1,1,-1>, <1,1,-1>, <1,-1,-1>)
-#declare B = Side(Green,   <-1,-1,1>, <-1,1,1>, <1,1,1>, <1,-1,1>)
-#declare U = Side(Blue,    <-1,1,-1>, <-1,1,1>, <1,1,1>, <1,1,-1>)
-#declare D = Side(Cyan,    <-1,-1,-1>, <-1,-1,1>, <1,-1,1>, <1,-1,-1>)
-#declare L = Side(Magenta, <-1,-1,-1>, <-1,-1,1>, <-1,1,1>, <-1,1,-1>)
-#declare R = Side(Yellow,  <1,-1,-1>, <1,1,-1>, <1,1,1>, <1,-1,1>)
-
-// The way that worked with the cublets of the cube
-// #declare F = Side(Red,     <0,0,0>, <0,1,0>, <1,1,0>, <1,0,0>)
-// #declare B = Side(Green,   <0,0,1>, <0,1,1>, <1,1,1>, <1,0,1>)
-// #declare U = Side(Blue,    <0,1,0>, <0,1,1>, <1,1,1>, <1,1,0>)
-// #declare D = Side(Cyan,    <0,0,0>, <0,0,1>, <1,0,1>, <1,0,0>)
-// #declare L = Side(Magenta, <0,0,0>, <0,0,1>, <0,1,1>, <0,1,0>)
-// #declare R = Side(Yellow,  <1,0,0>, <1,1,0>, <1,1,1>, <1,0,1>)
-
-#declare cubelet = union {
-  object { F }
-  object { U }
-  object { R }
-  object { B }
-  object { D }
-  object { L }
-}
 #macro Cubelet(a,b)
   union {
   object { F }
@@ -76,6 +69,7 @@ light_source { <-30,30,-10> 1 }
     Spin(a,b)
   }
 #end
+#declare standard_cubelet = Cubelet(0,2);
 
 #macro edge(a,b)
   #local X=0;
@@ -105,7 +99,7 @@ light_source { <-30,30,-10> 1 }
   #else
     #debug "What about this face on edge B?"
   #end
-  object { cubelet translate <X,Y,Z> }
+  object { Cubelet(0,2) translate <X,Y,Z> }
 #end
 
 #macro corner(a,b,c)
@@ -144,7 +138,7 @@ light_source { <-30,30,-10> 1 }
   #else
     #debug "Where it the face C?"
   #end
-  object { cubelet translate <X,Y,Z> }
+  object { standard_cubelet translate <X,Y,Z> }
 #end
 
 #macro centre(a,b)
@@ -167,7 +161,7 @@ light_source { <-30,30,-10> 1 }
   #else
     #debug "What is it on this edge A?"
   #end
-  object {  Cubelet(0,2)
+  object {  Cubelet(a,b)
 //    rotate x*b.x rotate z*b.z rotate y*b.y
     translate <X*2,Y*2,Z*2> }  
 #end
@@ -260,38 +254,42 @@ light_source { <-30,30,-10> 1 }
 
 // The things in this picture
 union {
+  #declare here=<-4,0,-4>;
+  #macro next(P)
+    #declare here=here+P; scale 0.5 rotate y*-50 translate here
+  #end
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
 
-  object { Cubelet(0,2) scale 0.5 rotate y*-50 translate <-4,0,-4> }
-  object { Cubelet(0,3) scale 0.5 rotate y*-50 translate <-4,0,-2> }
-  object { Cubelet(0,4) scale 0.5 rotate y*-50 translate <-4,0,0> }
-  object { Cubelet(0,5) scale 0.5 rotate y*-50 translate <-4,0,2> }
+  object { Cubelet(0,2) next(<0,0,0>) }
+  object { Cubelet(0,3) next(<0,0,2>) }
+  object { Cubelet(0,4) next(<0,0,2>) }
+  object { Cubelet(0,5) next(<0,0,2>) }
 
-  object { Cubelet(1,2) scale 0.5 rotate y*-50 translate <-2,0,-4> }
-  object { Cubelet(1,3) scale 0.5 rotate y*-50 translate <-2,0,-2> }
-  object { Cubelet(1,4) scale 0.5 rotate y*-50 translate <-2,0,0> }
-  object { Cubelet(1,5) scale 0.5 rotate y*-50 translate <-2,0,2> }
+  object { Cubelet(1,2) next(<2,0,-6>) }
+  object { Cubelet(1,3) next(<0,0,2>) }
+  object { Cubelet(1,4) next(<0,0,2>) }
+  object { Cubelet(1,5) next(<0,0,2>) }
 
-  object { Cubelet(2,0) scale 0.5 rotate y*-50 translate <0,0,-4> }
-  object { Cubelet(2,1) scale 0.5 rotate y*-50 translate <0,0,-2> }
-  object { Cubelet(2,4) scale 0.5 rotate y*-50 translate <0,0,0> }
-  object { Cubelet(2,5) scale 0.5 rotate y*-50 translate <0,0,2> }
+  object { Cubelet(2,0) next(<2,0,-6>) }
+  object { Cubelet(2,1) next(<0,0,2>) }
+  object { Cubelet(2,4) next(<0,0,2>) }
+  object { Cubelet(2,5) next(<0,0,2>) }
 
-  object { Cubelet(3,0) scale 0.5 rotate y*-50 translate <2,0,-4> }
-  object { Cubelet(3,1) scale 0.5 rotate y*-50 translate <2,0,-2> }
-  object { Cubelet(3,4) scale 0.5 rotate y*-50 translate <2,0,0> }
-  object { Cubelet(3,5) scale 0.5 rotate y*-50 translate <2,0,2> }
+  object { Cubelet(3,0) next(<2,0,-6>) }
+  object { Cubelet(3,1) next(<0,0,2>) }
+  object { Cubelet(3,4) next(<0,0,2>) }
+  object { Cubelet(3,5) next(<0,0,2>) }
+  
+  object { Cubelet(4,0) next(<2,0,-6>) }
+  object { Cubelet(4,1) next(<0,0,2>) }
+  object { Cubelet(4,2) next(<0,0,2>) }
+  object { Cubelet(4,3) next(<0,0,2>) }
 
-  object { Cubelet(4,0) scale 0.5 rotate y*-50 translate <4,0,-4> }
-  object { Cubelet(4,1) scale 0.5 rotate y*-50 translate <4,0,-2> }
-  object { Cubelet(4,2) scale 0.5 rotate y*-50 translate <4,0,0> }
-  object { Cubelet(4,3) scale 0.5 rotate y*-50 translate <4,0,2> }
-
-  object { Cubelet(5,0) scale 0.5 rotate y*-50 translate <6,0,-4> }
-  object { Cubelet(5,1) scale 0.5 rotate y*-50 translate <6,0,-2> }
-  object { Cubelet(5,2) scale 0.5 rotate y*-50 translate <6,0,0> }
-  object { Cubelet(5,3) scale 0.5 rotate y*-50 translate <6,0,2> }
-
+  object { Cubelet(5,0) next(<2,0,-6>) }
+  object { Cubelet(5,1) next(<0,0,2>) }
+  object { Cubelet(5,2) next(<0,0,2>) }
+  object { Cubelet(5,3) next(<0,0,2>) }
+  
   translate <3,0,1> 
   rotate <131,122,133> 
 }
