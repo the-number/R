@@ -1,11 +1,39 @@
-// 20220813 (C) Gunter Liszewski -*- mode: pov; -*-
+// 20220816 (C) Gunter Liszewski -*- mode: pov; -*-
 // orientation
 #version 3.7;
 #include "colors.inc"
  global_settings { assumed_gamma 1.0 }
 
-camera { location <0,2,-10> look_at 0 }
-light_source { <-5,30,-10> 1 }
+camera { location <0,2,-19> look_at <0,0,-10> }
+light_source { <-30,30,-10> 1 }
+
+#macro Spin(a,b)
+  #switch (a)
+    #case (0) 
+      rotate z*(b=2?0:(b=3?180:(b=4?-90:(b=5?90:0))))
+    #break
+    #case (1)
+      rotate y*180
+      rotate z*(b=2?0:(b=3?180:(b=4?90:(b=5?-90:0))))
+    #break
+    #case (2) 
+      rotate x*-90 
+      rotate z*(b=0?180:(b=1?0:(b=4?-90:(b=5?90:0))))      
+    #break
+    #case (3) 
+      rotate x*90
+      rotate z*(b=0?0:(b=1?180:(b=4?-90:(b=5?90:0))))      
+    #break
+    #case (4) 
+      rotate y*-90
+      rotate z*(b=0?90:(b=1?-90:(b=2?0:(b=3?180:0))))      
+    #break
+    #case (5) 
+      rotate y*90
+      rotate z*(b=0?-90:(b=1?90:(b=2?0:(b=3?180:0))))      
+    #break
+  #end
+#end
 
 #macro Side( Colour, P1, P2, P3, P4)
   polygon {  5, P1 P2 P3 P4 P1
@@ -36,8 +64,18 @@ light_source { <-5,30,-10> 1 }
   object { B }
   object { D }
   object { L }
-//  translate <-0.5, -0.5, -0.5>
 }
+#macro Cubelet(a,b)
+  union {
+  object { F }
+  object { U }
+  object { R }
+  object { B }
+  object { D }
+  object { L }
+    Spin(a,b)
+  }
+#end
 
 #macro edge(a,b)
   #local X=0;
@@ -129,8 +167,8 @@ light_source { <-5,30,-10> 1 }
   #else
     #debug "What is it on this edge A?"
   #end
-  object { cubelet 
-    rotate x*b.x rotate z*b.z rotate y*b.y
+  object {  Cubelet(0,2)
+//    rotate x*b.x rotate z*b.z rotate y*b.y
     translate <X*2,Y*2,Z*2> }  
 #end
 
@@ -190,7 +228,7 @@ light_source { <-5,30,-10> 1 }
 #end
 
 #macro Mirror( Colour )
-  box { <0,0,0>, <10,4,4>
+  box { <0,0,0>, <10,4.5,0.3>
     pigment { colour Colour } finish { reflection 1 } }
 #end
 
@@ -220,49 +258,40 @@ light_source { <-5,30,-10> 1 }
 >
 #end
 
-#macro Spin(a,b)
-  #switch (a)
-    #case (0) 
-//      matrix < 1,0,0, 0,1,0, 0,0,1, 0,0,0 >
-    #break
-    #case (1)
-//      matrix < 1,1,0, 1,0,0, 0,0,1 0,0,0 >
-      rotate z*180
-    #break
-    #case (2) 
-//      matrix < 1,0,0, 0,-1,0 0,0,-1, 0,0,0 >
-      rotate y*90
-    #break
-    #case (3) 
-//      matrix < -1,0,0, 0,1,0 0,0,-1, 0,0,0 >
-      rotate y*180
-    #break
-    #case (4) 
-//      matrix < 1,0,0, 0,-1,0, 0,0,-1 0,0,0 >
-      rotate y*-90
-    #break
-    #case (5) 
-//      matrix < -1,0,0, 0,-1,0, 0,0,-1, 0,0,0 >      
-      rotate z*90
-    #break
-  #end
-#end
 // The things in this picture
 union {
-  object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-10,0,0> }
-  object { centres( 2, <33,0,90> ) } // rotate x*0 //Matrix()
-  // object { standard_corners Matrix() }
-  //  object { standard_centres Matrix() }
-  // object { that_cube }
-  //  object { cubelet rotate y*-30 translate <-4,0,-4> }
-  object { cubelet Spin(0,2) translate <-4,0,-6.3> }
-  // object { cubelet Spin(1,3) translate <-3.9,0,-4.8> }  
-  // object { cubelet Spin(2,4) translate <-3.7,0,-3.3> }
-  // object { cubelet Spin(3,5) translate <-2.8,0,-1.8> }
-  // object { cubelet Spin(4,2) translate <-1.4,0,-0.3> }
-  // object { cubelet Spin(5,3) translate <0,0,1.2> }
+  object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
+
+  object { Cubelet(0,2) scale 0.5 rotate y*-50 translate <-4,0,-4> }
+  object { Cubelet(0,3) scale 0.5 rotate y*-50 translate <-4,0,-2> }
+  object { Cubelet(0,4) scale 0.5 rotate y*-50 translate <-4,0,0> }
+  object { Cubelet(0,5) scale 0.5 rotate y*-50 translate <-4,0,2> }
+
+  object { Cubelet(1,2) scale 0.5 rotate y*-50 translate <-2,0,-4> }
+  object { Cubelet(1,3) scale 0.5 rotate y*-50 translate <-2,0,-2> }
+  object { Cubelet(1,4) scale 0.5 rotate y*-50 translate <-2,0,0> }
+  object { Cubelet(1,5) scale 0.5 rotate y*-50 translate <-2,0,2> }
+
+  object { Cubelet(2,0) scale 0.5 rotate y*-50 translate <0,0,-4> }
+  object { Cubelet(2,1) scale 0.5 rotate y*-50 translate <0,0,-2> }
+  object { Cubelet(2,4) scale 0.5 rotate y*-50 translate <0,0,0> }
+  object { Cubelet(2,5) scale 0.5 rotate y*-50 translate <0,0,2> }
+
+  object { Cubelet(3,0) scale 0.5 rotate y*-50 translate <2,0,-4> }
+  object { Cubelet(3,1) scale 0.5 rotate y*-50 translate <2,0,-2> }
+  object { Cubelet(3,4) scale 0.5 rotate y*-50 translate <2,0,0> }
+  object { Cubelet(3,5) scale 0.5 rotate y*-50 translate <2,0,2> }
+
+  object { Cubelet(4,0) scale 0.5 rotate y*-50 translate <4,0,-4> }
+  object { Cubelet(4,1) scale 0.5 rotate y*-50 translate <4,0,-2> }
+  object { Cubelet(4,2) scale 0.5 rotate y*-50 translate <4,0,0> }
+  object { Cubelet(4,3) scale 0.5 rotate y*-50 translate <4,0,2> }
+
+  object { Cubelet(5,0) scale 0.5 rotate y*-50 translate <6,0,-4> }
+  object { Cubelet(5,1) scale 0.5 rotate y*-50 translate <6,0,-2> }
+  object { Cubelet(5,2) scale 0.5 rotate y*-50 translate <6,0,0> }
+  object { Cubelet(5,3) scale 0.5 rotate y*-50 translate <6,0,2> }
 
   translate <3,0,1> 
   rotate <131,122,133> 
-//    rotate <0,22,0> 
 }
