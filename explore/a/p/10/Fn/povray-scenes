@@ -1,0 +1,5 @@
+povray-scenes () 
+{ 
+    local D="POV-ray scenes folder";
+    ${1:-epiphany} $( dirname $( dirname $( realpath $( which povray ))))/share/povray-3.7/scenes/
+}

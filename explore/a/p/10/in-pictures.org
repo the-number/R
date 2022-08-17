@@ -1,0 +1,14 @@
+# 20220813 (C) Gunter Liszewski -*- mode: org; -*-
+* Taking pictures
+  [[../../perm4.tex]] is our view on Rubik's cube.
+   
+** [[./orientation_4.pov][We start with]] what we just envisaged
+
+[[./orientation_4.png]]
+
+** And [[./centres_5.pov][centres]] are next
+
+   Here, we will investigate the group of permutations
+   by example of our six centre cubelets.
+   
+[[./centres_5.png]]
