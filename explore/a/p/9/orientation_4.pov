@@ -90,7 +90,7 @@ light_source { <-30,30,-10> 1 }
   #else
     #debug "What about this face on edge B?"
   #end
-  object { Cubelet(0,2) translate <X,Y,Z> }
+  object { Cubelet(0,2) translate <2*X,2*Y,2*Z> }
 #end
 
 #macro corner(a,b,c)
@@ -129,7 +129,7 @@ light_source { <-30,30,-10> 1 }
   #else
     #debug "Where it the face C?"
   #end
-  object { standard_cubelet translate <X,Y,Z> }
+  object { standard_cubelet translate <2*X,2*Y,2*Z> }
 #end
 
 #macro centre(a,b,c)
@@ -187,9 +187,8 @@ light_source { <-30,30,-10> 1 }
   corner(1,3,5) //      down right
 } // standard_corners
 
-#declare standard_centres = union {
-  #local a=0;
-  #local b=2;
+#macro centres(a,b)
+  union {
 // y*0 x*0
   centre(0,a,b) // front
   centre(1,a,b) // back
@@ -197,19 +196,9 @@ light_source { <-30,30,-10> 1 }
   centre(3,a,b) // down
   centre(4,a,b) // left
   centre(5,a,b) // right
-} // standard_centres
-
-#macro centres(a,b)
-  union {
-// y*0 x*0
-  centre(0,0,2) // front
-  centre(1,0,2) // back
-  centre(2,1,2) // up
-  centre(3,1,2) // down
-  centre(4,0,2) // left
-  centre(5,0,2) // right
 } // centres
 #end
+#declare standard_centres = centres(0,2);
 
 #macro Mirror( Colour )
   box { <0,0,0>, <10,4.5,0.3>
@@ -284,10 +273,25 @@ union {
   the_twentyfour
 
 #declare the_centre = union {
-  object { centres(0,2) scale 0.5 rotate y*-19 translate <0,0,6> }
+  object { centres(2,0) scale 0.5 rotate y*-19 translate <0,0,6> }
 }
   the_centre
-  
+
+#declare the_standard_centre = union {
+  object { standard_centres scale 0.5 rotate y*-19 translate <-6,0,-8> }
+}
+  the_standard_centre
+
+#declare some_edges = union {
+  object { standard_edges scale 0.5 rotate y*-19 translate <-6,0,7> }
+}
+  some_edges
+
+#declare some_corners = union {
+  object { standard_corners scale 0.5 rotate <20,-33,0> translate <4,0,-8> }
+}
+  some_corners
+
   translate <3,0,1> 
   rotate <131,122,133> 
 }
