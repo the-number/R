@@ -1,4 +1,4 @@
-// 20220816 (C) Gunter Liszewski -*- mode: pov; -*-
+// 20220817 (C) Gunter Liszewski -*- mode: pov; -*-
 // orientation
 #version 3.7;
 #include "colors.inc"
@@ -20,15 +20,6 @@ light_source { <-30,30,-10> 1 }
 #declare D = Side(Cyan,    <-1,-1,-1>, <-1,-1,1>, <1,-1,1>, <1,-1,-1>)
 #declare L = Side(Magenta, <-1,-1,-1>, <-1,-1,1>, <-1,1,1>, <-1,1,-1>)
 #declare R = Side(Yellow,  <1,-1,-1>, <1,1,-1>, <1,1,1>, <1,-1,1>)
-
-// #declare cubelet = union {
-//   object { F }
-//   object { U }
-//   object { R }
-//   object { B }
-//   object { D }
-//   object { L }
-// }
 
 #macro Spin(a,b)
   #switch (a)
@@ -141,7 +132,7 @@ light_source { <-30,30,-10> 1 }
   object { standard_cubelet translate <X,Y,Z> }
 #end
 
-#macro centre(a,b)
+#macro centre(a,b,c)
   #local X=0;
   #local Y=0;
   #local Z=0;
@@ -159,10 +150,9 @@ light_source { <-30,30,-10> 1 }
     #case (5) #local Z=1;
     #break
   #else
-    #debug "What is it on this edge A?"
+    #debug "What is it at this centre A?"
   #end
-  object {  Cubelet(a,b)
-//    rotate x*b.x rotate z*b.z rotate y*b.y
+  object {  Cubelet(b,c)
     translate <X*2,Y*2,Z*2> }  
 #end
 
@@ -199,25 +189,25 @@ light_source { <-30,30,-10> 1 }
 
 #declare standard_centres = union {
   #local a=0;
-  #local b=<0,0,0>;
+  #local b=2;
 // y*0 x*0
-  centre(0,a) // front
-  centre(1,a) // back
-  centre(2,a) // up
-  centre(3,a) // down
-  centre(4,a) // left
-  centre(5,a) // right
+  centre(0,a,b) // front
+  centre(1,a,b) // back
+  centre(2,a,b) // up
+  centre(3,a,b) // down
+  centre(4,a,b) // left
+  centre(5,a,b) // right
 } // standard_centres
 
 #macro centres(a,b)
   union {
 // y*0 x*0
-  centre(0,0) // front
-  centre(1,0) // back
-  centre(2,b) // up
-  centre(3,0) // down
-  centre(4,0) // left
-  centre(5,0) // right
+  centre(0,0,2) // front
+  centre(1,0,2) // back
+  centre(2,1,2) // up
+  centre(3,1,2) // down
+  centre(4,0,2) // left
+  centre(5,0,2) // right
 } // centres
 #end
 
@@ -260,6 +250,7 @@ union {
   #end
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
 
+#declare the_twentyfour = union {
   object { Cubelet(0,2) next(<0,0,0>) }
   object { Cubelet(0,3) next(<0,0,2>) }
   object { Cubelet(0,4) next(<0,0,2>) }
@@ -289,6 +280,13 @@ union {
   object { Cubelet(5,1) next(<0,0,2>) }
   object { Cubelet(5,2) next(<0,0,2>) }
   object { Cubelet(5,3) next(<0,0,2>) }
+}
+  the_twentyfour
+
+#declare the_centre = union {
+  object { centres(0,2) scale 0.5 rotate y*-19 translate <0,0,6> }
+}
+  the_centre
   
   translate <3,0,1> 
   rotate <131,122,133> 
