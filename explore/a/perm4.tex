@@ -1,4 +1,4 @@
-% 20220810 (C) Gunter Liszewski -*- mode: tex; -*-
+% 20220817 (C) Gunter Liszewski -*- mode: tex; -*-
 % permutation basics
 
 \def\a{\left(\matrix }
@@ -1209,4 +1209,52 @@ we could devise a metric of the distance between different cube arrangements.
 (re-think, re-word, re-write)
 
 }% end of this excursion
+\vfill\eject
+\beginsection 16. Persistence of Vision and each cubelets' orientation
+
+{% about orientation and a start with expressing things such like
+We start with the face.  The cube has six faces.  The cube is made up of $3x3x3$ smaller
+cubes, little cubes, cubelets.  In the approach we take at the moment, each little cube,
+each cubelet, has also six faces. (However, the real Rubik cube is not like that: there
+edge cubelets have two small faces, facelets we say, corners show three, and each of
+the six faces' centre cublets has just one face, its centre cubelet's facelet)
+
+We start with a set $A=\{0,1,2,3,4,5\}$ as we continue to abstract
+things within the concepts of the set and the group.
+
+We have $3$ subsets $B_0,B_2,B_4\subset A,$ with $B_0=\{0,1\}$, $B_2=\{2,3\}$, and
+$B_4=\{4,5\}.$  These subsetes model our opposing faces and facelets such as
+the front is opposite the back, up is opposite down, and left opposes right.
+
+We have another three subsets $C_0=\{3,4,5,6\}=C_1,$ $C_2=\{0,1,4,5\}=C_3,$ and
+$C_4=\{0,1,2,3\}=C_5.$ These are ajacent faces and facelets.
+
+There is a relation between these sets, $B_n=A\backslash C_n$ and $C_n=A\backslash B_n.$
+Also we have $B_n\cup C_n=A.$  We also have $B_k=B_{k+1}$ for $k\in\{0,2,4\},$ and
+furthermore this holds for the sets of adjacent faces where
+$C_k=C_{k+1}$ for $k\in\{0,2,4\}.$
+
+\e Now we can enumerate the set of adjacent faces.  Given $k\in\{0,2,4\},$ we can
+let $b\in B_k$ and $c\in C_k,$ and then enumerte the adjacent pairs $(b,c)$ that
+are the elements of our group $(A,\*).$  {(\it It is unclear, at this stage of
+considerations, that we have a group here.)}
+
+We enumerate $B_0\*C_0,$ with $B=\{0,1\}$ and $C=\{2,3,4,5\}$ to have
+$\{02,03,04,05\}\cup\{12,13,14,15\}.$
+Similarly we have $B_2\*C_2\cup B_3\*C_3$ to be
+$\{20,21,24,25,30,31,34,35\},$ and finally
+$\{40,41,42,43,50,51,52,53\}.$
+
+\e We may also consider how to measure the distance between such arrangements.
+We assign a metric of $2$ to $(b_k,b_{k+1}),$ that is the permutation between
+opposite faces.
+Conversely, and for example, with $k=0$ we have a corresponding permuter element
+of $(c_2,c_4,c_3,c_5)$ with a $1$~unit distance between one arrangement and its
+successor.
+
+The opposing cycles are of order $2,$ while the adjacent cycles are of order $4.$
+Considering the parity of such permutation cycles and given that  $(c_2,c_4,c_3,c_5)=(c_2,c_4)\*(c_2,c_3)\*(c_2,c_5)$ the parity of the adjacent cycles turns out to be $3\pmod 2,$
+``odd'' in other words.
+
+}% end of orientation
 \bye
