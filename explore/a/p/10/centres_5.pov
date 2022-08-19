@@ -1,4 +1,4 @@
-// 20220818 (C) Gunter Liszewski -*- mode: pov; -*-
+// 20220819 (C) Gunter Liszewski -*- mode: pov; -*-
 // Rubik cube's six centre cubelets
 #version 3.7;
 #include "colors.inc"
@@ -243,13 +243,24 @@ union {
   #declare the_centre = union {
     object { centres(2,0) next(<0,0,0>) }
   }
-  the_centre
+//  the_centre
 
   #declare the_standard_centre = union {
     object { standard_centres next(<3,0,-6>) }
   }
-  the_standard_centre
+//  the_standard_centre
 
+  // rotating a centre
+
+  #declare this_F = centre(0,0,2);
+  this_F 
+
+  #declare this_B = centre(1,0,2);
+  this_B
+  
+  #declare this_L = centre(4,0,2);
+  this_L
+  
   #declare P = array [3][3] { { 1,2,3 }, { 4,5,6} , {7,8,9} };
     
   translate <3,0,1> 
