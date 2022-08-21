@@ -274,12 +274,16 @@ union {
       matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>
     }
   }
+  #macro Z90()
+      matrix < 0,-1,0, 1,0,0, 0,0,1, 0,0,0>
+   #end
   #macro X180()
       matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>
    #end
-   // object { Cubelet(0,2) transform { rotate x*90 } }
-   // object { Cubelet(0,2)  matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>  }
-   object { Cubelet(0,2) X180() }
+  // object { Cubelet(0,2) transform { rotate x*90 } }
+  // object { Cubelet(0,2)  matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>  }
+  // object { Cubelet(0,2) X180() }
+  object { Cubelet(0,2) Z90() }
 
   translate <3,0,1> 
   rotate <131,122,133> 
