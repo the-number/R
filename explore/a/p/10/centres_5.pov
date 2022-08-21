@@ -285,6 +285,18 @@ union {
   // object { Cubelet(0,2) X180() }
   object { Cubelet(0,2) Z90() }
 
+  #declare Many = union {
+    #local K = 0;
+    #local N = 6;
+    #while (K < N)
+      object { centre(K,5,3) }
+      #local K = K+1;
+    #end
+    scale 0.5
+    translate <-6,0,4>
+  }
+  Many
+  
   translate <3,0,1> 
   rotate <131,122,133> 
 }
