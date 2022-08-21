@@ -1,4 +1,4 @@
-// 20220819 (C) Gunter Liszewski -*- mode: pov; -*-
+// 20220821 (C) Gunter Liszewski -*- mode: pov; -*-
 // Rubik cube's six centre cubelets
 #version 3.7;
 #include "colors.inc"
@@ -262,7 +262,20 @@ union {
   this_L
   
   #declare P = array [3][3] { { 1,2,3 }, { 4,5,6} , {7,8,9} };
-    
+
+  // #declare M1 = < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >;
+  // #declare M2 = < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >; 
+  // #declare M3 = M1*M2;
+  // #debug str(matrix < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >)
+
+   #declare T = transform { rotate x*90 };
+   #macro X180()
+      matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>
+   #end
+   // object { Cubelet(0,2) transform { rotate x*90 } }
+   // object { Cubelet(0,2)  matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>  }
+   object { Cubelet(0,2) X180() }
+  
   translate <3,0,1> 
   rotate <131,122,133> 
 }
