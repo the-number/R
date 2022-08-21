@@ -1,0 +1,5 @@
+guix-shell-b2-here () 
+{ 
+    local D="guix shell b2-here -D boost-here@1.80.0";
+    guix shell -L here b2-here -D boost-here@1.80.0
+}
