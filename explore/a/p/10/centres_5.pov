@@ -2,10 +2,42 @@
 // Rubik cube's six centre cubelets
 #version 3.7;
 #include "colors.inc"
+// #include "textures.inc"
+#include "shapes.inc"
  global_settings { assumed_gamma 1.0 }
+#default{ finish{ ambient 0.1 diffuse 0.9 }} 
 
 camera { location <0,2,-14> look_at <0,0,2> }
 light_source { <-30,30,-10> 1 }
+
+#declare the_sun =
+light_source{< 3000,3000,-3000> color White};
+
+#macro the_sky()
+sky_sphere {
+  pigment {
+    gradient <0,1,0>
+    color_map { [0.00 rgb <0.6,0.7,1.0>]
+      [0.35 rgb <0.1,0.0,0.8>]
+      [0.65 rgb <0.1,0.0,0.8>]
+      [1.00 rgb <0.6,0.7,1.0>] 
+    } 
+    scale 2         
+  }
+}
+#end
+
+#declare the_ground =
+plane{ <0,1,0>, -5 
+       texture{
+	 pigment{ 
+	   checker 
+	   color rgb<1,1,1>*1.2 
+	   color rgb<0.25,0.15,0.1>*0}
+	 finish { phong 0.1}
+       }
+};
+
 
 #macro Side( Colour, P1, P2, P3, P4)
   polygon {  5, P1 P2 P3 P4 P1
@@ -202,7 +234,9 @@ light_source { <-30,30,-10> 1 }
 
 #macro Mirror( Colour )
   box { <0,0,0>, <10,4.5,0.3>
-    pigment { colour Colour } finish { reflection 1 } }
+    texture { 
+      pigment { colour Colour }
+      finish { reflection 1 } }}
 #end
 
 //--------------------------------------------------
@@ -234,40 +268,27 @@ light_source { <-30,30,-10> 1 }
 // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
-
   #declare here=<-5,0,2>;
   #macro next(P)
     #declare here=here+P; scale 0.5 rotate y*-19 translate here
   #end
-
   #declare the_centre = union {
     object { centres(2,0) next(<0,0,0>) }
   }
-//  the_centre
-
   #declare the_standard_centre = union {
     object { standard_centres next(<3,0,-6>) }
   }
-//  the_standard_centre
-
-  // rotating a centre
-
   #declare this_F = centre(0,0,2);
   this_F 
-
   #declare this_B = centre(1,0,2);
   this_B
-  
   #declare this_L = centre(4,0,2);
   this_L
-  
   #declare P = array [3][3] { { 1,2,3 }, { 4,5,6} , {7,8,9} };
-
   // #declare M1 = < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >;
   // #declare M2 = < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >; 
   // #declare M3 = M1*M2;
   // #debug str(matrix < 0,0,1, 0,1,0, -1,0,0, 0,0,0 >)
-
   #declare T = transform { rotate x*90 };
   #declare T90 = function {
     transform {
@@ -284,7 +305,6 @@ union {
   // object { Cubelet(0,2)  matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>  }
   // object { Cubelet(0,2) X180() }
   object { Cubelet(0,2) Z90() }
-
   #declare Many = union {
     #local K = 0;
     #local N = 6;
@@ -300,3 +320,15 @@ union {
   translate <3,0,1> 
   rotate <131,122,133> 
 }
+
+/*
+#declare the_thing = 
+sphere { <0,0,0>, 1 
+  texture { Polished_Chrome
+  } 
+  scale<1,1,1>  rotate<0,0,0>  translate<0,1.35,0>  
+};
+*/
+the_sun
+the_sky()
+the_ground
