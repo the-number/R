@@ -264,8 +264,43 @@ plane{ <0,1,0>, -5
 // https://www.povray.org/documentation/3.7.0/r3_3.html#r3_3_1_12_4
 >
 #end
-
-// The things in this picture
+#declare T0 =
+  array[6] {
+    transform { matrix <  1,0,0, 0,1,0,  0,0,1,  0,0,0 > },
+    transform { matrix < -1,0,0, 0,1,0,  0,0,-1, 0,0,0 > },
+    transform { matrix <  0,0,1, 0,1,0, -1,0,0,  0,0,0 > },
+    transform { matrix <  0,0,-1,0,1,0,  1,0,0,  0,0,0 > },
+    transform { matrix <  1,0,0  0,0,1,  0,-1,0, 0,0,0 > },
+    transform { matrix <  1,0,0, 0,0,-1, 0,1,0,  0,0,0 > }
+  };
+#declare T = 
+  array[6][4]{
+    { transform { T0[0] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[0] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { T0[0] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[0] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+    { transform { T0[1] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[1] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { T0[1] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[1] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+    { transform { T0[2] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[2] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[2] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+    { transform { T0[3] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[3] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { T0[3] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[3] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+    { transform { T0[4] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[4] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { T0[4] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[4] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+    { transform { T0[5] matrix <  1, 0,0,  0, 1,0, 0,0,1, 0,0,0 > },
+      transform { T0[5] matrix <  0,-1,0,  1, 0,0, 0,0,1, 0,0,0 > },
+      transform { T0[5] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
+      transform { T0[5] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
+  };
+    // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
   #declare here=<-5,0,2>;
@@ -300,7 +335,7 @@ union {
    #end
   #macro X180()
       matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>
-   #end
+  #end
   // object { Cubelet(0,2) transform { rotate x*90 } }
   // object { Cubelet(0,2)  matrix < 1,0,0, 0,-1,0, 0,0,-1, 0,0,0>  }
   // object { Cubelet(0,2) X180() }
@@ -315,7 +350,16 @@ union {
     scale 0.5
     translate <-6,0,4>
   }
-  Many
+  // Many
+  #declare Some = union {
+    Cubelet(0,2) 
+      // transform { matrix <  0,0,-1,0,1,0,  1,0,0,  0,0,0 > 
+	// transform { matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > }}
+      transform { T0[4] }
+    scale 0.6
+    translate <-6,0,4>
+  }
+  Some
   
   translate <3,0,1> 
   rotate <131,122,133> 
