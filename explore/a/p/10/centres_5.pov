@@ -1,4 +1,4 @@
-// 20220821 (C) Gunter Liszewski -*- mode: pov; -*-
+// 20220825 (C) Gunter Liszewski -*- mode: pov; -*-
 // Rubik cube's six centre cubelets
 #version 3.7;
 #include "colors.inc"
@@ -9,7 +9,18 @@
 
 camera { location <0,2,-14> look_at <0,0,2> }
 light_source { <-30,30,-10> 1 }
-
+#declare Polished_Chrome = 
+texture {
+    pigment { rgb <0.2, 0.2, 0.2> }
+    finish {
+        ambient 0.1
+        diffuse 0.7
+        brilliance 6.0
+        reflection 0.6
+        phong 0.8
+        phong_size 120
+    }
+}
 #declare the_sun =
 light_source{< 3000,3000,-3000> color White};
 
@@ -300,6 +311,78 @@ plane{ <0,1,0>, -5
       transform { T0[5] matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > },
       transform { T0[5] matrix <  0, 1,0, -1, 0,0, 0,0,1, 0,0,0 > }},
   };
+#macro Rx(a)
+  #switch (a)
+    #case (0)
+      matrix < 1,0,0, 0,1,0, 0,0,1, 0,0,0 >
+    #break
+    #case (90)
+      matrix < 1, 0,0, 
+               0, 0,1, 
+               0,-1,0, 0,0,0 >
+    #break
+    #case (180)
+      matrix < 1, 0, 0, 
+               0,-1, 0, 
+               0, 0,-1, 0,0,0 >
+    #break
+    #case (270)
+      matrix < 1, 0, 0, 
+               0, 0,-1, 
+               0, 1, 0, 0,0,0 >
+    #break
+  #end
+#end
+
+#macro Ry(a)
+  #switch (a)
+    #case (0)
+      matrix < 1,0,0,
+               0,1,0,
+               0,0,1, 0,0,0 >
+    #break
+    #case (90)
+      matrix < 0,0,-1, 
+               0,1, 0, 
+               1,0, 0, 0,0,0 >
+    #break
+    #case (180)
+      matrix < -1,0, 0, 
+                0,1, 0, 
+                0,0,-1, 0,0,0 >
+    #break
+    #case (270)
+      matrix <  0,0,1, 
+                0,1,0, 
+               -1,0,0, 0,0,0 >
+    #break
+  #end
+#end
+
+#macro Rz(a)
+  #switch (a)
+    #case (0)
+      matrix < 1,0,0,
+               0,1,0,
+               0,0,1, 0,0,0 >
+    #break
+    #case (90)
+      matrix < 0,1,0, 
+              -1,0,0, 
+               0,0,1, 0,0,0 >
+    #break
+    #case (180)
+      matrix < -1, 0,0, 
+                0,-1,0, 
+                0, 0,1, 0,0,0 >
+    #break
+    #case (270)
+      matrix <  0,-1,0, 
+                1, 0,0, 
+                0, 0,1, 0,0,0 >
+    #break
+  #end
+#end
     // The things in this picture
 union {
   object { Mirror( <0,0.1,0.1> ) rotate y*87 translate <-9,0,3> }
@@ -353,9 +436,7 @@ union {
   // Many
   #declare Some = union {
     Cubelet(0,2) 
-      // transform { matrix <  0,0,-1,0,1,0,  1,0,0,  0,0,0 > 
-	// transform { matrix < -1, 0,0,  0,-1,0, 0,0,1, 0,0,0 > }}
-      transform { T0[4] }
+      transform { Ry(270) Rz(90) }
     scale 0.6
     translate <-6,0,4>
   }
@@ -364,15 +445,13 @@ union {
   translate <3,0,1> 
   rotate <131,122,133> 
 }
-
-/*
 #declare the_thing = 
 sphere { <0,0,0>, 1 
   texture { Polished_Chrome
   } 
-  scale<1,1,1>  rotate<0,0,0>  translate<0,1.35,0>  
+  scale 9 rotate<0,0,0>  translate<15,12,20>  
 };
-*/
 the_sun
 the_sky()
 the_ground
+the_thing
