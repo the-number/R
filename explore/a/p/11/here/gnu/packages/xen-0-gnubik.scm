@@ -151,7 +151,9 @@
                           version ".tar.gz"))
       (sha256
        (base32
-        "1vlf924mq8hg93bsjj0rzvs0crc6psmlxyc6zn0fr7msnmpx6gib"))))
+        "1vlf924mq8hg93bsjj0rzvs0crc6psmlxyc6zn0fr7msnmpx6gib"))
+      (patches
+       (search-patches "gnubik-autogen.patch"))))
     (build-system gnu-build-system)
     (arguments
      '(#:phases (modify-phases %standard-phases

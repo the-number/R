@@ -1,0 +1,12 @@
+diff --git a/autogen.mak b/autogen.mak
+index d431d12..d884787 100755
+--- a/autogen.mak
++++ b/autogen.mak
+@@ -1,6 +1,6 @@
+ M4=m4
+ 
+-AM_SFX=-1.15
++AM_SFX=-1.16
+ 
+ ACLOCAL=aclocal$(AM_SFX)
+ AUTOMAKE=automake$(AM_SFX)
