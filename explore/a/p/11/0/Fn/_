@@ -1,0 +1,134 @@
+_ () 
+{ 
+    local D="0 new Fn/, 1 new set, 2 recall, 3 describe, 4 definitions, 5 this repository, 9 store, _ reformat, m,n,v,c,n_,n__,c_,c__, set_sprint_topic=${sprint_topic}=";
+    function set_sprint_topic () 
+    { 
+        local DD="Set our topic, here, now.";
+        export sprint_topic;
+        test -z "$1" && echo "$sprint_topic";
+        if test -n "$1"; then
+            sprint_topic="$*";
+            sed Fn/topic-here -e '/ D[=]/s,=".*",="'"$sprint_topic"'",' -i;
+        fi
+    };
+    function a__ () 
+    { 
+        local DD="a__: a2_ ;a9_ ;a2_ ;a9_;";
+        a2_;
+        a9_;
+        a2_;
+        a9_
+    };
+    function a0_ () 
+    { 
+        local DD="Create the folder 'Fn' for the purpose of keeping a record of functions.";
+        mkdir Fn
+    };
+    function a1_ () 
+    { 
+        local DD="Touch the records of the shell function here, in Fn/.";
+        for x in '';
+        do
+            test $( declare -F ${x}_ ) && touch Fn/${x}_;
+        done
+    };
+    function a2_ () 
+    { 
+        local DD="Declare the shell functions as per our record here.";
+        rm -f Fn/*~ Fn/*.bak;
+        for x in Fn/*;
+        do
+            . $x;
+        done
+    };
+    function a3_ () 
+    { 
+        local DD="Show the descriptions of the shell functions that are on record here.";
+        local a=$@;
+        test -z "$a" && a=$( echo Fn/* );
+        for b in $a;
+        do
+            local c=$( basename "$b" );
+            local d="Fn/$c";
+            test -f "$d" && echo "$( declare -F "$c" ) -- $( sed ${d} -n -e '/^.* [D]="\(.*\)".*$/s,,\1,p' )";
+        done
+    };
+    function a4_ () 
+    { 
+        local DD="Show the shell functions' descriptions and declarations.";
+        local a=$@;
+        test -z "$a" && a=$( echo Fn/* | sed - -e s,Fn/_,, );
+        for b in $a;
+        do
+            local c=$( basename "$b" );
+            local d="Fn/$c";
+            test -f "$d" && echo "$( declare -F "$c" ) -- $( sed ${d} -n -e '/^.* [D]="\(.*\)".*$/s,,\1,p' )" && declare -f $c;
+        done
+    };
+    function a5_ () 
+    { 
+        ( DD="git: set or get the description of this repository";
+        a=.git/description;
+        test -w "${a}" && echo -n "$( basename "$( pwd )")> " && cat "${a}" && test "$*" != "" && { 
+            echo "$*" > "${a}"
+        } && cat "${a}" )
+    };
+    function a9_ () 
+    { 
+        local DD="Record the shell functions as they are declared now.";
+        rm -f Fn/*~ Fn/*.bak;
+        local a=$@;
+        test -z "$a" && a=$( echo Fn/* );
+        for b in $a;
+        do
+            local c=$( basename "$b" );
+            local d="Fn/$c";
+            test -n "declare -F $c" && declare -f $c > $d;
+        done
+    };
+    function m () 
+    { 
+        git status -- $1 .
+    };
+    function n () 
+    { 
+        git log --stat --pretty --date=relative -- $1 .
+    };
+    function n_ () 
+    { 
+        local DD="git status --oneline";
+        git log --oneline --date relative -- ${1:-.}
+    };
+    function n__ () 
+    { 
+        local DD="git status --oneline --show-signature";
+        git log --show-signature --oneline --date relative -- ${1:-.}
+    };
+    function v () 
+    { 
+        git add --all -- $* .
+    };
+    function c () 
+    { 
+        local DD="git commit: git commit -s -S -m '$sprint_topic: $*'";
+        set-tty;
+        git commit -s -S -m "$sprint_topic: $*"
+    };
+    function c_ () 
+    { 
+        local DD="git: amend this commit, with this here";
+        set-tty;
+        git commit -s -S --amend -m "$sprint_topic: $*"
+    };
+    function c__ () 
+    { 
+        local DD="git: amend this commit, without a new message";
+        set-tty;
+        EDITOR=echo git commit -s -S --amend
+    };
+    local a="echo Usage: [ export DO=' '\; ] _ [ <n> | <command> ] ($D)";
+    test -n "$( declare -F "$1" )" && a="${1}";
+    test -n "$( declare -F a${1}_ )" && a="a${1}_";
+    shift;
+    ${DO:-echo} ${a} $@
+}

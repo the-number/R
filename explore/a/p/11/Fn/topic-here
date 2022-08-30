@@ -1,0 +1,7 @@
+topic-here () 
+{ 
+    local D="boost: gnubik-here";
+    local D1="$D";
+    test -n "$*" && D1="$*";
+    set_sprint_topic $D1
+}
