@@ -10,7 +10,7 @@
   ;; #:use-module (guix git-download)
   ;; #:use-module (guix svn-download)
   ;; #:use-module (guix gexp)
-  ;; #:use-module (gnu packages)
+  #:use-module (gnu packages)
   ;; #:use-module (gnu packages adns)
   ;; #:use-module (gnu packages algebra)
   #:use-module (gnu packages autotools)
@@ -151,9 +151,7 @@
                           version ".tar.gz"))
       (sha256
        (base32
-        "1vlf924mq8hg93bsjj0rzvs0crc6psmlxyc6zn0fr7msnmpx6gib"))
-      (patches
-       (search-patches "gnubik-autogen.patch"))))
+        "1vlf924mq8hg93bsjj0rzvs0crc6psmlxyc6zn0fr7msnmpx6gib"))))
     (build-system gnu-build-system)
     (arguments
      '(#:phases (modify-phases %standard-phases
@@ -164,18 +162,20 @@
                       (substitute* "Makefile.in"
                         (("gtk-update-icon-cache")
                          "true"))
+                      (substitute* "configure"
+                        (("guile-2.0")
+                         "guile-3.0"))
                       #t)))))
     (inputs (list gtk+-2
                   mesa
                   glu
                   libx11
-		  guile-3.0-latest
-                  ;; guile-2.0
+                  guile-3.0-latest
                   gtkglext))
-    (native-inputs `(("autoconf" ,autoconf)
-		     ("automake" ,automake)
-		     ("gettext" ,gettext-minimal)
-                     ("pkg-config" ,pkg-config)))
+    (native-inputs (list autoconf
+                         automake
+                         gettext-minimal
+                         pkg-config))
     (home-page "https://www.gnu.org/software/gnubik/")
     (synopsis "3d Rubik's cube game, its Guix gnubik package un-hacked")
     (description
